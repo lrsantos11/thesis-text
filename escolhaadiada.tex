@@ -1,0 +1,1212 @@
+%!TEX root = tese.tex
+\setchapterpreamble[u]{% 
+\dictum[Alfred North Whitehead]{``Every really new idea looks crazy at
+first.''}}
+
+
+
+
+
+
+	\chapter{Uma função de mérito polinomial em \ac{MPI}}
+\label{chap:merit-function}
+\section{Um KKT escalado}
+
+
+
+Este  trabalho tem por objetivo propor um método para resolver o problema
+\ac{PL}. Para isso, considere novamente o par primal-dual na sua forma padrão,
+i.e., 
+
+ \begin{equation*}
+	\begin{array}{lc}
+\displaystyle \minimizar_{x} & c^Tx \\
+\text{sujeito a} &\begin{cases} Ax = b \\
+				 x \geq 0	
+				 \end{cases}\
+\end{array}\tag{$P$}
+\end{equation*}
+e 
+ \begin{equation}
+	\begin{array}{lc}
+\displaystyle \maximizar_{(y,z)} & b^Ty \\
+\text{sujeito a} &\begin{cases} A^Ty + z = b \\
+				 z \geq 0, \:y \text{ livre}	
+				 \end{cases}\
+\end{array}.
+\tag{$D$}
+\end{equation}
+
+Como visto no Capítulo \ref{chap:mpis}, as condições \ac{KKT}  para este
+problema são
+
+\begin{subnumcases}{\label{eq:KKT-choice}}
+Ax =b,\label{eq:KKT-fac-primal-choice}\\
+A^Ty + z =c, \label{eq:KKT-fac-dual-choice}\\
+XZe =0,  \label{eq:KKT-complementar-choice}\\
+(x,z) \geq 0. \label{eq:KKT-nao-negativ-choice}
+\end{subnumcases}
+
+
+Dado qualquer $w = (x,y,z)$, os vetores dos resíduos
+de \eqref{eq:KKT-choice}, $r_P, r_D$ e $r_C$, podem ser definidos como
+\begin{subequations}
+\label{eq:KKT-residuals}
+\begin{align} 
+r_P & =Ax-b,\label{eq:KKT-residuals-a}\\ 
+r_D & =A^Ty + z - c,\label{eq:KKT-residuals-b}\\
+r_C  &=XZe. \label{eq:KKT-residuals-c}
+\end{align} 
+\end{subequations}
+
+
+
+Seja 
+$(x^0,y^0,z^0)$ um ponto inicial que pertença a $\Qset^+$. Então
+\begin{align*} 
+r^0_P & =Ax^0-b,\\ 
+r^0_D & =A^Ty^0 + z^0 - c, \\
+r^0_C  &=X^0Z^0 e > 0. 
+\end{align*}
+ 
+% No método proposto, precisa-se garantir que ambos $r^0_P$ e $r^0_D$ sejam
+% não-negativos e que seus componentes sejam comparáveis
+% -- os motivos para isso ficarão mais claros abaixo.
+% Para esse fim, sejam   $H_P$ e $H_D$ matrizes diagonais, tais que cada entrada de
+% suas diagonais é formada segundo as seguintes regras:
+% \[ (H_P)_i = \begin{cases} \xi_P,& \text{if } (r^0_P)_i \geq0\\
+% -\xi_P,& \text{if } (r^0_P)_i <0 \end{cases}, \] para $i=1,\ldots,m$, e \[
+% (H_D)_j = \begin{cases} \xi_D,& \text{if } (r^0_D)_j \geq 0\\
+% -\xi_D,& \text{if } (r^0_D)_j <0 \end{cases}, \] para $j=1,\ldots,n$,  em que 
+% 
+% 
+% 
+% \begin{align}
+% \xi_P &=
+% \frac{\sqrt{m}}{1+\norm{b}} \\
+% \xi_D &=
+% \frac{\sqrt{n}}{1+\norm{c}}
+% \end{align}
+% 
+
+No método proposto, precisa-se garantir que os resíduos primais e duais iniciais
+sejam  não-negativos -- os motivos para isso ficarão mais claros abaixo.
+Escolher um $(x^0,y^0,z^0)$ que gere resíduos iniciais desse tipo pode ser
+uma tarefa difícil. Assim, a estratégia adotada é definir  $H_P$ e $H_D$,
+matrizes diagonais, tais que cada entrada de suas diagonais é formada segundo as
+seguintes regras:
+\begin{subequations}
+\label{eq:defining_matrices_H}
+\begin{equation}
+\label{eq:H_P}
+ (H_P)_i = \begin{cases} 1,& \text{if } (r^0_P)_i \geq0\\
+-1,& \text{if } (r^0_P)_i <0 \end{cases}, 
+\end{equation} para $i=1,\ldots,m$, e \begin{equation}
+\label{eq:H_D}
+(H_D)_j = \begin{cases} 1,& \text{if } (r^0_D)_j \geq 0\\
+-1,& \text{if } (r^0_D)_j <0 \end{cases}, 
+\end{equation}
+ para $j=1,\ldots,n$.
+\end{subequations}
+
+
+
+Mais que isso, como  $H_D$ e $H_P$ são matrizes de posto completo, o conjunto
+solução de  \eqref{eq:KKT-choice} e do sistema 
+
+\begin{subnumcases}{\label{eq:ScaledKKT}}
+H_P(Ax-b) =0,\label{eq:ScaledKKT-fac-primal}\\ 
+H_D(A^Ty + z -c) =0, \label{eq:ScaledKKT-fac-dual}\\
+XZe =0,  \label{eq:ScaledKKT-complementar}\\
+(x,z) \geq 0, \label{eq:ScaledKKT-nao-negativ} 
+\end{subnumcases}
+é o mesmo. De fato, note que apenas se está multiplicando cada linha do sistema
+\ac{KKT} original por um escalar. Além disso, garante-se que
+\[H_P(r^0_P)\geq 0 \text{ e }H_D(r^0_C)\geq
+0.\]
+Tal era o objetivo principal dessas transformações.
+
+A otimalidade do sistema \eqref{eq:KKT-choice} -- bem como de
+\eqref{eq:ScaledKKT}  -- é alcançada quando todos os resíduos são nulos, ou
+melhor dizendo, sempre que esses resíduos forem menores ou iguais a uma  
+tolerância pré-estabelecida. Assim propõe-se um método para resolver o sistema
+\ac{KKT} escalado que resolva aproximadamente, em cada iteração, para
+$(x,y,z)\in\Qset^+$ e algum $\mu>0$, o sistema
+
+\begin{subnumcases}{\label{eq:Homotopy}}
+H_P(Ax-b) = 0, \label{eq:Homotopy-fac-primal}\\ 
+H_D(A^Ty + z -c) =0, \label{eq:Homotopy-fac-dual}\\
+XZe =\mu e,  \label{eq:Homotopy-complementar}\\
+(x,z) > 0. \label{eq:Homotopy-nao-negativ} 
+\end{subnumcases}
+
+
+
+\section{Direções de busca}
+\subsection{Direção Afim-escala}\label{sec:affine-scaling-directions}
+ 
+
+Como consequência da Seção \ref{sec:affine-scalling}, a direção afim-escala
+$\dew$, que resolve aproximadamente  o sistema \eqref{eq:KKT-choice}
+é encontrada através na solução do sistema não linear
+\begin{subnumcases}{\label{eq:affine-scaling-system}}
+A\dex + r_P = 0, \label{eq:affine-scaling-system-primal} \\
+A^T\dey +\dez + r_D =  0, \label{eq:affine-scaling-system-dual}\\
+Z\dex + X\dez +  r_C = 0. \label{eq:affine-scaling-system-compl}
+\end{subnumcases}
+
+Por meio  da equação \eqref{eq:affine-scaling-system-compl} pode-se encontrar
+$\dez$ como
+\begin{equation}
+\label{eq:de_z}
+\dez = -X^{-1}(Z\dex + r_C).
+\end{equation}
+
+
+Se  esta equação for usada e, além disso, $\dez$ for substituído na equação
+\eqref{eq:affine-scaling-system-dual}, obtém-se o  sistema
+\[
+\begin{cases}
+A\dex + r_P = 0  \\
+A^T\dey -X^{-1}Z\dex -X^{-1}r_C + r_D =  0
+\end{cases}.
+\]
+Este sistema é chamado \emph{Sistema Aumentado} e tem sua forma matricial dada
+por
+\begin{equation*}
+\label{eq:Augmented-system}
+\bbm  - D^{-1} & A^T \\
+A & 0 
+\ebm
+\bbm \dex \\ \dey
+\ebm = 
+\bbm - r_D +X^{-1}r_C  \\  -r_P 
+\ebm,
+\end{equation*}
+em que $D = XZ^{-1}$ é não-singular pois $(x,z)>0$. Mais que isso,
+$\dex$ pode ser encontrado como 
+\begin{align}
+\dex& = -D \left( - r_D +X^{-1}r_C - A^T\dey \right) \notag\\
+	 &= D\left(r_D -X^{-1}r_C +A^T\dey \right) \notag\\
+	 &= D\left(A^T\dey - t\right), \label{eq:de_x}
+\end{align}
+em que 
+\begin{align*}
+t &=  X^{-1}r_C - r_D \\
+  &= X^{-1}XZe - A^Ty - z + c \\
+  &= z - A^Ty - z + c\\
+   &= -(A^Ty - c).
+\end{align*}
+
+Usando a fórmula para   $\dex$, encontra-se $\dey$ e neste caso a equação
+\eqref{eq:affine-scaling-system-compl} torna-se $AD\left(A^T\dey - t\right) +
+r_P = 0$ e logo
+\begin{equation}
+\label{eq:de_y}
+\dey = B(ADt - r_P),
+\end{equation}
+em que \begin{equation}
+\label{eq:define-B}
+B = (ADA^T)^{-1}
+\end{equation} e portanto $B^{-1}$ é sempre simétrica definida positiva.
+Consequentemente, para encontrar $\dew$ usa-se uma fatoração de 
+Cholesky de $B^{-1}$ e um 
+\emph{backsolve}.
+%XXX Como traduzir o Backsolve?
+
+\subsection{A direção ideal}
+
+O método proposto aqui seguirá a estrutura dos  métodos preditores-corretores
+(vide Seção \ref{sec:path-following-methods}). Suponha que, dados o ponto $w =
+(x,y,z)$ e um parâmetro  $\mu>0$, seja possível  encontrar $\hat{w}$, solução
+do sistema
+\begin{equation}
+	\label{eq:ideal-system}
+\begin{cases} 
+A\hat{x} -b = 0 \\
+A^T\hat{y} +\hat{z} -c = 0 \\
+\hat{X}\hat{Z}e = \mu e
+\end{cases},
+\end{equation}
+através de um único
+passo \emph{ideal}
+ $\Dew = (\Dex,\Dey,\Dez)$, tal que \[ \hat{w} =
+w+\Dew.\]
+
+A estratégia adotada neste trabalho para encontrar esse passo ideal é  escrever
+$\Dew = \dew + \Decow$, em que  $\dew$ é a direção afim-escala e $\Decow$ é a direção corretora 
+\emph{ideal}.
+
+Procedendo com as substituições, na parte linear de \eqref{eq:ideal-system},
+tem-se
+\[ A(x+\Dex) - b = A(x+\dex + \Decox) - b = \underbrace{(Ax - b) + A\dex}_{=0
+\text{ por \eqref{eq:affine-scaling-system-primal}}} + A\Decox = A\Decox \] 
+e
+\begin{align*}
+A^T(y+\Dey) + (z+\Dez) - c &= A^T(y+\dey+\Decoy) + (z+\dez+\Decoz) - c \\
+						  &= \underbrace{A^Ty + z - c + A^T\dey+ +\dez}_{=0 
+						  \text{ por \eqref{eq:affine-scaling-system-dual}}} +
+						   A^T\Decoy +\Decoz \\
+						  &=  A^T\Decoy +\Decoz.
+\end{align*} 
+
+Por outro lado, para a parte da complementaridade de 
+\eqref{eq:ideal-system}, tem-se que
+\begin{align*}
+\hat{x}\hat{z} &= (x + \Dex)(z+\Dez) = xz + x\Dez + z\Dex + \Dex\Dez \\
+                &= \underbrace{xz + x\dez + z\dex}_{=0 \text{ por
+                \eqref{eq:affine-scaling-system-compl} }}  + z\Dex^c + x\Dez^c + (\dex + \Dex^c)(\dez + \Dez^c) \\
+                &=  x\Dez^c  +z\Dex^c + \Dex^c\Dez^c + \dex\dez 
+                + \dex\Dez^c + \dez\Dex^c \\
+                &=         x\Dez^c  +z\Dex^c + \Dex\Dez.     
+\end{align*}
+  
+Usando tais simplificações, obtém-se o seguinte sistema não linear
+\begin{equation}\begin{cases}
+A\Dex^c =  0\\
+A^T\Dey^c +\Dez^c =  0\\
+X\Dez^c + Z\Dex^c + \DeX\Dez = \mu e 
+\label{eq:corrector-nonlinear}
+\end{cases}.
+\end{equation}
+O vetor $\DeX\Dez$ corresponde a uma correção de segunda ordem, nos moldes dos
+trabalhos de \citet{Mehrotra:1992wr,Gondzio:1996uw}.
+
+
+
+A proposta deste trabalho é utilizar uma  forma de generalização das correções
+de ordem superior usadas por esses autores.
+Essa generalização será feita supondo-se que para algum escalar
+$\sig\in[0,\zeta]$, $\zeta>0$, a aproximação
+\begin{equation}
+\label{eq:aproximacao-direcao}
+\DeX\Dez \approx \sig \deX\dez
+\end{equation} 
+seja aceitável.
+%\footnote{Neste caso, a notação $u \approx \sig v$ significa que
+%  $u$ é um vetor que pertence ao subespaço gerado por $v$.}
+
+Em particular note
+que se  $\sig = 1$ e $\mu = \tau_{\text{af}}^3/\tau$ -- em que $\tau_{\text{af}}$ é dado
+na equação \eqref{eq:tau-affine} e $\tau=x^Tz/n$ -- tem-se o método de
+\citet{Mehrotra:1992wr}. Por outro lado, para \citet{Gondzio:1996uw}, $\mu$ é
+escolhido como no método de Mehrotra e $\DeX\Dez$ é várias vezes aproximado por
+direções que projetem, componente a componente, a complementaridade na
+vizinhança $N_s(\ga)$. De fato, a escolha do valor $\mu$ e a utilização de
+correções de ordem superior definem os diferentes tipos de \ac{MPI} que têm sido
+utilizados atualmente~\cite{Wright:Primal-dual-interior-point:1997h}.
+
+
+
+
+\subsection{Combinando direções}
+
+
+%XXX:Escrever sobre o trabalho do Fernando
+
+
+Alguns autores 
+combinam direções de correção utilizando pesos para essas direções.
+ \citet{Colombo:2008ia} generalizam e estendem o trabalho de \citet{Gondzio:1996uw},
+fazendo com que a combinação das correções múltiplas  tenha um peso, que é
+escolhido fazendo-se uma busca linear. Já \citet{Jarre:1999tl}  propõem um subproblema
+linear que é resolvido a cada iteração e cuja solução determina os pesos que as direções de 
+correções de ordem superior terão na direção final. 
+
+\citet{VillasBoas:2003tg}, também no contexto primal-dual, estudam algumas
+vantagens de adiar a escolha do parâmetro de barreira e do tamanho do passo.
+Estes autores mostram que o próximo iterado pode ser expresso por uma função
+quadrática do parâmetro de barreira, bem como que tal parametrização é útil
+para garantir tanto a não negatividade do próximo iterado quanto a proximidade destes da
+trajetória central. 
+
+Uma das principais contribuições deste trabalho, através da extensão das ideias
+de \citet{VillasBoas:2003tg}, é a escolha do valor de $\mu$ -- que aqui faz as
+vezes de parâmetro de barreira -- e de $\sig$  sendo feita de maneira adiada, e
+por isso tais parâmetros, bem como o tamanho do passo $\al$, estão sendo
+tratados como \emph{variáveis}. Para a escolha desses parâmetros, far-se-á uso de uma
+função de mérito, a qual será descrita abaixo.
+ 
+Antes disso, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
+transforma o sistema não linear \eqref{eq:corrector-nonlinear} no sistema linear
+\begin{equation*}\begin{cases}
+A\Dex^c = 0 \\
+A^T\Dey^c +\Dez^c = 0 \\
+X\Dez^c + Z\Dex^c +  = \mu e - \sig\deX\dez
+\end{cases}.
+\end{equation*}
+Expressando tal sistema  na  forma
+matricial tem-se
+\begin{equation}
+\label{eq:corrector-linear-matrix}
+\bbm A & 0 & 0 \\
+0 & A^T & I\\
+Z & 0 & X \ebm
+\bbm \Dex^c \\ \Dey^c \\ \Dez^c
+\ebm = 
+\bbm 0  \\ 0 \\ \mu e - \sig\deX\dez
+\ebm.
+\end{equation}
+Note que as matrizes do lado esquerdo das equações em
+\eqref{eq:affine-scaling-system} e \eqref{eq:corrector-linear-matrix} são as
+mesmas. Com isso, podemos resolver  \eqref{eq:corrector-linear-matrix} 
+utilizando a mesma fatoração de Cholesky de $B^{-1}$ -- veja a Equação~\eqref{eq:define-B}. 
+
+De fato, o lado direito de  \eqref{eq:corrector-linear-matrix} pode ser
+reescrito como
+\begin{equation}
+\label{eq:corrector-linear-matrix-rhs}
+\mu\bbm 0 \\  0 \\ e
+\ebm + \sig \bbm 0  \\ 0 \\ - \deX\dez
+\ebm.
+\end{equation}
+Portanto, para $(\mu,\sig)$ qualquer -- ainda não escolhidos --, é possível
+encontrar $\Decow$ como
+\begin{equation}
+\label{eq:Corrector-spllited}
+\Decow = \mu \Dew^{\mu} + \sig
+\Dew^{\sig},
+\end{equation} 
+resolvendo portanto dois sistemas lineares similares ao da Seção 
+\ref{sec:affine-scaling-directions}. Com efeito, encontra-se 
+$\Dew^\mu$ e $\Dew^\sig$  usando a
+mesma abordagem da referida seção, i.e., resolvendo
+os sistemas $\nabla F(w)\Dew^\mu = (0,0,e)$ e $\nabla F(w)\Dew^\sig = (0,0,-
+\deX\dez)$.
+Explicitamente, tem-se 
+\begin{equation}
+\label{eq:De_C} 
+\begin{aligned}
+& \Dey^{\mu} = B(ADt^\mu )\\
+& \Dex^{\mu} = D(A^T\Dey^{\mu} - t^\mu) \\
+& \Dez^{\mu} = -X^{-1}(Z\Dex^{\mu} - e)
+\end{aligned} \text{\quad e \quad } \begin{aligned}
+& \Dey^{\sig} = B(ADt^\sig)\\
+& \Dex^{\sig} = D(A^T\Dey^{\sig} - t^\sig) \\
+& \Dez^{\sig} = -X^{-1}(Z\Dex^{\sig} + \deX\dez)
+\end{aligned}, 
+\end{equation}
+em que
+\[
+t^\mu = - X^{-1}e \text{\quad e \quad} t^\sig = X^{-1}\deX\dez.
+\]
+
+Desta forma, o esforço computacional por iteração do método proposto consiste
+em uma fatoração de Cholesky da matriz $B^{-1}$ e três \emph{backsolves}.
+ 
+ 
+Define-se o próximo ponto, para cada uma das variáveis, como sendo \[\hat{w} = w
++ \al(\dew + \Decow),\] 
+ou ainda, expandindo para cada variável bem como
+separando as direções, na forma
+\begin{subequations}
+\label{eq:next-iterate}
+\begin{align}
+& \hat{x} = x + \al(\dex + \mu\Dex^\mu + \sig\Dex^\sig ),  \\
+& \hat{y} = y + \al(\dey + \mu\Dey^\mu + \sig\Dey^\sig ), \\
+\intertext{e}
+& \hat{z} = z + \al(\dez + \mu\Dez^\mu + \sig\Dez^\sig ).
+\end{align} 
+\end{subequations}
+
+Até o presente momento, a tripla $(\al, \mu,\sig)$, em que $\al$ é o tamanho do
+passo, ainda não foi escolhida. Para de fato dar o passo indicado acima, a
+abordagem proposta neste trabalho é tratar algebricamente $(\al, \mu,\sig)$ como
+uma tripla de variáveis reais, utilizar no máximo três \emph{backsolves} para
+escolhe-las e finalmente usar a combinação linear das direções $\dew$,
+$\Dew^\mu$ e $\Dew^\sig$, porém usando a tripla $(\al,\mu,\sig)$ para determinar
+as constantes -- ou pesos --  de tal combinação.
+
+
+
+
+A função de mérito, que será  apresentada em sequência, será formulada a partir
+dos resíduos do sistema KKT escalado \eqref{eq:ScaledKKT}. Para tanto, na
+próxima Seção será mostrado que é possível prever, a depender de
+uma escolha de $(\al, \mu,\sig)$, o próximo resíduo deste sistema.
+
+
+\section{O próximo resíduo}
+
+\begin{defin} 
+\label{def:residual-vector}
+Definimos  $\rho$, \emph{vetor de resíduos do sistema} \ac{KKT}  escalado
+\eqref{eq:ScaledKKT} para um ponto $(x,y,z)$ como
+\begin{equation}
+\label{eq:residuals}
+\rho(x,y,z) = 
+\begin{cases}
+\rho_P (x,y,z)= H_P(A{x} -b)  \\
+\rho_D(x,y,z)= H_D(A^T{y} +{z} -c) \\
+\rho_C(x,y,z)= {X}{Z}e
+\end{cases}.
+\end{equation}
+
+Além disso, seja  $\rho_L = (\rho_P,\rho_D)^T\in\Real^{m+n}$ o \emph{vetor dos
+resíduos da parte linear} do  sistema \ac{KKT} escalado. Definimos o
+\emph{vetor dos resíduos na iteração $k$} como $\rho^k$.
+Por construção $\rho^0>0$ para $(x^0,y^0,z^0)$.
+Pode-se denotar o \emph{vetor (preditivo) dos resíduos  para a próxima iteração
+$k+1$} como \[  \rho^{k+1} = \rho(x^{k+1},y^{k+1},z^{k+1}).
+\]
+\end{defin} 
+
+\begin{obs}
+De acordo com o contexto, pode-se representar o resíduo preditivo 
+$\rho^{k+1}$ como $\hat{\rho}$ ou ainda $\hat{\rho}(\al,\mu,\sig)$ já que, como
+será possível ver a partir do Teorema \ref{thm:next=residual}, a
+escolha de $(\al,\mu,\sig)$ determinará o próximo resíduo.
+
+
+
+
+\end{obs}
+
+
+Usando a Definição \ref{def:residual-vector}, dado um ponto  $(x,y,z)$, podemos 
+prever o próximo resíduo $\hat{\rho}$, a depender de uma escolha de 
+$(\al,\mu,\sig)$, através do teorema a seguir. 
+
+\begin{teo}
+\label{thm:next=residual}
+O próximo resíduo para o sistema KKT escalado  \eqref{eq:ScaledKKT} é escrito, em
+termos da tripla $(\al,\mu,\sig)$, como 
+\begin{equation}
+\label{eq:next-residual-all}
+\hat{\rho}(\al,\mu,\sig) = \bbm (1-\al)\rho_L \\   (1-\al)\rho_C+ \al\mu + \al(\al-\sig)L_{0,0} +  
+\al^2 \La(\mu,\sig) \ebm
+% \begin{cases}
+% (\hat{\rho}_L)_\ell  = (1-\al)(\rho_L)_\ell ,  \\
+% \text{para } \ell= 1,\ldots,n+m. \\
+% (\hat{\rho}_C)_j =  (1-\al)(\rho_C)_j+ \al\mu + \al(\al-\sig)(L_{0,0})_j +  
+% \al^2 \La(\mu,\sig)_j,
+%  \\
+%   \text{para } j = 1,\ldots, n.
+% \end{cases}
+\end{equation}
+em que 
+\begin{equation}
+\label{eq:Lambda-mu-sigma}
+\La(\mu,\sig) = \left(\mu^2
+ L_{2,0} + \mu L_{1,0} + \mu \sig L_{1,1} + \sig^2L_{0,2} + \sig
+ L_{0,1}\right),
+\end{equation}
+e
+\begin{equation}
+\label{eq:defining-Lij}
+\begin{aligned}
+	L_{0,0} & = \dex\dez, & L_{1,1}  & = \Dex^\mu\Dez^\sig +
+			\Dex^\sig\Dez^\mu, \\	
+	L_{1,0} &  = \dex\Dez^\mu +
+			\dez\Dex^\mu,  & L_{0,1}  & = \dex\Dez^\sig + \dez\Dex^\sig, \\	
+	L_{2,0} &  = \Dex^\mu\Dez^\mu,  & L_{0,2}  & = \Dex^\sig\Dez^\sig .\\	
+\end{aligned}
+\end{equation}
+
+\end{teo}
+
+O Teorema \ref{thm:next=residual} é consequência direta da aplicação
+dos Lemas \ref{lemma:linear-residual} e \ref{lemma:nonlinear-residual}, que
+atacam a parte linear e não linear de  $\hat{\rho}$ de forma separada. Esses lemas
+e suas demonstrações encontram-se na sequência. %no Apêndice
+% \ref{sec:tech-resultas}. 
+ 
+\begin{lema}\label{lemma:linear-residual}
+O resíduo da parte linear de  \eqref{eq:ScaledKKT}, para o próximo iterado é
+escrito como
+
+\[
+\hat{\rho}_L(\al,\mu,\sig) = (1-\al)\rho_L.
+\]
+ 
+\end{lema}
+
+\begin{proof}
+Para a equação \eqref{eq:ScaledKKT-fac-primal} temos
+\[
+\begin{aligned}
+\hat{\rho}_P & = H_P(A\hat{x} -b) = H_P(A(x + \al(\dex +
+\Decox )) -b) \\ 
+			& = H_P(A(x +  \al\dex) - b) +
+ \al H_PA\Decox.
+\end{aligned}
+\]
+Como $A\dex = b- Ax$, vale a seguinte igualdade:
+\[
+\begin{aligned}
+H_P(A(x +  \al\dex) - b) & = H_P((1-\al)A\dex) \\
+							& = 	 H_P((\al -1)(b-Ax)) \\
+							& =  (1 - \al)\underbrace{H_P(Ax - b)}_{\rho_P} 	\\
+							& = (1 - \al)\rho_P.					
+\end{aligned}
+\]
+Por outro lado, pela equação \eqref{eq:corrector-nonlinear}, $A\Dex^c= 0$. Logo
+$\hat{\rho}_P = (1-\al)\rho_P$.
+
+A prova para parte dual da factibilidade é similar. Com efeito,
+
+\begin{align}
+\hat{\rho}_D & = H_D(A^T\hat{y} + \hat{z} -c)   \notag \\
+			& = H_D\left[ A^T\left(y + \al(\dey + \Decoy)\right) + \left(z + \al(\dez + \Decoz )\right)
+			-c\right] \notag\\
+ 			& = H_D\left[A^Ty  + z -c +  \al(A^T\dey + \dez)\right] +
+ 			\label{eq:next-rho-dual-a}\\
+ 			& \quad + H_D\underbrace{\left(A^T\Decoy   + \Decoz\right)}_{=0 \text{ por
+ 			\eqref{eq:corrector-nonlinear}}}. \notag 
+\end{align}
+
+% 
+Como $A^T\dey + \dez = c - A^Ty - z$, a equação \eqref{eq:next-rho-dual-a}
+torna-se
+\[
+H_D\left[A^Ty  + z -c +  \al(A^T\dey + \dez)\right]  = (1-\al)H_D 
+(A^Ty + z - c)  = (1-\al)\rho_D.
+\]
+
+Portanto, 
+\[
+\hat{\rho}_D = (1-\al)\rho_D .
+\]
+\end{proof}
+ 
+ 
+\begin{lema}\label{lemma:nonlinear-residual}
+O resíduo da parte da complementaridade de  \eqref{eq:ScaledKKT}, para o próximo iterado é
+escrito como
+\begin{equation}
+\label{eq:next-residual-complementar}
+\hat{\rho}_C = (1-\al)\rho_C + \al\mu e+ \al(\al-\sig)L_{0,0} +
+\al^2\La(\mu,\sig).
+\end{equation}
+em que os vetores $L_{i,k}$, $i,j \in \{0,1,2\}$ são definidos por
+\eqref{eq:defining-Lij}.
+\end{lema}
+
+\begin{proof} 
+Para encontrar o resíduo da parte complementar para o próximo iterado,
+considere que pode-se escrever
+ $\hat{\rho}_C  =
+\hat{x}\hat{z}$. Então
+\begin{align}
+\hat{x}\hat{z} & = \left(x + \al(\dex + \Decox) \right)\left( z + \al(\dez + \Decoz
+)\right) \notag \\
+& = \al^2(\dex+\De^c_x)(\dez + \Dez^c) +  \al\left[  (x\dez+z\dex) +
+(x\Decoz + z\Decox)\right] + xz \label{eq:next-residual-complementar-1}
+\end{align}
+
+
+Note que  $ (x\dez+z\dex) = -xz$ por \eqref{eq:affine-scaling-system}. Além
+disso usando a equação \eqref{eq:Corrector-spllited}, claramente  $x\Dez^\mu +
+z\Dex^\mu = e$ e $x\Dez^\sig + z\Dex^\sig = - \dex\dez$. Então $(x\Dez^c +
+z\Dex^c) = \mu e - \sig\dex\dez$.
+ 
+Assim, a equação \eqref{eq:next-residual-complementar-1} torna-se
+\begin{subequations}
+\begin{align}
+\hat{x}\hat{z} & =  \al^2(\dex + \Dex^c)(\dez + \Dez^c) + \al (-xz + \mu   e
+- \sig\dex\dez) + xz \notag\\
+& = (1-\al) xz + \al\mu e +
+\al(\al-\sig)\dex\dez    +
+\label{eq:next-residual-complementar-2a} \\
+& \quad + \al^2\left(\dex\Dez^c + \dez\Dex^c + \Dex^c\Dez^c\right).
+\label{eq:next-residual-complementar-2b}
+\end{align}
+\end{subequations}
+
+Como $\Decow = \mu\Dew^\mu + \sig\Dew^\sig$, então
+\begin{align*}
+\dex\Dez^c &=  \mu\dex\Dez^\mu + \sig\dex\Dez^\sig,\\
+\dez\Dex^c &=  \mu\dez\Dex^\mu + \sig\dez\Dex^\sig,\\
+\intertext{e}
+\Dex^c\Dez^c& =   (\mu\Dey^\mu + \sig\Dey^\sig) (\mu\Dez^\mu
+			+ \sig\Dez^\sig) \\ 
+			& = \mu^2\Dex^\mu\Dez^\mu + \mu\sig \left(\Dex^\mu\Dez^\sig +
+			\Dex^\sig\Dez^\mu \right) + \sig^2\Dex^\sig\Dez^\sig.
+\end{align*}
+Consequentemente a equação \eqref{eq:next-residual-complementar-2b} pode ser
+expressa como
+\begin{multline}
+\label{eq:next-residual-complmentar-3b}
+\al^2\left(\mu^2\Dex^\mu\Dez^\mu + \mu\sig \left(\Dex^\mu\Dez^\sig +
+			\Dex^\sig\Dez^\mu \right) \right. +  \\ \left. + \mu\left(\dex\Dez^\mu +
+			\dez\Dex^\mu \right) +   \sig\left(\dex\Dez^\sig + \dez\Dex^\sig\right) +
+			\sig^2\Dex^\sig\Dez^\sig \right).
+\end{multline}
+
+
+Basta agora somar  \eqref{eq:next-residual-complmentar-3b}  e
+ \eqref{eq:next-residual-complementar-2a}. Definindo os vetores
+$\La(\mu,\sig)$ como em \eqref{eq:Lambda-mu-sigma} e $L_{i,j}$ como em
+\eqref{eq:defining-Lij} e substituindo onde for necessário, finalmente
+encontra-se a equação \eqref{eq:next-residual-complementar} levando em conta que $\rho_C = xz$.
+\end{proof} 
+
+
+O vetor  $\hat{\rho}(\al,\mu,\sig) \in \Real^q$, em que  $q = m+2n$ é
+precisamente o número de linhas de  \eqref{eq:ScaledKKT}. Além disso, uma
+consequência do Teorema \ref{thm:next=residual} é que todos os resíduos
+permanecem não-negativos, se nosso ponto inicial é interior. 
+
+\begin{corol}\label{cor:positive-residual}
+Em cada iteração $k$, para  $ \al \in(0,1]$ e  $(\mu, \sig)>0$,
+$\rho^k(\al,\mu,\sig) \geq 0$.
+\end{corol} 
+\begin{proof}
+
+Para a parte linear de  \eqref{eq:ScaledKKT}, pelo Lema
+\ref{lemma:linear-residual}, $\hat{\rho}_L(\al,\mu,\sig) = (1-\al)\rho_L$. Como
+garantimos que, $\rho^0\geq 0$, $0\leq\al\leq1 $, por  indução, o corolário
+se verifica.
+
+A parte da complementaridade, por construção,  é positiva, já que 
+$(x,y,z)\in\Qset^+$. Além disso, faremos a cada iteração o teste da razão, isto é, escolheremos $\al_k$,
+tal que \[ \al_k < \bar{\al}_k = \frac{-1}{\min\left\{
+(X^k)^{-1}\Dex^k,(Z^k)^{-1}\Dez^k,-1 \right\}}. \]
+Logo, $\rho^k_C>0$ para todo $k$ e o corolário é válido. 
+\end{proof}
+
+\section{Uma função de mérito polinomial}
+
+
+Em geral, funções de mérito para \ac{MPI} servem para dar uma medida de quão
+próximo se está da solução do problema, embora nem sempre elas sejam usadas como
+critério de parada do algoritmo. 
+
+\citet{Zhang:2006ic}, por exemplo, quer escolher o tamanho de passo de seu
+algoritmo, tal que a  complementaridade e a factibilidade primal-dual sejam
+reduzidas. Para isso, este autor define sua função de mérito como a soma do
+\emph{gap} de complementaridade e da norma-2 do resíduo primal-dual, i.e., \[\phi(x,y,z) =
+\norm{(r_P,r_D)} + x^Tz\] e escolhe $\al$ tal que essa função seja minimizada.
+Nada obstante, essa função é utilizada apenas de maneira teórica, para
+demonstrar a convergência do método.
+
+Do ponto de vista prático, o \emph{software} PCx \cite{Czyzyk:1999hk} utiliza-se de
+uma função de mérito para detectar se o problema é infactível ou se a solução é desconhecida
+ou sub-ótima. Nesse caso, a função é dada por 
+\[
+\phi(x,y,z) = \frac{\norm{r_P}}{\max \{1,\norm{b} \} } + \frac{\norm{r_D}}{\max
+\{1,\norm{c} \} } + \frac{c^Tx - b^Ty}{\max \{1,\norm{b},\norm{c} \} }.
+\]
+Note que essa função de mérito tem relação com o próprio critério de parada
+do algoritmo, como visto em  \eqref{eq:termination-criteria-pcx}.
+
+
+%XXX: Escrever sobre a função de mérito do mehotra
+% \textcolor{red}{Escrever sobre a função de mérito do 
+% \citet{Mehrotra:1992wr}
+
+Neste trabalho, será definida uma função de mérito que não só sirva como medida
+de complementaridade e factibilidade, mas que também sirva de guia para a
+escolha do próximo ponto. De maneira similar aos autores acima citados, será
+usada a soma da norma-1  da factibilidade -- esta escolha ficará mais clara
+mais adiante --  e a média do \emph{gap} de complementaridade. 
+
+\begin{defin}[Função de Mérito]
+\label{def:merit-function}
+Definimos a \emph{função de mérito} de um ponto  $(x,y,z)$ como
+\begin{align}
+\varphi(x,y,z) & = \frac{1}{m+n}\norm{\rho_L}_1+ 
+\frac{x^Tz}{n}, \label{eq:merit-function-as-sum}
+\end{align}
+em que $\rho_L$ é dado por  \eqref{eq:residuals} no ponto
+$(x,y,z)$.
+
+\end{defin}
+
+A Definição \ref{def:merit-function} é uma das possíveis maneiras de medir quão
+perto da solução está um ponto $(x,y,z)$. Em particular,  esta possui algumas
+propriedades que serão exploradas para escolher-se a tripla $(\al,\mu,\sig)$, a
+saber:
+
+\begin{enumerate}[(i)] 
+	\item Se $(x^*,y^*,z^*)$ é solução de
+\eqref{eq:ScaledKKT}, então $\varphi(x^*,y^*,z^*)=0$;
+	
+\item A utilização das matrizes $H_P$ e $H_D$  e o Corolário
+\ref{cor:positive-residual} garantem que dado $(x,y,z)$ calculado pelo
+método e que esteja em $\Qset^+$ , então $\rho_L(x,y,z)\geq 0$. Por isso,
+\[\frac{1}{m+n}\norm{\rho_L}_1 = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell \] e portanto não é preciso se
+preocupar com a não-diferenciabilidade da norma-1; 
+
+
+
+\item  Pode-se reescrever o
+\emph{gap} de complementaridade como
+ \[x^Tz = \sum_{i=1}^{n}x_iz_i = \sum_{i=1}^{n}(\rho_C)_i;\]
+
+\item A média do \emph{gap} de complementaridade, $x^Tz/n$, é usada em geral
+como valor para o parâmetro de barreira (vide Seção
+\ref{subsec:barrier-problem}). Logo, em uma solução ótima, este valor é
+nulo;    
+\item Também devido ao Corolário \ref{cor:positive-residual}, dado
+$(x,y,z)\in\Qset^+$ gerado pelo método, vale
+\[
+\varphi(x,y,z)\geq0.
+\]
+\end{enumerate}
+Por conta das propriedades (ii) e (iii), podemos reescrever
+\eqref{eq:merit-function-as-sum} como
+
+
+\begin{align}
+\varphi(x,y,z) & = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell+ 
+\frac{1}{n}\sum_{i=1}^{n}(\rho_C)_i.\label{eq:merit-function-rho}
+\end{align}
+
+Para fins de notação, define-se o \emph{operador média} para qualquer vetor
+$v\in\Real^p$ como \[\dbvec{v} = \frac{1}{p}\sum_{i=1}^p v_i.\] Este operador
+encontra a média aritmética das componentes do vetor em questão. 
+
+Com esta notação, pode-se representar a função de mérito
+\eqref{eq:merit-function-rho} como
+\begin{equation}\label{eq:merit-function-as-sum-bar}
+\varphi(x,y,z)  = \dbvec{\rho_L}+ 
+\dbvec{\rho_C}.
+\end{equation}
+
+Em vista disso e do Teorema~\ref{thm:next=residual}, pode-se  definir a função
+de mérito para o próximo ponto $(\hat{x},\hat{y},\hat{z})$ a depender de uma
+escolha de $(\al,\mu,\sig)$, i.e., temos a seguinte definição.
+
+
+\begin{defin}[Função de Mérito Preditiva] \label{def:predictive-merit-funcion}
+A \emph{função de mérito preditiva}
+$\hat{\varphi}$, na iteração $k$ será 
+\begin{equation*}
+\hat{\varphi}({x}^k,{y}^k, {z}^k) = \dbvec{\hat{\rho}_L}({x}^k,{y}^k, {z}^k)+
+\dbvec{\hat{\rho}_C}({x}^k,{y}^k, {z}^k).
+\end{equation*}
+
+Como, por conta da equação \eqref{eq:next-residual-all}, sabe-se a expressão do
+próximo resíduo,  a depender de uma escolha de $(\al,\mu,\sig)$, reescreve-se
+a função de mérito preditiva como
+\begin{equation}
+\label{eq:merit-function}
+\hat{\varphi}(\al,\mu,\sig) =
+\dbvec{\hat{\rho}_L}(\al,\mu,\sig)+
+\dbvec{\hat{\rho}_C}(\al,\mu,\sig).
+\end{equation}
+\end{defin}
+
+Finalmente, usando as propriedades (i-v) acima descritas e o próximo teorema,
+pode-se escrever $\hat{\varphi}$ como uma função polinomial que depende das
+variáveis $(\al,\mu,\sig)$. Com isso, alcança-se o objetivo de encontrar uma
+função de mérito que tenha boas propriedades matemáticas e que ao mesmo tempo dê
+uma medida adequada da qualidade solução.
+\begin{teo}
+\label{thm:varphi}  
+A função de mérito preditiva pode ser escrita como o \emph{polinômio} 
+$\hat{\varphi}:\Real^3\to\Real$ a depender das variáveis $(\al,\mu,\sig)$, com a seguinte
+expressão:
+\begin{equation}
+\label{eq:merit-function-al-mu-sig}
+\hat{\varphi}(\al,\mu,\sig) = (1-\al)(\dbvec{\rho_L}_k +
+\dbvec{\rho_C}_k) + \al\mu + \al(\al-\sig)\dbvec{L_{0,0}}_k +
+\al^2\dbvec{\Lambda(\mu,\sig)}_k,
+\end{equation}
+em que 
+\[
+\dbvec{\Lambda(\mu,\sig)}_k = \mu^2
+ \dbvec{L_{2,0}}_k + \mu \dbvec{L_{1,0}}_k + 	\mu \sig \dbvec{L_{1,1}}_k +
+ \sig^2 \dbvec{L_{0,2}}_k + \sig \dbvec{L_{0,1}}_k.
+ \]
+ 
+  \end{teo}
+\begin{proof} Aplicando diretamente o Teorema \ref{thm:next=residual} na
+Definição \ref{def:predictive-merit-funcion} temos que
+
+ \[
+\begin{aligned}
+\hat{\varphi}(\al,\mu,\sig) & =
+\frac{1}{m+n}\sum_{\ell=1}^{m+n}(\hat{\rho}_L)_\ell +
+\frac{1}{n}\sum_{j=1}^{n}(\hat{\rho}_C)_j \\
+						 & = \frac{1}{m+n}\sum_{\ell=1}^{n+m}\left[(1-\al)(\rho_L)_\ell +
+						 \right] +
+						 \\
+				 	 & \quad  + \frac{1}{n}\sum_{j=1}^{n}  \left[ (1-\al)(\rho_C)_j +
+				 	 \al\mu + \al(\al-\sig)(L_{0,0})_j + \al^2{\Lambda(\mu,\sig)}_j \right] \\
+				 	 & = (1-\al)\left(\dbvec{\rho_L} + \dbvec{\rho_C}\right) + \al\mu +
+\al(\al-\sig)\dbvec{L_{0,0}} + \al^2\dbvec{\Lambda(\mu,\sig)}.	
+\end{aligned}
+\]
+\end{proof}
+
+
+
+\begin{obs}
+É fácil ver que   \[\dbvec{L_{2,0}} = \frac{1}{n} \sum_{i=1}^n
+\Dex_i^\mu\Dez_i^\mu = \frac{(\Dex^\mu)^T(\Dez^\mu)}{n} = 0\] e que  
+  \[\dbvec{L_{0,2}} = \frac{1}{n} \sum_{i=1}^n
+\Dex_i^\sig\Dez_i^\sig = \frac{(\Dex^\sig)^T(\Dez^\sig)}{n} = 0.\] 
+Com efeito, pelas equações \eqref{eq:corrector-linear-matrix} e \eqref{eq:corrector-linear-matrix-rhs},
+ tanto $\Dex^\mu$ e $\Dez^\mu$ quanto $\Dex^\sig$ e $\Dez^\sig$ são vetores ortogonais. 
+
+ %XXX: Devo fazer o que com essa parte? Posso comentar depois.
+% \textcolor{red}{ Nada obstante, na prática ter-se-á $\dbvec{L_{2,0}}  \geq 
+% \mathtt{tol}$ e $\dbvec{L_{0,2}}  \geq  \mathtt{tol}$, já que só é possível
+% resolver os sistemas
+% \eqref{eq:corrector-linear-matrix} através de aritmética de ponto
+% flutuante\cite{Golub:1996wp}. Com isso, por enquanto, tais escalares serão
+% considerados não nulos.}
+% \textcolor{blue}{Posso falar disso depois, na parte de implementação? }
+
+\end{obs}
+
+
+Definindo os coeficientes \[ \left\{
+\begin{aligned}
+a_{0,0,0} &= (\dbvec{\rho_L}_k + \dbvec{\rho_C}_k)     & a_{2,1,1} &=
+\dbvec{L_{1,1}}\\
+a_{1,0,0} &= - (\dbvec{\rho_L}_k + \dbvec{\rho_C}_k)   & a_{2,1,0} &=
+\dbvec{L_{1,0}}\\
+a_{1,1,0} &= 2 				    & a_{2,2,0} &= \dbvec{L_{2,0}}=0\\
+a_{1,0,1} &= -  \dbvec{L_{0,0}} & a_{2,0,1} &= \dbvec{L_{0,1}}\\
+a_{2,0,0} &=  \dbvec{L_{0,0}} & a_{2,0,2} &= \dbvec{L_{0,2}}=0\\
+\end{aligned}\right.	
+\]
+e adotando a convenção de que se o coeficiente  $a_{\ell,p,s}$ não está definido
+acima, então será nulo, pode-se escrever $\hat{\varphi}$ como
+\[
+\hat{\varphi}(\al,\mu,\sig) = \sum_{\ell= 0}^2\sum_{p=0}^2 
+\sum_{s=0}^2a_{\ell,p,s}\al^\ell\mu^p\sig^s,
+\]   
+ou explicitamente
+\begin{equation}
+\begin{aligned}
+\hat{\varphi}(\al,\mu,\si) & = 	a_{0,0,0} + a_{1,0,0}\al + a_{1,1,0}\al\mu + 
+a_{1,0,1}\al\sig  
+\\
+&\quad + a_{2,0,0}\al^2
+ + a_{2,1,0}\al^2\mu   + a_{2,0,1}\al^2\sig\\ 
+% & \quad 	 \textcolor{red}{+ a_{2,2,0}\al^2\mu^2  + 	a_{2,0,2}\al^2\sig^2}\\ 
+& \quad + a_{2,1,1}\al^2\mu\sig.
+\end{aligned}
+\label{eq:varphi-poly-form}
+\end{equation}
+
+%XXX: Usar 8 ou 10?
+Esses 8 
+% \textcolor{red}{(10)} 
+coeficientes de três índices  não nulos são
+os únicos coeficientes que são calculados nessa implementação, além das
+direções.
+
+% \textcolor{red}{
+% Furthermore, we define
+% 
+% \[
+% \begin{aligned}
+% \phi_2(\mu,\sig) & =  \mu\left( a_{2,2,0}\mu + a_{2,1,1}\sig +a_{2,1,0} \right)
+% + \sig\left( a_{2,0,2}\sig +  a_{2,0,1} 	\right) +  a_{2,0,0}\\
+% \phi_1(\mu,\sig) & =  a_{1,0,0} + a_{1,1,0}\mu +
+% a_{1,0,1}\sig   \\
+% \phi_0(\mu,\sig) & = a_{0,0,0}
+% \end{aligned}
+% \]
+% so that for each fixed pair $(\mu,\sig)$ we have
+% \begin{equation}
+% \label{eq:next-varphi-alternative}
+% \hat{\varphi}(\al) = \al(\phi_2\al + \phi_1) + \phi_0.
+% \end{equation}}
+
+
+
+O método que está sendo proposto nesta tese encontra em cada iteração o
+argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para a função polinomial
+ $\hat{\varphi}(\al,\mu,\sig)$. Como $\hat{\varphi}$ é capaz de predizer a média
+ aritmética do próximo resíduo, esta escolha ótima permite um passo em uma
+ direção que minimizará  o resíduo $\rho$, pelo menos em média. Com isso
+ teremos um problema de otimização global a resolver em cada iteração.
+ 
+ 
+ Na Seção \ref{subsec:neighbouhoods}, ficou claro que bons métodos baseiam-se na
+  utilização de vizinhanças que fazem com que os iterados estejam a distâncias
+  razoáveis da trajetória central. Na próxima seção, será mostrado que, se um
+  ponto pertence ao conjunto viável gerado por funções polinomiais
+  $\psi_\ell:\Real^3\to\Real$ nas variáveis $(\al,\mu,\sig)$, construídas a
+  partir da vizinhança simétrica $\Nset_s$, então esse ponto  também pertencerá
+  a essa vizinhança.
+  Com isso, tais funções serão usadas como restrições do problema de otimização
+  global da função de mérito $\varphi$ exposto acima, garantindo que o próximo
+  iterado não só reduza o valor da função de mérito, mas também que o próximo
+  ponto tenha as boas propriedades que um ponto de uma vizinhança como a
+  vizinhança $\Nset_s$ possui.
+  
+  
+\section{Vizinhança simétrica como restrições polinomiais}
+
+Como visto no capítulo anterior, \citet{Colombo:2008ia}  propuseram  a
+vizinhança simétrica $\Nset_s(\ga)$ dada na Equação \eqref{eq:symmetric-neig} --
+baseada na vizinhança $\Nset_{-\infty}(\ga)$ --  com objetivo de melhorar a
+\emph{centralidade} de um ponto, i.e., como o espalhamento dos produtos
+complementares $x_iz_i$, para $i=1,\ldots,n$. Estes autores entendem que tal
+vizinhança é a pedra angular através da qual suas implementações obtém boas
+performances, já que tais condições impedem que os pares da complementaridade
+torne-se muito grandes ou muito pequenos antes do tempo adequado.
+
+Pode-se interpretar $\Nset_s(\ga)$ da seguinte maneira:
+\begin{itemize}
+  \item $x_iz_i$  é não só o par de complementaridade, mas também o resíduo
+  atual do sistema KKT na parte da complementaridade -- vide  Equação
+  \eqref{eq:KKT-residuals-c}.
+  \item O termo  \[\tau = \frac{x^Tz}{n} = \frac{1}{n}\sum_{i=1}^nx_iz_i\]
+  pode ser entendido como a média dos resíduos, no que diz respeito à parte
+  complementar de KKT.
+\end{itemize}
+
+Como este trabalho  baseia-se em pontos infactíveis mas ao mesmo tempo
+pretende utilizar as boas propriedades da vizinhança  $\Nset_s(\ga)$,
+é necessário estendê-la. No Capítulo \ref{chap:mpis},
+mostrou-se que \citet{Kojima:1993fe}, assim como 
+\citet[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
+método infactível a vizinhança $\Nset_{-\infty}(\ga,\be)$.
+
+
+Assim, usando a Definição \ref{def:residual-vector}, define-se  a vizinhança
+simétrica infactível $\Nset_s(\ga,\be)$, para o sistema KKT escalado
+\eqref{eq:ScaledKKT}, como 
+\begin{equation}
+\label{eq:infeasible-symmetric-neig}
+ \Nset_{s}(\ga,\be) =
+ \left\{(x,y,z) \in \Qset^+:\frac{\norm{\rho_L}}{\tau} \leq
+\beta\frac{\norm{\rho^0_L}}{\tau_0}, \ga\tau\leq x_iz_i \leq
+\frac{1}{\ga}\tau,\forall i =1,\ldots,n  \right\},
+\end{equation}
+em que $\ga\in(0,1)$, $\tau=x^Tz/n$ e $\be>1$.
+
+
+Até agora, o método proposto resolverá o \ac{KKT} escalado \eqref{eq:ScaledKKT}
+e além disso usará a função de mérito $\hat{\varphi}$ dada em
+\eqref{eq:merit-function-al-mu-sig} como guia para a escolha das variáveis
+$(\al,\mu,\sig)$  e por conseguinte do próximo ponto. Por conta do exposto
+acima, fazer este próximo ponto pertencer à vizinhança $\Nset_{s}(\ga,\be)$ é
+uma garantia de que este ponto estará a uma  distância adequada da
+trajetória central.
+
+Para tanto, basta que escrever funções nas variáveis
+$(\al,\mu,\sig)$ que sirvam de restrições para o subproblema de minimização da
+função de mérito $\hat{\varphi}$ e que garantam que o ponto escolhido esteja em 
+$\Nset_{s}(\ga,\be)$. Isso é possível, já que tal vizinhança é definida com base
+nos resíduos lineares e complementares -- $\norm{\rho_L}$ e $x_iz_i$ -- de
+\ac{KKT} e o seguinte teorema formaliza isso.
+
+
+\begin{teo} 
+\label{thm:polynomial-constraints}
+Um ponto $(x,y,z)\in\Qset^+$, gerado pelo método proposto, pertence à 
+$\Nset_{s}(\ga,\be)$ para o sistema \ac{KKT} escalado se valerem as seguintes desigualdades 
+\begin{subequations}
+\label{eq:symmetric-polynomials}
+\begin{align} 
+ \dbvec{\rho_L}(x,y,z) & \leq \be_L \dbvec{\rho_C}(x,y,z),
+ \label{eq:symmetric-polynomials-a}\\
+ \ga\dbvec{\rho_C}(x,y,z) &\leq (\rho_C)_i(x,y,z) \leq
+ \frac{1}{\ga}\dbvec{\rho_C}(x,y,z),
+ \label{eq:symmetric-polynomials-b}
+\end{align} 
+\end{subequations}
+em que \[\be_L = \frac{\be}{m+n}\frac{\norm{\rho_L^0}}{\dbvec{\rho_C}_0}.\]
+\end{teo}
+
+
+
+\begin{proof}Para facilitar a clareza, deixa-se de mostrar os vetores em
+questão como dependentes de $(x,y,z)$. Para demonstrar, comece por
+considerar que $\dbvec{\rho_L} = \norm{\rho_L}_1/(m+n)$.
+Assim, $\dbvec{\rho_L}  \leq \be_L \dbvec{\rho_C}$ implica que 
+$\norm{\rho_L}_1 \leq \beta \frac{\norm{\rho_L^0}}{\dbvec{\rho_C}_0}
+\dbvec{\rho_C}$. 
+Por equivalência de normas temos que 
+\[
+\norm{\rho_L} \leq \norm{\rho_L}_1 \leq \beta
+\frac{\norm{\rho_L^0}}{\dbvec{\rho_C}_0} \dbvec{\rho_C}.
+\] 
+Note finalmente que $\rho_C = XZe$ e portanto $(\rho_C)_i = x_iz_i$ e
+$\dbvec{\rho_C} = x^Tz/n$. Claramente, se  \eqref{eq:symmetric-polynomials-a}
+for satisfeita então a primeira propriedade que define $\Nset_{s}(\ga,\be)$.
+Por sua vez \eqref{eq:symmetric-polynomials-b} corresponde à vizinhança
+simétrica, o que finaliza a demonstração.
+\end{proof}
+
+
+
+Quando cada ponto $(x,y,z)$ pertence à sequência $w^k$, então podemos escrever
+$\dbvec{\rho_C}_{k+1} = \hat{\varphi}_C$ e $\dbvec{\rho_L}_{k+1} =
+\hat{\varphi}_L$. Portanto,
+\begin{align*}
+ &\hat{\varphi}_L = (1-\al)\dbvec{\rho_L}_k\\
+ \intertext{e}
+  &\hat{\varphi}_C =  (1-\al)\dbvec{\rho_C}_k+ \al\mu +
+\al(\al-\sig)\dbvec{L_{0,0}} + \al^2\dbvec{\Lambda(\mu,\sig)}.
+\end{align*}
+Assim as restrições da Teorema \ref{thm:polynomial-constraints} podem ser
+reescritas como
+
+\begin{align} 
+\hat{\varphi}_L & \leq \be_L \hat{\varphi}_C,
+ \label{eq:symmetric-polynomials-a}\\
+ \ga\hat{\varphi}_C &\leq (\rho_C)_i \leq \frac{1}{\ga}\hat{\varphi}_C.
+ \label{eq:symmetric-polynomials-b}
+\end{align} 
+
+
+
+
+
+
+
+\section{Subproblema de Otimização de Polinômios}
+
+A escolha de  $(\al,\mu,\sig)$ será feita através do seguinte subproblema de
+otimização: minimizar a função de mérito $\hat\varphi$, dada pelo Teorema
+\ref{thm:varphi}, restrita às desigualdades dadas no Teorema
+\ref{thm:polynomial-constraints}  -- sempre  levando em conta o teste da
+razão.
+
+Portanto, para expressar tal problema de forma apropriada, note que, 
+assim como $\hat{\varphi}$, as inequações  \eqref{eq:symmetric-polynomials}
+podem ser calculadas em termos de  $(\al,\mu,\sig)$, utilizando-se das
+desigualdades dadas em \eqref{eq:symmetric-polynomials-b}, produzindo um
+conjunto de $2n+1$ restrições. Expandindo-se \eqref{eq:symmetric-polynomials-b},
+tem-se:
+\begin{subequations}
+\label{eq:explicit-symmetric-neighbourhood}
+\begin{align}
+ (1-\al)(\rho_C)_i+ \al\mu + \al(\al-\sig)(L_{0,0})_i + \al^2\La(\mu,\sig)_i
+-  \frac{1}{\gamma}\hat{\varphi}_C(\al,\mu,\sig)  &\leq 0\\
+  {\gamma}\hat{\varphi}_C(\al,\mu,\sig) - \left[ (1-\al)(\rho_C)_i+ \al\mu +
+ \al(\al-\sig)(L_{0,0})_i  + \al^2\La(\mu,\sig)_i \right] &\leq 0
+ \end{align}
+para $i = 1,\ldots,n$, e 
+\begin{equation}
+	(1-\al)\dbvec{\rho_L} - \be_L \hat{\varphi}(\al,\mu,\sig) \leq 0.
+\end{equation}
+\end{subequations}
+
+% Using equation \eqref{eq:next-varphi-alternative}, this constraints  becomes 
+% \begin{align*}
+% (1-\al) \rho_i + \al\mu &\leq \frac{1}{\gamma}\left(\al(\phi_2\al + \phi_1) +
+% \phi_0\right) \\
+% (1-\al) \rho_i + \al\mu &\geq \gamma\left(\al(\phi_2\al + \phi_1) +
+% \phi_0\right)
+% \end{align*}
+% for $i = 1,\ldots,n+m$ and
+% \begin{align*}
+%  &(1-\al)\rho_i+ \al\mu + \al(\al-\sig)(L_{0,0})_j +  \al^2\La(\mu,\sig)_j \leq \frac{1}{\gamma}\left(\al(\phi_2\al + \phi_1) +
+% \phi_0\right)\\
+%  &(1-\al)\rho_i+ \al\mu + \al(\al-\sig)(L_{0,0})_j	  +  \al^2\La(\mu,\sig)_j \geq {\gamma}\left(\al(\phi_2\al + \phi_1) +
+% \phi_0\right)
+%  \end{align*}
+% for $i = m+n+1,\ldots,q$ and  $j = i -(m+n),\ldots, n$. 
+% 
+% Regrouping the common terms we have
+% \begin{subequations}
+% \label{eq:inequalities-psi}
+% \begin{align}
+% \al^2\phi_2 + \al(\phi_1 + \ga t^0_i) + (\phi_0 - \ga\rho_i) &\geq 0\\
+% \al^2(-\ga\phi_2) + \al(-t^0_i - \ga\phi_1) + (\rho_i-\ga\phi_0) &\geq 0 
+% \end{align}
+% where \[t^0_i = \rho_i - \mu,\]  for $i = 1,\ldots,n+m$, and
+% \begin{align}
+% \al^2(\phi_2 - \ga t^2_j) + \al(\phi_1 + \ga t^1_j) + (\phi_0 - \ga\rho_i) &\geq
+% 0\\
+% \al^2(t^2_j-\ga\phi_2) + \al(-t^1_j - \ga\phi_1) + (\rho_i-\ga\phi_0) &\geq 0 
+%  \end{align}
+% where \[\begin{cases}t^0_i = \rho_i - \mu, \\ t^1_j = t^0_i + \sig(L_{0,0})_j,\\
+% t^2_j = (L_{0,0}+\La(\mu,\sig))_j,\end{cases}\] for $i = m+n+1,\ldots,q$ and  $j
+% = i -(m+n),\ldots, n$.
+% \end{subequations}
+% 
+% This way, these inequalities become part of the constraints for our global
+% optimization subproblem, that would lead us to the choice, in each iteration, of
+% $(\al,\mu,\sig)$.
+
+Seja $\psi:\Real^3 \To \Real^{2q+1}, (\al,\mu,\sig)\mapsto
+(\psi_1(\al,\mu,\sig),\ldots,\psi_{2n+1}(\al,\mu,\sig))$ a função vetorial que
+representa o lado esquerdo das inequações
+\eqref{eq:explicit-symmetric-neighbourhood}.
+Note que cada  $\psi_\ell$ é um polinômio nas variáveis $(\al,\mu,\sig)$. De
+fato,	 é possível escrever cada $\psi_\ell$ como o seguinte polinômio
+\[
+\psi_\ell(\al,\mu,\sig) = \sum_{i=0}^2\sum_{j=0}^2\sum_{p=0}^2b_{
+i,j,p}\al^i\mu^j\sig^p, \] onde nem todos os coeficientes  $b_{i,j,p}$
+são  diferentes de zero. Mais que isso, os coeficientes que são diferentes de
+zero são os que estão relacionados com os mesmos monômios dados na Equação
+\eqref{eq:varphi-poly-form}, i.e., $\psi_\ell$ pode ser expandido como
+\begin{equation}
+\begin{aligned}
+\psi_\ell(\al,\mu,\si) & = 	b_{0,0,0} + b_{1,0,0}\al + b_{1,1,0}\al\mu + 
+b_{1,0,1}\al\sig  
+\\
+&\quad + b_{2,0,0}\al^2
+ + b_{2,1,0}\al^2\mu   + b_{2,0,1}\al^2\sig\\ 
+& \quad 	 + b_{2,2,0}\al^2\mu^2 + 	b_{2,0,2}\al^2\sig^2\\ 
+& \quad + b_{2,1,1}\al^2\mu\sig.
+\end{aligned}
+\label{eq:psi-poly-form}
+\end{equation}
+
+
+Portanto, o subproblema de otimização global pode ser escrito como
+\begin{equation}
+	\begin{array}{lc}
+\displaystyle \min_{(\al,\mu,\si)} & \hat\varphi(\al,\mu,\si) \\
+\text{s.t.} &\begin{cases} \psi(\al,\mu,\si)\leq 0 \\
+				 \xi_l\leq (\al,\mu,\si) \leq \xi_u,
+				 	
+				 \end{cases}\
+\end{array}
+\label{eq:pop-subproblem}
+\end{equation}
+em que  $\xi_l$ e $\xi_u$ são as canalizações de  $(\al,\mu,\sig)$. Para
+$\al$, a canalização é do tipo $[0,1]$.
+De fato, não queremos $\al=0$ e por isso mesmo,  durante a
+demonstração de convergência dar-se-á garantia de que é possível reduzir a
+função de mérito usando $\al>0$.
+Por outro lado, para $\mu$ e $\sig$ as canalização são do tipo $[0,\xi_u]$, em que $\xi_u$ é um escalar positivo que pode ou não ser
+diferente para esses dois parâmetros.
+
+ 
+O algoritmo proposto neste capítulo pode ser resumido no Pseudo-código
+\ref{alg:optimized-choice-of-parameters}.
+
+\begin{algorithm}
+\onehalfspacing
+\caption{Resumo do Método de Escolha Adiada.}
+\label{alg:optimized-choice-of-parameters} \begin{algorithmic}[1]
+\Procedure{ResolveLP}{$A,b,c$}
+\State $k \gets 0$
+\State $(x^0,y^0,z^0) \gets$ \Call{PontoInicial}{$A,b,c$}.
+\Comment{Assegure que  $(x^0,z^0)>0$.}
+	\Repeat
+		\State Resolva   \eqref{eq:affine-scaling-system} e encontre
+		$((\dex)^{k},(\dey)^{k},(\dez)^{k})$.
+		\State 	Encontre $((\Dex^\mu)^{k},(\Dey^\mu)^{k},(\Dez^\mu)^{k})$ e
+		$((\Dex^\sig)^{k},(\Dey^\sig)^{k},(\Dez^\sig)^{k})$ utilizando
+		\eqref{eq:De_C}.
+		\State Calcule  $\hat{\varphi}(\al_{k},\mu_{k},\sig_{k})$ usando
+		\eqref{eq:merit-function-al-mu-sig} e $\psi(\al_{k},\mu_{k},\sig_{k})$ usando
+		\eqref{eq:explicit-symmetric-neighbourhood}.
+		\State Encontre $(\al_{k},\mu_{k},\sig_{k})$ resolvendo o subproblema de
+		otimização global 
+		\eqref{eq:pop-subproblem}.
+		\State Dê próximo o passo conforme
+		\[
+		\begin{aligned}	
+		& x^{k+1} = x^{k} + \al_k((\dex)^{k} + \mu_{k}(\Dex^\mu)^{k} +
+		\sig_{k}(\Dex^\sig)^{k} )
+		\\
+		& y^{k+1} = y^{k} + \al_k((\dey)^{k} + \mu_{k}(\Dey^\mu)^{k} +
+		\sig_{k}(\Dey^\sig)^{k} )
+		\\
+		& z^{k+1} = z^{k} + \al_k((\dez)^{k} + \mu_{k}(\Dez^\mu)^{k} +
+		\sig_{k}(\Dez^\sig)^{k} ) \end{aligned}. 
+		\]		
+		\State $k\gets k+1$
+	\Until{O critério de parada ser satisfeito.}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+  
+ 
+ 

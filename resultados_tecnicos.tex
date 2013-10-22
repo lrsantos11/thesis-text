@@ -1,0 +1,208 @@
+%!TEX root = tese.tex
+\chapter{Resultados Técnicos}
+\label{sec:tech-resultas}
+
+\section{Lemas para a prova Teorema \ref{thm:next=residual}}
+A prova do Teorema \ref{thm:next=residual} é consequência direta  dos  Lemas
+\ref{lemma:linear-residual} e \ref{lemma:nonlinear-residual}, cujas
+demonstrações seguem abaixo.
+
+\begin{lema}\label{lemma:linear-residual}
+O resíduo da parte linear de  \eqref{eq:ScaledKKT}, para o próximo iterado é
+escrito como
+
+\[
+\hat{\rho}_L(\al,\mu,\sig) = (1-\al)\rho_L
+\]
+ 
+\end{lema}
+
+\begin{proof}
+Para a equação \eqref{eq:ScaledKKT-fac-primal} temos
+\[
+\begin{aligned}
+\hat{\rho}_P & = H_P(A\hat{x} -b) = H_P(A(x + \al(\dex +
+\Decox )) -b) \\ 
+			& = H_P(A(x +  \al\dex) - b) +
+ \al H_PA\Decox.
+\end{aligned}
+\]
+Como $A\dex = b- Ax$, vale a seguinte igualdade:
+\[
+\begin{aligned}
+H_P(A(x +  \al\dex) - b) & = H_P((1-\al)A\dex) \\
+							& = 	 H_P((\al -1)(b-Ax)) \\
+							& =  (1 - \al)\underbrace{H_P(Ax - b)}_{\rho_P} 	\\
+							& = (1 - \al)\rho_P.					
+\end{aligned}
+\]
+
+
+Por outro lado, pela equação \eqref{eq:corrector-nonlinear}, $A\Dex^c= 0$. Logo
+$\hat{\rho}_P = (1-\al)\rho_P$.
+
+A prova para parte dual da factibilidade é similar. Com efeito,
+
+\begin{align}
+\hat{\rho}_D & = H_D(A^T\hat{y} + \hat{z} -c)   \notag \\
+			& = H_D\left[ A^T\left(y + \al(\dey + \Decoy)\right) + \left(z + \al(\dez + \Decoz )\right)
+			-c\right] \notag\\
+ 			& = H_D\left[A^Ty  + z -c +  \al(A^T\dey + \dez)\right] +
+ 			\label{eq:next-rho-dual-a}\\
+ 			& \quad + H_D\underbrace{\left(A^T\Decoy   + \Decoz\right)}_{=0 \text{ por
+ 			\eqref{eq:corrector-nonlinear}}} \notag 
+\end{align}
+
+% 
+Como $A^T\dey + \dez = c - A^Ty - z$, a equação \eqref{eq:next-rho-dual-a}
+torna-se
+\[
+H_D\left[A^Ty  + z -c +  \al(A^T\dey + \dez)\right]  = (1-\al)H_D 
+(A^Ty + z - c)  = (1-\al)\rho_D.
+\]
+
+Portanto, 
+\[
+\hat{\rho}_D = (1-\al)\rho_D .
+\]
+\end{proof}
+ 
+ 
+\begin{lema}\label{lemma:nonlinear-residual}
+O resíduo da parte da complementaridade de  \eqref{eq:ScaledKKT}, para o próximo iterado é
+escrito como
+
+\begin{equation}
+\label{eq:next-residual-complementar}
+\hat{\rho}_C = (1-\al)\rho_C + \al\mu e+ \al(\al-\sig)L_{0,0} +
+\al^2\La(\mu,\sig).
+\end{equation}
+em que os vetores $L_{i,k}$, $i,j \in {0,1,2}$ são definidos por
+\eqref{eq:defining-Lij}.
+\end{lema}
+
+\begin{proof} 
+Para encontrar o resíduo da parte complementar para o próximo iterado,
+considere que pode-se escrever
+ $\hat{\rho}_C  =
+\hat{x}\hat{z}$. Então
+\begin{align}
+\hat{x}\hat{z} & = \left(x + \al(\dex + \Decox) \right)\left( z + \al(\dez + \Decoz
+)\right) \notag \\
+& = \al^2(\dex+\De^c_x)(\dez + \Dez^c) +  \al\left[  (x\dez+z\dex) +
+(x\Decoz + z\Decox)\right] + xz \label{eq:next-residual-complementar-1}
+\end{align}
+
+
+Note que  $ (x\dez+z\dex) = -xz$ por \eqref{eq:affine-scaling-system}. Além
+disso usando a equação \eqref{eq:Corrector-spllited}, claramente  $x\Dez^\mu +
+z\Dex^\mu = e$ e $x\Dez^\sig + z\Dex^\sig = - \dex\dez$. Então $(x\Dez^c +
+z\Dex^c) = \mu e - \sig\dex\dez$.
+ 
+Assim, a equação \eqref{eq:next-residual-complementar-1} torna-se
+\begin{subequations}
+\begin{align}
+\hat{x}\hat{z} & =  \al^2(\dex + \Dex^c)(\dez + \Dez^c) + \al (-xz + \mu   e
+- \sig\dex\dez) + xz \notag\\
+& = (1-\al) xz + \al\mu e +
+\al(\al-\sig)\dex\dez    +
+\label{eq:next-residual-complementar-2a} \\
+& \quad + \al^2\left(\dex\Dez^c + \dez\Dex^c + \Dex^c\Dez^c\right).
+\label{eq:next-residual-complementar-2b}
+\end{align}
+\end{subequations}
+
+Note que como $\Decow = \mu\Dew^\mu + \sig\Dew^\sig$, então
+\begin{align*}
+\dex\Dez^c &=  \mu\dex\Dez^\mu + \sig\dex\Dez^\sig,\\
+\dez\Dex^c &=  \mu\dez\Dex^\mu + \sig\dez\Dex^\sig,\\
+\intertext{e}
+\Dex^c\Dez^c& =   (\mu\Dey^\mu + \sig\Dey^\sig) (\mu\Dez^\mu
+			+ \sig\Dez^\sig) \\ 
+			& = \mu^2\Dex^\mu\Dez^\mu + \mu\sig \left(\Dex^\mu\Dez^\sig +
+			\Dex^\sig\Dez^\mu \right) + \sig^2\Dex^\sig\Dez^\sig.
+\end{align*}
+
+Consequentemente a equação \eqref{eq:next-residual-complementar-2b} pode ser
+expressa como
+\begin{multline}
+\label{eq:next-residual-complmentar-3b}
+\al^2\left(\mu^2\Dex^\mu\Dez^\mu + \mu\sig \left(\Dex^\mu\Dez^\sig +
+			\Dex^\sig\Dez^\mu \right) \right. +  \\ \left. + \mu\left(\dex\Dez^\mu +
+			\dez\Dex^\mu \right) +   \sig\left(\dex\Dez^\sig + \dez\Dex^\sig\right) +
+			\sig^2\Dex^\sig\Dez^\sig \right).
+\end{multline}
+
+
+Basta agora somar  \eqref{eq:next-residual-complmentar-3b}  e
+ \eqref{eq:next-residual-complementar-2a}. Definindo os vetores
+$\La(\mu,\sig)$ como em \eqref{eq:Lambda-mu-sigma} e $L_{i,j}$ como em
+\eqref{eq:defining-Lij} e substituindo onde for possível, finalmente encontra-se
+a equação \eqref{eq:next-residual-complementar} levando em conta que $\rho_C = xz$.
+\end{proof} 
+
+% \section{Lema para o Teorema \ref{teo:bound-xz}}
+% 
+% O Lema \ref{lem:svd-AI} é utilizado para demonstrar o Teorema
+% \ref{teo:bound-xz}.
+% %XXX: Colocar esse lema no capítulo de resultados técnicos
+% \begin{lema}
+% \label{lem:svd-AI}
+% Sejam  $A \in \Real^{m\times n}$, $m<n$ uma matriz de posto completo e a
+%   $\tilde{A} = [A^T\: I_n]$, em que $I_n$ é a matriz identidade de ordem
+% $n$. Se $\varsigma_i$, para $i=1,\ldots,m$, é valor singular de $A$ -- e de
+% $A^T$ --, e $\pi_i$, para $i=1,\ldots,n$, é valor singular de
+% $\tilde{A}$ então
+% 
+% \begin{subequations}
+% \label{eq:sing_value_AI}
+% \begin{equation}
+% \pi_i^2 = \varsigma_i^2 + 1
+% \end{equation}
+% para $i=1,\ldots,m$ e 
+% \begin{equation}
+% \pi_i =   1
+% \end{equation}
+% para $i=m+1,\ldots,n$.
+% \end{subequations}
+% Consequentemente, o menor valor singular de $\tilde{A}$, $\pi_{\min}$, 
+% e igual a $1$.
+% \end{lema}
+% 
+% \begin{proof}
+% Os valores singulares de $A^T$ são as raízes quadradas dos autovalores
+% distintos da matriz $A^TA$, isto é, existem $v_i\in \Real^n$, $i=1,\ldots,m$ não
+% nulos, tais que
+% 
+% \[
+% A^TAv_i = \varsigma^2_iv_i.
+% \] 
+% 
+% Agora, note que 
+% \[\tilde{A}\tilde{A}^T = [A^T \: I_n ]\bbm A\\ I_n \ebm = A^TA +
+% I_n
+% \] 
+% e que
+% \[
+% \tilde{A}\tilde{A}^Tv_i = A^TAv_i + v_i = (\varsigma^2 + 1)v_i.
+% \]
+% Portanto, para $i=1,\ldots,m$,  $v_i$  é autovetor de
+% $\tilde{A}\tilde{A}^T$ com autovalor correspondente a $(\varsigma_i^2 + 1)$. 
+% 
+% Além disso, note que o posto de $A^TA$ é $m$ e portanto
+% a dimensão do núcleo de $A^TA$ é $(n-m)$. Seja $\mathcal{B} =
+% \left\{ u_{m+1},\ldots,u_n\right\} $ uma base para o núcleo de $A^TA$. Para
+% $u_i\in\mathcal{B}$, tem-se que 
+% \[
+% \tilde{A}\tilde{A}^Tu_i = A^TAu_i + u_i = u_i.
+% \]
+% Com isso, para $i=m+1,\ldots,n$,  $u_i$ também é autovetor de
+% $\tilde{A}\tilde{A}^T$ com autovalor correspondente a $1$.  
+% 
+% 
+% Consequentemente, sendo os valores singulares de $\tilde{A}$ a raiz quadrada os 
+% autovalores de $\tilde{A}\tilde{A}^T$  e considerando que os autovalores são
+% únicos valem as equações \eqref{eq:sing_value_AI}.
+% \end{proof}
+
+

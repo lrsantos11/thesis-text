@@ -1,0 +1,76 @@
+%!TEX root = tese.tex
+\addchap{Perspectivas Futuras}
+\label{chap:final_remarks}
+
+Para a finalização da tese, pretende-se  terminar de demonstrar  e
+descrever os resultados de convergência do método, bem como realizar
+experimentos numéricos que comparem o método com códigos mais maduros, como
+o \texttt{PCx}. Os passos que pretendem ser dados nessas duas fases seguem
+descritos abaixo.
+
+\addsec{Resultados de Convergência}
+\begin{itemize}
+	\item A convergência do método proposto no Pseudo-código
+	\ref{alg:optimized-choice-of-parameters} está em fase de demonstração. Seguem
+	um roteiro do que pretende ser seguido para finalizar a demonstração.
+	\item \minisec{Roteiro para a demonstração}
+	\begin{itemize}
+  		\item Supor $\bar{\sig} = 0$ e $\bar{\mu}=\eta
+  		x^Tz/n$  e encontrar $\al_k\in(0,1]$ tal que 
+  		\[\varphi_{k+1} = (1 -\theta(\al_k))\varphi_k.\]
+  		em que $\theta(\al_k) \in(0,1)$. Como consequência, a sequência
+  		$\{\varphi_k\}$ satisfaz 
+  		\[
+  		\varphi_{k+1} < \varphi_k.
+  		\] 
+  		e logo ter-se-á convergência Q-linear.
+  		
+  		\item Esta é a abordagem usada por  \citet{Zhang:2006ic} para um método
+  		infactível.
+  		\item Na prática o método deve ter desempenho melhor do que Q-linear,
+  		já que se buscará, em cada iteração $k$,
+  		o minimizador global
+  		de $\varphi_k$, dado por $(\al^*,\mu^*,\sig^*)$ e portanto
+  		$\varphi_k(\al^*,\mu^*,\sig^*)\leq \varphi_k(\al_k,\bar{\mu},\bar{\sig})$.
+
+  		
+  	\end{itemize}
+  	
+  	  		\item Pretende-se também encontrar estimativas para um limitante superior
+  	  		para $\norm{(x^*,z^*)}_\infty$. Este limitante é mencionado nas
+  	  		demonstrações de convergência de métodos
+  		de pontos interiores infactíveis e indica como escolher um ponto inicial
+  		que dependa desse limitante e é utilizado na garantia da convergência. Não
+  		há porém -- pelo menos de nosso conhecimento --, estimativas para o esse
+  		limitante.
+
+
+\item As matrizes $H_P$ e $H_D$ (veja Equação
+\eqref{eq:defining_matrices_H}) podem ser adaptadas, não só garantido a
+não-negatividade dos resíduos primais e duais, mas como fator de escala.
+Esse escalamento pode ser feito tal que se
+$\varphi_k<\eps$, para algum $k$, então o critério de parada do 
+\texttt{PCx} (veja Equação \eqref{eq:termination-criteria-pcx}) também será
+satisfeito.
+\end{itemize}
+
+
+\addsec{Experimentos Numéricos}
+\begin{itemize}
+\item Descrever a heurística utilizada para resolver o subproblema de otimização
+global de polinômios. Artigo escrito em conjunto com os orientadores está sendo
+finalizado para submissão em que tal subproblema também aparece, porém num
+método similar. Tal trabalho contempla também uma biblioteca para resolver o
+subproblema de otimização de polinômios.
+\begin{itemize}
+  \item Este método similar, já em fase final de implementação,
+  demonstra-se competitivo com o \texttt{PCx} nos testes preliminares
+ \end{itemize}
+\item Implementação do método proposto, utilizando-se da biblioteca supra
+citada para resolver os subproblemas de otimização de polinômios.
+\item Realizar  testes
+numéricos com conjunto de teste da \texttt{Netlib} e complementares, com
+comparação ao \texttt{PCx} e com o método desenvolvido pelo grupo.
+\end{itemize}
+
+

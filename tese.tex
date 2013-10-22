@@ -1,0 +1,171 @@
+\documentclass[%
+				%draft,%
+%                 openany,
+            	%11pt, 
+                %cleardoublepage=plain,%
+                chapterprefix, 
+                appendixprefix,
+				oneside, %Usar quando menos de 100 paginas
+% 				twoside, %Usa quando mais de 100 paginas
+				bibliography=totoc,%incluir refs no sumario					
+				]{scrbook}
+
+\usepackage[letterpaper,inner=3cm,top=3cm,outer=3cm,%showframe,%,bottom=3cm
+			]{geometry}
+\usepackage [utf8]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage{ae}
+\usepackage[english,brazil]{babel}  
+\usepackage{graphicx}
+\usepackage{setspace} %para controle do espacamento
+\usepackage{enumerate} %Controle melhor do env enumerate
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{url} 
+\usepackage{lrsmath,lrsthm}
+\usepackage{acronym}
+\usepackage{imecclogo,unicamplogo}
+\usepackage[pagewise]{lineno}
+\linenumbers
+% \usepackage{showlabels}
+%\usepackage{eulervm}
+%\usepackage{mathptmx}
+ 
+%\usepackage{microtype}
+%\usepackage{biblatex}  
+%\usepackage[alf]{abntcite}
+%\def\citet{\citeonline}
+\usepackage[numbers,sort&compress,longnamesfirst]{natbib}
+\usepackage{hypernat}
+%Para Português
+\bibliographystyle{myabbrvnat} 
+%Para Inglês
+% \bibliographystyle{abbrvnat} 
+
+%\bibliographystyle{plainnat}  
+
+%% Defined on lrsmath.sty  
+% \def\Pset{\mathcal{P}}
+% \def\Dset{\mathcal{D}}
+% \def\Fset{\mathcal{F}}
+% \def\Cset{\mathcal{C}} 
+% \def\Nset{\mathcal{N}}  
+% \def\Oset{\mathcal{O}} 
+% \def\Deaf{\De^{\text{af}}} 
+% \def\Deco{\De^{\text{cc}}}  
+% \def\DeMe{\De^{\text{m}}}   
+% \def\DeMu{\De^{\text{g}}} 
+   
+       
+\setkomafont{dictumtext}{\normalfont\normalcolor\sffamily\footnotesize}
+%%%%%%%%%%%%%Head and Footer
+\usepackage{fancyhdr} 
+\pagestyle{fancy}
+% com isto nos nos certificamos que o cabecalho dos capitulos e
+% secoes estao em minusculo.  
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\fancyhf{} % deleta a configuracao atual para cabecalho e rodape
+\fancyhead[LE,RO]{\bf\sffamily\thepage}%
+\fancyhead[LO]{\bfseries\sffamily\rightmark}%
+\fancyhead[RE]{\bfseries\sffamily\leftmark} 
+%
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt} % cria espaco para a linha
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\sffamily\bfseries\thepage} % except the center
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+\DeclareMathOperator*{\minimizar}{minimizar} 
+\DeclareMathOperator*{\maximizar}{maximizar} 
+ 	
+  
+%%%%Arrumando o Algoritmo para portugues%%%%
+\usepackage{algorithmicx,algorithm}
+\usepackage{algpseudocode}
+ \algrenewcommand{\algorithmicrequire}{\textbf{Dado:}}
+% \algrenewcommand{\algorithmicreturn}{\textbf{Sa\' ida:}}
+ \algrenewcommand{\algorithmicend}{\textbf{fim}}
+% \algrenewcommand{\algorithmicif}{\textbf{Se}}
+% \algrenewcommand{\algorithmicthen}{\textbf{Ent\~ao}}
+% \algrenewcommand{\algorithmicelse}{\textbf{Sen\~ao}}
+% \algrenewcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+% \algrenewcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\algrenewcommand{\algorithmicfor}{\textbf{para}}
+\algrenewcommand{\algorithmicforall}{\textbf{para todo}}
+\algrenewcommand{\algorithmicdo}{\textbf{fa\c{c}a}}
+% \algrenewcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+% \algrenewcommand{\algorithmicwhile}{\textbf{Enquanto}}
+% \algrenewcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
+% \algrenewcommand{\algorithmicloop}{\textbf{loop}}
+% \algrenewcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+ \algrenewcommand{\algorithmicrepeat}{\textbf{Repita}}
+ \algrenewcommand{\algorithmicuntil}{\textbf{At\'e}}
+%\algrenewcommand{\algorithmicprint}{\textbf{Imprima}}
+%\algrenewcommand{\algorithmicreturn}{\textbf{Retorna}}
+%\algrenewcommand{\algorithmictrue}{\true}
+%\algrenewcommand{\algorithmicfalse}{\false}
+\floatname{algorithm}{Pseudo-Código} 
+
+
+
+% 
+ %\includeonly{
+% capa,%
+% folha_rosto,
+% dedic,
+% epigrafe,
+% agradece,
+% res,
+% abs,
+% int,
+% mpis,
+% escolhaadiada,
+%convergencia,
+% concl,
+% anexo,
+%}
+\author{Luiz Rafael dos Santos}
+\synctex=1 
+
+\begin{document} 
+% \selectlanguage{brazil}
+
+\onehalfspacing
+\include{capa}
+\frontmatter
+%Incluir  somente na versao final
+% \include{folha_rosto}
+%\include{dedic}
+%\include{epigrafe}
+%\include{agradece}
+%Resumo and Abstract
+% \include{res}
+% \include{abs}
+\eject  
+\setcounter{tocdepth}{3}
+\tableofcontents
+\mainmatter
+\onehalfspacing
+\include{int}
+\include{mpis} 
+\include{escolhaadiada}
+\include{convergencia}
+% \include{numericos} 
+\include{concl}
+  
+
+\onehalfspacing 
+\bibliography{references_bibdesk_papers}
+
+%Incluir apenas se tiver algum anexo.
+
+% \appendix
+% \include{resultados_tecnicos}
+
+\backmatter
+	
+ 
+     
+\end{document}
