@@ -11,9 +11,29 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 127.0,
 		"selected_items":
 		[
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"git:p",
+				"Git: Push"
+			],
+			[
+				"git:sta",
+				"Git: Status"
+			],
+			[
+				"git:psu",
+				"Git: Push"
+			],
+			[
+				"git:ps",
+				"Git: Push"
+			],
 			[
 				"git:sa",
 				"Git: Status"
@@ -28,10 +48,6 @@
 			],
 			[
 				"git:st",
-				"Git: Status"
-			],
-			[
-				"git:sta",
 				"Git: Status"
 			],
 			[
@@ -72,6 +88,8 @@
 	},
 	"file_history":
 	[
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/README.md",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/texto/tese.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/texto/tese.pdf",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/LaTeX.sublime-build",
@@ -149,6 +167,14 @@
 	},
 	"menu_visible": true,
 	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.git-commit":
+	{
+		"height": 100.0
+	},
+	"output.git-push":
 	{
 		"height": 100.0
 	},
