@@ -330,9 +330,9 @@ função de mérito, a qual será descrita abaixo.
 Antes disso, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
 transforma o sistema não linear \eqref{eq:corrector-nonlinear} no sistema linear
 \begin{equation*}\begin{cases}
-A\Dex^c = 0 \\
-A^T\Dey^c +\Dez^c = 0 \\
-X\Dez^c + Z\Dex^c +  = \mu e - \sig\deX\dez
+A\Decox = 0 \\
+A^T\Decoy +\Decoz = 0 \\
+X\Decoz + Z\Decox +  = \mu e - \sig\deX\dez
 \end{cases}.
 \end{equation*}
 Expressando tal sistema  na  forma
@@ -342,7 +342,7 @@ matricial tem-se
 \bbm A & 0 & 0 \\
 0 & A^T & I\\
 Z & 0 & X \ebm
-\bbm \Dex^c \\ \Dey^c \\ \Dez^c
+\bbm \Decox \\ \Decoy \\ \Decoz
 \ebm = 
 \bbm 0  \\ 0 \\ \mu e - \sig\deX\dez
 \ebm.
@@ -956,7 +956,7 @@ Pode-se interpretar $\Nset_s(\ga)$ da seguinte maneira:
 
 Como este trabalho  baseia-se em pontos infactíveis mas ao mesmo tempo
 pretende utilizar as boas propriedades da vizinhança  $\Nset_s(\ga)$,
-é necessário estendê-la. No Capítulo \ref{chap:mpis},
+é necessário estendê-la. No Capítulo \ref{chap:mpis}, página \pageref{eq:infeasible-infty-neig}
 mostrou-se que \citet{Kojima:1993fe}, assim como 
 \citet[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
 método infactível a vizinhança $\Nset_{-\infty}(\ga,\be)$.
@@ -968,23 +968,36 @@ simétrica infactível $\Nset_s(\ga,\be)$, para o sistema KKT escalado
 \begin{equation}
 \label{eq:infeasible-symmetric-neig}
  \Nset_{s}(\ga,\be) =
- \left\{(x,y,z) \in \Qset^+:\frac{\norm{\rho_L}}{\tau} \leq
-\beta\frac{\norm{\rho^0_L}}{\tau_0}, \ga\tau\leq x_iz_i \leq
+ \left\{(x,y,z) \in \Qset^+:\frac{\norm{\rho_L}}{\norm{\rho^0_L}} \leq
+\beta\frac{\tau}{\tau_0}, \ga\tau\leq x_iz_i \leq
 \frac{1}{\ga}\tau,\forall i =1,\ldots,n  \right\},
 \end{equation}
-em que $\ga\in(0,1)$, $\tau=x^Tz/n$ e $\be>1$.
+em que $\ga\in(0,1)$, $\tau=x^Tz/n$ e $\be\geq1$.
+
+Agora, usando a Definição \ref{def:residual-vector}, define-se  a vizinhança
+de passo largo infactível $\Nset_{-\infty}(\ga,\be)$, para o sistema KKT escalado
+como
+\begin{equation}
+\Nset_{-\infty}(\ga,\be) =
+ \left\{(x,y,z) \in \Qset^+:\frac{\dbvec{\rho_L}}{\dbvec{\rho^0_L}} \leq
+\beta\frac{\dbvec{\rho_C}}{\dbvec{\rho_C}_0}, x_iz_i \geq
+{\ga}\dbvec{\rho_C},\forall i =1,\ldots,n  \right\},
+\end{equation}
+em que $\ga\in(0,1)$ e $\be\geq1$. 
 
 
-Até agora, o método proposto resolverá o \ac{KKT} escalado \eqref{eq:ScaledKKT}
-e além disso usará a função de mérito $\hat{\varphi}$ dada em
+
+
+Até agora, o método proposto resolve o \ac{KKT} escalado \eqref{eq:ScaledKKT}
+e além disso usa a função de mérito $\hat{\varphi}$ dada em
 \eqref{eq:merit-function-al-mu-sig} como guia para a escolha das variáveis
 $(\al,\mu,\sig)$  e por conseguinte do próximo ponto. Por conta do exposto
-acima, fazer este próximo ponto pertencer à vizinhança $\Nset_{s}(\ga,\be)$ é
+acima, exigir que o próximo ponto pertença à vizinhança $\Nset_{s}(\ga,\be)$, equivale a dar 
 uma garantia de que este ponto estará a uma  distância adequada da
 trajetória central.
 
 Para tanto, basta que escrever funções nas variáveis
-$(\al,\mu,\sig)$ que sirvam de restrições para o subproblema de minimização da
+$(\al,\mu,\sig)$ que sirvam de restrições para o subproblema de minimização global da
 função de mérito $\hat{\varphi}$ e que garantam que o ponto escolhido esteja em 
 $\Nset_{s}(\ga,\be)$. Isso é possível, já que tal vizinhança é definida com base
 nos resíduos lineares e complementares -- $\norm{\rho_L}$ e $x_iz_i$ -- de
@@ -1044,9 +1057,9 @@ reescritas como
 
 \begin{align} 
 \hat{\varphi}_L & \leq \be_L \hat{\varphi}_C,
- \label{eq:symmetric-polynomials-a}\\
+ \label{eq:symmetric-polynomials-a-new}\\
  \ga\hat{\varphi}_C &\leq (\rho_C)_i \leq \frac{1}{\ga}\hat{\varphi}_C.
- \label{eq:symmetric-polynomials-b}
+ \label{eq:symmetric-polynomials-b-new}
 \end{align} 
 
 
@@ -1190,7 +1203,7 @@ O algoritmo proposto neste capítulo pode ser resumido no Pseudo-código
 		\State Encontre $(\al_{k},\mu_{k},\sig_{k})$ resolvendo o subproblema de
 		otimização global 
 		\eqref{eq:pop-subproblem}.
-		\State Dê próximo o passo conforme
+		\State Garanta que $\al_k\in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ e faça
 		\[
 		\begin{aligned}	
 		& x^{k+1} = x^{k} + \al_k((\dex)^{k} + \mu_{k}(\Dex^\mu)^{k} +

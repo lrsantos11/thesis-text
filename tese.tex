@@ -6,13 +6,14 @@
                 chapterprefix, 
                 appendixprefix,
 				oneside, %Usar quando menos de 100 paginas
-% 				twoside, %Usa quando mais de 100 paginas
+ 				% twoside, %Usa quando mais de 100 paginas
 				bibliography=totoc,%incluir refs no sumario					
 				]{scrbook}
 
 \usepackage[letterpaper,inner=3cm,top=3cm,outer=3cm,%showframe,%,bottom=3cm
 			]{geometry}
 \usepackage [utf8]{inputenc}
+\usepackage{cmap}
 \usepackage[T1]{fontenc} 
 \usepackage{ae}
 \usepackage[english,brazil]{babel}  
@@ -57,26 +58,27 @@
    
        
 \setkomafont{dictumtext}{\normalfont\normalcolor\sffamily\footnotesize}
-%%%%%%%%%%%%%Head and Footer
-\usepackage{fancyhdr} 
-\pagestyle{fancy}
-% com isto nos nos certificamos que o cabecalho dos capitulos e
-% secoes estao em minusculo.  
-\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
-\fancyhf{} % deleta a configuracao atual para cabecalho e rodape
-\fancyhead[LE,RO]{\bf\sffamily\thepage}%
-\fancyhead[LO]{\bfseries\sffamily\rightmark}%
-\fancyhead[RE]{\bfseries\sffamily\leftmark} 
-%
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0pt}
-\addtolength{\headheight}{0.5pt} % cria espaco para a linha
-\fancypagestyle{plain}{%
-\fancyhf{} % clear all header and footer fields
-\fancyfoot[C]{\sffamily\bfseries\thepage} % except the center
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}}
+% %%%%%%%%%%%%%Head and Footer
+% \usepackage{fancyhdr} 
+% \pagestyle{fancy}
+% % com isto nos nos certificamos que o cabecalho dos capitulos e
+% % secoes estao em minusculo.  
+% \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+% \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+% \fancyhf{} % deleta a configuracao atual para cabecalho e rodape
+% \fancyhead[LE,RO]{\bfseries\sffamily\thepage}%
+% \fancyhead[LO]{\bfseries\sffamily\rightmark}%
+% \fancyhead[RE]{\bfseries\sffamily\leftmark} 
+% %
+% \renewcommand{\headrulewidth}{0.5pt}
+% \renewcommand{\footrulewidth}{0pt}
+% \addtolength{\headheight}{0.5pt} % cria espaco para a linha
+% \fancypagestyle{plain}{%
+% \fancyhf{} % clear all header and footer fields
+% \fancyfoot[C]{\sffamily\bfseries\thepage} % except the center
+% \renewcommand{\headrulewidth}{0pt}
+% \renewcommand{\footrulewidth}{0pt}}
+
 \DeclareMathOperator*{\minimizar}{minimizar} 
 \DeclareMathOperator*{\maximizar}{maximizar} 
  	
@@ -127,13 +129,17 @@
 % anexo,
 %}
 \author{Luiz Rafael dos Santos}
+\title{Escolha adiada de parâmetros em métodos de pontos interiores para programação linear}
 \synctex=1 
+
+\usepackage{scrhack}
 
 \begin{document} 
 % \selectlanguage{brazil}
 
 \onehalfspacing
-\include{capa}
+\maketitle
+%\include{capa}
 \frontmatter
 %Incluir  somente na versao final
 % \include{folha_rosto}

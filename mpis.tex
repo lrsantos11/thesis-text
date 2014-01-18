@@ -86,7 +86,7 @@ $x$ e $z$.
 
 
 
-Com isso, sejam  
+Com isso, seja
 \[  \Fset^+ = \Fset \cap \Qset^+\] o conjunto dos
 pontos primais e duais interiores. Como o próprio nome sugere, em Métodos de 
 Pontos Interiores dedica-se especialmente a estudar iterados que estejam
@@ -101,13 +101,7 @@ Neste trabalho, o seguinte pressuposto é assumido como verdadeiro:
 \end{pressup}
 
 
-% \begin{enumerate}[$\Pset$1.]
-%   \item O interior de $\Fset$ é não-vazio, isto é, existe algum ponto interior
-%   factível.
-%    \item Para quaisquer $(x,y,z)\in\Fset$ e $(\bar{x},\bar{y},\bar{z})\in\Fset$,
-%  temos $(x-\bar{x})^T(z-\bar{z})\geq 0$.
-%  
-% \end{enumerate}
+
 
 Com efeito,   o Pressuposto \ref{ass:interior-nonempty} tem como
 consequência o fato existir  solução para
@@ -854,8 +848,8 @@ tamanho do passo que garante a convergência global do método. Isto é obtido a
 utilizar-se uma vizinhança similar à $\Nset_{-\infty}(\ga)$ (veja equação \eqref{eq:infty-neig}), dada por 
 \begin{equation}
 \label{eq:infeasible-infty-neig}
-\Nset_{-\infty}(\ga,\be) = \left\{w \in\Qset^+ :\frac{\norm{(r_P,r_D)}}{\tau} \leq
-\be\frac{\norm{(r^0_P,r^0_D)}}{\tau_0}, 
+\Nset_{-\infty}(\ga,\be) = \left\{(x,y,z) \in\Qset^+ :\frac{\norm{(r_P,r_D)}}{\norm{(r^0_P,r^0_D)}} \leq
+\be\frac{\tau}{\tau_0}, 
 x_iz_i\geq \ga\tau,\forall i =1,\dotsc,n \right\}, 
 \end{equation}
 em que $\ga \in(0,1)$ e $\be\geq 1$ são
@@ -893,6 +887,7 @@ completa de métodos infactíveis veja \citet[cap. 6]{Wright:Primal-dual-interio
 \section{Métodos de Pontos Interiores na Prática}
 
 \subsection{Método Preditor-Corretor de Mehrotra}
+\label{sec:mehrotra-pc-method}
 Do ponto de vista prático, a maioria dos códigos de implementação de \ac{MPI}
 baseia-se em alguma variação do \acrodef{MPC}{Método Preditor-Corretor}
 \ac{MPC} devido a \citet{Mehrotra:1992wr}. O método de Mehrotra baseia-se no modelo geral
