@@ -643,7 +643,7 @@ FUNCTION {format.article.crossref}
     }
     { "In " }
   if$
-  " \citet{" * crossref * "}" *
+  " \textcite{" * crossref * "}" *
 }
 
 FUNCTION {format.book.crossref}
@@ -672,7 +672,7 @@ FUNCTION {format.book.crossref}
     }
     'skip$
   if$
-  " \citet{" * crossref * "}" *
+  " \textcite{" * crossref * "}" *
 }
 
 FUNCTION {format.incoll.inproc.crossref}
@@ -693,7 +693,7 @@ FUNCTION {format.incoll.inproc.crossref}
     }
     { "In " }
   if$
-  " \citet{" * crossref * "}" *
+  " \textcite{" * crossref * "}" *
 }
 
 FUNCTION {article}

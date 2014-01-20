@@ -16,10 +16,10 @@ Este capítulo tem o objetivo de apresentar os \acl{MPI} primais-duais seguidore
 de caminho. A teoria central que versa sobre \ac{MPI} está bem estabelecida e há
 ótimos textos sobre o
 assunto~\cite{Vanderbei:2008vp,Wright:Primal-dual-interior-point:1997h}.
-Recentemente \citet{Gondzio:2011ta} fez um resumo histórico no qual resgata as
+Recentemente \textcite{Gondzio:2011ta} fez um resumo histórico no qual resgata as
 principais contribuições no tema.  Estas referências servem como texto
 introdutório e foi com base nelas e nos trabalhos de 
- \citet{Colombo:2008wm} e \citet{Villas-Boas:2000}, que este capítulo foi
+ \textcite{Colombo:2008wm} e \textcite{Villas-Boas:2000}, que este capítulo foi
  escrito.
     
 
@@ -31,7 +31,7 @@ introdutório e foi com base nelas e nos trabalhos de
 O  problema de \ac{PL} na forma padrão, 
 \begin{equation} %(P) \quad
 	\begin{array}{lc}
-\displaystyle \minimizar_{x} & c^Tx \\
+\displaystyle \min_{x} & c^Tx \\
 \text{sujeito a} &\begin{cases} Ax = b \\
 				 x \geq 0	
 				 \end{cases}\
@@ -45,7 +45,7 @@ Associado a todo \ac{PL} existe um outro \ac{PL} chamado
 diferente. O dual de \eqref{eq:primal} é
  \begin{equation}%(D) \quad
 	\begin{array}{lc}
-\displaystyle \maximizar_{(y,z)} & b^Ty \\
+\displaystyle \max_{(y,z)} & b^Ty \\
 \text{sujeito a} &\begin{cases} A^Ty + z = b \\
 				 z \geq 0, \:y \text{ livre}	
 				 \end{cases}\
@@ -363,7 +363,7 @@ prima-dual do \ac{PL}. Essa curva é chamada em \ac{MPI} de \emph{trajetória
 central}.  Esta trajetória nos guia para uma solução em que os pares $x_iz_i$
 são estritamente positivos e decrescem a zero na mesma taxa de
 decrescimento de $\tau$. Estudos sobre a trajetória central pode ser encontrados
-em \citet{Bayer:1989av,Bayer:1989ud,Sonnevend:1986ua,Meggido:Pathways-to-the-optimal:1988u}, entre outros. 
+em \textcite{Bayer:1989av,Bayer:1989ud,Sonnevend:1986ua,Meggido:Pathways-to-the-optimal:1988u}, entre outros. 
 
 Usando o fato de que para algum $\tau>0$ o ponto $(x(\tau),y(\tau),z(\tau))$ é
 primal-dual factível, podemos definir o gap de dualidade $g(\tau)$ para \eqref{eq:primal-barrier}
@@ -427,7 +427,7 @@ $x^*\in\Pset$ e um par $(y^*,z^*)\in\Dset$ tais que
 
 Uma solução $(x^*,z^*)$ que satisfaça o teorema acima é chamada estritamente
 complementar. Nesses termos pode-se definir o conceito de partição ótima.
-Seguindo as ideias de \citet{Jansen:1997vy}, definimos o suporte do vetor
+Seguindo as ideias de \textcite{Jansen:1997vy}, definimos o suporte do vetor
 $v\in\Real^n$ como
 \[
 \supp(v) = \{i:v_i>0, i=1,\ldots,n\}.
@@ -463,7 +463,7 @@ uma base ótima ou uma partição ótima é de importante consequência para o u
 soluções na análise de sensibilidade \cite{Jansen:1997vy,Yildirim:2001gp}
 
 
-\citet{Vavasis:1996bw}
+\textcite{Vavasis:1996bw}
 discutiram propriedades da trajetória central, demonstrando que a mesma é caracterizada por
 $\mathcal{O}(n^2)$ curvas de alto grau e segmentos nos quais a trajetória é
 relativamente reta. Mais que isso, em uma vizinhança
@@ -481,7 +481,7 @@ isto é,
 \check{x} = \arg \min_{x\in\Pset^+}\left\{-\sum_{i=1}^{n}\ln x_i \right\}.
 \]
 O ponto $\check{x}$ é o \emph{centro analítico} do politopo factível, e foi
-primeiramente estudado por \citet{Sonnevend:1986ua}. Dada a convexidade estrita
+primeiramente estudado por \textcite{Sonnevend:1986ua}. Dada a convexidade estrita
 da função de barreira, o conceito de centro analítico está bem definido. Como o
 centro analítico minimiza o problema de barreira, ele é o ponto que se encontra
 mais distante da fronteira do politopo. Entretanto, existe um problema em
@@ -495,7 +495,7 @@ custosos de se calcular \cite{Gonzaga:1992uj}.
 
 
 Tal desvantagem da trajetória central foi  apresentada como potencialmente
-geradora de consequências extremas por \citet{Deza:2006hm}, que conseguiram
+geradora de consequências extremas por \textcite{Deza:2006hm}, que conseguiram
 replicar o comportamento do método simplex no cubo de Klee-Minty num contexto de
 pontos interiores. Isso foi conseguido por patologicamente se adicionar um
 número exponencial de restrições redundantes e paralelas às faces do cubo, tal que a trajetória
@@ -681,7 +681,7 @@ positividade exigida de $(x,z)$.
  complexidade $\Oset(\sqrt{n}\ln (1/\eps))$. Os métodos de passo curto
  são os mais simples dos \ac{MPI} pois fixam $\al_k\equiv  1$ e $\eta_k \equiv \eta$
  dependente de $\theta$ e foram introduzidos por
- \citet{Kojima:1989fw} e \citet{Monteiro:1989go}. Como a redução do
+ \textcite{Kojima:1989fw} e \textcite{Monteiro:1989go}. Como a redução do
  parâmetro de barreira é muito pequena, estes tipos de métodos são pouco usados
  na prática.
    
@@ -721,13 +721,13 @@ análise da medida \eqref{eq:ratio-complementarity} pode ser encontrada em
 \cite{Jansen:1jv}.
  
 
-\citet{Gondzio:1996uw} e posteriormente \citet{Colombo:2008wm,Colombo:2008ia}
+\textcite{Gondzio:1996uw} e posteriormente \textcite{Colombo:2008wm,Colombo:2008ia}
 definiram uma vizinhança que tenta fazer com que em cada iteração tenha-se uma
 certa \emph{centralidade} dos iterados.  Por centralidade entenda-se a
 dispersão dos pares $x_iz_i$. Quando a discrepância nos
 valores dos pares complementares é muito grande, e portanto têm-se pouca
 centralidade, as direções de busca não são adequadas, não só com valores
-pequenos mas também com valores grandes de $x_iz_i$. Com efeito, \citet[pp.
+pequenos mas também com valores grandes de $x_iz_i$. Com efeito, \textcite[pp.
 26]{Colombo:2008wm} propõe que a noção de dispersão dos produtos
 complementares não é adequadamente  representada em um ambiente computacional
 por nenhuma das  vizinhanças  $\Nset_{-\infty}$.
@@ -750,7 +750,7 @@ produtos complementares se tornem muito grandes em relação à média. Além di
 pares complementares que são muito grandes, permitindo uma melhor centralidade. 
 
 
-\citet{Colombo:2008wm}
+\textcite{Colombo:2008wm}
 determinou o valor de $n$ para o qual a vizinhança simétrica impõe um limite
 superior mais estreito:
 \[
@@ -765,7 +765,7 @@ de $\Nset_{-\infty}$ não produzem perdas teóricas, ao mesmo tempo em que,
 contribuem com  a possibilidade de deixar os iterados mais centrados.
   
   
-De fato, \citet{Zhang:1993gn}, ao provar a convergência superlinear de um método
+De fato, \textcite{Zhang:1993gn}, ao provar a convergência superlinear de um método
 primal-dual, utilizam uma vizinhança com parâmetros simétricos para melhorar os
 limites da convergência. No entanto, à época imaginavam que um limite superior,
 como o dado por $\gamma\tau$,  não teria significância prática, previsão não se
@@ -842,7 +842,7 @@ infactibilidade seria eliminada. No entanto, na prática,  o limite da sequênci
 de iterados é o ponto ótimo e somente quando o ponto atual está em uma
 vizinhança apropriada deste ótimo é que se dá um passo que zera os resíduos.
 
-\citet{Kojima:1993fe}
+\textcite{Kojima:1993fe}
 estabeleceram resultados de convergência para um \ac{MPI} infactível bem como uma regra para o
 tamanho do passo que garante a convergência global do método. Isto é obtido ao
 utilizar-se uma vizinhança similar à $\Nset_{-\infty}(\ga)$ (veja equação \eqref{eq:infty-neig}), dada por 
@@ -871,10 +871,10 @@ mostrando que a infactibilidade se reduz linearmente com $\al$.  Assim, se $\al
 = 1$, então os resíduos $r_P$ e $r_D$ tornam-se nulos, portanto a factibilidade é
 restaurada e  subsequentemente o método infactível torna-se igual a um método
 factível, já que todos os próximos iterados estarão em $\Fset^0$.
-\citet{Kojima:1993fe} provaram a convergência global de um método com passos
-infactíveis, enquanto \citet{Zhang:2006ic} provou  a complexidade  de $\Oset(
+\textcite{Kojima:1993fe} provaram a convergência global de um método com passos
+infactíveis, enquanto \textcite{Zhang:2006ic} provou  a complexidade  de $\Oset(
 n^2 \ln ( 1/\eps ) )$ para um método desse tipo. Para uma uma explanação
-completa de métodos infactíveis veja \citet[cap. 6]{Wright:Primal-dual-interior-point:1997h}. 
+completa de métodos infactíveis veja \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h}. 
 
 
 
@@ -890,7 +890,7 @@ completa de métodos infactíveis veja \citet[cap. 6]{Wright:Primal-dual-interio
 \label{sec:mehrotra-pc-method}
 Do ponto de vista prático, a maioria dos códigos de implementação de \ac{MPI}
 baseia-se em alguma variação do \acrodef{MPC}{Método Preditor-Corretor}
-\ac{MPC} devido a \citet{Mehrotra:1992wr}. O método de Mehrotra baseia-se no modelo geral
+\ac{MPC} devido a \textcite{Mehrotra:1992wr}. O método de Mehrotra baseia-se no modelo geral
 para Métodos Seguidores de Caminho, dado no Pseudo-código
 \ref{alg:modelo-geral}, mas altera a busca de direção puramente Newton com
 correções que são muito baratas computacionalmente mas que auxiliam a obter uma
@@ -902,9 +902,9 @@ acadêmicos como \texttt{BPMPD}, \texttt{HOPDM}, \texttt{OOPS}, \texttt{OOQP},
 incorporadas, de modo que todos são variantes do \ac{MPC}.
 
 Este método usa  aproximações de ordem maior da trajetória central $\Cset$ --
-abordagem começada  por \citet{Meggido:Pathways-to-the-optimal:1988u} e mais
+abordagem começada  por \textcite{Meggido:Pathways-to-the-optimal:1988u} e mais
 tarde desenvolvidas por
-\citet{Monteiro:1990vn} -- e o uso de pontos infactíveis. Segundo \citet[pg
+\textcite{Monteiro:1990vn} -- e o uso de pontos infactíveis. Segundo \textcite[pg
 194]{Wright:Primal-dual-interior-point:1997h},  a contribuição princiapl
 de Mehrotra foi combinar estas ideias existentes da maneira certa e adicionar
 heurísticas engenhosas para escolher o parâmetro de centragem (adaptativamente), o tamanho
@@ -999,7 +999,7 @@ recomendado. Essa escolha faz com que ocorra uma forte centralização, isto é,
 move-se para mais perto de $\Cset$, e logo, na próxima iteração, o método está
 melhor posicionado para reduzir o gap de complementaridade.
 
- \citet{Mehrotra:1992wr} utiliza a seguinte heurística na escolha do parâmetro
+ \textcite{Mehrotra:1992wr} utiliza a seguinte heurística na escolha do parâmetro
  de centralização foi usada:
 \begin{equation}\label{eq:Mehrotra-centralizer-parameter}
 \eta = \left(\frac{\tau_{\text{af}}}{\tau}\right)^3
@@ -1017,7 +1017,7 @@ centralização pode ser escolhido como
 \eta = \left(\frac{\tau_{\text{af}}}{\tau}\right)^p = \left(\frac{g_{\text{af}}}{x^Tz}\right)^p.
 \]
 
-Além disso, \citet{Mehrotra:1992wr} estudou o efeito de diferentes valores de
+Além disso, \textcite{Mehrotra:1992wr} estudou o efeito de diferentes valores de
 $p= 1,2,3,4$ em um subconjunto da de problemas da \texttt{Netlib} e conclui que não havia
  muita diferença para $p$ entre 2 e 4.
 
@@ -1119,12 +1119,12 @@ iguais ao valor $\tau$ é um pedido muito forte e algumas vezes pouco eficaz.
 que utiliza mais correções lineares de uma forma inteligente.
 
 O \emph{método das múltiplas correções} deve-se a
-\citet{Gondzio:1996uw} e é uma tentativa de melhorar a centralização do iterado
+\textcite{Gondzio:1996uw} e é uma tentativa de melhorar a centralização do iterado
 atual. Esta abordagem busca produzir produtos $x_iz_i$ mais homogêneos e forçar
 um aumento do tamanho do passo corrigindo o parâmetro de centralização de
 Mehrotra.
 
-Implicitamente \citet{Gondzio:1996uw} utiliza a Vizinhança Simétrica dada 
+Implicitamente \textcite{Gondzio:1996uw} utiliza a Vizinhança Simétrica dada 
 em \eqref{eq:symmetric-neig}, de modo a ter produtos perto o suficiente da
 trajetória central. Nesta descrição o passo será dado na direção
 \[
@@ -1230,7 +1230,7 @@ quanto infactíveis. Pede-se que o ponto possua boas propriedades nas
 seguintes características: centralidade do ponto e magnitude das
 infactibilidades.
 
-\citet{Mehrotra:1992wr}
+\textcite{Mehrotra:1992wr}
 introduziu uma heurística para encontrar um ponto inicial que satisfaça essas hipóteses.
 Nesta, resolve-se os seguintes problemas de Quadrados Mínimos
 \begin{align*}
@@ -1259,7 +1259,7 @@ códigos de pontos interiores por ser considerada uma heurística muito boa para
 determinar o ponto inicial, além de ter custo computacional equivalente ao de
 uma iteração de um \ac{MPI}.
 
-\citet{Gertz:2003ji},	  em seu \emph{solver} \texttt{OOQP}, propõem uma
+\textcite{Gertz:2003ji},	  em seu \emph{solver} \texttt{OOQP}, propõem uma
 heurística que se baseia nos mesmos princípios -- que o ponto inicial seja ao mesmo tempo
 ``bem centrado'' e ``não muito infactível'' -- agora para usar um \ac{MPI} no
 contexto de Programação Quadrática. Descreveremos a seguir essa heurística, no

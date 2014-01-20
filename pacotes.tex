@@ -1,0 +1,116 @@
+%!TEX root = tese.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: básicos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage[utf8]{inputenc}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usepackage[english,brazilian]{babel}
+\usepackage{indentfirst}
+\usepackage[top=3cm,bottom=3cm,right=2cm,left=2cm]{geometry}
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+% FIXME Para compatibilidade de alguns pacotes com Koma-Script
+\usepackage{scrhack} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: layoyt %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{etoolbox}  % É preciso para mudar o layout do frontmatter
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: links %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\usepackage{hyperref}
+% FIXME breakurl sempre depois de hhyperref. Use apenas se não estiver gerando 
+% via PDFLATEX
+% \usepackage{breakurl}
+% FIXME Comente o pacote abaixo quando for concluir sua defesa e for entregar a
+% versão final.
+%\usepackage{showkeys}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: ams %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% \usepackage{amsmath}
+% \usepackage{amsfonts}
+% \usepackage{amssymb}
+% \usepackage{amsthm}
+% \usepackage{breqn}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: tabelas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{booktabs}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: cores %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: figuras %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{fit}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: algoritmos %%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage{algorithmicx}
+\usepackage[chapter]{algorithm}
+\usepackage{algpseudocode}
+\floatname{algorithm}{Algoritmo}
+\renewcommand{\listalgorithmname}{Lista de Algoritmos}
+ \algrenewcommand{\algorithmicrequire}{\textbf{Dado:}}
+% \algrenewcommand{\algorithmicreturn}{\textbf{Sa\' ida:}}
+ \algrenewcommand{\algorithmicend}{\textbf{fim}}
+% \algrenewcommand{\algorithmicif}{\textbf{Se}}
+% \algrenewcommand{\algorithmicthen}{\textbf{Ent\~ao}}
+% \algrenewcommand{\algorithmicelse}{\textbf{Sen\~ao}}
+% \algrenewcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+% \algrenewcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\algrenewcommand{\algorithmicfor}{\textbf{para}}
+\algrenewcommand{\algorithmicforall}{\textbf{para todo}}
+\algrenewcommand{\algorithmicdo}{\textbf{fa\c{c}a}}
+% \algrenewcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+% \algrenewcommand{\algorithmicwhile}{\textbf{Enquanto}}
+% \algrenewcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
+% \algrenewcommand{\algorithmicloop}{\textbf{loop}}
+% \algrenewcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+ \algrenewcommand{\algorithmicrepeat}{\textbf{Repita}}
+ \algrenewcommand{\algorithmicuntil}{\textbf{At\'e}}
+%\algrenewcommand{\algorithmicprint}{\textbf{Imprima}}
+%\algrenewcommand{\algorithmicreturn}{\textbf{Retorna}}
+%\algrenewcommand{\algorithmictrue}{\true}
+%\algrenewcommand{\algorithmicfalse}{\false}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: códigos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage{textcomp}
+\usepackage{listings}
+\renewcommand\lstlistingname{Código}
+\renewcommand\lstlistlistingname{Lista de Códigos}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: index %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage{makeidx}
+\makeindex
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: fontes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage{lmodern} \normalfont
+ \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
+ \usepackage{mathrsfs}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: fontes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% \usepackage{setspace} %para controle do espacamento
+\usepackage{enumerate} %Controle melhor do env enumerate
+\usepackage{acronym}
+\usepackage{imecclogo,unicamplogo}
+\usepackage[pagewise]{lineno}
+\usepackage{lrsmath,lrsthm}
+

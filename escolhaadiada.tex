@@ -20,7 +20,7 @@ i.e.,
 
  \begin{equation*}
 	\begin{array}{lc}
-\displaystyle \minimizar_{x} & c^Tx \\
+\displaystyle \min_{x} & c^Tx \\
 \text{sujeito a} &\begin{cases} Ax = b \\
 				 x \geq 0	
 				 \end{cases}\
@@ -29,7 +29,7 @@ i.e.,
 e 
  \begin{equation}
 	\begin{array}{lc}
-\displaystyle \maximizar_{(y,z)} & b^Ty \\
+\displaystyle \max_{(y,z)} & b^Ty \\
 \text{sujeito a} &\begin{cases} A^Ty + z = b \\
 				 z \geq 0, \:y \text{ livre}	
 				 \end{cases}\
@@ -270,7 +270,7 @@ X\Dez^c + Z\Dex^c + \DeX\Dez = \mu e
 \end{cases}.
 \end{equation}
 O vetor $\DeX\Dez$ corresponde a uma correção de segunda ordem, nos moldes dos
-trabalhos de \citet{Mehrotra:1992wr,Gondzio:1996uw}.
+trabalhos de \textcite{Mehrotra:1992wr,Gondzio:1996uw}.
 
 
 
@@ -289,7 +289,7 @@ seja aceitável.
 Em particular note
 que se  $\sig = 1$ e $\mu = \tau_{\text{af}}^3/\tau$ -- em que $\tau_{\text{af}}$ é dado
 na equação \eqref{eq:tau-affine} e $\tau=x^Tz/n$ -- tem-se o método de
-\citet{Mehrotra:1992wr}. Por outro lado, para \citet{Gondzio:1996uw}, $\mu$ é
+\textcite{Mehrotra:1992wr}. Por outro lado, para \textcite{Gondzio:1996uw}, $\mu$ é
 escolhido como no método de Mehrotra e $\DeX\Dez$ é várias vezes aproximado por
 direções que projetem, componente a componente, a complementaridade na
 vizinhança $N_s(\ga)$. De fato, a escolha do valor $\mu$ e a utilização de
@@ -307,13 +307,13 @@ utilizados atualmente~\cite{Wright:Primal-dual-interior-point:1997h}.
 
 Alguns autores 
 combinam direções de correção utilizando pesos para essas direções.
- \citet{Colombo:2008ia} generalizam e estendem o trabalho de \citet{Gondzio:1996uw},
+ \textcite{Colombo:2008ia} generalizam e estendem o trabalho de \textcite{Gondzio:1996uw},
 fazendo com que a combinação das correções múltiplas  tenha um peso, que é
-escolhido fazendo-se uma busca linear. Já \citet{Jarre:1999tl}  propõem um subproblema
+escolhido fazendo-se uma busca linear. Já \textcite{Jarre:1999tl}  propõem um subproblema
 linear que é resolvido a cada iteração e cuja solução determina os pesos que as direções de 
 correções de ordem superior terão na direção final. 
 
-\citet{VillasBoas:2003tg}, também no contexto primal-dual, estudam algumas
+\textcite{VillasBoas:2003tg}, também no contexto primal-dual, estudam algumas
 vantagens de adiar a escolha do parâmetro de barreira e do tamanho do passo.
 Estes autores mostram que o próximo iterado pode ser expresso por uma função
 quadrática do parâmetro de barreira, bem como que tal parametrização é útil
@@ -321,7 +321,7 @@ para garantir tanto a não negatividade do próximo iterado quanto a proximidade
 trajetória central. 
 
 Uma das principais contribuições deste trabalho, através da extensão das ideias
-de \citet{VillasBoas:2003tg}, é a escolha do valor de $\mu$ -- que aqui faz as
+de \textcite{VillasBoas:2003tg}, é a escolha do valor de $\mu$ -- que aqui faz as
 vezes de parâmetro de barreira -- e de $\sig$  sendo feita de maneira adiada, e
 por isso tais parâmetros, bem como o tamanho do passo $\al$, estão sendo
 tratados como \emph{variáveis}. Para a escolha desses parâmetros, far-se-á uso de uma
@@ -672,7 +672,7 @@ Em geral, funções de mérito para \ac{MPI} servem para dar uma medida de quão
 próximo se está da solução do problema, embora nem sempre elas sejam usadas como
 critério de parada do algoritmo. 
 
-\citet{Zhang:2006ic}, por exemplo, quer escolher o tamanho de passo de seu
+\textcite{Zhang:2006ic}, por exemplo, quer escolher o tamanho de passo de seu
 algoritmo, tal que a  complementaridade e a factibilidade primal-dual sejam
 reduzidas. Para isso, este autor define sua função de mérito como a soma do
 \emph{gap} de complementaridade e da norma-2 do resíduo primal-dual, i.e., \[\phi(x,y,z) =
@@ -693,7 +693,7 @@ do algoritmo, como visto em  \eqref{eq:termination-criteria-pcx}.
 
 %XXX: Escrever sobre a função de mérito do mehotra
 % \textcolor{red}{Escrever sobre a função de mérito do 
-% \citet{Mehrotra:1992wr}
+% \textcite{Mehrotra:1992wr}
 
 Neste trabalho, será definida uma função de mérito que não só sirva como medida
 de complementaridade e factibilidade, mas que também sirva de guia para a
@@ -935,7 +935,7 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para a função polinomial
   
 \section{Vizinhança simétrica como restrições polinomiais}
 
-Como visto no capítulo anterior, \citet{Colombo:2008ia}  propuseram  a
+Como visto no capítulo anterior, \textcite{Colombo:2008ia}  propuseram  a
 vizinhança simétrica $\Nset_s(\ga)$ dada na Equação \eqref{eq:symmetric-neig} --
 baseada na vizinhança $\Nset_{-\infty}(\ga)$ --  com objetivo de melhorar a
 \emph{centralidade} de um ponto, i.e., como o espalhamento dos produtos
@@ -957,8 +957,8 @@ Pode-se interpretar $\Nset_s(\ga)$ da seguinte maneira:
 Como este trabalho  baseia-se em pontos infactíveis mas ao mesmo tempo
 pretende utilizar as boas propriedades da vizinhança  $\Nset_s(\ga)$,
 é necessário estendê-la. No Capítulo \ref{chap:mpis}, página \pageref{eq:infeasible-infty-neig}
-mostrou-se que \citet{Kojima:1993fe}, assim como 
-\citet[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
+mostrou-se que \textcite{Kojima:1993fe}, assim como 
+\textcite[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
 método infactível a vizinhança $\Nset_{-\infty}(\ga,\be)$.
 
 

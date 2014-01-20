@@ -70,8 +70,8 @@ Como vimos, $\dbvec{L_{2,0}} = \dbvec{L_{0,2}} = 0$, e escolhendo $\mu = \eta\fr
  e $\sig=0$ podemos reescrever a função de mérito para o próximo ponto, apenas dependendo de uma escolha de  $\al$, como
 \[
 % \label{eq:merit-function-al-mu-sig}
-{\varphi}_{k+1}(\al) & = (1-\al)(\nu_{k}\dbvec{\rho_L}_0 +
-\dbvec{\rho_C}_{k}) + \al\eta\dbvec{\rho_C}_{k} + \al^2\left(\dbvec{L_{0,0}}_{k} + \eta\dbvec{\rho_C}_{k} \dbvec{L_{1,0}_{k}}
+{\varphi}_{k+1}(\al)  = (1-\al)(\nu_{k}\dbvec{\rho_L}_0 +
+\dbvec{\rho_C}_{k}) + \al\eta\dbvec{\rho_C}_{k} + \al^2\left(\dbvec{L_{0,0}}_{k} + \eta\dbvec{\rho_C}_{k} \dbvec{L_{1,0}}_{k}
 \right) .
 \]
 Seja 
@@ -102,18 +102,18 @@ Como quer-se garantir que $\varphi(\al) \leq  0$, então $\theta(\al)$ deve ser 
 
 
 
-Vamos escolher um $\gamma\in(0,1)$ adequado, para construir a vizinhança. Várias escolhas são possíveis, como, por exemplo a de \citet{Colombo:2008ia} que fazem $\ga = 1/10$. No entanto, vamos utilizar a estratégia de \citet{Zhang:2006ic}
+Vamos escolher um $\gamma\in(0,1)$ adequado, para construir a vizinhança. Várias escolhas são possíveis, como, por exemplo a de \textcite{Colombo:2008ia} que fazem $\ga = 1/10$. No entanto, vamos utilizar a estratégia de \textcite{Zhang:2006ic}
 \[
 \gamma \leq \frac{\min(x^0z^0)}{(x^0)^Tz^0/n},
 \]
-que garante que o ponto inicial estará dentro da vizinhança. Mais detalhes sobre a escolha de $\gamma$ será feita na Capítulo que fala a respeito da implementação.
+que garante que o ponto inicial estará dentro da vizinhança. Mais detalhes sobre a escolha de $\gamma$ será feita na Capítulo~\ref{chap:numerical}, que versa a respeito da implementação.
 
-% Considerando que fixamos o valor de $\mu$ e de $\sig$, para minimizar a função de mérito para o próximo ponto tanto quanto possível em cada iteração, sujeita as restrições da Equações\eqref{eq:symmetric-polynomials-a} e \eqref{eq:symmetric-polynomials-b} dadas pelo Teorema~\ref{thm:polynomial-constraints} -- restrições que garantem que o próximo ponto está em $\Nset_{-\infty}(\gamma,\beta)$ --, escolhemos o tamanho de passo $\bar{\al}$ como
-% \begin{equation}
-% \label{eq:bound-alpha}
-% 	\bar{\al} = \arg\max \{\theta(\al):\al\in[0,\min\{\al_L,\al_C\}] \}
-% }
-% \end{equation}
+Considerando que fixamos o valor de $\mu$ e de $\sig$, para minimizar a função de mérito para o próximo ponto tanto quanto possível em cada iteração, sujeita as restrições da Equações\eqref{eq:symmetric-polynomials-a} e \eqref{eq:symmetric-polynomials-b} dadas pelo Teorema~\ref{thm:polynomial-constraints} -- restrições que garantem que o próximo ponto está em $\Nset_{-\infty}(\gamma,\beta)$ --, escolhemos o tamanho de passo $\bar{\al}$ como
+
+\begin{equation}
+\label{eq:bound-alpha}
+	\bar{\al} = \arg\max \{\theta(\al):\al\in[0,\min\{\al_L,\al_C\}] \}
+\end{equation}
 
 
 
@@ -126,8 +126,8 @@ que garante que o ponto inicial estará dentro da vizinhança. Mais detalhes sob
 \begin{algorithmic}[1]
 \Procedure{ResolveLP}{$A,b,c$}
 \State $(x^0,y^0,z^0) \gets$ \Call{PontoInicial}{$A,b,c$}.
-\Comment{Assegure que  $(x^0,z^0)>0$ e que \eta\in(0,1)}
-	\For {$k=1,2,\dots$}
+\Comment{Assegure que  $(x^0,z^0)>0$ e que $\eta\in(0,1)$}
+	\For {$k=1,2,\ldots$}
 		\State Encontre		$((\dex)^{k},(\dey)^{k},(\dez)^{k})$ resolvendo
 				\begin{equation}
 				\label{eq:predictor-linear-matrix-simplified}

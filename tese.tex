@@ -1,177 +1,159 @@
+% FIXME Ao final, deixe descomentada a linha correspondente ao numero de paginas
+% que a sua defesa possui.
 \documentclass[%
-				%draft,%
-%                 openany,
-            	%11pt, 
-                %cleardoublepage=plain,%
+				12pt, 
+				letterpaper, 
+				oneside, 
+				bibliography=totoc,
+				cleardoublepage=plain,%
                 chapterprefix, 
                 appendixprefix,
-				oneside, %Usar quando menos de 100 paginas
- 				% twoside, %Usa quando mais de 100 paginas
-				bibliography=totoc,%incluir refs no sumario					
-				]{scrbook}
+				]{scrbook}  % Para menos de 100 paginas.
+% \documentclass[12pt, letterpaper, twoside, bibliography=totoc, cleardoublepage, ]{scrbook}  % Para mais de 100 paginas.
 
-\usepackage[letterpaper,inner=3cm,top=3cm,outer=3cm,%showframe,%,bottom=3cm
-			]{geometry}
-\usepackage [utf8]{inputenc}
-\usepackage{cmap}
-\usepackage[T1]{fontenc} 
-\usepackage{ae}
-\usepackage[english,brazil]{babel}  
-\usepackage{graphicx}
-\usepackage{setspace} %para controle do espacamento
-\usepackage{enumerate} %Controle melhor do env enumerate
-\usepackage[pdfborder={0 0 0}]{hyperref}
-\usepackage{url} 
-\usepackage{lrsmath,lrsthm}
-\usepackage{acronym}
-\usepackage{imecclogo,unicamplogo}
-\usepackage[pagewise]{lineno}
-%\linenumbers
-% \usepackage{showlabels}
-%\usepackage{eulervm}
-%\usepackage{mathptmx}
- 
-%\usepackage{microtype}
-%\usepackage{biblatex}  
-%\usepackage[alf]{abntcite}
-%\def\citet{\citeonline}
-\usepackage[numbers,sort&compress,longnamesfirst]{natbib}
-\usepackage{hypernat}
-%Para Português
-\bibliographystyle{myabbrvnat} 
-%Para Inglês
-% \bibliographystyle{abbrvnat} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Configuração: pacotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{pacotes}  % Arquivo com os pacotes.
 
-%\bibliographystyle{plainnat}  
+%%%%%%%%%%%%%%%%%%%%%%%%% Configuração: dados pessoais %%%%%%%%%%%%%%%%%%%%%%%%%
+% FIXME Substituir 'Nome completo do aluno' pelo seu nome.
+\newcommand{\autor}{Luiz Rafael dos Santos}
+% FIXME Se for do sexo feminino, descomente a linha a seguir.
+% \def\femaleAuthor{}
 
-%% Defined on lrsmath.sty  
-% \def\Pset{\mathcal{P}}
-% \def\Dset{\mathcal{D}}
-% \def\Fset{\mathcal{F}}
-% \def\Cset{\mathcal{C}} 
-% \def\Nset{\mathcal{N}}  
-% \def\Oset{\mathcal{O}} 
-% \def\Deaf{\De^{\text{af}}} 
-% \def\Deco{\De^{\text{cc}}}  
-% \def\DeMe{\De^{\text{m}}}   
-% \def\DeMu{\De^{\text{g}}} 
-   
-       
-\setkomafont{dictumtext}{\normalfont\normalcolor\sffamily\footnotesize}
-% %%%%%%%%%%%%%Head and Footer
-% \usepackage{fancyhdr} 
-% \pagestyle{fancy}
-% % com isto nos nos certificamos que o cabecalho dos capitulos e
-% % secoes estao em minusculo.  
-% \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
-% \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
-% \fancyhf{} % deleta a configuracao atual para cabecalho e rodape
-% \fancyhead[LE,RO]{\bfseries\sffamily\thepage}%
-% \fancyhead[LO]{\bfseries\sffamily\rightmark}%
-% \fancyhead[RE]{\bfseries\sffamily\leftmark} 
-% %
-% \renewcommand{\headrulewidth}{0.5pt}
-% \renewcommand{\footrulewidth}{0pt}
-% \addtolength{\headheight}{0.5pt} % cria espaco para a linha
-% \fancypagestyle{plain}{%
-% \fancyhf{} % clear all header and footer fields
-% \fancyfoot[C]{\sffamily\bfseries\thepage} % except the center
-% \renewcommand{\headrulewidth}{0pt}
-% \renewcommand{\footrulewidth}{0pt}}
+% FIXME Substituir 'Título da defesa' pelo título da defesa.
+\newcommand{\titulo}{Escolha Adiada de Parâmetros para Métodos de Pontos Interiores}
+% FIXME Se estiver no programa de mestrado, descomente a linha a seguir.
+%\ \def\mestrado{}
+% FIXME Deixe descomente apenas a linha referente ao departamento.
+% \def\matematica{}
+\def\aplicada{}
+% \def\estatistica{}
 
-\DeclareMathOperator*{\minimizar}{minimizar} 
-\DeclareMathOperator*{\maximizar}{maximizar} 
- 	
-  
-%%%%Arrumando o Algoritmo para portugues%%%%
-\usepackage{algorithmicx,algorithm}
-\usepackage{algpseudocode}
- \algrenewcommand{\algorithmicrequire}{\textbf{Dado:}}
-% \algrenewcommand{\algorithmicreturn}{\textbf{Sa\' ida:}}
- \algrenewcommand{\algorithmicend}{\textbf{fim}}
-% \algrenewcommand{\algorithmicif}{\textbf{Se}}
-% \algrenewcommand{\algorithmicthen}{\textbf{Ent\~ao}}
-% \algrenewcommand{\algorithmicelse}{\textbf{Sen\~ao}}
-% \algrenewcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
-% \algrenewcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
-\algrenewcommand{\algorithmicfor}{\textbf{para}}
-\algrenewcommand{\algorithmicforall}{\textbf{para todo}}
-\algrenewcommand{\algorithmicdo}{\textbf{fa\c{c}a}}
-% \algrenewcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
-% \algrenewcommand{\algorithmicwhile}{\textbf{Enquanto}}
-% \algrenewcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
-% \algrenewcommand{\algorithmicloop}{\textbf{loop}}
-% \algrenewcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
- \algrenewcommand{\algorithmicrepeat}{\textbf{Repita}}
- \algrenewcommand{\algorithmicuntil}{\textbf{At\'e}}
-%\algrenewcommand{\algorithmicprint}{\textbf{Imprima}}
-%\algrenewcommand{\algorithmicreturn}{\textbf{Retorna}}
-%\algrenewcommand{\algorithmictrue}{\true}
-%\algrenewcommand{\algorithmicfalse}{\false}
-\floatname{algorithm}{Pseudo-Código} 
+% FIXME Substituir 'Nome completo do orientador' pelo nome completo do seu
+% orientador.
+\newcommand{\orientador}{Aurelio Ribeiro Leite de Oliveira}
+% FIXME Se for orientado por uma mulher, descomente a linha a seguir.
+% \def\femaleOrientador{}
 
+% FIXME Substituir 'Nome completo do coorientador' pelo nome completo do seu
+% coorientador. Caso não tenha coorientador, comente a linha a seguir.
+\newcommand{\coorientador}{Fernando da Rocha Villas-Bôas e Clóvis Perin}
+% FIXME Se for coorientado por uma mulher, descomente a linha a seguir.
+% \def\femaleCoorientador{}
+% FIXME Se tiver mais que um coorientador, descomente a linha a seguir.
+\def\Coorientadores{}
 
+% FIXME Substituir 'Ano' pelo ano em que ocorreu sua defesa.
+\newcommand{\ano}{2014}
 
-% 
-% \includeonly{
-% capa,%
-% folha_rosto,
-% dedic,
-% epigrafe,
-% agradece,
-% res,
-% abs,
-% int,l
-% mpis,
-% escolhaadiada,
-%convergencia,
-% concl,
-% anexo,
-%}
-\author{Luiz Rafael dos Santos}
-\title{Escolha adiada de parâmetros em métodos de pontos interiores para programação linear}
-\synctex=1 
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Configuração: definições %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{configuracao}  % Arquivo com algumas configurações.
 
-\usepackage{scrhack}
-
-\begin{document} 
-% \selectlanguage{brazil}
-
-\onehalfspacing
-\maketitle
-%\include{capa}
+%%%%%%%%%%%%%%%%%%%%%%%%%% Início do texto da defesa %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+% WARNING Todas as paginas deverão ser numeradas.
+%
+% As paginas iniciais são numeradas com algoritmos romanos em sua forma
+% minuscula.
 \frontmatter
-%Incluir  somente na versao final
-% \include{folha_rosto}
-%\include{dedic}
-%\include{epigrafe}
-%\include{agradece}
-%Resumo and Abstract
-% \include{res}
-% \include{abs}
-\eject  
-\setcounter{tocdepth}{3}
+%
+\input{capa}  % Não edite esse arquivo.
+\newpage\mbox{}\thispagestyle{plain}\newpage  % Pagina em branco.
+%
+% WARNING A folha de rosto precisa ser assinada pelos orientadores.
+% FIXME Substitua arquivo folha-de-rosto.pdf por uma copia escaneada, comente
+% esta linha e descomente a próxima.
+% \input{folha-de-rosto}
+% \includepdf{folha-de-rosto.pdf}
+%
+% WARNING A ficha catalográfica deve estar no verso da folha de rosto.
+% FIXME O arquivo ficha-catalografica.pdf deve ser sobrescrito com uma cópia
+% do arquivo pdf que a biblioteca lhe enviar.
+% \includepdf{ficha-catalografica}
+%
+% WARNING A folha de aprovação deve ser assinada pelos membros da banca apos a
+% defesa.
+% FIXME Substitua o arquivo folha-de-aprovacao.pdf por uma copia escaneada.
+% \includepdf{folha-de-aprovacao}
+% \chapter*{}  % Capítulo vazio.
+% \input{abstract}
+% \vspace{.1\textheight}
+% \input{resumo}
+%
 \tableofcontents
+%
+% FIXME Se não for incluir a dedicatória, comentar a linha abaixo.
+% \input{dedicatoria}
+%
+% FIXME Se não for incluir os agradecimentos, comentar a linha abaixo.
+%\input{agradecimentos}
+%
+% FIXME Comentar a linha abaixo se não desejar listar as figuras
+% apresentadas.
+%\renewcommand{\listfigurename}{Lista de Ilustrações}  % CCPG 228/2013
+%\listoffigures
+%
+% FIXME Comentar a linha abaixo se não desejar listar as tabelas
+% apresentadas.
+%\listoftables
+%
+% FIXME Comentar a linha abaixo de não for apresentar as
+% abreviações e siglas utilizadas.
+%\input{abreviacoes}
+%
+% FIXME Comentar a linha abaixo se não for apresentar os
+% símbolos utilizados.
+%\input{simbolos}
+%
+% FIXME Comentar a linha abaixo se não desejar listar os algoritmos
+% apresentados.
+%\listofalgorithms
+%
+% FIXME Comentar a linha abaixo se não desejar listar os trechos de código
+% apresentados.
+%\lstlistoflistings
+%
+% As paginas com o conteúdo da tese são numeradas com algoritmos arábicos.
 \mainmatter
-\onehalfspacing
+%
+\doublespacing
+% FIXME Remover as 3 linhas abaixo.
 \include{int}
 \include{mpis} 
 \include{escolhaadiada}
 \include{convergencia}
 % \include{numericos} 
 \include{concl}
-  
 
-\onehalfspacing 
-\bibliography{references_bibdesk_papers}
+%
+% TODO Inserir os arquivos referentes ao corpo da tese.
+%
+% Referência bibliográfica.
+\singlespacing
+\printbibliography[title=Referências]
+%
+% FIXME Se não for utilizar apêndices (o glossario é um apêndice), comentar a
+% linha abaixo.
+%\appendix
+% FIXME Remover as 4 linha abaixo.
+%\input{glossario}
 
-%Incluir apenas se tiver algum anexo.
-
-% \appendix
-% \include{resultados_tecnicos}
-
-\backmatter
-	
- 
-     
+% TODO Inserir os arquivos referentes aos apêndices.
+%
+% TODO Se não for utilizar anexos nem uma licença Creative Commons, comentar a linha abaixo.
+%\annex
+% FIXME Remover a linha abaixo.
+%\input{ex_ane1}
+% TODO Inserir os arquivos referentes aos anexos.
+%
+% FIXME Escolher, opcionalmente, uma das licença Creative Commons abaixo.
+% Para isso remova a linha correspondente a licença não desejada.
+%\input{cc-by}  % Creative Commons Atribuição 3.0 Não Adaptada
+%\input{cc-by-sa}  % Creative Commons AtribuiçãoCompartilhaIgual 3.0 Não Adaptada
+%
+% \clearpage
+% \backmatter
+% \phantomsection
+% \addcontentsline{toc}{chapter}{Índice Remissivo}
+% \printindex
 \end{document}

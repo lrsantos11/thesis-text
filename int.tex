@@ -50,7 +50,7 @@ Matematicamente, podemos escrever qualquer \ac{PL} na seguinte \emph{forma
 padrão}:
 \begin{equation*}
 	\begin{array}{lc}
-\displaystyle \minimizar_{x} & c^Tx \\
+\displaystyle \min_{x} & c^Tx \\
 \text{sujeito a} &\begin{cases} Ax = b \\
 				 x \geq 0	
 				 \end{cases}
@@ -99,7 +99,7 @@ segredo dos bons métodos para resolver problemas de \ac{PL}.
 \subsection{Método simplex}
 
 O Método Simplex foi apresentado por
-\citet{Dantzig:Maximization-of-a-linear:1951y} em 1947 e foi desenvolvido ao
+\textcite{Dantzig:Maximization-of-a-linear:1951y} em 1947 e foi desenvolvido ao
 mesmo tempo em que houve a percepção do poder da \ac{PL} como ferramenta auxiliar na
 tomada de decisões. Seu pioneirismo deve-se à busca da solução do \ac{PL}
 caminhando pelos vértices de maneira a utilizar o valor da função objetivo --
@@ -119,7 +119,7 @@ quantidade de problemas, e por isso mesmo foi considerado \emph{o método
 preferencial} para se resolver \ac{PL}'s. Entretanto, dado o número exponencial
 de possíveis vértices, havia sempre o receio de que seria necessário esforço
 exponencial, isto é, que fosse  todos os vértices da região viável fossem
-visitados para que se encontrasse a solução ótima. De fato, \citet{Klee:1972wi}
+visitados para que se encontrasse a solução ótima. De fato, \textcite{Klee:1972wi}
 foram os primeiros a apresentar uma classe de exemplos patológicos para a qual esse
 comportamento patológico do método simplex apareceu. No exemplo criado por estes
 autores, com $n$ variáveis e $2n$ restrições, o método simplex de Dantzig 
@@ -133,14 +133,14 @@ consultada até que se chegue a uma solução ótima. Mais que isso, em geral, o
 simplex mostra comportamento polinomial, sendo linear em relação à $m$ e
 sublinear em relação à $n$~\cite[pg.~94]{Fang:1993wu}. Um resumo sobre a
 eficiência do método simplex pode ser encontrada no artigo
-de~\citet{Shamir:1987th}.
+de~\textcite{Shamir:1987th}.
  
 
 \subsection{Método elipsoide}
 
 Enquanto na prática o método Simplex continuava como o método mais robusto e
 eficiente, a busca por um método que tivesse complexidade polinomial no pior
-caso foi satisfeita por \citet{Khachiyan:A-polynomial-algorithm:1979y} através
+caso foi satisfeita por \textcite{Khachiyan:A-polynomial-algorithm:1979y} através
 de seu  \emph{Método Elipsoide}.
 Este método, ao contrário do método simplex,  não se baseia em caminhar pelos
 vértices da região factível mas em diminuir o volume de um elipsoide que
@@ -167,18 +167,18 @@ na prática este era absolutamente superior ao método elipsoide.
 
 Em problemas práticos, o método Simplex reinou absoluto na solução de problemas
 de \ac{PL} até meados da década de 1980 como único método viável para resolver
-tal classe de problemas. Em 1984, \citet{Karmarkar:1984cp} inicia uma nova
+tal classe de problemas. Em 1984, \textcite{Karmarkar:1984cp} inicia uma nova
 abordagem que ficou conhecida como \acrodef{MPI}{Métodos de Pontos Interiores}
 \ac{MPI}. Por outro lado,  em 1967,
-\citet{DIKIN:InterativeSol1967} já havia publicado um trabalho, no qual um 
+\textcite{DIKIN:InterativeSol1967} já havia publicado um trabalho, no qual um 
 \ac{PL} era resolvido usando um método de pontos interiores. O método de Dikin ficou
 conhecido como método afim-escala.
       
 % De fato, uma busca histórica mostra que em 1955  o primeiro \emph{\acl{MPI}} é
-% atribuído a \citet{Frisch:The-logarithmic-potential:1955t}.
+% atribuído a \textcite{Frisch:The-logarithmic-potential:1955t}.
 % Este trabalho implementa uma função barreira-logarítmica para encontrar o mínimo local de uma
 % função \emph{não-linear}, sujeita a restrições de desigualdade. O método foi
-% extensamente estudado por \citet{Fiacco:Nonlinear-programming::1968y}, porém
+% extensamente estudado por \textcite{Fiacco:Nonlinear-programming::1968y}, porém
 % caiu em desuso por conta de sua ineficiência bem como pela presença de
 % competidores muito fortes como a programação quadrática sequencial.
 
@@ -206,7 +206,7 @@ $\mathcal{O}(n(1/\eps))$~\cite{Karmarkar:1984cp}.
 Ao contrário do método elipsoide, o método de Karmarkar tem um desempenho muito
 melhor e compete com o simplex, sendo consideravelmente melhor  que este em
 problemas de larga escala. Uma variante do método de Karmarkar foi implementada
-por~\citet{Adler:1989fw}, e desde então a compreensão do funcionamento desses
+por~\textcite{Adler:1989fw}, e desde então a compreensão do funcionamento desses
 métodos aumentou consideravelmente, ao mesmo tempo em que variantes têm
 sido propostas, muitas delas se apresentando como alternativas computacionais
 viáveis ao método simplex.
@@ -231,7 +231,7 @@ de fluxo em rede, nos quais uma especialização do método simplex permite
 explorar a estrutura do problema de maneira muito
 eficiente~\cite{Nemhauser:Integer-and-combinatorial:1988s}. Vale a pena notar
 que, para um problema de fluxo de rede com de milhões de variáveis, 
-\citet{Resende:1993uu} mostraram que um \ac{MPI} foi mais
+\textcite{Resende:1993uu} mostraram que um \ac{MPI} foi mais
 eficientes.
 
 
@@ -246,7 +246,7 @@ são usualmente resolvidos com \ac{MPI}, principalmente
 quando são de larga escala. Com efeito, um \ac{QP} convexo pode ser  escrito como
 \begin{equation*}
 	\begin{array}{lc}
-\displaystyle \minimizar_{x} & x^TQx + c^Tx \\
+\displaystyle \min_{x} & x^TQx + c^Tx \\
 \text{sujeito a} &\begin{cases} Ax = b \\
 				 x \geq 0	
 				 \end{cases}
