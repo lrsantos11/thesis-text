@@ -5,5 +5,9 @@
 			"follow_symlinks": true,
 			"path": "/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text"
 		}
-	]
+	],
+	"settings":
+	{
+		"TEXroot": "tese.tex"
+	}
 }

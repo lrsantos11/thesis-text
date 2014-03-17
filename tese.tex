@@ -1,15 +1,26 @@
 % FIXME Ao final, deixe descomentada a linha correspondente ao numero de paginas
 % que a sua defesa possui.
+% Para menos de 100 paginas.
+% \documentclass[%
+% 				12pt, 
+% 				a4paper, 
+% 				oneside, 
+% 				bibliography=totoc,
+%                 chapterprefix, 
+%                 appendixprefix,
+% 				]{scrbook}  
+% Para mais de 100 paginas.
 \documentclass[%
 				12pt, 
-				a4paper, 
-				oneside, 
-				bibliography=totoc,
-				cleardoublepage=plain,%
-                chapterprefix, 
-                appendixprefix,
-				]{scrbook}  % Para menos de 100 paginas.
-% \documentclass[12pt, letterpaper, twoside, bibliography=totoc, cleardoublepage, ]{scrbook}  % Para mais de 100 paginas.
+		 		letterpaper, 
+				twoside, 
+				bibliography=totoc, 
+				cleardoublepage=empty,
+				chapterprefix, 
+                appendixprefix, 
+                ]{scrbook}  
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Configuração: pacotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{pacotes}  % Arquivo com os pacotes.
