@@ -70,15 +70,14 @@ respectivamente. Usando essa notação, o par primal-dual de
 \begin{equation}
 \label{eq:primal-dual-reescrito}
 \min_x\; c^Tx \; \text{ s.a. }\; x\in \Pset \qquad\text{ e } \qquad
-\max_{(y,z)}.
+\max_{(y,z)}
 b^Tx \; \text{ s.a. }\; (y,z) \in \Dset.
 \end{equation}
 
 
 Denomina-se $\Fset = \Pset\times\Dset$ o conjuntos dos pontos primais-duais
 factíveis.
- Para fins de notação, pode-se escrever $w = (x,y,z)$ e portanto é correto
- afirmar que $w\in\Fset$. Define-se também os conjuntos \[ \Qset =
+ Para fins de notação, pode-se dizer que se  $w = (x,y,z)$ é primal-dual factível, então $w\in\Fset$. Define-se também os conjuntos \[ \Qset =
  \{w\in\Real^{2n+m}:(x,z)\geq 0\} \] e \[ \Qset^+ = \{w\in\Real^{2n+m}:(x,z) >
  0\} \] respectivamente  como os
 conjuntos dos pontos de $\Real^{2n+m}$ não-negativos e positivos nas variáveis
@@ -87,10 +86,13 @@ $x$ e $z$.
 
 
 Com isso, seja
-\[  \Fset^+ = \Fset \cap \Qset^+\] o conjunto dos
+\begin{equation}
+  	\label{eq:F+}
+  	\Fset^+ = \Fset \cap \Qset^+
+  \end{equation}   o conjunto dos
 pontos primais e duais interiores. Como o próprio nome sugere, em Métodos de 
 Pontos Interiores dedica-se especialmente a estudar iterados que estejam
-contidos em $\Fset^+$, no caso de métodos factíveis.
+contidos em $\Fset^+$, no caso de métodos factíveis, ou iniciando com pontos em $\Qset^{+}$, no caso de métodos infactíveis. 
 
 
 Neste trabalho, o seguinte pressuposto é assumido como verdadeiro:
@@ -118,7 +120,7 @@ $\Fset$.
 
 Apresenta-se agora  alguns resultados bem conhecidos sobre a relação entre o par
 primal-dual. Para maiores detalhes consulte-se
-\cite{Colombo:2008wm,Wright:Primal-dual-interior-point:1997h,Bazaraa:2009uu,Fang:1993wu}
+\textcite{Colombo:2008wm,Wright:Primal-dual-interior-point:1997h,Bazaraa:2009uu,Fang:1993wu},
 textos que inspiraram esta apresentação.
 
 \begin{lema}[Dualidade Fraca]\label{lema:weak-duality}
@@ -718,7 +720,7 @@ dá uma medida de proporção entre o maior e o menor par de complementaridade.
  Claramente, $\varrho(xz)\in(0,1)$ e quando o iterado é perfeitamente
 centrado, este valor é igual a 1. Uma
 análise da medida \eqref{eq:ratio-complementarity} pode ser encontrada em
-\cite{Jansen:1jv}.
+\textcite{Jansen:1jv}.
  
 
 \textcite{Gondzio:1996uw} e posteriormente \textcite{Colombo:2008wm,Colombo:2008ia}
@@ -765,11 +767,11 @@ de $\Nset_{-\infty}$ não produzem perdas teóricas, ao mesmo tempo em que,
 contribuem com  a possibilidade de deixar os iterados mais centrados.
   
   
-De fato, \textcite{Zhang:1993gn}, ao provar a convergência superlinear de um método
+De fato, \textcite{Zhang:1993gn}, ao provarem a convergência superlinear de um método
 primal-dual, utilizam uma vizinhança com parâmetros simétricos para melhorar os
 limites da convergência. No entanto, à época imaginavam que um limite superior,
 como o dado por $\gamma\tau$,  não teria significância prática, previsão não se
-concretizou~\cite{Gondzio:1996uw,Colombo:2008wm,Colombo:2008ia}
+concretizou~\cite{Gondzio:1996uw,Colombo:2008wm,Colombo:2008ia}.
 
 \subsection{Ponto inicial infactível}
 \label{sec:infeasible_inicial_point}
@@ -889,23 +891,23 @@ completa de métodos infactíveis veja \textcite[cap. 6]{Wright:Primal-dual-inte
 \subsection{Método Preditor-Corretor de Mehrotra}
 \label{sec:mehrotra-pc-method}
 Do ponto de vista prático, a maioria dos códigos de implementação de \ac{MPI}
-baseia-se em alguma variação do \acrodef{MPC}{Método Preditor-Corretor}
-\ac{MPC} devido a \textcite{Mehrotra:1992wr}. O método de Mehrotra baseia-se no modelo geral
+baseia-se em alguma variação de um método do tipo  preditor-corretor
+ devido a \textcite{Mehrotra:1992wr}. O \acrodef{MPC-M}{Método Preditor Corretor de Mehrotra} \ac{MPC-M} baseia-se no modelo geral
 para Métodos Seguidores de Caminho, dado no Pseudo-código
 \ref{alg:modelo-geral}, mas altera a busca de direção puramente Newton com
 correções que são muito baratas computacionalmente mas que auxiliam a obter uma
 direção melhor. Além disso, um escolha adaptativa do parâmetro de centragem
 $\eta$ é feita em cada iteração. Atualmente, nos códigos mais utilizados, tanto
 acadêmicos como \texttt{BPMPD}, \texttt{HOPDM}, \texttt{OOPS}, \texttt{OOQP},
-\texttt{PCx}, bem como  comerciais tais quais \texttt{Cplex}, \texttt{Mosek} and
+\texttt{PCx}, bem como  comerciais tais quais \texttt{Cplex}, \texttt{Mosek} e
 \texttt{Xpress}, algumas heurísticas e ideias de otimização também foram
-incorporadas, de modo que todos são variantes do \ac{MPC}.
+incorporadas, de modo que todos são variantes do \ac{MPC-M}.
 
 Este método usa  aproximações de ordem maior da trajetória central $\Cset$ --
 abordagem começada  por \textcite{Meggido:Pathways-to-the-optimal:1988u} e mais
 tarde desenvolvidas por
 \textcite{Monteiro:1990vn} -- e o uso de pontos infactíveis. Segundo \textcite[pg
-194]{Wright:Primal-dual-interior-point:1997h},  a contribuição princiapl
+194]{Wright:Primal-dual-interior-point:1997h},  a contribuição principal
 de Mehrotra foi combinar estas ideias existentes da maneira certa e adicionar
 heurísticas engenhosas para escolher o parâmetro de centragem (adaptativamente), o tamanho
 do passo e o ponto inicial.
@@ -975,7 +977,7 @@ pontos que têm complementaridade pequena, mas que não são ótimos
 
 \subsubsection{Direção com correção de Segunda Ordem}
 
-O \ac{MPC} de Mehrotra explora uma direção corretora de centralidade de modo a
+O \ac{MPC-M} explora uma direção corretora de centralidade de modo a
 tentar remediar pontos que estão mal centrados. Esta direção caminha para
 perto da trajetória central e logo reduz o espalhamento dos produtos
 complementares em relação à média, embora não busque otimalidade.
@@ -1096,7 +1098,7 @@ o sistema não linear \[ z\Dex + x\Dez = -xz + \eta\tau
 \end{algorithm}
  
  
- A principal vantagem do \ac{MPC} é que, na prática, ele produz tamanho de
+ A principal vantagem do \ac{MPC-M} é que, na prática, ele produz tamanho de
  passos maiores antes de violar as restrições de não-negatividade. Isso normalmente
  significa que se está economizando número de iterações: de fato Mehrotra relata
  que temos economia da ordem de 35\%-50\% quando comparada com outras
@@ -1111,14 +1113,14 @@ o sistema não linear \[ z\Dex + x\Dez = -xz + \eta\tau
  
  \subsection{Método das múltiplas correções de centralização}
  
-O método de Mehrotra é baseado na hipótese de que um passo
+O \acl{MPC-M} é baseado na hipótese de que um passo
 completo na direção corretora ocorre, o que raramente é possível. Mais que
 isso,  tentar corrigir a complementaridade fazendo todos os seus produtos
 iguais ao valor $\tau$ é um pedido muito forte e algumas vezes pouco eficaz. 
-É possível tentar remediar estes problemas através de uma extensão do \ac{MPC}
+É possível tentar remediar estes problemas através de uma extensão do \ac{MPC-M}
 que utiliza mais correções lineares de uma forma inteligente.
 
-O \emph{método das múltiplas correções} deve-se a
+O \emph{Método de Múltiplas Correções} deve-se a
 \textcite{Gondzio:1996uw} e é uma tentativa de melhorar a centralização do iterado
 atual. Esta abordagem busca produzir produtos $x_iz_i$ mais homogêneos e forçar
 um aumento do tamanho do passo corrigindo o parâmetro de centralização de
@@ -1308,8 +1310,8 @@ Para uma  análise aprofundada de estratégias de pontos iniciais em
   
 \subsection{Critério de Parada}
 
-Os \ac{MPI}, ao contrário do  simplex, por exemplo, encontram a solução apenas
-assintoticamente. Por conta do parâmetro de barreira $\tau$, ele nunca encontra
+Os \ac{MPI}, ao contrário do  Simplex, por exemplo, encontram a solução apenas
+assintoticamente. Por conta do parâmetro de barreira $\tau$, um \ac{MPI} jamais encontra
 a solução exata do problema de \ac{PL}. Com isso, é necessário um critério de
 parada que possa decidir quando o iterado atual está próximo o suficiente 
 do conjunto solução. 
@@ -1321,32 +1323,32 @@ são ambos estritamente positivos. Nenhum desses iterados pode ser uma solução
 fato do \ac{PL} já que para estes, $x^k_iz^k_i>0$, para $k=0,1,2,\ldots$, o que
 viola a condição de complementaridade \eqref{eq:KKT-nao-negativ}. Com efeito, os
 iterados convergem para um conjunto de soluções sem de fato alcançá-lo, e para
-efeitos práticos um iterado avançado ($(x^k,y^k,z^k)$ para $k$ suficientemente
-grande) serve muito bem como uma solução aproximada. Para outras aplicações e
-para propósitos teóricos, uma solução de fato $(x^*,y^*,z^*)\in\Fset$ pode ser
+efeitos práticos um iterado avançado  -- $(x^k,y^k,z^k)$ para $k$ suficientemente
+grande --  serve muito bem como uma solução aproximada. Para outras aplicações e
+para propósitos teóricos, uma solução ótima $(x^*,y^*,z^*)\in\Fset$ pode ser
 necessária. Para tanto, nesses códigos,  há uma fase de
 \emph{terminação finita}, a qual toma um iterado interior suficientemente avançado
 para um ponto em $\Fset$, encontrando, se for o caso, a base ótima. É
 necessário também saber quão avançado o iterado precisa ser, tal que
-garanta-se que o número de iterações de ponto-interior não seja muito grande
-(veja \cite[Cap. 7]{Wright:Primal-dual-interior-point:1997h}).
+garanta-se que o número de iterações de ponto-interior não seja muito grande. Veja-se o texto de \textcite[Cap. 7]{Wright:Primal-dual-interior-point:1997h} para uma explanação completa sobre terminação finita em \ac{MPI}.
 
 A maioria das implementações de pontos interiores, por estar trabalhando com
-precisão finita, garante apenas um certo grau de exatidão. Tipicamente a maioria
+precisão finita, garante apenas um certo grau de exatidão. A maioria
 dos códigos utiliza os seguintes critérios~\cite{Gondzio:1996:CVI}:	
+
+
 \begin{subequations}
 \label{eq:termination-criteria}
 \begin{align}
-	\dfrac{\norm{Ax - b}}{1 + \norm{x}_{\infty}} \leq 10^{-\be},
+	\dfrac{\norm{Ax - b}}{1 + \norm{x}_{\infty}} \leq \tolL,
 	\label{eq:termination-criteria-primal}\\ 
 	\dfrac{\norm{A^Ty + z - c}}{1 + \norm{z}_{\infty}} \leq
-	10^{-\be},\label{eq:termination-criteria-dual} \\ 
+	\tolL,\label{eq:termination-criteria-dual} \\ 
 	\dfrac{\abs{c^Tx - b^T y}}{1 + \abs{b^Ty}}\leq
-	10^{-\nu}.\label{eq:termination-criteria-gap}
+	\tolG.\label{eq:termination-criteria-gap}
 \end{align}
 \end{subequations}
-Os valores de $\be,\nu\in\Natural$ dependem da precisão desejada. Comumente na
-literatura escolhe-se $\be=\nu=8$.  
+Os valores de $\tol_{L}$ e $\tol_{G}$ são em geral potências de 10, e  dependem da precisão desejada. Comumente na literatura escolhe-se $\tolL=\tolG=10^{-8}$.  
 
 
 Os critérios
@@ -1360,31 +1362,30 @@ permitirem avaliar relativamente tanto viabilidades primal e dual quanto
 otimalidade.
   
 Um outro conjunto de critérios muito parecido  com
-\eqref{eq:termination-criteria}  e que é utilizado no PCx~\cite{Czyzyk:1999hk} é
+\eqref{eq:termination-criteria}  -- o qual é utilizado no \texttt{PCx}~\cite{Czyzyk:1999hk}  -- é
 \begin{subequations}
 \label{eq:termination-criteria-pcx}
 \begin{align}
-	\dfrac{\norm{Ax - b}}{1 + \norm{b}} \leq 10^{-8},
+	\dfrac{\norm{Ax - b}}{1 + \norm{b}} \leq \tol,
 	\label{eq:termination-criteria-pcx-primal}\\
-	\dfrac{\norm{A^Ty + z - c}}{1 + \norm{c}} \leq 10^{-8},
+	\dfrac{\norm{A^Ty + z - c}}{1 + \norm{c}} \leq \tol,
 	\label{eq:termination-criteria-pcx-dual}\\
 	\dfrac{\tau}{1 + \abs{c^Tx}}\leq
-	10^{-8}.\label{eq:termination-criteria-pcx-gap}
+	\tol,\label{eq:termination-criteria-pcx-gap}
 \end{align}
 \end{subequations}
-Note que agora, em contraste com
+e, que $\tol = 10^{-8}$. Note que agora, em contraste com
 \eqref{eq:termination-criteria}, os denominadores de 
 \eqref{eq:termination-criteria-pcx-primal} e
 \eqref{eq:termination-criteria-pcx-dual} são fixos, o que de certa maneira
 diminui a quantidade de operações, já que não é mais necessário encontrar a
-norma (ainda que norma-$\infty$) dos vetores $x$ e $y$ em cada
+norma  -- ainda que norma-$\infty$ --  dos vetores $x$ e $y$ em cada
 iteração. O valor de $\tau$,  é usado em \eqref{eq:termination-criteria-pcx-gap} ao
- invés do gap dual  como em \eqref{eq:termination-criteria-gap}, pois no ponto
- ótimo, gap dual e gap de complementaridade são iguais e já que $\tau$ está
+ invés do \emph{gap} dual  como em \eqref{eq:termination-criteria-gap}, pois no ponto
+ ótimo, \emph{gap} dual e \emph{gap} de complementaridade são iguais e já que $\tau$ está
 calculado, temos mais uma vez uma economia de operações. 
 
 
-%XXX Fazer subseção sobre terminação finita
 
 
 Todas estas ideias representam o estado da arte no que diz respeito a \ac{MPI}

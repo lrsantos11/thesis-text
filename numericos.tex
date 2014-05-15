@@ -1,9 +1,24 @@
 %!TEX root = tese.tex
-\chapter{Experimentos Numéricos}
+\chapter{Resultados Numéricos}
 \label{chap:numerical}
 
-Vamos escolher um $\gamma\in(0,1)$ adequado, para construir a vizinhança. Várias escolhas são possíveis, como, por exemplo a de \textcite{Colombo:2008ia} que fazem $\ga = 1/10$. No entanto, vamos utilizar a estratégia de \textcite{Zhang:2006ic}
-\[
-\gamma \leq \frac{\min(x^0z^0)}{(x^0)^Tz^0/n},
-\]
-que garante que o ponto inicial estará dentro da vizinhança. Mais detalhes sobre a escolha de $\gamma$ será feita na Capítulo~\ref{chap:numerical}, que versa a respeito da implementação.l
+\section{Heurística para Otimizacão \texorpdfstring{de $\nextphi$}{da função de mérito}}
+
+
+\begin{itemize}
+\item Descrever a heurística utilizada para resolver o subproblema de otimização
+global de polinômios. Artigo escrito em conjunto com os orientadores está sendo
+finalizado para submissão em que tal subproblema também aparece, porém num
+método similar. Tal trabalho contempla também uma biblioteca para resolver o
+subproblema de otimização de polinômios.
+\begin{itemize}
+  \item Este método similar, já em fase final de implementação,
+  demonstra-se competitivo com o \texttt{PCx} nos testes preliminares
+ \end{itemize}
+\item Implementação do método proposto, utilizando-se da biblioteca supra
+citada para resolver os subproblemas de otimização de polinômios.
+\item Realizar  testes
+numéricos com conjunto de teste da \texttt{Netlib} e complementares, com
+comparação ao \texttt{PCx} e com o método desenvolvido pelo grupo.
+\end{itemize}
+

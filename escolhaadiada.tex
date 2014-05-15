@@ -10,12 +10,15 @@ first.''}}
 
 	\chapter{Um polinômio como função de mérito em \ac{MPI}}
 \label{chap:merit-function}
+
+
+Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada na implementação do método,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção --  escolhendo o peso de cada uma destas na direção final através da  otimização global da função de mérito. Além disso, escreve-se a vizinhança $\Nset_{\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio, tal que a otimização da função de mérito está sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. 
+
 \section{Um KKT escalado}
 
 
  
-Este  trabalho tem por objetivo propor um método para resolver o problema
-\ac{PL}. Para isso, considere novamente o par primal-dual na sua forma padrão,
+A fim de construir a função de mérito e suas restrições como polinômios, são necessárias algumas transformações, as quais explanamos a seguir. Considere novamente o par primal-dual na sua forma padrão,
 i.e.,  
 
  \begin{equation*}
@@ -46,9 +49,7 @@ A^Ty + z =c, \label{eq:KKT-fac-dual-choice}\\
 XZe =0,  \label{eq:KKT-complementar-choice}\\
 (x,z) \geq 0. \label{eq:KKT-nao-negativ-choice}
 \end{subnumcases}
-
-
-Dado qualquer $w = (x,y,z)$, os vetores dos resíduos
+Com isso, dado qualquer $w = (x,y,z)$, os vetores dos resíduos
 de \eqref{eq:KKT-choice}, $r_P, r_D$ e $r_C$, podem ser definidos como
 \begin{subequations}
 \label{eq:KKT-residuals}
@@ -62,7 +63,7 @@ r_C  &=XZe. \label{eq:KKT-residuals-c}
 
 
 Seja 
-$(x^0,y^0,z^0)$ um ponto inicial que pertença a $\Qset^+$. Então
+$(x^0,y^0,z^0)$ um ponto inicial que pertença a $\Qset^+$, isto é, um ponto inicial com as componentes de $x$ e de $z$ positivas. Então
 \begin{align*} 
 r^0_P & =Ax^0-b,\\ 
 r^0_D & =A^Ty^0 + z^0 - c, \\
@@ -89,8 +90,8 @@ r^0_C  &=X^0Z^0 e > 0.
 % \end{align}
 % 
 
-No método proposto, precisa-se garantir que os resíduos primais e duais iniciais
-sejam  não-negativos -- os motivos para isso ficarão mais claros abaixo.
+No método proposto, vamos garantir que os resíduos primais e duais iniciais
+sejam  não-negativos -- veja Observação \ref{obs:Choice-of-merit-function}.
 Escolher um $(x^0,y^0,z^0)$ que gere resíduos iniciais desse tipo pode ser
 uma tarefa difícil. Assim, a estratégia adotada é definir  $H_P$ e $H_D$,
 matrizes diagonais, tais que cada entrada de suas diagonais é formada segundo as
@@ -214,8 +215,8 @@ em que \begin{equation}
 B = (ADA^T)^{-1}
 \end{equation} e portanto $B^{-1}$ é sempre simétrica definida positiva.
 Consequentemente, para encontrar $\dew$ usa-se uma fatoração de 
-Cholesky de $B^{-1}$ e um 
-\emph{backsolve}.
+Cholesky de $B^{-1}$ e um
+\emph{backsolve} -- ou retrosubstituição.
 %XXX Como traduzir o Backsolve?
 
 \subsection{A direção ideal}
@@ -286,7 +287,7 @@ $\sig$ positivo e limitado a aproximação
 \label{eq:aproximacao-direcao}
 \DeX\Dez \approx \sig \deX\dez
 \end{equation} 
-seja aceitável.
+seja aceitável. Estamos aqui fazendo um abuso de notação, ao utilizar o símbolo $\approx$. O que queremos dizer é que, estamos usando como hipótese que existe $\sig$ tal que $\norm{\DeX\Dez - \sig \deX\dez}$ seja suficientemente pequena.
 %\footnote{Neste caso, a notação $u \approx \sig v$ significa que
 %  $u$ é um vetor que pertence ao subespaço gerado por $v$.}
 
@@ -299,7 +300,7 @@ direções que projetem, componente a componente, a complementaridade na
 vizinhança $N_s(\ga)$. Caso $\mu=0$ e $\sig=1$, e o ponto inicial for factível, temos o método de \textcite{Monteiro:1990vn}.
  De fato, a escolha do valor $\mu$ e a utilização de
 correções de ordem superior definem os diferentes tipos de \ac{MPI} que têm sido
-utilizados atualmente~\cite{Wright:Primal-dual-interior-point:1997h}. Isso significa que de certa forma, nosso método generaliza os \ac{MPI} existentes.
+utilizados atualmente~\cite{Wright:Primal-dual-interior-point:1997h}. Isso significa que de certa forma, nosso método generaliza alguns dos mais conhecidos \ac{MPI} existentes.
 
 
 
@@ -334,12 +335,13 @@ função de mérito, a qual será descrita abaixo.
  
 Para tanto, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
 transforma o sistema não linear \eqref{eq:corrector-nonlinear} no sistema linear
-\begin{equation*}\begin{cases}
+\begin{equation}\begin{cases}
+\label{eq:linear-sytem-DeXDeZcorrec}
 A\Decox = 0 \\
 A^T\Decoy +\Decoz = 0 \\
 X\Decoz + Z\Decox +  = \mu e - \sig\deX\dez
 \end{cases}.
-\end{equation*}
+\end{equation}
 Expressando tal sistema  na  forma
 matricial tem-se
 \begin{equation}
@@ -531,7 +533,7 @@ Como $A\dex = b- Ax$, vale a seguinte igualdade:
 \[
 \begin{aligned}
 H_P(A(x +  \al\dex) - b) & = H_P((1-\al)A\dex) \\
-							& = 	 H_P((\al -1)(b-Ax)) \\
+							% & = 	 H_P((\al -1)(b-Ax)) \\
 							& =  (1 - \al)\underbrace{H_P(Ax - b)}_{\rho_P} 	\\
 							& = (1 - \al)\rho_P.					
 \end{aligned}
@@ -545,9 +547,10 @@ A prova para parte dual da factibilidade é similar. Com efeito,
 			& = H_D\left[ A^T\left(y + \al(\dey + \Decoy)\right) + \left(z + \al(\dez + \Decoz )\right)
 			-c\right] \notag\\
  			& = H_D\left[A^Ty  + z -c +  \al(A^T\dey + \dez)\right] +
- 			\label{eq:next-rho-dual-a}\\
- 			& \quad + H_D\underbrace{\left(A^T\Decoy   + \Decoz\right)}_{=0 \text{ por
- 			\eqref{eq:corrector-nonlinear}}}. \notag 
+ 			\label{eq:next-rho-dual-a} %\\
+ 			%& \quad + 
+ 			H_D\underbrace{\left(A^T\Decoy   + \Decoz\right)}_{=0 \text{ por
+ 			\eqref{eq:corrector-nonlinear}}}. %\notag 
 \end{align}
 
 
@@ -558,10 +561,7 @@ H_D\left[A^Ty  + z -c +  \al(A^T\dey + \dez)\right]  = (1-\al)H_D
 (A^Ty + z - c)  = (1-\al)\rho_D.
 \]
 
-Portanto, 
-\[
-\hat{\rho}_D = (1-\al)\rho_D .
-\]
+Portanto, $ \hat{\rho}_D = (1-\al)\rho_D$.
 \end{proof}
  
  
@@ -585,7 +585,7 @@ considere que pode-se escrever
 \begin{align}
 \hat{x}\hat{z} & = \left(x + \al(\dex + \Decox) \right)\left( z + \al(\dez + \Decoz
 )\right) \notag \\
-& = \al^2(\dex+\De^c_x)(\dez + \Dez^c) +  \al\left[  (x\dez+z\dex) +
+& = \al^2(\dex+\Decox)(\dez + \Decoz) +  \al\left[  (x\dez+z\dex) +
 (x\Decoz + z\Decox)\right] + xz \label{eq:next-residual-complementar-1}
 \end{align}
 
@@ -680,7 +680,7 @@ reduzidas. Para isso, este autor define sua função de mérito como a soma do
 Nada obstante, essa função é utilizada apenas de maneira teórica, para
 demonstrar a convergência do método.
 
-Do ponto de vista prático, o \emph{software} PCx \cite{Czyzyk:1999hk} utiliza-se de
+Do ponto de vista prático, o  \texttt{PCx} \cite{Czyzyk:1999hk} utiliza-se de
 uma função de mérito para detectar se o problema é infactível ou se a solução é desconhecida
 ou sub-ótima. Nesse caso, a função é dada por 
 \[
@@ -691,15 +691,11 @@ Note que essa função de mérito tem relação com o próprio critério de para
 do algoritmo, como visto em  \eqref{eq:termination-criteria-pcx}.
 
 
-%XXX: Escrever sobre a função de mérito do Mehrotra
-% \textcolor{red}{Escrever sobre a função de mérito do 
-% \textcite{Mehrotra:1992wr}
 
 Neste trabalho, será definida uma função de mérito que não só sirva como medida
 de complementaridade e factibilidade, mas que também sirva de guia para a
-escolha do próximo ponto. De maneira similar aos autores acima citados, será
-usada a soma da norma-1  da factibilidade -- esta escolha ficará mais clara
-mais adiante --  e a média do \emph{gap} de complementaridade. 
+escolha do próximo ponto. De maneira similar aos autores acima citados, serão
+usadas medidas  da infactibilidade  e do \emph{gap} de complementaridade. 
 
 \begin{defin}[Função de Mérito]
 \label{def:merit-function}
@@ -713,41 +709,47 @@ $(x,y,z)$.
 
 \end{defin}
 
+\begin{obs}
+\label{obs:Choice-of-merit-function}
 A Definição \ref{def:merit-function} é uma das possíveis maneiras de medir quão
-perto da solução está um ponto $(x,y,z)$. Em particular,  esta possui algumas
+perto da solução está um ponto $(x,y,z)$. Em particular,  esta escolha possui algumas
 propriedades que serão exploradas para escolher-se a tripla $(\al,\mu,\sig)$, a
 saber:
 
 \begin{enumerate}[(i)] 
-	\item Se $(x^*,y^*,z^*)$ é solução de
-\eqref{eq:ScaledKKT}, então $\varphi(x^*,y^*,z^*)=0$;
+
 	
 % FIXME Elaborar melhor a questão da não-diferenciabilidade e da necessidade de 
 % utilizar a norma para obter um polinômio 
 
-\item A utilização das matrizes $H_P$ e $H_D$  e o Corolário
+\item \label{it:obs-Choice-merit-rho-l} A utilização das matrizes $H_P$ e $H_D$  e o Corolário
 \ref{cor:positive-residual} garantem que dado $(x,y,z)$ calculado pelo
-método e que esteja em $\Qset^+$ , então $\rho_L(x,y,z)\geq 0$. Por isso,
-\[\frac{1}{m+n}\norm{\rho_L}_1 = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell \] e portanto não é preciso se
-preocupar com a não-diferenciabilidade da norma-1; 
+método e que esteja em $\Qset^+$ ,  o sinal de cada linha de $\rho_{L}$ permanece igual em todas as iterações --  de fato, determinamos que tais linhas sejam não-negativo. Neste caso, temos certeza de que para cada linha $i$ de $\rho_{L}$,  $\rho_L(x,y,z)_{i}\geq 0$. Portanto, podemos descartar o módulo na utilização da norma-1 de $\rho_{L}$, isto é,
+\[\frac{1}{m+n}\norm{\rho_L}_1 = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell. \] 
+Tal escolha permite transforma a função de mérito em um polinômio nas variáveis $(\al,\mu,\sig)$, conforme veremos a seguir; 
 
 
 
-\item  Pode-se reescrever o
+\item \label{it:obs-Choice-merit-rho-C} Pode-se rescrever o
 \emph{gap} de complementaridade como
  \[x^Tz = \sum_{i=1}^{n}x_iz_i = \sum_{i=1}^{n}(\rho_C)_i;\]
 
 \item A média do \emph{gap} de complementaridade, $x^Tz/n$, é usada em geral
-como valor para o parâmetro de barreira (vide Seção
-\ref{subsec:barrier-problem}). Logo, em uma solução ótima, este valor é
+como parte determinante do valor para o parâmetro de barreira (vide Seção
+\ref{subsec:barrier-problem}). Em uma solução ótima, este valor é
 nulo;    
 \item Também devido ao Corolário \ref{cor:positive-residual}, dado
 $(x,y,z)\in\Qset^+$ gerado pelo método, vale
 \[
 \varphi(x,y,z)\geq0.
 \]
+	\item Finalmente, se $(x^*,y^*,z^*)$ é solução de
+\eqref{eq:ScaledKKT}, então $\varphi(x^*,y^*,z^*)=0$;
 \end{enumerate}
-Por conta das propriedades (ii) e (iii), podemos reescrever
+\end{obs}
+
+
+Por conta das propriedades \eqref{it:obs-Choice-merit-rho-l} e \eqref{it:obs-Choice-merit-rho-C} da Observação \ref{obs:Choice-of-merit-function}, podemos rescrever
 \eqref{eq:merit-function-as-sum} como
 
 
@@ -816,13 +818,14 @@ Equação \eqref{eq:merit-function} e utilizando a definição do operador médi
 				 	 & \quad  + \frac{1}{n}\sum_{j=1}^{n}  \left[ (1-\al)(\rho_C)_j +
 				 	 \al\mu + \al(\al-\sig)(L_{0,0})_j + \al^2{\Lambda(\mu,\sig)}_j \right] \\
 				 	 & = (1-\al)\left(\dbvec{\rho_L} + \dbvec{\rho_C}\right) + \al\mu +
-\al(\al-\sig)\dbvec{L_{0,0}} + \al^2\dbvec{\Lambda(\mu,\sig)}.	
+\al(\al-\sig)\dbvec{L_{0,0}} + \al^2\dbvec{\Lambda(\mu,\sig)},	
 \end{aligned}
 \]
+o que finaliza a demonstração
 \end{proof}
 
 
-Consideramos que a função de mérito para o próximo ponto, $\nextphi(\al,\mu,\sig) $ representa as propriedades (i-v) acima descritas. Com isso, alcança-se o objetivo de encontrar uma função de mérito que tenha boas propriedades matemáticas e que ao mesmo tempo dê uma medida adequada da qualidade solução.
+Consideramos que a função de mérito para o próximo ponto, $\nextphi(\al,\mu,\sig) $ bem caracteriza todas propriedades da Observação \ref{obs:Choice-of-merit-function}. Com isso, alcança-se o objetivo de encontrar uma função de mérito que tenha boas propriedades matemáticas -- um polinômio de grau máximo 2 em cada uma das variáveis $(\al,\mu,\sig)$ --  e que ao mesmo tempo dê uma medida adequada da qualidade solução.
 
 
 \begin{obs}\label{obs:L_02-L20}
@@ -879,7 +882,7 @@ a_{1,0,1}\al\sig
 %XXX: Usar 8 ou 10?
 Esses 8 
 % \textcolor{red}{(10)} 
-coeficientes de três índices  não nulos são
+coeficientes de três índices  não-nulos são
 os únicos coeficientes que são calculados nessa implementação, além das
 direções.
 
@@ -911,9 +914,10 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para um polinômio
  teremos um problema de otimização global a resolver em cada iteração.
  
  
- Na Seção \ref{subsec:neighbouhoods}, ficou claro que bons métodos baseiam-se na
+ \section{Vizinhança como restrições polinomiais}
+ Na Seção \ref{subsec:neighbouhoods}, mostrou-se que bons \acl{MPI} baseiam-se na
   utilização de vizinhanças que fazem com que os iterados estejam a distâncias
-  razoáveis da trajetória central. Na próxima seção, será mostrado que, se um
+  razoáveis da trajetória central. Nesta seção mostra-se  que, se um
   ponto pertence a um conjunto viável  gerado por funções polinomiais de terceiro grau 
   nas variáveis $(\al,\mu,\sig)$, construídas a
   partir da vizinhança  $\Nset_{-\infty}$, então esse ponto  também pertencerá
@@ -926,46 +930,37 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para um polinômio
   
  % FIXME Reorganizar esta seção com vistas no capítulo da convergência.
 
-\section{Vizinhança como restrições polinomiais}
-
-Como visto no capítulo anterior, \textcite{Colombo:2008ia}  propuseram  a
-vizinhança simétrica $\Nset_s(\ga)$ dada na Equação \eqref{eq:symmetric-neig} --
-baseada na vizinhança $\Nset_{-\infty}(\ga)$ --  com objetivo de melhorar a
-\emph{centralidade} de um ponto, i.e., como o espalhamento dos produtos
-complementares $x_iz_i$, para $i=1,\ldots,n$. Estes autores entendem que tal
-vizinhança é a pedra angular através da qual suas implementações obtém boas
-performances, já que tais condições impedem que os pares da complementaridade
-torne-se muito grandes ou muito pequenos antes do tempo adequado.
-
-Pode-se interpretar $\Nset_s(\ga)$ da seguinte maneira:
-\begin{itemize}
-  \item $x_iz_i$  é não só o par de complementaridade, mas também o resíduo
-  atual do sistema KKT na parte da complementaridade -- vide  Equação
-  \eqref{eq:KKT-residuals-c}.
-  \item O termo  \[\tau = \frac{x^Tz}{n} = \frac{1}{n}\sum_{i=1}^nx_iz_i\]
-  pode ser entendido como a média dos resíduos, no que diz respeito à parte
-  complementar de KKT.
-\end{itemize}
-
-Como este trabalho  baseia-se em pontos infactíveis mas ao mesmo tempo
-pretende utilizar as boas propriedades da vizinhança  $\Nset_s(\ga)$,
-é necessário estendê-la. No Capítulo \ref{chap:mpis}, página \pageref{eq:infeasible-infty-neig}
-mostrou-se que \textcite{Kojima:1993fe}, assim como 
-\textcite[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
-método infactível a vizinhança $\Nset_{-\infty}(\ga,\be)$.
 
 
-Assim, usando a Definição \ref{def:residual-vector}, define-se  a vizinhança
-simétrica infactível $\Nset_s(\ga,\be)$, para o sistema KKT escalado
-\eqref{eq:ScaledKKT}, como 
-\begin{equation}
-\label{eq:infeasible-symmetric-neig}
- \Nset_{s}(\ga,\be) =
- \left\{(x,y,z) \in \Qset^+:\frac{\norm{\rho_L}}{\norm{\rho^0_L}} \leq
-\beta\frac{\tau}{\tau_0}, \ga\tau\leq x_iz_i \leq
-\frac{1}{\ga}\tau,\forall i =1,\ldots,n  \right\},
-\end{equation}
-em que $\ga\in(0,1)$, $\tau=x^Tz/n$ e $\be\geq1$.
+% Como visto no capítulo anterior, \textcite{Colombo:2008ia}  propuseram  a
+% vizinhança simétrica $\Nset_s(\ga)$ dada na Equação \eqref{eq:symmetric-neig} --
+% baseada na vizinhança $\Nset_{-\infty}(\ga)$ --  com objetivo de melhorar a
+% \emph{centralidade} de um ponto, i.e., como o espalhamento dos produtos
+% complementares $x_iz_i$, para $i=1,\ldots,n$. Estes autores entendem que tal
+% vizinhança é a pedra angular através da qual suas implementações obtém boas
+% performances, já que tais condições impedem que os pares da complementaridade
+% torne-se muito grandes ou muito pequenos antes do tempo adequado.
+
+
+% Como este trabalho  baseia-se em pontos infactíveis mas ao mesmo tempo
+% pretende utilizar as boas propriedades da vizinhança  $\Nset_s(\ga)$,
+% é necessário estendê-la. No Capítulo \ref{chap:mpis}, página \pageref{eq:infeasible-infty-neig}
+% mostrou-se que \textcite{Kojima:1993fe}, assim como 
+% \textcite[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
+% método infactível a vizinhança $\Nset_{-\infty}(\ga,\be)$.
+
+
+% Assim, usando a Definição \ref{def:residual-vector}, define-se  a vizinhança
+% simétrica infactível $\Nset_s(\ga,\be)$, para o sistema KKT escalado
+% \eqref{eq:ScaledKKT}, como 
+% \begin{equation}
+% \label{eq:infeasible-symmetric-neig}
+%  \Nset_{s}(\ga,\be) =
+%  \left\{(x,y,z) \in \Qset^+:\frac{\norm{\rho_L}}{\norm{\rho^0_L}} \leq
+% \beta\frac{\tau}{\tau_0}, \ga\tau\leq x_iz_i \leq
+% \frac{1}{\ga}\tau,\forall i =1,\ldots,n  \right\},
+% \end{equation}
+% em que $\ga\in(0,1)$, $\tau=x^Tz/n$ e $\be\geq1$.
 
 
 
@@ -990,7 +985,7 @@ em que  $\nu_0 = 1$ e
 	\begin{align*}
 		\rho_L^{k} & = (1-\al_{k-1})\rho_L^{k-1}\\
 				   & = (1-\al_{k-1})\cdots(1-\al_{0})\rho_L^{0}\notag\\
-				   & = \nu_k \rho_L^{0}.
+				   & = \nu_k \rho_L^{0}. \qedhere
 	\end{align*}
 \end{proof}
 
@@ -1004,10 +999,24 @@ e logo, pela definição de \emph{operador média}, vale
 	\nu_k = \frac{\dbvec{\rho_L^k}}{\dbvec{\rho_L^0}}.
 \end{equation}
 
-Caso $\rho_L^0 = 0$, então encontramos um ponto inicial viável e o Algoritmo resolve o problema como um método factível o faz. Na prática, porém, essa situação é rara.
+Caso $\rho_L^0 = 0$, então encontramos um ponto inicial factível e o Algoritmo resolve o problema como um método factível o faz. Na prática, porém, essa situação é rara.
 
-Usando a Definição \ref{def:residual-vector} e a Proposição \ref{prop:nu_k}, é possível rescrever  a vizinhança
-de passo largo infactível $\Nset_{-\infty}(\ga,\be)$ para o  o sistema KKT escalado
+
+No Capítulo \ref{chap:mpis}, Equação~\eqref{eq:infeasible-infty-neig},
+mostrou-se que \textcite{Kojima:1993fe}, assim como 
+\textcite[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
+método infactível a vizinhança de passo largo infactível $\Nset_{-\infty}(\ga,\be)$. Nesta definição, pode-se fazer as seguintes ilações:
+\begin{itemize}
+  \item $x_iz_i$  é não só o par de complementaridade, mas também o resíduo
+  atual do sistema KKT na parte da complementaridade -- vide  Equação
+  \eqref{eq:KKT-residuals-c}.
+  \item O termo  \[\tau = \frac{x^Tz}{n} = \frac{1}{n}\sum_{i=1}^nx_iz_i\]
+  pode ser entendido como a média dos resíduos, no que diz respeito à parte
+  complementar de KKT.
+\end{itemize}
+
+Com tudo isso, mais a Definição \ref{def:residual-vector} e a Proposição \ref{prop:nu_k}, é possível rescrever  a vizinhança
+ $\Nset_{-\infty}(\ga,\be)$ para  o sistema KKT escalado
 como
 \begin{equation}
 \Nset_{-\infty}(\ga,\be) =
@@ -1065,12 +1074,6 @@ teste da razão.
 % \section{Subproblema de Otimização de Polinômios}
 
 
-Portanto, para expressar tal problema de forma apropriada,  assim
-como feito com $\nextphi$, vamos explicitar as desigualdades   \eqref{eq:symmetric-polynomials}
- para o próximo ponto. Veremos que estas podem ser calculadas
-termos de  $(\al,\mu,\sig)$.
-
-
 %De fato, temos o Teorema \ref{thm:explicit-neigb}.
 
 % \begin{teo}	\label{thm:explicit-neigb}
@@ -1104,6 +1107,9 @@ termos de  $(\al,\mu,\sig)$.
 
 % \begin{proof} 
 
+Para expressar tal problema de forma apropriada,  assim
+como feito com $\nextphi$, vamos explicitar as desigualdades   \eqref{eq:symmetric-polynomials}
+ para o próximo ponto em termos de $(\al,\mu,\sig)$.
 De fato,  para que o próximo ponto $(\nextx,\nexty,\nextz) $ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, definimos os lados esquerdos de  \eqref{eq:symmetric-polynomials} como
 \begin{align}
 	g_C^i(\nextx,\nexty,\nextz) & \coloneqq (\nextrho_C(\nextx,\nexty,\nextz))_i - \ga\dbvec{\nextrho_C}(\nextx,\nexty,\nextz), \quad i = 1,\ldots,n, \label{eq:def-g_C}\\ 

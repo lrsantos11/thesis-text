@@ -1,16 +1,18 @@
-
-\section{Convergência do Algoritmo de Escolha Adiada de Parâmetros}
-
+%!TEX root = tese.tex
 
 
-Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estratégicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\bar{\mu}=\eta\dfrac{x^Tz}{n},
+\section{Convergência  Polinomial do Algoritmo de Escolha Adiada de Parâmetros}
+
+
+
+Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estratégicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
-em que $\eta\in [\eta_{\min},\eta_{\max} ]$ enquanto o parâmetro $\sig$ será fixado como $\bar{\sig} = 0$. Essas escolhas  podem fazer com que nosso método, resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos escolher $\eta_{\min}=\eta_{\max}=\eta $ como em  
+em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método, resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos escolher $\eta_{\min}=\eta_{\max}=\eta $ como em  
 \cite{Zhang:1995fu}.
 
 
  Na prática, porém, esperamos que  o método  tenha desempenho melhor do que a convergência teórica, já que se buscará, em cada iteração $k$,
-o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$ e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\bar{\al},\bar{\mu},\bar{\sig})$, para  $\bar{\al}$ definido abaixo.
+o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$ e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para  $\hat{\al}$ definido abaixo.
 
 
 Com essas alterações, podemos rescrever o Algoritmo~\ref{alg:optimized-choice-of-parameters}, como o  Algoritmo Simplificado \ref{alg:optimized-choice-of-parameters-simplified}.
@@ -37,8 +39,8 @@ em que
  \]
 
 
-Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2}} = 0$. Ao fixarmos $\bar{\mu} = \eta\frac{x^Tz}{n} = \eta\dbvec{\rho_C} $
- e $\bar{\sig}=0$ e usarmos a Proposição \ref{prop:nu_k},   podemos rescrever a função de mérito para o próximo ponto, dependendo apenas de uma escolha de  $\al$ como
+Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2}} = 0$. Fazendo $\mu = \nextmu = \eta\frac{x^Tz}{n} = \eta\dbvec{\rho_C} $
+ e $\sig = \nextsig=0$ e usando a Proposição \ref{prop:nu_k},   podemos rescrever a função de mérito para o próximo ponto, dependendo apenas de uma escolha de  $\al$ como
 \begin{equation}
 	\label{eq:simplified-merit-function-al}
 \nextphi(\al)  = (1-\al)(\nu\dbvec{\rho_L}_0 +
@@ -46,40 +48,75 @@ Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2
 \right) .
 \end{equation}
 
-Seja 
+Seja a função auxiliar  dada por
 \begin{equation}
 	\label{eq:theta}
-\theta(\al) =  \dfrac{\al\left[ \nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} + \al\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}}
+\theta(\al) =  \dfrac{\al\left[ \nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} - \al\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}}
 \right) \right]}{\nu\dbvec{\rho_L}_0 +
 \dbvec{\rho_C}}.
 \end{equation}
-Usando \eqref{eq:theta}, podemos escrever a seguinte relação entre a função de mérito atual e a próxima:
+Usando tal definição, podemos escrever a seguinte relação entre a função de mérito atual -- $\varphi$ --  e a próxima -- $\nextphi$ --: 
 \begin{equation}
 	\label{eq:relation-phi-next-phi}
-	 			{\nextphi} = (1- \theta(\al))\varphi
+	 			{\nextphi} = (1- \theta(\al))\varphi.
 \end{equation}
 
-Como precisa-se garantir que  $\nextphi  $  seja não negativo, deve-se escolher um tamanho de passo,  $\al_k$, em cada iteração $k$ ,tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir $\theta>0$, tal que $\theta = \liminf \theta_k$, isto é, se a sequência $\{\theta_k\}$ for limitada inferiormente por um valor positivo, então a sequência $\{\varphi_k\}$, gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}, converge para zero Q-linearmente \cite{Ortega:2000vd}.
+
+Como é necessário garantir que  $\nextphi  $  seja não negativa, deve-se escolher um tamanho de passo  $\al_k$, em cada iteração $k$, tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir um escalar $\theta>0$, tal que $\theta = \liminf (\theta_k)$, isto é, se a sequência $\{\theta_k\}$ for limitada inferiormente por um valor positivo,	 então a sequência $\{\varphi_k\}$, gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}, converge para zero Q-linearmente~\cite{Ortega:2000vd}.
 
 
 
 
+ Em vista disso, para garantirmos a convergência dos pontos gerados pelo Algoritmo para uma solução ótima $(\xstar,\ystar,\zstar)$ do problema de \ac{PL}, além de ser  crucial que exista $\hat{\al}>0$  tal que,  para toda iteração $k$, tenha-se  $\al_k\in(0,\hat{\al}]$, de modo que a equação~\eqref{eq:relation-phi-next-phi} seja válida, é preciso que todo   ponto  $({x}^{k} ,{y}^{k},{z}^{k})$ pertença à vizinhança $\Nset_{-\infty}(\gamma,\beta)$.
 
-% Com efeito, observe que como $\eta<1$, então $0<\theta'(0)<1$ e por continuidade, temos que é possível escolher $\al_k\in(0,1]$ tal que 
-% \[
-% 0 < \theta_k = \theta(\al_k) < 1.
-% \]
+Para tanto, sejam  
+\begin{equation}
+	\label{eq:al-C+al-L}
+\begin{cases}
+	\hat{\al}_{C}^{i} = \displaystyle \max_{\al\in (0,1]} \{ \al : g_{C}^{i}(\upsilon,\nextmu,\nextsig)\geq0 \text{ para todo } 0 \leq \upsilon\leq \al  \}, & i = 1,\ldots,n,\\
+	\hat{\al}_{C} = \displaystyle \min_{1\leq i \leq n} \{\hat{\al}_{C}^{i}\}, \\
+	\hat{\al}_{L} = \displaystyle \max_{\al\in (0,1]} \{ \al : g_{L}(\upsilon,\nextmu,\nextsig)\geq0 \text{ para todo } 0 \leq  \upsilon\leq \al  \},
+\end{cases}
+\end{equation}
+em que $g_{C}^{i}$ e $g_{L}$ são dadas pelas equações  \eqref{eq:g-Ci_explicit} e \eqref{eq:g-L_explicit}, já tendo sido fixados os parâmetros $\mu=\nextmu$ e $\sig=\nextsig$.
 
- Em resumo, para garantirmos a convergência do método, é crucial que exista $\bar{\al}>0$  tal que,  para toda iteração $k$, tenha-se  $\al_k\in(0,\bar{\al}]$, de modo que a equação \eqref{eq:relation-phi-next-phi} seja válida e  e além disso que todos os  ponto  $({x}^{k} ,{y}^{k},{z}^{k})$ pertença a vizinhança $\Nset_{-\infty}(\gamma,\beta)$.
 
- Essa propriedade garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} gere uma sequência $\{\varphi_k\}$ que decresce de maneira significante a cada passo, com $\varphi_k \to 0$. Assim, garantimos que o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda que $({x}^{k} ,{y}^{k},{z}^{k})$ convirga para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
+Com isso, escolheremos  $\hat\al$ que garanta decréscimo suficiente de $\nextphi$ ao mesmo em que haja a pertinência de $({x}^{k} ,{y}^{k},{z}^{k})$ à $\Nset_{-\infty}(\gamma,\beta)$ por sujeitar $\nextphi$ tanto à  \eqref{eq:g-Ci_explicit} quanto à \eqref{eq:g-L_explicit}. Isso será feito simplesmente por escolher
+
+\begin{equation}
+	\label{eq:nex-al}
+\nextal = \min\{\nextal_{C},\nextal_{L}\},
+\end{equation}
+em que $\nextal_{C}$ e $\nextal_{L}$ são definidos nos Lemas \ref{lemma:alC_delta-1} e  \ref{lemma:alL_delta-2}.
+
+% -- neste caso,  em que $\mu$ e $\sig$ estão fixados --  por escolher o tamanho de passo $\nextal$ como
+% \begin{equation}
+% 	\label{eq:nex-al}
+% \nextal = \argmax \left\{ \theta(\al): \al\in\left[0,\min\{\nextal_{C},\nextal_{L}\}\right]\right\}.
+% \end{equation}
+  
+
+
+% De fato, a função $\theta(\al)$ é uma quadrática, e por conta disso, o problema \eqref{eq:nex-al} é resolvido por comparar os valores funcionais de $\theta(\al)$ em seus pontos críticos no interior do intervalo e o valor funcional no ponto mais a direita do intervalo.
+
+
+ Essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, garantimos que o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda que $({x}^{k} ,{y}^{k},{z}^{k})$ convirga para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
 
 
 
 
-\section{Ponto Inicial}
+% \section{Ponto Inicial}
 
-Vamos  estabelecer um ponto inicial adequado para utilizarmos em nosso Algoritmo. Para tanto, tomaremos como hipótese que existe uma solução ótima $(\xstar,\ystar,\zstar)$  do problema (\ref{eq:primal}-\ref{eq:dual}) para a qual é válido  
+
+\section{Resultados técnicos}
+
+
+
+A fim de demonstrarmos a convergência e a complexidade do Algoritmo proposto, na presente seção provaremos alguns lemas técnicos que serão utilizados para estabelecer nossos principais resultados de convergência.
+
+
+
+Primeirmente vamos  estabelecer um ponto inicial adequado para utilizarmos em nosso Algoritmo. Para tanto, tomaremos como hipótese que existe uma solução ótima $(\xstar,\ystar,\zstar)$  do problema (\ref{eq:primal}-\ref{eq:dual}) para a qual é válido  
 \begin{equation}
 	\label{eq:norm-xz-star}
 	\norm{(\xstar,\zstar)}_{\infty} \leq \bdxzstar,
@@ -103,32 +140,30 @@ Naturalmente nesses termos, $\xstar_{i}\leq   \bdxzstar$, bem como $\zstar_{i}\l
 0\leq x^{0} - \xstar \leq \bdxzstar e \quad \text{e} \quad 0\leq \zzero  - \zstar \leq \bdxzstar e. 
 \end{equation}
 
-\section{Resultados técnicos}
 
-
-
-A fim de demonstrarmos a convergência e a complexidade do Algoritmo proposto, na presente seção provaremos alguns lemas técnicos que serão utilizados para estabelecer nossos principais resultados de convergência.
-
-Antes disso, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
+Além disso, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
 \textcite{Colombo:2008ia} que utilizam $\ga = 1/10$. No entanto, vamos escolher $\ga$ tal que  
 \[
-\gamma \leq \frac{\min(\xzero \zzero )}{(\xzero )^T\zzero /n},
+\gamma \leq  \min\left\{ \frac{\displaystyle \min_{i}(\xzero_{i} \zzero_{i} )}{(\xzero )^T\zzero /n}, \frac{1}{10}\right\},
 \]
 o que garante que o ponto inicial satisfaz a desigualdade~\eqref{eq:symmetric-polynomials-b}.
 
-Com relação à $\be$,  usando um raciocínio parecido, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto maior for $\be$, mais acelerada é a redução  das médias dos resíduos lineares, dadas por $\dbvec{\rho_L}$, em relação à redução da média dos resíduos complementares $\dbvec{\rho_C}$. 
+Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto maior for $\be$, mais acelerada é a redução  das médias dos resíduos lineares, dadas por $\dbvec{\rho_L}$, em relação à redução da média dos resíduos complementares $\dbvec{\rho_C}$. Para facilitar os raciocínios, do ponto de vista teórico, considere seja escolhido como $\be=1$.
 
 
-A seguinte observação  é útil em vários momentos da análise que segue. Seja $(\tilde{x},\tilde{y},\tilde{z})$ um ponto tal que 
+\begin{obs}
+	Em vários momentos da análise que segue vamos considerar que se $(\Dex,\Dey,\Dez)$ é uma terna de direções qualquer,  tal que 
 \begin{equation}
 	\label{eq:Ax0-ATyz0}
-	A\tilde{x}=0 \text{ e } A^T\tilde{y} + \tilde{z} = 0,
+	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0,
 \end{equation}
 então
 \begin{equation}
 	\label{eq:xTziszero}
-	(\tilde{x})^T\tilde{z} =  - (\tilde{x})^T(A^T\tilde{y})  = -(A\tilde{x})^Ty = 0.
+	\Dex^T\Dez =  - \Dex^T(A^T\Dey)  = -(A\Dex)^T\Dey = 0.
 \end{equation}
+\end{obs}
+
 
 
 Esta análise é  baseada naquelas feitas por \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h},  \textcite{Zhang:2006ic,Zhang:1995fu}. 
@@ -203,9 +238,9 @@ conforme queríamos demonstrar.
 
 
 
-\subsection{Limitantes para a normas das direções} 
+\subsection{Limitantes paras normas de direções} 
 
-A próxima proposição será utilizada nas demonstrações que seguem e é um fato fácil de se verificar.
+A próxima proposição será utilizada nas demonstrações que seguem e é um fato conhecido e bastante utilizado em \ac{MPI}.
 
 \begin{prop}\label{prop:norm-uv}
 	Seja $D$ uma matriz diagonal não-singular de ordem $n$ e sejam $u,v\in\Real^n$, então 
@@ -333,15 +368,26 @@ Da Equação~\eqref{eq:DxDzaff6}, do Lema~\ref{lemma:boundxz1} e da desigualdade
 \end{equation}
 
 O resultado é obtido por observar \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparar com \eqref{eq:DxDzaff4} e escolher 
-\[
-\omega_1 = \frac{9\be}{\ga^{1/2}},
-\]
+\begin{equation}
+	\label{eq:omega1}
+	\omega_1 = \frac{9\be}{\ga^{1/2}},
+\end{equation}
 Como $\be\geq1$ e $\ga\in(0,1)$, temos que $\omega_1>1$ como requisitado.
 \end{proof}
 
+Um corolário  das desigualdades dadas pela Proposição~\ref{prop:norm-uv} e do Lema~\ref{lemma:boundDxDzaff} acima é que 
+\begin{multline}
+\label{eq:normDxDzaff}
+	\norm{(\dex)^{k}(\dez)^{k}} \leq \norm{(\dex)^{k}(\dez)^{k}}_{1}  \\ \leq \frac{1}{2}\left(\norm{D^{k}(\dex)^{k}}^{2} + \norm{(D^{-1})^{k}(\dez)^{k}}^{2}\right)
+  					 \leq \left(\omega_1 n\dbvec{\rho_C^{k}}^{1/2}\right)^{2}
+  					 = \omega_1^{2} n^{2}\dbvec{\rho_C^{k}}.
+\end{multline}
 
 \begin{lema}\label{lemma:boundDxDzc}
-	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point}. Então existe uma constante $\omega_2\geq1$ e  independente de $n$ tal que 
+	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point} e que \begin{equation}
+	\label{eq:sig-eta-relation}
+	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}}.
+\end{equation} Então existe uma constante $\omega_2\geq1$  independente de $n$ tal que 
 	\begin{equation}\label{eq:lemma-boundDxDzcx}
 		\norm{D^{k}(\Decox)^{k}}^{2} + \norm{(D^{k})^{-1}(\Decoz)^{k}}^{2} \leq \omega_2 n^{4}\dbvec{\rho_C^{k}}.
 	\end{equation}
@@ -350,19 +396,19 @@ Como $\be\geq1$ e $\ga\in(0,1)$, temos que $\omega_1>1$ como requisitado.
 
 
 \begin{proof}
-	Note que por conta de \eqref{eq:corrector-nonlinear}, temos que $(\Decox,\Decoy,\Decoz)$ satisfaz \eqref{eq:Ax0-ATyz0} e logo $(\Decox)^{T}\Decoz = 0$. 
+	Note que por conta de \eqref{eq:linear-sytem-DeXDeZcorrec}, temos que $(\Decox,\Decoy,\Decoz)$ satisfaz \eqref{eq:Ax0-ATyz0} e logo $(\Decox)^{T}\Decoz = 0$. 
 
 	
 
 
-	Além disso, temos que
+	Além disso, também por causa de \eqref{eq:linear-sytem-DeXDeZcorrec}, temos que
 	\[
 	z\Decox + x\Decoz = \mu e  - \sig\dex\dez.
 	\]
 
-	Multiplicando toda equação anterior por $(xz)^{-1/2}$ e  fixando $\mu = \mubar$ e $\sig = \sigbar$, segue que 
+	Multiplicando toda equação anterior por $(xz)^{-1/2}$ e  fixando $\mu = \nextmu$ e $\sig = \nextsig $, segue que 
 	\[
-		D\Decox + D^{-1}\Decoz = (xz)^{-1/2}(\mubar e + \sigbar\dex\dez).
+		D\Decox + D^{-1}\Decoz = (xz)^{-1/2}(\nextmu e + \nextsig\dex\dez).
 	\] 
 
 	Por um lado temos que 
@@ -372,38 +418,50 @@ Como $\be\geq1$ e $\ga\in(0,1)$, temos que $\omega_1>1$ como requisitado.
 
 Assim, usando consistência de normas e o fato de que  $(x,y,z)\in\Nset_{-\infty}(\ga,\be))$ obtemos
 \begin{align}
-	\norm{D\Decox}^{2} + \norm{D^{-1}\Decoz}^{2} & = \norm{(xz)^{-1/2}(\mubar e+ \sigbar\dex\dez)}^{2} \notag\\ 
-												& \leq \norm{(xz)^{-1/2}}^{2}\norm{(\mubar e+ \sigbar\dex\dez)}^{2} \notag\\ 
-												& \leq \min\left({x_iz_i}\right)^{-1}\left(\mubar\norm{ e} +\abs{\sigbar}\norm{\dex\dez}\right)^{2}\notag\\
-												& \leq (\ga\dbvec{\rho_C})^{-1}\left(\mubar\sqrt{n} +\abs{\sigbar}\norm{\dex\dez}\right)^{2} \label{eq:DxDzc1}		
+	\norm{D\Decox}^{2} + \norm{D^{-1}\Decoz}^{2} & = \norm{(xz)^{-1/2}(\nextmu e+ \nextsig\dex\dez)}^{2} \notag\\ 
+												& \leq \norm{(xz)^{-1/2}}^{2}\norm{(\nextmu e+ \nextsig\dex\dez)}^{2} \notag\\ 
+												& \leq \min\left({x_iz_i}\right)^{-1}\left(\nextmu\norm{ e} +{\nextsig}\norm{\dex\dez}\right)^{2}\notag\\
+												& \leq (\ga\dbvec{\rho_C})^{-1}\left(\nextmu\sqrt{n} +{\nextsig}\norm{\dex\dez}\right)^{2} \label{eq:DxDzc1}		
 \end{align}
 
-Com as desigualdades da~\eqref{eq:prop-uvDuDv} da Proposição~\ref{prop:norm-uv} e o Lema~\ref{lemma:boundDxDzaff}, temos que 
-\[
-  	\norm{\dex\dez}  \leq \frac{1}{2}\left(\norm{D\dex}^{2} + \norm{D^{-1}\dez}^{2}\right)
-  					 \leq \left(\omega_1 n\dbvec{\rho_C}^{1/2}\right)^{2}
-  					 = \omega_1^{2} n^{2}\dbvec{\rho_C}.
-\]
 
-Utilizando esta desigualdade, fazendo $\mubar =\eta \dbvec{\rho_C}$ como anteriormente e notando que para todo $n$ natural vake $\sqrt{n} \leq n^{2}$, o lado esquerdo de~\eqref{eq:DxDzc1} é tal que
+
+Utilizando as desigualdades de \eqref{eq:normDxDzaff}, fixando $\mu = \nextmu =\eta \dbvec{\rho_C}$ como anteriormente e notando que para todo $n$ natural vake $\sqrt{n} \leq n^{2}$, o lado esquerdo de~\eqref{eq:DxDzc1} é tal que
 \begin{align*}
-	% (\ga\dbvec{\rho_C})^{-1}\left(\mubar\sqrt{n} +\abs{\sigbar}\norm{\dex\dez}\right)^{2}  
+	% (\ga\dbvec{\rho_C})^{-1}\left(\nextmu\sqrt{n} +\abs{\nextsig}\norm{\dex\dez}\right)^{2}  
 	\norm{D\Decox}^{2} + \norm{D^{-1}\Decoz}^{2}
-							& \leq (\ga\dbvec{\rho_C})^{-1}\left(\eta\dbvec{\rho_C}\sqrt{n} +\abs{\sigbar} \omega_1^{2} n^{2}\dbvec{\rho_C}\right)^{2}\\
-							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +\abs{\sigbar} \omega_1^{2} n^{2}\right)^{2}\dbvec{\rho_C}\\
-							& \leq (\ga)^{-1}\left(\eta +\abs{\sigbar} \omega_1^{2} \right)^{2}n^{4}\dbvec{\rho_C}.
+							& \leq (\ga\dbvec{\rho_C})^{-1}\left(\eta\dbvec{\rho_C}\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\dbvec{\rho_C}\right)^{2}\\
+							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\right)^{2}\dbvec{\rho_C}\\
+							& \leq (\ga)^{-1}\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}n^{4}\dbvec{\rho_C}.
 \end{align*}
 
-Escolhendo \[\omega_2 = \frac{\left(\eta +\abs{\sigbar} \omega_1^{2} \right)^{2}}{\ga}, \]
-obtemos o resultado esperado.
+Seja
+\begin{equation}
+\label{eq:omega2}
+	\omega_2 = \frac{\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}}{\ga}.
+	\end{equation}
+Observando que  $\omega_1 \geq 1$ e  $\ga\in(0,1)$,  se $\eta\in[0,1]$ e se \eqref{eq:sig-eta-relation} for satisfeita, então garante-se que $\omega_2\geq 1$, como queríamos. \qedhere
+% \begin{equation}
+% 	\label{eq:sig-eta-relation}
+% 	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}},
+% \end{equation}
 
-Além disso,  observando que $\omega_1^{2}\geq 1$, se $\eta \geq \sqrt{\gamma}$, para todo $\sigbar$ real, garantimos que $\omega_{2}\geq 1$. 
+
+
+
+% Wolphran Alpha code
+% solve{ (1/gamma)*(eta +sigma*omega^2)^2>=1 , gamma<1, omega>=1, sigma}
+%with abs(sigma)
+%solve{ (1/gamma)*(eta +abs(sigma)*omega^2)^2>=1 , gamma<1, omega>=1, sigma}
+%sigma>0
+% solve{ (1/gamma)*(eta +(sigma)*omega^2)^2>=1 , gamma<1, omega>=1, sigma>0, sigma}
+
 \end{proof}
 
 \begin{lema}\label{lemma:boundDxDzaff-c}
-	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point}; então 
+	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point}. Então 
 	\begin{equation}\label{eq:lemma-boundDxDzaff-c}
-		\norm{\dex\Decoz + \Decox\dez}_{1} \leq  \tfrac{1}{2}\omega_{3}n^{3}\dbvec{\rho_C},
+		\norm{(\dex)^{k}(\Decoz)^{k} + (\Decox)^{k}(\dez)^{k}}_{1} \leq  \tfrac{1}{2}\omega_{3}n^{3}\dbvec{\rho_C^{k}},
 	\end{equation}
 em que $\omega_{3} = 4(\omega_1\omega_2^{1/2})\geq 4 $.
 \end{lema}
@@ -421,14 +479,26 @@ Similarmente, 	$\norm{\Decox\dez}_{1} \leq (\omega_1\omega_2^{1/2})n^{3}\dbvec{\
 \]
 \end{proof}
 
-\subsection{Um limitante para \texorpdfstring{$\al_k$}{o tamanho do passo} }
+\section{Teorema de Convergência}
 
-A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\bar{\mu} $ e  $\bar{\sig}$, basta encontrar um o tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
-$\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. 
+A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\nextmu $ e  $\nextsig$, basta encontrar um o tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
+$\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. É o que os próximos resultados garantem. Observe que, por conta de \eqref{eq:sig-eta-relation}, garantiremos que $\eta>\sqrt{\ga}$.
 
-Para tanto, considere-se novamente que vamos fixar $\mu$ e $\sig$ com  as seguintes escolhas $ \bar{\mu} = \eta\dbvec{\rho_C} $ e $\bar{\sig}=0$.
 
- Primeiramente, utilizando a Equação \eqref{eq:simplified-merit-function-al}, é possível rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, tal função pode ser escrita escrita nos seguintes termos
+
+\begin{lema}\label{lemma:alC_delta-1}
+Seja $\nextal_{C}$ dado em \eqref{eq:al-C+al-L}. Então 
+\[
+\nextal_{C} \geq \delta_{1}/n^{4}
+\]
+em que 
+\[
+\delta_{1} = \dfrac{(1-\ga)\eta}{2\om_{1}^{2} + \om_{2}/2 + \om_{3}  } < 1.
+\]
+\end{lema}
+
+\begin{proof}
+ Primeiramente, considere que  utilizando a Equação \eqref{eq:simplified-merit-function-al}, é possível rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, tal função pode ser escrita escrita nos seguintes termos
 \[
 \begin{aligned}
 {g}_C^i (\al)				& = (1-\al)(\rho_C)_i+ \al\eta\dbvec{\rho_C}+ \al^2\left[(L_{0,0})_i + \eta\dbvec{\rho_C} ({L_{1,0}})_i 
@@ -438,139 +508,546 @@ Para tanto, considere-se novamente que vamos fixar $\mu$ e $\sig$ com  as seguin
 \end{aligned}
 \]
 
-Definindo as constantes
-\[
-\begin{aligned}
+Sejam as constantes
+\begin{equation}
+\label{eq:defin-zeta-i+chi-i+xi-i}
+	\begin{aligned}
 \zeta_i & = (L_{0,0})_i - \ga \dbvec{L_{0,0}}, \\
 \chi_i  & = \eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
-\xi_i	& =  (\eta\dbvec{\rho_C})^2(L_{2,0})_i , \\ 	
+\xi_i	& =  (\eta\dbvec{\rho_C})^2(L_{2,0})_i . \\ 	
 \end{aligned}
-\]
-e usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ temos
+\end{equation}
+
+
+
+Usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$, e as definições da Equação~\eqref{eq:defin-zeta-i+chi-i+xi-i} reescreve-se  $g_C^i(\al) $ como
 \[
 \begin{aligned}
 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C)_i - \ga\dbvec{\rho_C})}_{\geq 0}  + (1-\ga)\eta\dbvec{\rho_C} \al+  (\zeta_i + 				\chi_i + \xi_i)\al^2  \\
 				& \geq (1-\ga)\eta\dbvec{\rho_C} \al +  (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
 				& \geq (1-\ga)\eta\dbvec{\rho_C} \al -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al^2 \\
-				& = \al \left[	(1-\ga)\eta\dbvec{\rho_C}  -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] \\
-				& = h^i(\al).
+				& = \al \left[	(1-\ga)\eta\dbvec{\rho_C}  -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] = h^i(\al),
 \end{aligned}
 \]
-em que $h^i$ é uma quadrática côncava em função de $\al$ com uma raiz nula e uma positiva. Note que, para $\al>0$ e $i=1,\ldots,n$, se $h^i(\al)\geq0$ então $g_C^i(\al)\geq 0$. 
+em que $h^i$ é uma quadrática côncava em função de $\al$ com uma raiz nula e uma positiva. 
+
+Considere, para as substituições que seguem, as definições dos vetores $L_{i,j}$ dadas em~\eqref{eq:defining-Lij}. Neste caso, da Equação~\eqref{eq:normDxDzaff}  vem que  
+\begin{align}
+\abs{\zeta_i} & = \abs{(L_{0,0})_i - \ga \dbvec{L_{0,0}}} \leq \abs{(L_{0,0})_i} + \ga \abs{\dbvec{L_{0,0}}} \notag \\
+			  & \leq	\norm{L_{0,0}}_1  + \dfrac{\ga}{n}\norm{L_{0,0}}_1   \leq 2\norm{L_{0,0}}_1 \notag \\
+			  & = 2\norm{\dex\dez}_1   \leq 2\omega_1^{2} n^{2}\dbvec{\rho_C}. \label{eq:bound-zeta-i}
+\end{align}
+Como $\sig = \nextsig=0$, usando a equação \eqref{eq:Corrector-spllited} e sabendo que $\mu=\nextmu = \eta\dbvec{\rho_{C}}$ fixado, temos que 
+	\[
+		\eta\dbvec{\rho_{C}}\Dex^\mu =  \nextmu\Dex^\mu = \Decox   \quad \text{ e } \quad \eta\dbvec{\rho_{C}}\Dez^\mu=  \nextmu\Dez^\mu=  \Decoz .
+	\]
+	Assim, do Lema~\ref{lemma:boundDxDzaff-c} segue que
+\begin{align}
+	\abs{\chi_i }  	& = \abs{\eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \leq \abs{\eta\dbvec{\rho_C}  ({L_{1,0}})_i} + \ga\abs { \eta\dbvec{\rho_C}\dbvec{L_{1,0}}} 
+					\notag \\
+					&\leq \norm{\eta\dbvec{\rho_C}  L_{1,0}}_1 + \dfrac{\ga}{n}\norm{\eta\dbvec{\rho_C}  L_{1,0}}_1 \notag\\
+					& \leq \norm{\dex\Decoz + \Decox\dez}_1 + \dfrac{\ga}{n}\norm{\dex\Decoz + \Decox\dez}_1 \notag\\
+					& \leq 2 \norm{\dex\Decoz + \Decox\dez}_1  \leq \omega_{3}n^{3}\dbvec{\rho_C}. \label{eq:bound-chi-i}
+\end{align}
+Se utilizarmos  a equação \eqref{eq:Corrector-spllited}, novamente com as escolhas $\sig = \nextsig=0$ e $\mu=\nextmu = \eta\dbvec{\rho_{C}}$ temos
+\[
+	(\eta\dbvec{\rho_C})^2(L_{2,0}) = (\eta\dbvec{\rho_C}\Dex^\mu)(\eta\dbvec{\rho_C}\Dez^\mu) = \Decox\Decoz.
+\]
+Portanto, do Lema~\ref{lemma:boundDxDzc} e da Proposição~\ref{eq:prop-uvDuDv} vem que
+\begin{equation}\label{eq:bound-xi-i}
+	\abs{\xi_i}	 =  \abs{(\eta\dbvec{\rho_C})^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1 \leq \tfrac{1}{2} \omega_2 n^{4}\dbvec{\rho_C}.
+\end{equation}
+	
+
+
+Agora, note que, para $\al>0$ e $i=1,\ldots,n$, se $h^i(\al)\geq0$ então $g_C^i(\al)\geq 0$. 
 
 Com efeito, a única raiz positiva de $h^i$ é dada por
 \[
 \al_{C}^i = \dfrac{(1-\ga)\eta\dbvec{\rho_C}}{\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}}
 \]
-e $h^i(\al)\geq$ sempre que $\al\in[0,\al_{C}^i].$ 
+e $h^i(\al)\geq 0$ sempre que $\al\in[0,\al_{C}^i].$ 
 
+Como $\nextal^{i}_{C}$, dada em \eqref{eq:al-C+al-L}, é o maior número em $(0,1]$ tal que $g_{C}^{i}(\al)\geq 0$, para $\al\leq\nextal^{i}_{C}$, e além disso para todo $\al$ vale $g_{C}^{i}(\al) \geq h^{i}(\al)$, claramente $\nextal^{i}_{C} \geq  \al_{C}^i$ para todo $i=1,\ldots,n$.
 
-Assim, seja
+Consequentemente, utilizando \eqref{eq:bound-zeta-i}, \eqref{eq:bound-xi-i} e \eqref{eq:bound-chi-i} temos que 
 \[
-\al_C = \min_i\{\al_C^i\}.
-\] 
-Para $i=1,\ldots,n$, teremos $g_C^i(\al)\geq 0$, quando  
-$\al\in[0,\al_C]$. 
+\begin{aligned}
+\nextal_{C}^i & \geq \left(\dfrac{(1-\ga)\eta}{2\om_{1}^{2}/n^{2} + \om_{2}/2 + \om_{3}/n  }\right)\dfrac{1}{n^{4}} \\			  & \geq \left(\dfrac{(1-\ga)\eta}{2\om_{1}^{2} + \om_{2}/2 + \om_{3}  }\right)\dfrac{1}{n^{4}},
+\end{aligned}
+\]
+ para todo $i=1,\ldots,n$. 
+ % O lema fica provado, considerando que para algum $j\in\{1,\ldots,n\}$, $ \al_{C}^{j}=\nextal_{C} $.
+ \end{proof}
 
 
 
 
 
 
+\begin{lema}\label{lemma:alL_delta-2}
+Seja $\nextal_{L}$ dado em \eqref{eq:al-C+al-L}. Então 
+\[
+\nextal_{L} \geq \delta_{2}/n^{2}
+\]
+em que 
+\[
+\delta_{2} = \frac{\eta }{\om_{1}^{2} + \om_{3}/2} < 1.
+\]
+\end{lema}
 
-Por outro lado, usando as mesmas substituições de $\bar{\mu}$ e $\bar{\sig}$, a função $g_L$, dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
+
+\begin{proof}
+
+Usando as mesmas substituições de $\nextmu$ e $\nextsig$, a função $g_L$ dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
 \[
 g_L(\al) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu   \right) +  \al\eta\dbvec{\rho_C} + 
    \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C}  \dbvec{L_{1,0}}   \right ) ,
 	\]
-Usando novamente o fato de que o ponto atual pertence à  vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e definindo as seguintes constantes 
-\[
-\begin{aligned}
-\zeta & =  \dbvec{L_{0,0}}, \\
-\chi  & = \eta\dbvec{\rho_C} \dbvec{L_{1,0}},
-\end{aligned}
-\]
-segue que 
+Usando  o fato de que o ponto atual pertence à  vizinhança segue que 
  \[
 \begin{aligned}
 {g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C} -  \be_L \nu   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C} + 
-   \al^2\left( \zeta + \chi   \right ) \\
+   \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C}  \dbvec{L_{1,0}}   \right ) \\
    & \geq  \al\left[\eta\dbvec{\rho_C} - 
-   \al (\abs{\zeta} + \abs{\chi})   \right ].
+   \al \left(\abs{\dbvec{L_{0,0}}} + \abs{\eta\dbvec{\rho_C}  \dbvec{L_{1,0}}}\right)   \right ].
 \end{aligned}
  \]
-
-
-
-
-Seja $\al_L\in(0,1]$ o maior número tal que  $g_L(\al)\geq 0$, para  $\al\in[0,\al_L]$. Por conta da última inequação acima, temos que se 
-\[
-\al_L \geq \frac{\eta\dbvec{\rho_C} }{\abs{\zeta} + \abs{\chi}},
-\]
- então certamente a condição \eqref{eq:symmetric-polynomials-a} será satisfeita. 
-
-
-
-
-
-
-Por conta do que foi visto até aqui, devemos escolher o tamanho do passo $\al_k$ tal que 
+Note que  $\nextal_L\in(0,1]$ -- definido em \eqref{eq:al-C+al-L} -- é o maior número tal que  $g_L(\al)\geq 0$, para  $\al\in[0,\nextal_L]$. Por conta da última inequação acima, temos que 
 \begin{equation}
-\label{eq:bound-alpha} 
-	\al_k \leq \bar{\al} = \arg\max \{\theta(\al):\al\in[0,\min\{\al_C,\al_L\}] \}
+	\label{eq:next-al-ineq}
+\nextal_L \geq \frac{\eta\dbvec{\rho_C} }{\abs{\dbvec{L_{0,0}}} + \abs{\eta\dbvec{\rho_C}  \dbvec{L_{1,0}}}}.
 \end{equation}
-
-
-
-
-
-\section{Procurar limitantes do que?}
-
-\textcolor{red}{Esta seção será rescrita. Apenas está aqui para mostrar os  limitantes procurados.}
-
-
-Observe que é preciso encontrar limitantes para $ \abs{\zeta}, \abs{\chi}, \abs{\zeta_i}, \abs{\chi_i} \text{ e } \abs{\xi_i}$.
-Com efeito por conta  das definições dessas constantes acima  e do Teorema \ref{thm:next=residual} valem as seguintes observações:
-\begin{enumerate}[(i)]
-	\item $\abs{\zeta} = \abs{\dbvec{L_{0,0}}} = \abs{\dfrac{(\dex)^T\dez}{n}} \leq \dfrac{1}{n} \norm{\dex\dez}_1$.
-	\item Como $\sig=0$, usando a equação \eqref{eq:Corrector-spllited}, temos que 
+Da Equação~\eqref{eq:normDxDzaff}  vem que  
+\begin{align}
+\abs{\dbvec{L_{0,0}}} &  = \abs{\dfrac{(\dex)^T\dez}{n}} \notag \\
+			& \leq \dfrac{1}{n} \norm{\dex\dez}_1  \leq  \omega_1^{2} n\dbvec{\rho_C}\label{eq:bound-zeta}
+\end{align}
+Novamente, fazemos $\sig = \nextsig=0$ e  $\mu=\nextmu = \eta\dbvec{\rho_{C}}$. Usando a equação \eqref{eq:Corrector-spllited} temos que 
 	\[
-		\Decox = \mu\Dex^\mu \text{ e } \Decoz = \mu\Dez^\mu.
+		\eta\dbvec{\rho_{C}}\Dex^\mu =  \nextmu\Dex^\mu = \Decox   \quad \text{ e } \quad \eta\dbvec{\rho_{C}}\Dez^\mu=  \nextmu\Dez^\mu=  \Decoz .
 	\]
-	Assim,  
-	\[
+	Assim, do Lema~\ref{lemma:boundDxDzaff-c} segue que
+	\begin{align}
+	\abs{\eta\dbvec{\rho_C} \dbvec{L_{1,0}}} & = \abs{\dfrac{(\dex)^T(\nextmu\Dez^\mu) + (\nextmu\Dex^\mu)^T\dez}{n}   }  \notag \\ 
+	&  = \abs{\dfrac{(\dex)^T(\Decoz) + (\Decox)^T\dez}{n} } \notag \\
+	& \leq \dfrac{1}{n} \norm{\dex\Decoz + \Decox\dez}_1 \notag\\
+	&\leq \tfrac{1}{2}\omega_{3}n^{2}\dbvec{\rho_C}.\label{eq:bound-chi}
+	\end{align}
+
+A prova do lema termina por juntar a Equação \eqref{eq:next-al-ineq} com \eqref{eq:bound-zeta} e \eqref{eq:bound-chi}, derivando 
+\[
+\nextal_L \geq \left( \frac{\eta }{\om_{1}^{2}/n + \om_{3}/2}\right)\dfrac{1}{n^{2}}. \qedhere
+\]
+\end{proof}
+
+
+\begin{lema}\label{lemma:next-phi-delta-n4}
+A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} é tal que
+\begin{equation}
+		\label{eq:varphi-delta-n4}
+				\varphi_{k+1}\leq \left(1 - \frac{\hat{\delta}}{n^{4}}\right)\varphi_{k},
+	\end{equation}
+	para todo $k$, em que 
+	\begin{equation}
+		\label{eq:nextdel}
+		 \nextdel =(1 -  \eta)\delta_{1} - \delta_{1}^{2}\left(\omega_1^{2} + \tfrac{1}{2}\omega_{3} \right).
+	\end{equation}
+\end{lema}
+
+
+\begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$. Com isso, basta mostrar que $\theta(\nextal)= \Oset(\nextdel/n^{4})$. Com efeito, considerando que $\dfrac{\dbvec{\rho_C}}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\leq 1$ temos que
+
+
+\[
 	\begin{aligned}
-	\abs{\chi} & = \abs{\eta\dbvec{\rho_C} \dbvec{L_{1,0}}} = \abs{\dfrac{(\dex)^T(\bar{\mu}\Dez^\mu) + (\bar{\mu}\Dex^\mu)^T\dez}{n}   }  \\ 
-	&  = \abs{\dfrac{(\dex)^T(\Decoz) + (\Decox)^T\dez}{n} }  \\
-	& \leq \dfrac{1}{n} \norm{\dex\Decoz + \Decox\dez}_1.
-	\end{aligned}
+		\theta(\nextal)% & =  \dfrac{1}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ \nu\dbvec{\rho_L}_0\nextal + (1- \eta)\dbvec{\rho_C}\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}} \right) \right] \\
+						& = \dfrac{1}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ (\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C})\nextal -  \eta\dbvec{\rho_C}\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}} \right) \right] \\
+						& \geq \dfrac{1}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ (\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C})\nextal -  \eta\dbvec{\rho_C}\nextal - \nextal^{2}\left(\omega_1^{2} n\dbvec{\rho_C} + \tfrac{1}{2}\omega_{3}n^{2}\dbvec{\rho_C} \right) \right]\\
+						& \geq \nextal - \dfrac{\dbvec{\rho_C}}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}} \left[   \eta\nextal + \nextal^{2}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right]\\
+						& \geq \nextal \left[ 1 -  \eta - \nextal\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right] \\
+						& \geq \frac{\delta_{1}}{n^{4}} \left[ 1 -  \eta - \frac{\delta_{1}}{n^{4}}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right] \\
+						& \geq 	 \left[ (1 -  \eta)\delta_{1} - \delta_{1}^{2}\left(\omega_1^{2} + \tfrac{1}{2}\omega_{3} \right) \right] \frac{1}{n^{4}}	\\
+						& = \frac{\nextdel}{n^{4}},		
+		\end{aligned}
 	\]
+	com 	$\nextdel$ dado na Equação \eqref{eq:nextdel}. A demonstração será finalizada ao mostrarmos que $0<\nextdel<1$.
 
-\item $\abs{\zeta_i}  = \abs{(L_{0,0})_i - \ga \dbvec{L_{0,0}}} \leq \abs{(L_{0,0})_i} + \ga \abs{\dbvec{L_{0,0}}} \leq
-					\norm{L_{0,0}}_1  + \dfrac{\ga}{n}\norm{L_{0,0}}_1 \leq 2\norm{L_{0,0}}_1 = 2\norm{\dex\dez}_1.$
-\item Utilizando as ideias de (ii) segue que  
+	Com efeito, ao utilizarmos as equações \eqref{eq:omega1}, \eqref{eq:omega2} e o Lema \ref{lemma:boundDxDzaff-c}, encontramos o valor de $\nextdel$ a depender das constantes $\ga$ e $\eta$, ou seja, 
+	\begin{equation}
+		\label{eq:nextdel-full}
+		\nextdel = \frac{(2\ga\eta)(1-\ga)(324 -	(414 - 162\ga)\eta - (107 - 36\ga)\eta^{2} -  \eta^{3})}{(324 + 72\eta + \eta^{2})^{2}}.
+	\end{equation}
+	O terceiro termo do numerador da equação acima é o polinômio 
+	\[
+		p(\eta,\ga) =   324 -	(414 - 162\ga)\eta - (107 - 36\ga)\eta^{2} -  \eta^{3}. 
+	\]
+	Considerando que  $\sqrt{\ga}<\eta<1$, para $0 < \ga \leq 1/10$, segue que
+	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0.\] 
+
+	Sob essas condições, pelo Teorema do Valor Intermediário de Bolzano \cite[Teorema 5.3.7]{Bartle:2011tr}, escolhido $\ga$, existe uma raiz $\eta_1$ do polinômio $p$, tal que  $\eta_{1}\in (1/10, 1)$. Neste caso, por continuidade, para qualquer valor de $\eta  < \eta_{1}$, $p(\eta,\ga) >0$.  Finalmente,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, temos que  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$, o que completa a demonstração.
+% \textcolor{red}{Como terminar? $\nextdel$ precisa ser menor que 1? Maior que 0? O que mais? Já sei que $\eta > \sqrt{\ga}$, para essa escolha de $\mu$ e $\sigma$.}
+\end{proof}
+
+
+
+
+% \begin{proof} 
+% Por conta dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, é suficiente considerar o caso em que $\nextal \neq \min\{\nextal_{C},\nextal_{L} \}$.  Considerando as definições dadas na Equação~\eqref{eq:defin-zeta-chi}, podemos rescrever \eqref{eq:theta} como
+% \[
+% \theta(\al) =  \dfrac{\al\left[ \nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} - \al\left(\zeta + \chi
+% \right) \right]}{\nu\dbvec{\rho_L}_0 +
+% \dbvec{\rho_C}}.
+% \]
+	
+% 	%FIXME Verificar
+% Note que \[\theta'(0) = 1 - \frac{\eta\dbvec{\rho_{C}}}{\nu\dbvec{\rho_{L}}_{0}+\dbvec{\rho_{C}}}.\]
+% Se 
+% \[
+% 0< \eta < \dfrac{\nu\dbvec{\rho_{L}}_{0}}{\dbvec{\rho_{C}}} + 1 % \leq \frac{\be}{\dbvec{\rho_{C}}_{0}}  + 1,
+% \]
+% então $\theta'(0)>0$ e por continuidade, temos que é possível escolher $\al_k\in(0,1]$ tal que 
+% \[
+% 0 < \theta_k = \theta(\al_k) < 1.
+% \]
+
+% Portanto, vamos estabelecer um limitante inferior para $\nextal$. Teremos dois casos a considerar. 
+% \begin{enumerate}[{Caso} (i):]
+% 	\item $(\zeta + \chi) > 0$. Neste caso, $\theta(\al)$ é uma quadrática com concavidade voltada para baixo. Assim, o seu máximo será atingido no vértice, isto é, em
+% 	\[
+% 		\nextal = \frac{\nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C}}{2(\zeta + \chi)}.
+% 	\]
+
+% 	Note que, neste caso, $\zeta + \chi = \abs{\zeta + \chi} \leq \abs{\zeta} + \abs{\chi}$.  Utilizando as Equações \eqref{eq:bound-zeta} e \eqref{eq:bound-chi}, vemos que  
+
+% 	\[
+% 		\nextal \geq \left( \frac{\nu\dbvec{\rho_L}_0/\dbvec{\rho_C} + (1-\eta)}{2( \omega_1^{2}/n  + \tfrac{1}{2}\omega_{3})}\right)\dfrac{1}{n^{2}}.
+% 	\]
+% 	\color{red}
+% 	Sei que \[ \frac{\norm{\rho_{L}}}{x^{T}z} = \frac{\dbvec{\rho_{L}}}{\dbvec{\rho_{C}}}=  \frac{\nu\dbvec{\rho_L}_0}{\dbvec{\rho_C}} \leq \frac{\beta}{\dbvec{\rho_C}_0} \] para toda iteração, por conta da vizinhança $\Nset_{\infty}(\ga,\be)$. Como garantir que o limitante de $\nextal$ seja grande o suficiente? Posso considerar que $\rho_{L}\to 0$ antes que $\rho_{C}\to 0$. Nesse caso, posso considerar que se eu escolher $\be\geq 1$ tal que $\frac{\beta}{\dbvec{\rho_C}_0} \leq 1$, então temos um limitante suficiente? 
+
+
+% 	\color{black}
+% 	\item $(\zeta + \chi) < 0$. Agora, $\theta(\al)$ é uma quadrática com concavidade voltada para cima. Com isso, o seu máximo será atingido em algum ponto à direita da única raiz não nula, isto é, em $\nextal$, tal que 
+% 	\[
+% 		\nextal \geq  \frac{\nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C}}{(\zeta + \chi)}.
+% 	\]
+% \end{enumerate}
+% \end{proof}
+
+
+
+
+
+Finalmente podemos enunciar e provar o teorema de convergência do Algoritmo. 
+
+
+\begin{teo}[Convergência do Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}]
+	\label{teo:alg-convergence-varphi} Seja $0 < \varepsilon <1$ dado. Suponha que a sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} é  tal que 
+	para o ponto inicial $(\xzero,\yzero,\zzero)$ seja válido	
+	\begin{equation}
+	\label{eq:varphi0-eps-kappa}
+		\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}}
+	\end{equation} 
+	com  $\kappa$ uma constante positiva. Então existe um índice \[K =  \Oset\left(n^{4}\abs{\ln\frac{1}{\varepsilon}}\right),\] tal que 
+	 $\varphi_{k}\leq \varepsilon \text{ para todo } k \geq K$.
+	 
+\end{teo}
+
+\begin{proof} 
+	Aplicando o logaritmo em ambos os lados da inequação \eqref{eq:varphi-delta-n4} dada no Lema \ref{lemma:next-phi-delta-n4}, obtemos
+	\[
+	\ln\varphi_{k+1}\leq \ln \left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln\varphi_{k},
+	\]
+Repetindo tal procedimento na fórmula acima e utilizando \eqref{eq:varphi0-eps-kappa} segue que
 \[
-\begin{aligned}
-	\abs{\chi_i }  & = \abs{\eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \\
-	&  \leq 
-						\abs{\eta\dbvec{\rho_C}  ({L_{1,0}})_i} + \ga\abs { \eta\dbvec{\rho_C}\dbvec{L_{1,0}} } \\
-						& \leq \norm{\dex\Decoz + \Decox\dez}_1 + \dfrac{\ga}{n}\norm{\dex\Decoz + \Decox\dez}_1	\\
-						& \leq 2 \norm{\dex\Decoz + \Decox\dez}_1
-\end{aligned}
+	\begin{aligned}
+		\ln\varphi_{k} & \leq k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln \varphi_{0} \\
+					& \leq k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \kappa\ln \frac{1}{\varepsilon}. 
+	\end{aligned}
+\] 
+
+Conforme \textcite[Lema 4.1, pg 68]{Wright:Primal-dual-interior-point:1997h}, temos que $\ln(1+r) \leq r$, sempre que $r>-1$. Assim
+\[
+	\ln\varphi_{k}\leq k \left(- \frac{\hat{\delta}}{n^{4}}\right) + \kappa\ln \frac{1}{\varepsilon}.
+\] 
+
+Para que o critério de convergência $\varphi_{k}\leq\varepsilon$ seja satisfeito, devemos garantir que 
+\[
+	k \left(- \frac{\hat{\delta}}{n^{4}}\right) + \kappa\ln \frac{1}{\varepsilon} \leq \ln\varepsilon.
+\] 
+De fato, tal inequação é válida para 
+\[
+	k \geq \dfrac{n^{4}}{\hat{\delta}}(1+\kappa)\ln\frac{1}{\varepsilon},
+\]
+o que termina a demonstração.
+\end{proof}
+
+
+
+
+O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém, é possível garantir que o Critério de Parada do \texttt{PCx}  dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito, para uma escolha particular de $\varepsilon$. Tal garantia é dada pelo Corolário a seguir.
+
+
+\begin{corol}
+Suponha que escolha-se  $\tol = 10^{-8}$  e $\varepsilon$   tal que 
+\begin{equation}
+	\label{eq:choosing-eps}
+		\varepsilon < \min\left\{  \frac{\tol(1+\norm{b})}{m+n}, \frac{\tol(1+\norm{c})}{m+n},\tol(1+ |c^{T}z|)\right\}.
+\end{equation}
+Então se o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} converge então o critério de parada dado na Equação~\eqref{eq:termination-criteria-pcx} é satisfeito.
+\end{corol}		
+
+\begin{proof}
+	 Pelas Definições \ref{def:residual-vector} e \ref{def:merit-function}, vale
+	\begin{equation}
+		\label{eq:varphi-rhoP-rhoD}
+				\varphi_{k} =  \frac{\norm{\rho^{k}_L}_1}{m+n} + 
+\frac{(x^{k})^Tz^{k}}{n}  = \frac{\norm{H_{P}(Ax^{k} - b)}_1 +\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_1 }{m+n} + 
+\frac{(x^{k})^Tz^{k}}{n}.
+	\end{equation}
+Além disso, temos que $\norm{Ax^{k} - b} \leq \norm{Ax^{k} - b}_{1} = \norm{H_{P}(Ax^{k} - b)}_{1}$ e que $\norm{H_{D}(A^{T}y^{k} + z^{k}- c)} \leq \norm{A^{T}y^{k} + z^{k}- c}_1 = \norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_1$.
+
+Ademais, se  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} converge, existe $k$ suficientemente grande tal que $\varphi_{k}<\eps$. Assim, cada um dos termos da última parte de \eqref{eq:varphi-rhoP-rhoD} é menor que $\varepsilon$.
+
+
+Daí, pela Equação \ref{eq:choosing-eps}, segue que 
+\[
+\dfrac{\norm{Ax^{k} - b}}{1 + \norm{b}} \leq  \frac{\norm{H_{P}(Ax^{k} - b)}_1  }{1 + \norm{b}} < \frac{\eps (m+n)}{1 + \norm{b}} <\frac{\tol(1+\norm{b})}{m+n} \frac{m+n}{1 + \norm{b}} = \tol,
 \]
 
-\item Novamente, considerando $\sig=0$, usando a equação \eqref{eq:Corrector-spllited},  vale
 \[
-	(\eta\dbvec{\rho_C})^2(L_{2,0}) = (\eta\dbvec{\rho_C}\Dex^\mu)(\eta\dbvec{\rho_C}\Dez^\mu) = \Decox\Decoz.
-\]
-Assim
-\[
-	\abs{\xi_i}	 =  \abs{(\eta\dbvec{\rho_C})^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1
+\dfrac{\norm{A^{T}y^{k} + z^{k}- c}}{1 + \norm{c}} \leq  \frac{\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_{1}  }{1 + \norm{c}} < \frac{\eps (m+n)}{1 + \norm{c}} <\frac{\tol(1+\norm{c})}{m+n} \frac{m+n}{1 + \norm{c}} = \tol,
 \]
 
-\end{enumerate}
 
-Assim precisamos de limitantes para $\norm{\dex\dez}_1$, $\norm{\dex\Decoz + \Decox\dez}_1$ e $\norm{\Decox\Decoz}_1$.
+\[
+\dfrac{(x^{k})^{T}z^{k}/n}{1+ |c^{T}z^{k}|} <   \frac{\eps}{1+ |c^{T}z^{k}|} <\frac{\tol(1+ |c^{T}z^{k}|)}{1+ |c^{T}z^{k}|} = \tol.
+\]
+
+
+ \end{proof}
+
+% \subsection{Um limitante para \texorpdfstring{$\al_k$}{o tamanho do passo} alternativo }
+
+% \color{red} 
+% A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\bar{\mu} $ e  $\bar{\sig}$, basta encontrar um o tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
+% $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. 
+
+% Para tanto, considere-se novamente que vamos fixar $\mu$ e $\sig$ com  as seguintes escolhas $ \mu = \bar{\mu} = \eta\dbvec{\rho_C} $ e $\sig = \bar{\sig} \in[\sig_{\min},\sig_{\min}]$ a definir.
+
+%  Primeiramente, utilizando a Equação \eqref{eq:simplified-merit-function-al}, é possível rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, tal função pode ser escrita escrita nos seguintes termos:
+% \begin{multline*}
+% {g}_C^i (\al)	 = (1-\al)(\rho_C)_i+ \al\left(\eta\dbvec{\rho_C}\right) +  \al(\al - \barsig) ({L_{0,0}})_i + 
+% 				\\ + \al^2\left[  (\eta\dbvec{\rho_C})^2(L_{2,0})_i + \eta\dbvec{\rho_C} ({L_{1,0}})_i +	\barsig\eta\dbvec{\rho_C} ({L_{1,1}})_i		+	    \barsig ({L_{0,1}})_i + \barsig^2(L_{0,2})_i \right]  + \\
+% 				 -\ga\left[  (1-\al)\dbvec{\rho_C} + \al\left(\eta\dbvec{\rho_C} + (\al- \barsig) \dbvec{L_{0,0}} \right) + \al^2\left( \eta\dbvec{\rho_C} \dbvec{L_{1,0}} + \barsig\eta\dbvec{\rho_C} 
+% 				 \dbvec{L_{1,1}}	+	    \barsig \dbvec{L_{0,1}} \right)  \right].
+% \end{multline*}
+
+% Definindo as constantes
+% \[
+% \begin{aligned}
+% \zeta_i & = (L_{0,0})_i - \ga \dbvec{L_{0,0}}, \\
+% \chi_i  & = \eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right) + \barsig\left( ({L_{0,1}})_i - \ga\dbvec{L_{0,1}} \right),   \\
+% \xi_i	& =  (\eta\dbvec{\rho_C})^2(L_{2,0})_i + \barsig\eta\dbvec{\rho_C} 
+% 				 \left(({L_{1,1}})_i - \ga	 \dbvec{L_{1,1}}\right) + \barsig^2(L_{0,2})_i, \\ 	
+% \end{aligned}
+% \]
+%  usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e as propriedades de módulo de um escalar, temos
+% \[
+% \begin{aligned}
+% 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C)_i - \ga\dbvec{\rho_C})}_{\geq 0}  + (1-\ga)\eta\dbvec{\rho_C} \al + \al(\al - \sig) \zeta_i +  (\chi_i + \xi_i)\al^2  \\
+% 				& \geq \left( (1-\ga)\eta\dbvec{\rho_C}  - \barsig\zeta_i\right)\al + (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
+% 				& \geq \left( (1-\ga)\eta\dbvec{\rho_C}  - {\barsig}{\zeta_i}\right)\al -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al^2 \\
+% 				& = \al \left[	(1-\ga)\eta\dbvec{\rho_C}  - {\barsig}{\zeta_i}	  -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] \\
+% 				& = h^i(\al).
+% \end{aligned}
+% \] 
+
+% em que $h^i$ é uma quadrática côncava em função de $\al$ com apenas uma raiz nula. Como queremos que $\al>0$ precisamos que a outra raiz seja positiva. Para tanto, exigimos que 
+% \begin{equation}
+% 	\label{eq:barsig-bound1}
+% 	\barsig\zeta_{i} < (1-\ga)\eta\dbvec{\rho_C}.
+% \end{equation}
+
+
+% \begin{itemize}
+% 	\item Caso $\eta=0$, como $\barsig>0$, precisamos que $\zeta_{i}<0$, isto é, que  $(L_{0,0})_i - \ga \dbvec{L_{0,0}} < 0$ ou ainda
+% \[
+% (L_{0,0})_i < \ga \dbvec{L_{0,0}}.
+% \]
+% \end{itemize}
+
+% Dessa forma,  para  $i=1,\ldots,n$, se $h^i(\al)\geq0$ então $g_C^i(\al)\geq 0$. 
+
+% Com efeito, se \eqref{eq:barsig-bound1} for satisfeito, a única raiz positiva de $h^i$ é dada por
+% \[
+% \al_{C}^i = \dfrac{(1-\ga)\eta\dbvec{\rho_C} - {\barsig}{\zeta_i}}{\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}}
+% \]
+% e $h^i(\al)\geq 0 $ sempre que $\al\in[0,\al_{C}^i].$ 
+
+
+% Assim, seja
+% \[
+% \al_C = \min_i\{\al_C^i\}.
+% \] 
+% Para $i=1,\ldots,n$, teremos $g_C^i(\al)\geq 0$, quando  
+% $\al\in[0,\al_C]$. 
+
+
+
+% \[
+% \sig<0 \text{ and } \xi>0 \text{ and } \frac{1}{\sig} <\zeta\leq 0 \text{ and } 0<\ga<1-\zeta \sig \text{ and } -\frac{(\zeta \sig)}{(\ga-1)}<\eta\leq 1 \text{ and } \al =\frac{(\zeta \sig+\eta (\ga-1))}{\xi}
+% \]
+
+
+
+
+% Por outro lado, us\text{ and }o as mesmas substituições de $\bar{\mu}$ e $\bar{\sig}$, a função $g_L$, dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
+% \[
+% g_L(\al) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu   \right) +  \al\eta\dbvec{\rho_C} + 
+%    \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C}  \dbvec{L_{1,0}}   \right ) ,
+% 	\]
+% Usando novamente o fato de que o ponto atual pertence à  vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e definindo as seguintes constantes 
+% \[
+% \begin{aligned}
+% \zeta & =  \dbvec{L_{0,0}}, \\
+% \chi  & = \eta\dbvec{\rho_C} \dbvec{L_{1,0}},
+% \end{aligned}
+% \]
+% segue que 
+%  \[
+% \begin{aligned}
+% {g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C} -  \be_L \nu   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C} + 
+%    \al^2\left( \zeta + \chi   \right ) \\
+%    & \geq  \al\left[\eta\dbvec{\rho_C} - 
+%    \al (\abs{\zeta} + \abs{\chi})   \right ].
+% \end{aligned}
+%  \]
+
+
+
+
+% Seja $\al_L\in(0,1]$ o maior número tal que  $g_L(\al)\geq 0$, para  $\al\in[0,\al_L]$. Por conta da última inequação acima, temos que se 
+% \[
+% \al_L \geq \frac{\eta\dbvec{\rho_C} }{\abs{\zeta} + \abs{\chi}},
+% \]
+%  então certamente a condição \eqref{eq:symmetric-polynomials-a} será satisfeita. 
+
+
+
+
+
+
+% Por conta do que foi visto até aqui, devemos escolher o tamanho do passo $\al_k$ tal que 
+% \begin{equation}
+% \label{eq:bound-alpha} 
+% 	\al_k \leq \bar{\al} = \arg\max \{\theta(\al):\al\in[0,\min\{\al_C,\al_L\}] \}
+% \end{equation}
+
+
+
+% \subsection{Um limitante para \texorpdfstring{$\al_k$}{o tamanho do passo} alternativo }
+
+% \color{blue} 
+% A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\bar{\mu} $ e  $\bar{\sig}$, basta encontrar um o tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
+% $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. 
+
+% Para tanto, considere-se novamente que vamos fixar $\mu$ e $\sig$ com  as seguintes escolhas $ \mu = 0$ e $\sig = 1$ a definir.
+
+%  Primeiramente, utilizando a Equação \eqref{eq:simplified-merit-function-al}, é possível rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, tal função pode ser escrita escrita nos seguintes termos:
+% \begin{multline*}
+% {g}_C^i (\al)	 = (1-\al)(\rho_C)_i+   \al(\al - \barsig) ({L_{0,0}})_i  
+% 				 + \al^2\left[  ( \barsig ({L_{0,1}})_i + \barsig^2(L_{0,2})_i \right]  + \\
+% 				 -\ga\left[  (1-\al)\dbvec{\rho_C} +  \al(\al- \barsig) \dbvec{L_{0,0}}  + \al^2\left(   \barsig \dbvec{L_{0,1}} \right)  \right].
+% \end{multline*}
+
+% Definindo $\nextsig=1$, e as constantes
+% \[
+% \begin{aligned}
+% \zeta_i & = (L_{0,0})_i - \ga \dbvec{L_{0,0}}, \\
+% \chi_i  & =   ({L_{0,1}})_i - \ga\dbvec{L_{0,1}} ,   \\
+% \xi_i	& =    (L_{0,2})_i, \\ 	
+% \end{aligned}
+% \]
+%  usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e as propriedades de módulo de um escalar, temos
+% \[
+% \begin{aligned}
+% 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C)_i - \ga\dbvec{\rho_C})}_{\geq 0}  + \al(\al - 1) \zeta_i +  (\chi_i + \xi_i)\al^2  \\
+% 				& \geq  - \zeta_i\al + (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
+% 				& = h^i(\al).
+% \end{aligned}
+% \] 
+% em que $h^i$ é uma quadrática em função de $\al$ com apenas uma raiz nula dada por  
+% \[
+% \bar{\al} = \frac{-\zeta_{i}}{\zeta_i + \chi_i + \xi_i}.
+% \]
+
+
+% Se $\zeta_i + \chi_i + \xi_i>0$, então $h^{i}$ tem concavidade voltada para cima e  exigimos que $\bar{\al}<0$. Para isso, precisamos que $\zeta_{i}>0$, isto é $(L_{0,0})_i - \ga \dbvec{L_{0,0}} > 0$ ou ainda
+% \[
+% (L_{0,0})_i > \ga \dbvec{L_{0,0}}.
+% \]
+
+
+% Caso $\zeta_i + \chi_i + \xi_i<0$, então $h^{i}$ tem concavidade voltada para baixo e  exigimos que $\bar{\al}>0$. Para isso, fazemos  $\zeta_{i}<0$, isto é $(L_{0,0})_i - \ga \dbvec{L_{0,0}} < 0$ ou ainda
+% \[
+% (L_{0,0})_i < \ga \dbvec{L_{0,0}}.
+% \]
+
+
+
+% COMO GARANTIR ISSO?
+
+% \color{black}
+
+% \section{Procurar limitantes do que?}
+
+% \textcolor{red}{Esta seção será rescrita. Apenas está aqui para mostrar os  limitantes procurados.}
+
+
+% Observe que é preciso encontrar limitantes para $ \abs{\zeta}, \abs{\chi}, \abs{\zeta_i}, \abs{\chi_i} \text{ e } \abs{\xi_i}$.
+% Com efeito por conta  das definições dessas constantes acima  e do Teorema \ref{thm:next=residual} valem as seguintes observações:
+% \begin{enumerate}[(i)]
+% 	\item $\abs{\zeta} = \abs{\dbvec{L_{0,0}}} = \abs{\dfrac{(\dex)^T\dez}{n}} \leq \dfrac{1}{n} \norm{\dex\dez}_1$.
+% 	\item Como $\sig=0$, usando a equação \eqref{eq:Corrector-spllited}, temos que 
+% 	\[
+% 		\Decox = \mu\Dex^\mu \text{ e } \Decoz = \mu\Dez^\mu.
+% 	\]
+% 	Assim,  
+% 	\[
+% 	\begin{aligned}
+% 	\abs{\chi} & = \abs{\eta\dbvec{\rho_C} \dbvec{L_{1,0}}} = \abs{\dfrac{(\dex)^T(\bar{\mu}\Dez^\mu) + (\bar{\mu}\Dex^\mu)^T\dez}{n}   }  \\ 
+% 	&  = \abs{\dfrac{(\dex)^T(\Decoz) + (\Decox)^T\dez}{n} }  \\
+% 	& \leq \dfrac{1}{n} \norm{\dex\Decoz + \Decox\dez}_1.
+% 	\end{aligned}
+% 	\]
+
+% \item $\abs{\zeta_i}  = \abs{(L_{0,0})_i - \ga \dbvec{L_{0,0}}} \leq \abs{(L_{0,0})_i} + \ga \abs{\dbvec{L_{0,0}}} \leq
+% 					\norm{L_{0,0}}_1  + \dfrac{\ga}{n}\norm{L_{0,0}}_1 \leq 2\norm{L_{0,0}}_1 = 2\norm{\dex\dez}_1.$
+% \item Utilizando as ideias de (ii) segue que  
+% \[
+% \begin{aligned}
+% 	\abs{\chi_i }  & = \abs{\eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \\
+% 	&  \leq 
+% 						\abs{\eta\dbvec{\rho_C}  ({L_{1,0}})_i} + \ga\abs { \eta\dbvec{\rho_C}\dbvec{L_{1,0}} } \\
+% 						& \leq \norm{\dex\Decoz + \Decox\dez}_1 + \dfrac{\ga}{n}\norm{\dex\Decoz + \Decox\dez}_1	\\
+% 						& \leq 2 \norm{\dex\Decoz + \Decox\dez}_1
+% \end{aligned}
+% \]
+
+% \item Novamente, considerando $\sig=0$, usando a equação \eqref{eq:Corrector-spllited},  vale
+% \[
+% 	(\eta\dbvec{\rho_C})^2(L_{2,0}) = (\eta\dbvec{\rho_C}\Dex^\mu)(\eta\dbvec{\rho_C}\Dez^\mu) = \Decox\Decoz.
+% \]
+% Assim
+% \[
+% 	\abs{\xi_i}	 =  \abs{(\eta\dbvec{\rho_C})^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1
+% \]
+
+% \end{enumerate}
+
+% Assim precisamos de limitantes para $\norm{\dex\dez}_1$, $\norm{\dex\Decoz + \Decox\dez}_1$ e $\norm{\Decox\Decoz}_1$.
 
 
 % \chi_i  & = \eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
@@ -596,7 +1073,7 @@ Assim precisamos de limitantes para $\norm{\dex\dez}_1$, $\norm{\dex\Decoz + \De
 				\bbm -r_P^k  \\ -r_D^k \\ -r_C^k
 				\ebm.
 			\end{equation}
-		\State 	Faça $\bar{\mu}=\eta{(x^k)^Tz^k}/{n}$ e  $\bar{\sig}=0$, e resolva 
+		\State 	Faça $\nextmu=\eta{(x^k)^Tz^k}/{n}$ e  $\nextsig=0$, e resolva 
 		% \[((\Decox)^{k},(\Decoy)^{k},(\Decoz)^{k}) = \bar{\mu}((\Dex^{\mu})^{k},(\Dey^{\mu})^{k},(\Dez^{\mu})^{k})\]
 		% resolvendo
 			\begin{equation}
@@ -606,7 +1083,7 @@ Assim precisamos de limitantes para $\norm{\dex\dez}_1$, $\norm{\dex\Decoz + \De
 				Z^k & 0 & X^k \ebm
 				\bbm (\Decox)^{k} \\ (\Decoy)^{k} \\ (\Decoz)^{k}
 				\ebm = 
-				\bbm 0  \\ 0 \\  \bar{\mu}e %- \bar{\sig}\deX\dez
+				\bbm 0  \\ 0 \\  \nextmu e %- \bar{\sig}\deX\dez
 				\ebm.
 			\end{equation}
 		\State Encontre $\al^*$ resolvendo o subproblema de

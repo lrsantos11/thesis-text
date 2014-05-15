@@ -1,5 +1,5 @@
 %!TEX root = tese.tex
-\addchap{Perspectivas Futuras}
+\addchap{Considerações Finais}
 \label{chap:final_remarks}
 
 Para a finalização da tese, pretende-se  terminar de demonstrar  e
@@ -55,22 +55,26 @@ satisfeito.
 \end{itemize}
 
 
-\addsec{Experimentos Numéricos}
-\begin{itemize}
-\item Descrever a heurística utilizada para resolver o subproblema de otimização
-global de polinômios. Artigo escrito em conjunto com os orientadores está sendo
-finalizado para submissão em que tal subproblema também aparece, porém num
-método similar. Tal trabalho contempla também uma biblioteca para resolver o
-subproblema de otimização de polinômios.
-\begin{itemize}
-  \item Este método similar, já em fase final de implementação,
-  demonstra-se competitivo com o \texttt{PCx} nos testes preliminares
- \end{itemize}
-\item Implementação do método proposto, utilizando-se da biblioteca supra
-citada para resolver os subproblemas de otimização de polinômios.
-\item Realizar  testes
-numéricos com conjunto de teste da \texttt{Netlib} e complementares, com
-comparação ao \texttt{PCx} e com o método desenvolvido pelo grupo.
-\end{itemize}
 
+\addsec{Perspectivas Futuras}
+\begin{itemize}
+ 
+    
+          \item Pretende-se também encontrar estimativas para um limitante superior
+          para $\norm{(x^*,z^*)}_\infty$. Este limitante é usado nas
+          demonstrações de convergência de métodos
+      de pontos interiores infactíveis e indica como escolher um ponto inicial
+      que dependa desse limitante e é utilizado na garantia da convergência. Não
+      há porém -- pelo menos de nosso conhecimento --, estimativas para o esse
+      limitante.
+
+
+\item As matrizes $H_P$ e $H_D$ (veja Equação
+\eqref{eq:defining_matrices_H}) podem ser adaptadas, não só garantido a
+não-negatividade dos resíduos primais e duais, mas como fator de escala.
+Esse escalamento pode ser feito tal que se
+$\varphi_k<\eps$, para algum $k$, então o critério de parada do 
+\texttt{PCx} (veja Equação \eqref{eq:termination-criteria-pcx}) também será
+satisfeito.
+\end{itemize}
 
