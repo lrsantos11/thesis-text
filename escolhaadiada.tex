@@ -12,7 +12,7 @@ first.''}}
 \label{chap:merit-function}
 
 
-Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada na implementação do método,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção --  escolhendo o peso de cada uma destas na direção final através da  otimização global da função de mérito. Além disso, escreve-se a vizinhança $\Nset_{\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio, tal que a otimização da função de mérito está sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. 
+Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção . Além disso, escreve-se a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções n na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}. Neste caso, a escolha será determinada em cada passo do algoritmo. Isso significa, como veremos a seguir, que nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
 
 \section{Um KKT escalado}
 
@@ -328,12 +328,12 @@ trajetória central.
 
 Uma das principais contribuições do nosso trabalho, através da extensão das ideias
 de \textcite{VillasBoas:2003tg}, é a escolha do valor de $\mu$ -- que aqui faz as
-vezes de parâmetro de barreira -- e de $\sig$ -- que vai pesar a contribuição da correção --  sendo feita de maneira adiada, e
+vezes de parâmetro que determina a trajetória central -- e de $\sig$ -- que vai pesar a contribuição da correção --  sendo feita de maneira adiada, e
 por isso tais parâmetros, bem como o tamanho do passo $\al$, estão sendo
 tratados como \emph{variáveis}. Para a escolha desses parâmetros, far-se-á uso de uma
-função de mérito, a qual será descrita abaixo.
+função de mérito, a qual será construída a seguir.
  
-Para tanto, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
+Primeiramente, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
 transforma o sistema não linear \eqref{eq:corrector-nonlinear} no sistema linear
 \begin{equation}\begin{cases}
 \label{eq:linear-sytem-DeXDeZcorrec}
@@ -368,14 +368,14 @@ reescrito como
 \ebm.
 \end{equation}
 Portanto, para $(\mu,\sig)$ qualquer -- ainda não escolhidos --, é possível
-encontrar $\Decow$ como
+encontrar a direção corretora $\Decow$ como
 \begin{equation}
 \label{eq:Corrector-spllited}
 \Decow = \mu \Dew^{\mu} + \sig
 \Dew^{\sig},
 \end{equation} 
-resolvendo então dois sistemas lineares similares ao da Seção 
-\ref{sec:affine-scaling-directions}. 
+resolvendo então dois sistemas lineares similares ao utilizado na direção afim (vide  Seção 
+\ref{sec:affine-scaling-directions}). 
 
 Com efeito, encontra-se 
 $\Dew^\mu$ e $\Dew^\sig$  usando a
@@ -403,7 +403,7 @@ t^\mu = - X^{-1}e \text{\quad e \quad} t^\sig = X^{-1}\deX\dez.
 \]
 
 Desta forma, o maior esforço computacional por iteração do método proposto consiste
-em uma fatoração de Cholesky da matriz $B^{-1}$ e seguido de três \emph{backsolves}.
+em uma fatoração de Cholesky da matriz $B^{-1}$, seguido de três retrosubstituições ou \emph{backsolves}.
  
  
 Define-se o próximo ponto, para cada uma das variáveis, como sendo \[\hat{w} = w
@@ -415,7 +415,7 @@ separando as direções, na forma
 \begin{align}
 & \hat{x} = x + \al(\dex + \mu\Dex^\mu + \sig\Dex^\sig ),  \\
 & \hat{y} = y + \al(\dey + \mu\Dey^\mu + \sig\Dey^\sig ), \\
-\intertext{e}
+% \intertext{e}
 & \hat{z} = z + \al(\dez + \mu\Dez^\mu + \sig\Dez^\sig ).
 \end{align} 
 \end{subequations}
@@ -1111,12 +1111,19 @@ Para expressar tal problema de forma apropriada,  assim
 como feito com $\nextphi$, vamos explicitar as desigualdades   \eqref{eq:symmetric-polynomials}
  para o próximo ponto em termos de $(\al,\mu,\sig)$.
 De fato,  para que o próximo ponto $(\nextx,\nexty,\nextz) $ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, definimos os lados esquerdos de  \eqref{eq:symmetric-polynomials} como
+\begin{subequations}
+\label{eq:def-g_C+g_L}
 \begin{align}
 	g_C^i(\nextx,\nexty,\nextz) & \coloneqq (\nextrho_C(\nextx,\nexty,\nextz))_i - \ga\dbvec{\nextrho_C}(\nextx,\nexty,\nextz), \quad i = 1,\ldots,n, \label{eq:def-g_C}\\ 
 	g_L(\nextx,\nexty,\nextz)  & \coloneqq \dbvec{\rho_C}(\nextx,\nexty,\nextz)  - \frac{\nextnu}{\be} \dbvec{\rho_C^0}. \label{eq:def-g_L}
 \end{align}
+\end{subequations}
 
 Assim, usando os Teoremas \ref{thm:next=residual} e  \ref{thm:varphi} em conjunto com \eqref{eq:def-g_C}, obtemos $g_C^{i}$, para $i=1,\ldots,n$, em função de $(\al,\mu,\sig)$ como 
+
+
+\begin{subequations}
+	\label{eq:g_Ci+G_L-explicit}
 \begin{multline}
 \label{eq:g-Ci_explicit}
 g_C^i(\al,\mu,\sig)=      (1-\al)\left((\rho_C)_i - \ga\dbvec{\rho_C} \right) + \al\mu (1-\ga) + \\ +
@@ -1129,15 +1136,16 @@ Por outro lado, considerando que $\nu^{k+1} = \nextnu = (1-\al)\nu$ e levando em
 g_L(\al,\mu,\sig) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu   \right) + \al\mu  + 
  \al(\al-\sig) \dbvec{L_{0,0}}  + \al^2 \dbvec{\La(\mu,\sig)},
 \end{equation}
+\end{subequations}
  em que $\be_{L}= \dfrac{\dbvec{\rho_C^0}}{\be}$. 
 
 
 
 Desta forma, exigindo que as desigualdades 
-\begin{align}
-	g_C^i(\al,\mu,\sig) &\geq 0 \quad \forall i = 1,\ldots,n  \label{eq:ineq-g_C}\\ 
-	g_L(\al,\mu,\sig)  & \geq 0 \label{eq:ineq-g_L}
-\end{align}
+\begin{align*}
+	g_C^i(\al,\mu,\sig) &\geq 0 \quad \forall i = 1,\ldots,n \\% \label{eq:ineq-g_C}\\ 
+	g_L(\al,\mu,\sig)  & \geq 0 %\label{eq:ineq-g_L}
+\end{align*}
 sejam satisfeitas para alguma tripla $(\al,\mu,\sig) $, garantimos que o próximo ponto estará na vizinhança $\Nset_{-\infty}(\ga,\be)$. Neste sentido, essas desigualdades se tornam parte das restrições de nosso subproblema de otimização global, o qual leva a escolha, em cada iteração, de $(\al,\mu,\sig)$.
 
 
@@ -1161,12 +1169,11 @@ função de mérito usando $\al>0$.
 Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $\varsigma_{2}$ e $\varsigma_{3}$ são escalares positivos que podem ou não ser diferente para esses dois parâmetros.
 
  
-O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto neste capítulo.
-
+O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto neste capítulo. A escolha do ponto inicial e do critério de parada, serão descritas no Capítulo \ref{chap:numerical}, junto aos resultados numéricos.
 
 \begin{algorithm}
 \onehalfspacing
-\caption{Resumo do Método de Escolha Adiada.}
+\caption{Método de Escolha Adiada de Parâmetros.}
 \label{alg:optimized-choice-of-parameters} \begin{algorithmic}[1]
 \Procedure{ResolveLP}{$A,b,c$}
 \State $k \gets 0$
@@ -1178,12 +1185,13 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto n
 		\State 	Encontre $((\Dex^\mu)^{k},(\Dey^\mu)^{k},(\Dez^\mu)^{k})$ e
 		$((\Dex^\sig)^{k},(\Dey^\sig)^{k},(\Dez^\sig)^{k})$ utilizando
 		\eqref{eq:De_C}.
-		\State Calcule  $\nextphi(\al_{k},\mu_{k},\sig_{k})$ usando
-		\eqref{eq:merit-function-al-mu-sig} e $\psi(\al_{k},\mu_{k},\sig_{k})$.
+		\State Calcule os coeficientes de  $\nextphi(\al,\mu,\sig)$ usando
+		\eqref{eq:merit-function-al-mu-sig} 
+		\State Calcule os coeficienes de $g_{L}(\al,\mu,\sig)$ e $g^{i}_{C}(\al,\mu,\sig)$ utilizando \eqref{eq:g_Ci+G_L-explicit}.
 		\State Encontre $(\al_{k},\mu_{k},\sig_{k})$ resolvendo o subproblema de
 		otimização global 
 		\eqref{eq:pop-subproblem}.
-		\State Garanta que $\al_k\in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ e faça
+		\State Garanta que $\al_k\in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ usando \eqref{eq:ratio-test} e faça
 		\[
 		\begin{aligned}	
 		& x^{k+1} = x^{k} + \al_k((\dex)^{k} + \mu_{k}(\Dex^\mu)^{k} +
@@ -1201,5 +1209,5 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto n
 \end{algorithmic}
 \end{algorithm}
   
- 
+ No próximo capítulo estabeleceremos os resultados teóricos dessa abordagem, garantindo convergência e polinomialidade do algoritmo, em relação a diminuição da função de mérito e da garantia de que o próximo ponto esteja na vizinhança $\Nset_{-\infty}$.
  

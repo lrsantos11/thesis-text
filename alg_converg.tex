@@ -7,15 +7,14 @@
 
 Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estratégicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
-em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método, resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos escolher $\eta_{\min}=\eta_{\max}=\eta $ como em  
-\cite{Zhang:1995fu}.
+em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método, resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos fixar $\eta_{\min}=\eta_{\max}=\eta $. 
 
 
  Na prática, porém, esperamos que  o método  tenha desempenho melhor do que a convergência teórica, já que se buscará, em cada iteração $k$,
 o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$ e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para  $\hat{\al}$ definido abaixo.
 
 
-Com essas alterações, podemos rescrever o Algoritmo~\ref{alg:optimized-choice-of-parameters}, como o  Algoritmo Simplificado \ref{alg:optimized-choice-of-parameters-simplified}.
+Com essas alterações, podemos rescrever o Algoritmo~\ref{alg:optimized-choice-of-parameters} como o  Algoritmo Simplificado \ref{alg:optimized-choice-of-parameters-simplified}.
 
 
 A fim de pode  resolver o o problema primal-dual (\ref{eq:primal}-\ref{eq:dual}), vamos considerar válido o Pressuposto \ref{ass:interior-nonempty}, isto é, que o interior da região factível é não vazio. Além disso, vamos considerar que o \ac{PL} em questão possui ao menos uma solução ótima. 
@@ -55,7 +54,7 @@ Seja a função auxiliar  dada por
 \right) \right]}{\nu\dbvec{\rho_L}_0 +
 \dbvec{\rho_C}}.
 \end{equation}
-Usando tal definição, podemos escrever a seguinte relação entre a função de mérito atual -- $\varphi$ --  e a próxima -- $\nextphi$ --: 
+Usando tal definição, deriva-se a seguinte relação entre a função de mérito atual -- $\varphi$ --  e a próxima -- $\nextphi$ --: 
 \begin{equation}
 	\label{eq:relation-phi-next-phi}
 	 			{\nextphi} = (1- \theta(\al))\varphi.
@@ -440,7 +439,7 @@ Seja
 \label{eq:omega2}
 	\omega_2 = \frac{\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}}{\ga}.
 	\end{equation}
-Observando que  $\omega_1 \geq 1$ e  $\ga\in(0,1)$,  se $\eta\in[0,1]$ e se \eqref{eq:sig-eta-relation} for satisfeita, então garante-se que $\omega_2\geq 1$, como queríamos. \qedhere
+Observando que  $\omega_1 \geq 1/10$ e  $\ga\in(0,1)$,  se $\eta\in[0,1]$ e se \eqref{eq:sig-eta-relation} for satisfeita, então garante-se que $\omega_2\geq 1$, como queríamos. \qedhere
 % \begin{equation}
 % 	\label{eq:sig-eta-relation}
 % 	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}},
@@ -683,9 +682,9 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 		p(\eta,\ga) =   324 -	(414 - 162\ga)\eta - (107 - 36\ga)\eta^{2} -  \eta^{3}. 
 	\]
 	Considerando que  $\sqrt{\ga}<\eta<1$, para $0 < \ga \leq 1/10$, segue que
-	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0.\] 
+	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0\].
 
-	Sob essas condições, pelo Teorema do Valor Intermediário de Bolzano \cite[Teorema 5.3.7]{Bartle:2011tr}, escolhido $\ga$, existe uma raiz $\eta_1$ do polinômio $p$, tal que  $\eta_{1}\in (1/10, 1)$. Neste caso, por continuidade, para qualquer valor de $\eta  < \eta_{1}$, $p(\eta,\ga) >0$.  Finalmente,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, temos que  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$, o que completa a demonstração.
+	Sob essas condições, como o $p$ é polinômio de grau 3 em $\eta$, pelo Teorema do Valor Intermediário de Bolzano \cite[Teorema 5.3.7]{Bartle:2011tr}, escolhido $\ga$, existe uma  raiz  de $p$ no intervalo $(1/10,1)$. Seja $\eta_{1}$ a menor destas raízes. Neste caso, por continuidade, para qualquer valor de $\eta  < \eta_{1}$, $p(\eta,\ga) >0$.  Finalmente,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, temos que  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$, o que completa a demonstração.
 % \textcolor{red}{Como terminar? $\nextdel$ precisa ser menor que 1? Maior que 0? O que mais? Já sei que $\eta > \sqrt{\ga}$, para essa escolha de $\mu$ e $\sigma$.}
 \end{proof}
 
@@ -739,7 +738,7 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 
 
 
-Finalmente podemos enunciar e provar o teorema de convergência do Algoritmo. 
+Finalmente podemos enunciar e provar o teorema de convergência. 
 
 
 \begin{teo}[Convergência do Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}]
@@ -749,13 +748,12 @@ Finalmente podemos enunciar e provar o teorema de convergência do Algoritmo.
 	\label{eq:varphi0-eps-kappa}
 		\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}}
 	\end{equation} 
-	com  $\kappa$ uma constante positiva. Então existe um índice \[K =  \Oset\left(n^{4}\abs{\ln\frac{1}{\varepsilon}}\right),\] tal que 
+	com  $\kappa$ uma constante positiva. Então a sequência $\{\varphi_{k}\}$ converge Q-linearmente para zero e existe um índice \[K =  \Oset\left(n^{4}\abs{\ln\frac{1}{\varepsilon}}\right),\] tal que 
 	 $\varphi_{k}\leq \varepsilon \text{ para todo } k \geq K$.
 	 
 \end{teo}
 
-\begin{proof} 
-	Aplicando o logaritmo em ambos os lados da inequação \eqref{eq:varphi-delta-n4} dada no Lema \ref{lemma:next-phi-delta-n4}, obtemos
+\begin{proof} A convergência Q-linear é consequência direta do Lema \ref{lemma:next-phi-delta-n4}. Quanto à polinomialidade, aplicando o logaritmo em ambos os lados da inequação \eqref{eq:varphi-delta-n4} dada no Lema \ref{lemma:next-phi-delta-n4}, obtemos
 	\[
 	\ln\varphi_{k+1}\leq \ln \left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln\varphi_{k},
 	\]
@@ -786,16 +784,16 @@ o que termina a demonstração.
 
 
 
-O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém, é possível garantir que o Critério de Parada do \texttt{PCx}  dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito, para uma escolha particular de $\varepsilon$. Tal garantia é dada pelo Corolário a seguir.
-
+% \color{red}
+O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia é dada pelo Corolário a seguir.
 
 \begin{corol}
 Suponha que escolha-se  $\tol = 10^{-8}$  e $\varepsilon$   tal que 
 \begin{equation}
 	\label{eq:choosing-eps}
-		\varepsilon < \min\left\{  \frac{\tol(1+\norm{b})}{m+n}, \frac{\tol(1+\norm{c})}{m+n},\tol(1+ |c^{T}z|)\right\}.
+		\varepsilon < \min\left\{  \frac{\tol(1+\norm{b})}{m+n}, \frac{\tol(1+\norm{c})}{m+n},\frac{\tol}{n}\right\}.
 \end{equation}
-Então se o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} converge então o critério de parada dado na Equação~\eqref{eq:termination-criteria-pcx} é satisfeito.
+Se o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} converge então o critério de parada dado na Equação~\eqref{eq:termination-criteria-pcx} é satisfeito.
 \end{corol}		
 
 \begin{proof}
@@ -803,31 +801,84 @@ Então se o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} conver
 	\begin{equation}
 		\label{eq:varphi-rhoP-rhoD}
 				\varphi_{k} =  \frac{\norm{\rho^{k}_L}_1}{m+n} + 
-\frac{(x^{k})^Tz^{k}}{n}  = \frac{\norm{H_{P}(Ax^{k} - b)}_1 +\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_1 }{m+n} + 
+\frac{(x^{k})^Tz^{k}}{n}  = \frac{\norm{H_{P}(Ax^{k} - b)}_1}{m+n} +\frac{\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_1 }{m+n} + 
 \frac{(x^{k})^Tz^{k}}{n}.
 	\end{equation}
-Além disso, temos que $\norm{Ax^{k} - b} \leq \norm{Ax^{k} - b}_{1} = \norm{H_{P}(Ax^{k} - b)}_{1}$ e que $\norm{H_{D}(A^{T}y^{k} + z^{k}- c)} \leq \norm{A^{T}y^{k} + z^{k}- c}_1 = \norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_1$.
+
+Além disso, por equivalência de normas e pela definção de $H_{P}$ e $H_{D}$ dadas na Equação \eqref{eq:defining_matrices_H}, temos que $\norm{Ax^{k} - b} \leq \norm{Ax^{k} - b}_{1} = \norm{H_{P}(Ax^{k} - b)}_{1}$ e que $\norm{H_{D}(A^{T}y^{k} + z^{k}- c)} \leq \norm{A^{T}y^{k} + z^{k}- c}_1 = \norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_1$.
 
 Ademais, se  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} converge, existe $k$ suficientemente grande tal que $\varphi_{k}<\eps$. Assim, cada um dos termos da última parte de \eqref{eq:varphi-rhoP-rhoD} é menor que $\varepsilon$.
 
 
-Daí, pela Equação \ref{eq:choosing-eps}, segue que 
+Daí, pela Equação \eqref{eq:choosing-eps}, segue que 
 \[
 \dfrac{\norm{Ax^{k} - b}}{1 + \norm{b}} \leq  \frac{\norm{H_{P}(Ax^{k} - b)}_1  }{1 + \norm{b}} < \frac{\eps (m+n)}{1 + \norm{b}} <\frac{\tol(1+\norm{b})}{m+n} \frac{m+n}{1 + \norm{b}} = \tol,
 \]
-
+e
 \[
-\dfrac{\norm{A^{T}y^{k} + z^{k}- c}}{1 + \norm{c}} \leq  \frac{\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_{1}  }{1 + \norm{c}} < \frac{\eps (m+n)}{1 + \norm{c}} <\frac{\tol(1+\norm{c})}{m+n} \frac{m+n}{1 + \norm{c}} = \tol,
+\dfrac{\norm{A^{T}y^{k} + z^{k}- c}}{1 + \norm{c}} \leq  \frac{\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_{1}  }{1 + \norm{c}} < \frac{\eps (m+n)}{1 + \norm{c}} <\frac{\tol(1+\norm{c})}{m+n} \frac{m+n}{1 + \norm{c}} = \tol.
 \]
-
-
+Além disso, como $1+ |c^{T}z| \geq 1$, temos que 
 \[
-\dfrac{(x^{k})^{T}z^{k}/n}{1+ |c^{T}z^{k}|} <   \frac{\eps}{1+ |c^{T}z^{k}|} <\frac{\tol(1+ |c^{T}z^{k}|)}{1+ |c^{T}z^{k}|} = \tol.
+\dfrac{(x^{k})^{T}z^{k}}{1+ |c^{T}x^{k}|} <   \frac{n\cdot  \eps}{1+ |c^{T}x^{k}|} \leq n \cdot \eps < n \frac{\tol}{n} = \tol. \qedhere
 \]
-
-
  \end{proof}
 
+  \begin{algorithm}[htb]
+ \onehalfspacing
+ \caption{Método de Escolha Adiada de Parâmetros Simplificado.}
+ \label{alg:optimized-choice-of-parameters-simplified} 
+\begin{algorithmic}[1]
+\Procedure{ResolveLP}{$A,b,c$}
+\State $(\xzero ,\yzero,\zzero ) \gets$ \Call{PontoInicial}{$A,b,c$}.
+\Comment{Assegure que  $(\xzero ,\zzero )>0$ e que $\eta\in(0,1)$}
+	\For {$k=1,2,\ldots$}
+		\State Encontre		$((\dex)^{k},(\dey)^{k},(\dez)^{k})$ resolvendo
+				\begin{equation}
+				\label{eq:predictor-linear-matrix-simplified}
+				\bbm A & 0 & 0 \\
+				0 & A^T & I\\
+				Z^k & 0 & X^k \ebm
+				\bbm (\dex)^k \\ (\dey)^k \\ (\dez)^k
+				\ebm = 
+				\bbm -r_P^k  \\ -r_D^k \\ -r_C^k
+				\ebm.
+			\end{equation}
+		\State 	Faça $\nextmu=\eta{(x^k)^Tz^k}/{n}$ e  $\nextsig=0$, e resolva 
+		% \[((\Decox)^{k},(\Decoy)^{k},(\Decoz)^{k}) = \bar{\mu}((\Dex^{\mu})^{k},(\Dey^{\mu})^{k},(\Dez^{\mu})^{k})\]
+		% resolvendo
+			\begin{equation}
+				\label{eq:corrector-linear-matrix-simplified}
+				\bbm A & 0 & 0 \\
+				0 & A^T & I\\
+				Z^k & 0 & X^k \ebm
+				\bbm (\Decox)^{k} \\ (\Decoy)^{k} \\ (\Decoz)^{k}
+				\ebm = 
+				\bbm 0  \\ 0 \\  \nextmu e %- \bar{\sig}\deX\dez
+				\ebm.
+			\end{equation}
+		\State Encontre $\al^*$ resolvendo o subproblema de
+		otimização global 	\eqref{eq:pop-subproblem}.		
+		\State Escolha $\al_k = \min\{\al^*,\tilde{\al}_k\}$ com $\tilde{\al}_k$ dado por $\eqref{eq:ratio-test}$ e faça
+		\[
+		\begin{aligned}	
+		& x^{k+1} = x^{k} + \al_k((\dex)^{k} + (\Decox)^{k} )
+		\\
+		& y^{k+1} = y^{k} + \al_k((\dey)^{k} + (\Decoy)^{k} )
+		\\
+		& z^{k+1} = z^{k} + \al_k((\dez)^{k} + (\Decoz)^{k} )
+		 \end{aligned}. 
+		\]		
+	\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+No presente capítulo, estabelecemos os resultados de $\eps$-convergência e polinomialidade do nosso método, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}, com uma escolha particular do ponto inicial. Além disso, garantimos que é possível escolher um $\eps>0$ tal que um critério de parada equivalente ao usado em várias implementações. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Adiada de Parâmetros (MPI-EAP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns experimentos numéricos feitos com este método.
+
+
+
+% \color{black}
 % \subsection{Um limitante para \texorpdfstring{$\al_k$}{o tamanho do passo} alternativo }
 
 % \color{red} 
@@ -1052,53 +1103,3 @@ Daí, pela Equação \ref{eq:choosing-eps}, segue que
 
 % \chi_i  & = \eta\dbvec{\rho_C} \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
 % \xi_i	& =  (\eta\dbvec{\rho_C})^2(L_{2,0})_i , \\ 
-
-  \begin{algorithm}[htb]
- \onehalfspacing
- \caption{Método de Escolha Adiada Simplificado.}
- \label{alg:optimized-choice-of-parameters-simplified} 
-\begin{algorithmic}[1]
-\Procedure{ResolveLP}{$A,b,c$}
-\State $(\xzero ,\yzero,\zzero ) \gets$ \Call{PontoInicial}{$A,b,c$}.
-\Comment{Assegure que  $(\xzero ,\zzero )>0$ e que $\eta\in(0,1)$}
-	\For {$k=1,2,\ldots$}
-		\State Encontre		$((\dex)^{k},(\dey)^{k},(\dez)^{k})$ resolvendo
-				\begin{equation}
-				\label{eq:predictor-linear-matrix-simplified}
-				\bbm A & 0 & 0 \\
-				0 & A^T & I\\
-				Z^k & 0 & X^k \ebm
-				\bbm (\dex)^k \\ (\dey)^k \\ (\dez)^k
-				\ebm = 
-				\bbm -r_P^k  \\ -r_D^k \\ -r_C^k
-				\ebm.
-			\end{equation}
-		\State 	Faça $\nextmu=\eta{(x^k)^Tz^k}/{n}$ e  $\nextsig=0$, e resolva 
-		% \[((\Decox)^{k},(\Decoy)^{k},(\Decoz)^{k}) = \bar{\mu}((\Dex^{\mu})^{k},(\Dey^{\mu})^{k},(\Dez^{\mu})^{k})\]
-		% resolvendo
-			\begin{equation}
-				\label{eq:corrector-linear-matrix-simplified}
-				\bbm A & 0 & 0 \\
-				0 & A^T & I\\
-				Z^k & 0 & X^k \ebm
-				\bbm (\Decox)^{k} \\ (\Decoy)^{k} \\ (\Decoz)^{k}
-				\ebm = 
-				\bbm 0  \\ 0 \\  \nextmu e %- \bar{\sig}\deX\dez
-				\ebm.
-			\end{equation}
-		\State Encontre $\al^*$ resolvendo o subproblema de
-		otimização global 	\eqref{eq:pop-subproblem}.		
-		\State Escolha $\al_k = \min\{\al^*,\tilde{\al}_k\}$ com $\tilde{\al}_k$ dado por $\eqref{eq:ratio-test}$ e faça
-		\[
-		\begin{aligned}	
-		& x^{k+1} = x^{k} + \al_k((\dex)^{k} + (\Decox)^{k} )
-		\\
-		& y^{k+1} = y^{k} + \al_k((\dey)^{k} + (\Decoy)^{k} )
-		\\
-		& z^{k+1} = z^{k} + \al_k((\dez)^{k} + (\Decoz)^{k} )
-		 \end{aligned}. 
-		\]		
-	\EndFor
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}

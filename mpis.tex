@@ -1333,8 +1333,8 @@ necessário também saber quão avançado o iterado precisa ser, tal que
 garanta-se que o número de iterações de ponto-interior não seja muito grande. Veja-se o texto de \textcite[Cap. 7]{Wright:Primal-dual-interior-point:1997h} para uma explanação completa sobre terminação finita em \ac{MPI}.
 
 A maioria das implementações de pontos interiores, por estar trabalhando com
-precisão finita, garante apenas um certo grau de exatidão. A maioria
-dos códigos utiliza os seguintes critérios~\cite{Gondzio:1996:CVI}:	
+precisão finita, garante apenas um certo grau de exatidão ou tolerância, tanto para a factibilidade quanto para a otimalidade. Grande parte
+dos códigos utiliza os seguintes critérios~\cite{Gondzio:1996:CVI,Czyzyk:1999hk}:	
 
 
 \begin{subequations}
@@ -1362,7 +1362,7 @@ permitirem avaliar relativamente tanto viabilidades primal e dual quanto
 otimalidade.
   
 Um outro conjunto de critérios muito parecido  com
-\eqref{eq:termination-criteria}  -- o qual é utilizado no \texttt{PCx}~\cite{Czyzyk:1999hk}  -- é
+\eqref{eq:termination-criteria}  é
 \begin{subequations}
 \label{eq:termination-criteria-pcx}
 \begin{align}
@@ -1370,20 +1370,18 @@ Um outro conjunto de critérios muito parecido  com
 	\label{eq:termination-criteria-pcx-primal}\\
 	\dfrac{\norm{A^Ty + z - c}}{1 + \norm{c}} \leq \tol,
 	\label{eq:termination-criteria-pcx-dual}\\
-	\dfrac{\tau}{1 + \abs{c^Tx}}\leq
+	\dfrac{x^{T}z}{1 + \abs{c^Tx}}\leq
 	\tol,\label{eq:termination-criteria-pcx-gap}
 \end{align}
 \end{subequations}
-e, que $\tol = 10^{-8}$. Note que agora, em contraste com
+em que $\tol = 10^{-8}$. Note que agora, em contraste com
 \eqref{eq:termination-criteria}, os denominadores de 
 \eqref{eq:termination-criteria-pcx-primal} e
 \eqref{eq:termination-criteria-pcx-dual} são fixos, o que de certa maneira
 diminui a quantidade de operações, já que não é mais necessário encontrar a
 norma  -- ainda que norma-$\infty$ --  dos vetores $x$ e $y$ em cada
-iteração. O valor de $\tau$,  é usado em \eqref{eq:termination-criteria-pcx-gap} ao
- invés do \emph{gap} dual  como em \eqref{eq:termination-criteria-gap}, pois no ponto
- ótimo, \emph{gap} dual e \emph{gap} de complementaridade são iguais e já que $\tau$ está
-calculado, temos mais uma vez uma economia de operações. 
+iteração. O valor de $x^{T}z$,  é usado em \eqref{eq:termination-criteria-pcx-gap} ao
+ invés do \emph{gap} dual  como em \eqref{eq:termination-criteria-gap}, pois além de para pontos factíveis, \emph{gap} dual e \emph{gap} de complementaridade são iguais -- vide Equação \eqref{eq:gap-complementarity} -- é razoável que se $x^{T}z$ convergir para zero, então o \emph{gap} dual também converge para zero.
 
 
 
