@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"be",
+				"begin	\\begin{}…\\end{}"
+			],
+			[
 				"al",
 				"lemma:alL_delta-2"
 			],
@@ -131,7 +135,15 @@
 			"file": "alg_converg.tex",
 			"settings":
 			{
-				"buffer_size": 53176,
+				"buffer_size": 57116,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "convergencia.tex",
+			"settings":
+			{
+				"buffer_size": 1099,
 				"line_ending": "Unix"
 			}
 		},
@@ -147,7 +159,7 @@
 			"file": "numericos.tex",
 			"settings":
 			{
-				"buffer_size": 983,
+				"buffer_size": 1021,
 				"line_ending": "Unix"
 			}
 		},
@@ -155,7 +167,7 @@
 			"file": "escolhaadiada.tex",
 			"settings":
 			{
-				"buffer_size": 48373,
+				"buffer_size": 49423,
 				"line_ending": "Unix"
 			}
 		},
@@ -168,18 +180,10 @@
 			}
 		},
 		{
-			"file": "mpis.tex",
-			"settings":
-			{
-				"buffer_size": 64701,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "pacotes.tex",
 			"settings":
 			{
-				"buffer_size": 4081,
+				"buffer_size": 4147,
 				"line_ending": "Unix"
 			}
 		},
@@ -187,7 +191,7 @@
 			"file": "configuracao.tex",
 			"settings":
 			{
-				"buffer_size": 3604,
+				"buffer_size": 3668,
 				"line_ending": "Unix"
 			}
 		}
@@ -195,9 +199,25 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 107.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"git",
+				"Git: Push"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"git:pul",
+				"Git: Pull"
+			],
+			[
+				"git:ps",
+				"Git: Push"
+			],
 			[
 				"git:pus",
 				"Git: Push Current Branch"
@@ -213,10 +233,6 @@
 			[
 				"git:che",
 				"Git: Checkout"
-			],
-			[
-				"git:ps",
-				"Git: Push"
 			],
 			[
 				"gis",
@@ -271,10 +287,6 @@
 				"Git: Checkout"
 			],
 			[
-				"push",
-				"Git: Push"
-			],
-			[
 				"pus",
 				"Git: Push"
 			],
@@ -289,10 +301,6 @@
 			[
 				"git:ch",
 				"Git: Checkout"
-			],
-			[
-				"git",
-				"Git: Status"
 			],
 			[
 				"git:s",
@@ -344,6 +352,8 @@
 	},
 	"file_history":
 	[
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/.gitignore",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.aux",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
@@ -353,7 +363,6 @@
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.log",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/.gitignore",
 		"/Users/lrsantos/Dropbox/UFSC/Concurso_270-13/memorial/ProjetoAcademico/ProjetoAcademicoLRS.tex",
 		"/Users/lrsantos/Dropbox/IFC/Docência/documentos/2013/Edital_Pesquisa_39_2013/texto/Projeto_Pesquisa_edita23_LRS.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/references_bibdesk_papers.bib",
@@ -361,7 +370,6 @@
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese_antiga.tex",
 		"/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/pacotes.tex",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/CheckBounce/CheckBounce.sublime-settings",
@@ -507,8 +515,8 @@
 						"selection":
 						[
 							[
-								384,
-								384
+								4438,
+								4438
 							]
 						],
 						"settings":
@@ -624,10 +632,10 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2116.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -636,15 +644,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 53176,
+						"buffer_size": 57116,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								36041,
-								36041
+								45358,
+								45358
 							]
 						],
 						"settings":
@@ -762,7 +770,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 18538.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -770,6 +778,141 @@
 				},
 				{
 					"buffer": 2,
+					"file": "convergencia.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1099,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								58,
+								58
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 13,
+							"sublime_auto_complete": true,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "concl.tex",
 					"semi_transient": false,
 					"settings":
@@ -902,24 +1045,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "numericos.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 983,
+						"buffer_size": 1021,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								664,
-								500
+								163,
+								163
 							]
 						],
 						"settings":
@@ -1037,24 +1180,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "escolhaadiada.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 48373,
+						"buffer_size": 49423,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								43912,
-								43912
+								46452,
+								46452
 							]
 						],
 						"settings":
@@ -1169,14 +1312,14 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 20741.0,
+						"translation.y": 21675.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
 					"semi_transient": false,
 					"settings":
@@ -1305,142 +1448,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1387.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "mpis.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 64701,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								62332,
-								62332
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 1,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 24108.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -1452,15 +1460,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4081,
+						"buffer_size": 4147,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								368,
-								368
+								2224,
+								2224
 							]
 						],
 						"settings":
@@ -1576,10 +1584,10 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 165.0,
+						"translation.y": 1202.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1588,15 +1596,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3604,
+						"buffer_size": 3668,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3600,
-								3600
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1715,7 +1723,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -1768,6 +1776,10 @@
 	{
 		"height": 100.0
 	},
+	"output.git-merge":
+	{
+		"height": 118.0
+	},
 	"output.git-pull":
 	{
 		"height": 100.0
@@ -1795,6 +1807,10 @@
 		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"",
+				"~/Documents/Matematica/Unicamp/doutorado/tese/testes/PCx-LRS/PCx_LRS.sublime-workspace"
+			]
 		],
 		"width": 380.0
 	},
