@@ -54,7 +54,7 @@ Seja a função auxiliar  dada por
 \right) \right]}{\nu\dbvec{\rho_L}_0 +
 \dbvec{\rho_C}}.
 \end{equation}
-Usando tal definição, deriva-se a seguinte relação entre a função de mérito atual -- $\varphi$ --  e a próxima -- $\nextphi$ --: 
+Usando tal definição, deriva-se a seguinte relação entre a função de mérito atual  $\varphi$  e a da próxima iteração  $\nextphi$: 
 \begin{equation}
 	\label{eq:relation-phi-next-phi}
 	 			{\nextphi} = (1- \theta(\al))\varphi.
@@ -80,7 +80,7 @@ Para tanto, sejam
 em que $g_{C}^{i}$ e $g_{L}$ são dadas pelas equações  \eqref{eq:g-Ci_explicit} e \eqref{eq:g-L_explicit}, já tendo sido fixados os parâmetros $\mu=\nextmu$ e $\sig=\nextsig$.
 
 
-Com isso, escolheremos  $\hat\al$ que garanta decréscimo suficiente de $\nextphi$ ao mesmo em que haja a pertinência de $({x}^{k} ,{y}^{k},{z}^{k})$ à $\Nset_{-\infty}(\gamma,\beta)$ por sujeitar $\nextphi$ tanto à  \eqref{eq:g-Ci_explicit} quanto à \eqref{eq:g-L_explicit}. Isso será feito simplesmente por escolher
+Com isso, escolheremos  $\hat\al$ que garanta decréscimo suficiente de $\nextphi$ ao mesmo em que haja a pertinência de $({x}^{k} ,{y}^{k},{z}^{k})$ à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ por sujeitar $\nextphi$ tanto à  \eqref{eq:g-Ci_explicit} quanto à \eqref{eq:g-L_explicit}. Isso será feito simplesmente por escolher
 
 \begin{equation}
 	\label{eq:nex-al}
@@ -99,7 +99,7 @@ em que $\nextal_{C}$ e $\nextal_{L}$ são definidos nos Lemas \ref{lemma:alC_del
 % De fato, a função $\theta(\al)$ é uma quadrática, e por conta disso, o problema \eqref{eq:nex-al} é resolvido por comparar os valores funcionais de $\theta(\al)$ em seus pontos críticos no interior do intervalo e o valor funcional no ponto mais a direita do intervalo.
 
 
- Essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, garantimos que o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda que $({x}^{k} ,{y}^{k},{z}^{k})$ convirga para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
+ Essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, garantimos que o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda que $({x}^{k} ,{y}^{k},{z}^{k})$ convirja para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
 
 
 
