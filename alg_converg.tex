@@ -481,7 +481,7 @@ Similarmente, 	$\norm{\Decox\dez}_{1} \leq (\omega_1\omega_2^{1/2})n^{3}\dbvec{\
 
 \section{Teorema de Convergência}
 
-A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\nextmu $ e  $\nextsig$, basta encontrar um o tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
+A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\nextmu $ e  $\nextsig$, basta encontrar um  tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
 $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. É o que os próximos resultados garantem. Observe que, por conta de \eqref{eq:sig-eta-relation}, garantiremos que $\eta>\sqrt{\ga}$.
 
 
@@ -683,9 +683,10 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 		p(\eta,\ga) =   324 -	(414 - 162\ga)\eta - (107 - 36\ga)\eta^{2} -  \eta^{3}. 
 	\]
 	Considerando que  $\sqrt{\ga}<\eta<1$, para $0 < \ga \leq 1/10$, segue que
-	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0\].
+	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0.\]
+	Sob essas condições, como o $p$ é polinômio de grau 3 em $\eta$, pelo Teorema do Valor Intermediário de Bolzano \cite[Teorema 5.3.7]{Bartle:2011tr}, escolhido $\ga$, existe pelo menos uma  raiz  de $p$ no intervalo $(1/10,1)$. 
 
-	Sob essas condições, como o $p$ é polinômio de grau 3 em $\eta$, pelo Teorema do Valor Intermediário de Bolzano \cite[Teorema 5.3.7]{Bartle:2011tr}, escolhido $\ga$, existe uma  raiz  de $p$ no intervalo $(1/10,1)$. Seja $\eta_{1}$ a menor destas raízes. Neste caso, por continuidade, para qualquer valor de $\eta  < \eta_{1}$, $p(\eta,\ga) >0$.  Finalmente,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, temos que  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$, o que completa a demonstração.
+	Seja $\eta_{1}$ a menor dessas raízes. Nesse caso, por continuidade de $p$, para qualquer $\eta  < \eta_{1}$ e $\ga$ escolhido como acima, temos que  $p(\eta,\ga) >0$.  De fato,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, temos que  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$, o que completa a demonstração.
 % \textcolor{red}{Como terminar? $\nextdel$ precisa ser menor que 1? Maior que 0? O que mais? Já sei que $\eta > \sqrt{\ga}$, para essa escolha de $\mu$ e $\sigma$.}
 \end{proof}
 
