@@ -5,9 +5,9 @@
 
 
 
-Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estratégicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
+Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estrategicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
-em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método, resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos fixar $\eta_{\min}=\eta_{\max}=\eta $. 
+em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos fixar $\eta_{\min}=\eta_{\max}=\eta $. 
 
 
  Na prática, porém, esperamos que  o método  tenha desempenho melhor do que a convergência teórica, já que se buscará, em cada iteração $k$,
