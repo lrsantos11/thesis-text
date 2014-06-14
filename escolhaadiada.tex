@@ -18,7 +18,7 @@ Este capítulo tem o objetivo de apresentar a principal contribuição deste tra
 
 
  
-A fim de construir a função de mérito e suas restrições como polinômios, são necessárias algumas transformações, as quais explanamos a seguir. Considere novamente o par primal-dual na sua forma padrão,
+A fim de construir a função de mérito e suas restrições como polinômios, são necessárias algumas transformações, as quais explanamos a seguir. Considere novamente o par primal-dual  (\ref{eq:primal}-\ref{eq:dual}) na sua forma padrão,
 i.e.,  
 
  \begin{equation*}
@@ -741,15 +741,15 @@ nulo;
 \item Também devido ao Corolário \ref{cor:positive-residual}, dado
 $(x,y,z)\in\Qset^+$ gerado pelo método, vale
 \[
-\varphi(x,y,z)\geq0.
+\varphi(x,y,z)\geq0;
 \]
 	\item Finalmente, se $(x^*,y^*,z^*)$ é solução de
-\eqref{eq:ScaledKKT}, então $\varphi(x^*,y^*,z^*)=0$;
+\eqref{eq:ScaledKKT}, então $\varphi(x^*,y^*,z^*)=0$.
 \end{enumerate}
 \end{obs}
 
 
-Por conta das propriedades \eqref{it:obs-Choice-merit-rho-l} e \eqref{it:obs-Choice-merit-rho-C} da Observação \ref{obs:Choice-of-merit-function}, podemos rescrever
+Por conta dos itens \eqref{it:obs-Choice-merit-rho-l} e \eqref{it:obs-Choice-merit-rho-C} da Observação \ref{obs:Choice-of-merit-function}, podemos rescrever
 \eqref{eq:merit-function-as-sum} como
 
 
@@ -975,9 +975,10 @@ linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possíve
  \rho_L^{k+1}  = (1-\al_k) \rho_L^{k} = \nu_{k+1}  \rho_L^{0},
 \end{equation}
 em que  $\nu_0 = 1$ e 
-\[
+\begin{equation}
+	\label{eq:nu_k+1}
 \nu_{k+1} = (1-\al_k)\nu_k = \prod_{j=0}^{k}(1-\al_j) \geq 0.
-\]
+\end{equation}
 \end{prop}
 
 \begin{proof}
@@ -993,7 +994,7 @@ Como  $\nu_k$ é uma constante não negativa,  uma consequência desta proposiç
 \[
 \nu_k = \frac{\norm{\rho_L^{k}}_p}{\norm{\rho_L^{0}}_p},
 \]
-e logo, pela definição de \emph{operador média}, vale
+e logo, pela definição de \emph{operador média}, segue que
 \begin{equation}
 	\label{eq:nu_k}
 	\nu_k = \frac{\dbvec{\rho_L^k}}{\dbvec{\rho_L^0}}.

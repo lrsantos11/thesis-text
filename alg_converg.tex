@@ -7,7 +7,7 @@
 
 Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estrategicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
-em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos fixar $\eta_{\min}=\eta_{\max}=\eta $. 
+em que $\eta\in [\eta_{\min},\eta_{\max} ]$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos supor $\eta$ fixo. Os valores de $\eta_{\min}$ e $\eta_{\max}$ serão determinados no Lema~\ref{lemma:next-phi-delta-n4}.
 
 
  Na prática, porém, esperamos que  o método  tenha desempenho melhor do que a convergência teórica, já que se buscará, em cada iteração $k$,
@@ -99,7 +99,7 @@ em que $\nextal_{C}$ e $\nextal_{L}$ são definidos nos Lemas \ref{lemma:alC_del
 % De fato, a função $\theta(\al)$ é uma quadrática, e por conta disso, o problema \eqref{eq:nex-al} é resolvido por comparar os valores funcionais de $\theta(\al)$ em seus pontos críticos no interior do intervalo e o valor funcional no ponto mais a direita do intervalo.
 
 
- Essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, garantimos que o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda que $({x}^{k} ,{y}^{k},{z}^{k})$ convirja para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
+ Essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters-simplified} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda faz com que $({x}^{k} ,{y}^{k},{z}^{k})$ convirja para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
 
 
 
@@ -148,7 +148,7 @@ Além disso, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequ
 \]
 o que garante que o ponto inicial satisfaz a desigualdade~\eqref{eq:symmetric-polynomials-b}.
 
-Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto maior for $\be$, mais acelerada é a redução  das médias dos resíduos de linearidade, dadas por $\dbvec{\rho_L}$, em relação à redução da média dos resíduos de complementaridade $\dbvec{\rho_C}$. Para facilitar os raciocínios, do ponto de vista teórico, considere seja escolhido como $\be=1$.
+Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\dbvec{\rho_C}$, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L}$. Para facilitar os raciocínios, do ponto de vista teórico, vamos escolher o menor valor para $\beta$, isto é, $\be=1$.
 
 
 \begin{obs}
@@ -178,8 +178,9 @@ O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm
 	Suponha que o ponto inicial seja dado por \eqref{eq:initial-point}. Então para qualquer iterado $(\xk,\yk,\zk)$,  temos que 
 	\begin{equation}
 		\label{eq:bound-xkzk}
-		\bdxzstar\nu_k\norm{(\xk,\zk)}_{1} \leq  4\be n \dbvec{\rho_C^{k}}.
+		\bdxzstar\nu_k\norm{(\xk,\zk)}_{1} \leq  4\be n \dbvec{\rho_C^{k}},
 	\end{equation}
+	em que $\nu_{k}$ é definido em \eqref{eq:nu_k+1} e $\bdxzstar$ é definido em \eqref{eq:norm-xz-star}.
 \end{lema}
 
 \begin{proof}
@@ -188,11 +189,13 @@ O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm
 		(\tilde{x},\tilde{y},\tilde{z})  = \nu(\xzero,\yzero,\zzero) + (1-\nu)(\xstar,\ystar,\zstar) - (x,y,z). 
 	\]
 em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point} e $(\xstar,\ystar,\zstar)$ é  solução ótima que satisfaz \eqref{eq:norm-xz-star}.
+
+
 É fácil ver que tal ponto satisfaz \eqref{eq:Ax0-ATyz0} e portanto vale \eqref{eq:xTziszero}, isto é, $(\tilde{x})^{T}\tilde{z} = 0$. 
 
 Logo temos que 
 \begin{align}
-	0  = \tilde{x}^{T}\tilde{z} & = (\nu\xzero + (1-\nu)\xstar - x)^{T}(\nu\zzero + (1-\nu_k)\zstar - x)\notag\\
+	0  = \tilde{x}^{T}\tilde{z} & = (\nu\xzero + (1-\nu)\xstar - x)^{T}(\nu\zzero + (1-\nu)\zstar - x)\notag\\
 	  & = \nu^{2}(\xzero)^T\zzero + (1-\nu)^{2}(\xstar)^{T}\zstar + \nu(1-\nu)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero) \notag\\
 	  & \textcolor{white}{=} + x^{T}z - \nu (x^{T}\zzero + (\xzero)^{T}z) - (1-\nu) (x^{T}\zstar + (\xstar)^{T}z).\label{eq:boundxz1}
 \end{align}
