@@ -42,7 +42,7 @@ Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2
  e $\sig = \nextsig=0$ e usando a Proposição \ref{prop:nu_k},   podemos rescrever a função de mérito para o próximo ponto, dependendo apenas de uma escolha de  $\al$ como
 \begin{equation}
 	\label{eq:simplified-merit-function-al}
-\nextphi(\al)  = (1-\al)(\nu\dbvec{\rho_L}_0 +
+\nextphi(\al)  = (1-\al)(\nu_k\dbvec{\rho_L}_0 +
 \dbvec{\rho_C}) + \al\eta\dbvec{\rho_C} + \al^2\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}}
 \right) .
 \end{equation}
@@ -50,8 +50,8 @@ Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2
 Seja a função auxiliar  dada por
 \begin{equation}
 	\label{eq:theta}
-\theta(\al) =  \dfrac{\al\left[ \nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} - \al\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}}
-\right) \right]}{\nu\dbvec{\rho_L}_0 +
+\theta(\al) =  \dfrac{\al\left[ \nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} - \al\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}}
+\right) \right]}{\nu_k\dbvec{\rho_L}_0 +
 \dbvec{\rho_C}}.
 \end{equation}
 Usando tal definição, deriva-se a seguinte relação entre a função de mérito atual  $\varphi$  e a da próxima iteração  $\nextphi$: 
@@ -152,15 +152,15 @@ Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 
 
 
 \begin{obs}
-	Em vários momentos da análise que segue vamos considerar que se $(\Dex,\Dey,\Dez)$ é uma terna de direções qualquer,  tal que 
+	Em vários momentos da análise que segue vamos considerar que para qualquer terna de vetores $(\tilde{x},\tilde{y},\tilde{z})$ ,  tal que 
 \begin{equation}
 	\label{eq:Ax0-ATyz0}
-	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0,
+	A\tilde{x}=0 \text{ e } A^T\tilde{y} + \tilde{z} = 0,
 \end{equation}
 então
 \begin{equation}
 	\label{eq:xTziszero}
-	\Dex^T\Dez =  - \Dex^T(A^T\Dey)  = -(A\Dex)^T\Dey = 0.
+	\tilde{x}^T\tilde{z} =  - \tilde{x}^T(A^T\tilde{y})  = -(A\Dex)^T\tilde{y} = 0.
 \end{equation}
 \end{obs}
 
@@ -171,7 +171,7 @@ Esta análise é  baseada naquelas feitas por \textcite[cap. 6]{Wright:Primal-du
 O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm{(\xk,\zk)}_{1}$. Sua demonstração pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação. Ademais, na demonstração deste e dos outros resultados, omitiremos o índice da iteração $k$ dos vetores, para fins de clareza. 
 
 
-% \subsection{Limitante para \texorpdfstring{$\nu_k\norm{(\xk,\zk)}_{1}$}{a norma dos iterandos}}
+% \subsection{Limitante para \texorpdfstring{$\nu_k_k\norm{(\xk,\zk)}_{1}$}{a norma dos iterandos}}
 
 
 \begin{lema}\label{lemma:boundxz1}
@@ -180,13 +180,13 @@ O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm
 		\label{eq:bound-xkzk}
 		\bdxzstar\nu_k\norm{(\xk,\zk)}_{1} \leq  4\be n \dbvec{\rho_C^{k}},
 	\end{equation}
-	em que $\nu_{k}$ é definido em \eqref{eq:nu_k+1} e $\bdxzstar$ é definido em \eqref{eq:norm-xz-star}.
+	em que $\nu_k$ é definido em \eqref{eq:nu_k+1} e $\bdxzstar$ é definido em \eqref{eq:norm-xz-star}.
 \end{lema}
 
 \begin{proof}
 	Seja o ponto auxiliar
 	\[
-		(\tilde{x},\tilde{y},\tilde{z})  = \nu(\xzero,\yzero,\zzero) + (1-\nu)(\xstar,\ystar,\zstar) - (x,y,z). 
+		(\tilde{x},\tilde{y},\tilde{z})  = \nu_k(\xzero,\yzero,\zzero) + (1-\nu_k)(\xstar,\ystar,\zstar) - (\xk,\yk,\zk). 
 	\]
 em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point} e $(\xstar,\ystar,\zstar)$ é  solução ótima que satisfaz \eqref{eq:norm-xz-star}.
 
@@ -194,18 +194,18 @@ em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-poin
 Note que 
 \[
 \begin{aligned}
-A\tilde{x} & = A(\nu\xzero+ (1-\nu)\xstar - x) = \nu(A\xzero - A\xstar) + A\xstar - Ax   \\
-& = \nu(A\xzero - b) + (b - Ax) = -\nu r_{P}^{0} + r_{P}  \\
- & =r_{P} + r_{P} = 0,  
+A\tilde{x} & = A(\nu_k\xzero+ (1-\nu_k)\xstar -\xk) = \nu_k(A\xzero - A\xstar) + A\xstar - A\xk   \\
+& = \nu_k(A\xzero - b) + (b - A\xk) = -\nu_k r_{P}^{0} + r_{P}^{k}  \\
+ & =r_{P}^{k} + r_{P}^{k} = 0,  
 \end{aligned}
 \]
 e que
 \[
 \begin{aligned}
-A^{T}\tilde{y} + \tilde{z}  & = 	A^{T}(\nu\yzero + (1-\nu)\ystar - y) + (\nu\zzero + (1-\nu)\zstar - z) \\
-							&  =  \nu \left[(A^{T}\yzero  +\zzero)  - (A^{T}\ystar  +\zstar)  \right]+  \left[(A^{T}\ystar  +\zstar)  - (A^{T}y  +z)  \right]  \\
-							& = -\nu r_{D}^{0} + r_{D}  \\
- & =r_{D} + r_{D} = 0.   
+A^{T}\tilde{y} + \tilde{z}  & = 	A^{T}(\nu_k\yzero + (1-\nu_k)\ystar - \yk) + (\nu_k\zzero + (1-\nu_k)\zstar - \zk) \\
+							&  =  \nu_k \left[(A^{T}\yzero  +\zzero)  - (A^{T}\ystar  +\zstar)  \right]+  \left[(A^{T}\ystar  +\zstar)  - (A^{T}\yk  +\zk)  \right]  \\
+							& = -\nu_k r_{D}^{0} + r_{D}^{k}  \\
+ & =r_{D}^{k} + r_{D}^{k} = 0.   
 \end{aligned}
 \]
 
@@ -214,22 +214,22 @@ Portando, $(\tilde{x},\tilde{y},\tilde{z})$  satisfaz \eqref{eq:Ax0-ATyz0} e ent
 
 Logo temos que 
 \begin{align}
-	0  = \tilde{x}^{T}\tilde{z} & = (\nu\xzero + (1-\nu)\xstar - x)^{T}(\nu\zzero + (1-\nu)\zstar - x)\notag\\
-	  & = \nu^{2}(\xzero)^T\zzero + (1-\nu)^{2}(\xstar)^{T}\zstar + \nu(1-\nu)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero) \notag\\
-	  & \textcolor{white}{=} + x^{T}z - \nu (x^{T}\zzero + (\xzero)^{T}z) - (1-\nu) (x^{T}\zstar + (\xstar)^{T}z).\label{eq:boundxz1}
+	0  = \tilde{x}^{T}\tilde{z} & = (\nu_k\xzero + (1-\nu_k)\xstar -\xk)^{T}(\nu_k\zzero + (1-\nu_k)\zstar -\zk)\notag\\
+	  & = \nu_k^{2}(\xzero)^T\zzero + (1-\nu_k)^{2}(\xstar)^{T}\zstar + \nu_k(1-\nu_k)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero) \notag\\
+	  & \textcolor{white}{=} +(\xk)^{T}\zk - \nu_k ((\xk)^{T}\zzero + (\xzero)^{T}\zk) - (1-\nu_k) ((\xk)^{T}\zstar + (\xstar)^{T}\zk).\label{eq:boundxz1}
 \end{align}
 
-Como todas as componentes de $(x,z)$ e $(\xstar,\zstar)$ são não-negativas, vale $(x^{T}\zstar + (\xstar)^{T}z) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nu\in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
+Como todas as componentes de $(\xk,\zk)$ e $(\xstar,\zstar)$ são não-negativas, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nu_k\in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
 \begin{equation}
 	\label{eq:xTzero+xzeroTz}
-	  \nu (x^{T}\zzero + (\xzero)^{T}z) \leq 
-  \nu^{2}(\xzero)^T\zzero  +  x^{T}z+  \nu(1-\nu)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero).
+	  \nu_k ((\xk)^{T}\zzero + (\xzero)^{T}z) \leq 
+  \nu_k^{2}(\xzero)^T\zzero  + (\xk)^{T}z+  \nu_k(1-\nu_k)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero).
 \end{equation}
 Note agora que 
 \begin{equation}
 \label{eq:normxz1}
-	x^{T}\zzero + (\xzero)^{T}z = \sum_{i=1}^{n} \bdxzstar\abs{x_i} +\sum_{i=1}^{n} \bdxzstar\abs{z_i} = \bdxzstar\norm{x}_{1} + 
-	\bdxzstar\norm{z}_{1} = \bdxzstar\norm{(x,z)}_{1},
+	(\xk)^{T}\zzero + (\xzero)^{T}\zk = \sum_{i=1}^{n} \bdxzstar\abs{x_i} +\sum_{i=1}^{n} \bdxzstar\abs{z_i} = \bdxzstar\norm{x}_{1} + 
+	\bdxzstar\norm{z}_{1} = \bdxzstar\norm{(\xk,\zk)}_{1},
 \end{equation}
 e que
 \begin{equation}
@@ -247,8 +247,8 @@ Além disso, pela escolha do ponto inicial, temos que
 
 Substituindo esses valores em \eqref{eq:xTzero+xzeroTz}, utilizando \eqref{eq:normxz1}, \eqref{eq:norm-star-zero-infty-1} e o fato de que $(x,y,z)$ pertence à vizinhança $\Nset_{\infty}(\ga,\be)$ obtemos
 \begin{align*}
-	\bdxzstar\nu\norm{(x,z)}_{1} &\leq \nu^{2}n\dbvec{\rho_C^0} + n\dbvec{\rho_C} + \nu(1-\nu)(\bdxzstar2n\bdxzstar) \\ 
-								&\leq \nu n\dbvec{\rho_C^0}+ n\dbvec{\rho_C} + \nu(2n\bdxzstar^{2}) \\ 
+	\bdxzstar\nu_k\norm{(x,z)}_{1} &\leq \nu_k^{2}n\dbvec{\rho_C^0} + n\dbvec{\rho_C} + \nu_k(1-\nu_k)(\bdxzstar2n\bdxzstar) \\ 
+								&\leq \nu_k n\dbvec{\rho_C^0}+ n\dbvec{\rho_C} + \nu_k(2n\bdxzstar^{2}) \\ 
 								&\leq \be n\dbvec{\rho_C}+ n\dbvec{\rho_C} + \be\left({\dbvec{\rho_C}}/{\dbvec{\rho_C^{0}}}\right)(2n\bdxzstar^{2}) \\	
 								&\leq 4\be n \dbvec{\rho_C},									
 \end{align*}
@@ -290,11 +290,12 @@ e portanto temos a validade de
 \]
 \end{proof}
 
-De agora em diante, definimos a matriz $D$ como sendo
+De agora em diante, dados $(\xk,\zk)$ gerado pelo Algoritmo, definimos a matriz $\Dk$ como sendo
 \[
-D = X^{-1/2}Z^{1/2}.
+\Dk =(\Xk)^{-1/2}(\Zk)^{1/2}.
 \]
 
+Assim, podemos enunciar o seguinte lema.
 
 \begin{lema}\label{lemma:boundDxDzaff}
 	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point}. Então existe uma constante $\omega_1>1$ e  independente de $n$ tal que 
@@ -305,47 +306,47 @@ D = X^{-1/2}Z^{1/2}.
 \begin{proof}
 	Seja o ponto auxiliar
 	\[
-		(\tilde{x},\tilde{y},\tilde{z})  = (\dex,\dey,\dez) + \nu(\xzero - \xstar,\yzero - \ystar,\zzero - \zstar), 
+		(\tilde{x},\tilde{y},\tilde{z})  = (\dex,\dey,\dez) + \nu_k(\xzero - \xstar,\yzero - \ystar,\zzero - \zstar), 
 	\]
 em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point} e $(\xstar,\ystar,\zstar)$ é  solução ótima que satisfaz \eqref{eq:norm-xz-star}.
 	Também é fácil  ver que tal ponto satisfaz \eqref{eq:Ax0-ATyz0} e logo 
 	\begin{equation}
 		\label{eq:DxDzaff1}
-			 0 = \tilde{x}^{T}\tilde{z} = \left(\dex +  \nu(\xzero - \xstar)\right)^{T}\left(\dez +  \nu(\zzero - \zstar)\right).
+			 0 = \tilde{x}^{T}\tilde{z} = \left(\dex +  \nu_k(\xzero - \xstar)\right)^{T}\left(\dez +  \nu_k(\zzero - \zstar)\right).
 	\end{equation}
 	
 
 	 Usando este ponto auxiliar na equação \eqref{eq:affine-scaling-system-compl}, obtemos 
 	 \[
-	 Z(\left(\dex +  \nu(\xzero - \xstar)\right)+ X \left(\dez +  \nu(\zzero - \zstar)\right) = -xz + \nu Z(\xzero - \xstar) + \nu X(\zzero - \zstar).
+	 Z(\left(\dex +  \nu_k(\xzero - \xstar)\right)+ X \left(\dez +  \nu_k(\zzero - \zstar)\right) = -xz + \nu_k Z(\xzero - \xstar) + \nu_k X(\zzero - \zstar).
 	 \]
 	 Multiplicando toda essa expressão por $(XZ)^{-1/2}$, e notando que $D=(XZ)^{-1/2}Z$ e que $D^{-1}=(XZ)^{-1/2}X$, resulta em 
 	\begin{multline}
 		\label{eq:DxDzaff2}
-		 D\left(\dex +  \nu(\xzero - \xstar)\right)+ D^{-1} \left(\dez +  \nu(\zzero - \zstar)\right) = \\ -(xz)^{1/2} + \nu D(\xzero - \xstar) + \nu D^{-1}(\zzero - \zstar).
+		 D\left(\dex +  \nu_k(\xzero - \xstar)\right)+ D^{-1} \left(\dez +  \nu_k(\zzero - \zstar)\right) = \\ -(xz)^{1/2} + \nu_k D(\xzero - \xstar) + \nu_k D^{-1}(\zzero - \zstar).
 		\end{multline}
 	 
 	 Note que, como vale  \eqref{eq:DxDzaff1}, pode-se utilizar o Teorema de Pitágoras para norma-2 de vetores e logo, tomando a norma-2 ao quadrado do lado esquerdo de \eqref{eq:DxDzaff2} obtemos
 	\begin{multline*}
-			 	 \norm{D\left(\dex +  \nu(\xzero - \xstar)\right)+ D^{-1} \left(\dez +  \nu(\zzero - \zstar)\right)}^{2} =\\
-	 	 	 	 	 \norm{D\left(\dex +  \nu(\xzero - \xstar)\right)}^{2}+ \norm{D^{-1} \left(\dez +  \nu(\zzero - \zstar)\right)}^{2}.
+			 	 \norm{D\left(\dex +  \nu_k(\xzero - \xstar)\right)+ D^{-1} \left(\dez +  \nu_k(\zzero - \zstar)\right)}^{2} =\\
+	 	 	 	 	 \norm{D\left(\dex +  \nu_k(\xzero - \xstar)\right)}^{2}+ \norm{D^{-1} \left(\dez +  \nu_k(\zzero - \zstar)\right)}^{2}.
 	\end{multline*}
 	 Se  usarmos este resultado e a desigualdade triangular, após tomarmos a norma-2 ao quadrado de ambos os lados de \eqref{eq:DxDzaff2}, obtemos 
 	 \begin{multline}\label{eq:DxDzaff3}
-	 \norm{D\left(\dex +  \nu(\xzero - \xstar)\right)}^{2}+ \norm{D^{-1} \left(\dez +  \nu(\zzero - \zstar)\right)}^{2} \leq \\ 
-	 \left\{ \norm{(xz)^{1/2}} + \nu \norm{D(\xzero - \xstar)} + \nu \norm{D^{-1}(\zzero - \zstar)} \right\}^{2}.
+	 \norm{D\left(\dex +  \nu_k(\xzero - \xstar)\right)}^{2}+ \norm{D^{-1} \left(\dez +  \nu_k(\zzero - \zstar)\right)}^{2} \leq \\ 
+	 \left\{ \norm{(xz)^{1/2}} + \nu_k \norm{D(\xzero - \xstar)} + \nu_k \norm{D^{-1}(\zzero - \zstar)} \right\}^{2}.
 	 \end{multline}
 
 Isolando o primeiro termo dessa equação, obtemos
 \[
-\norm{D\left(\dex +  \nu(\xzero - \xstar)\right)} \leq  
-	  \norm{(xz)^{1/2}} + \nu \norm{D(\xzero - \xstar)} + \nu \norm{D^{-1}(\zzero - \zstar)}.
+\norm{D\left(\dex +  \nu_k(\xzero - \xstar)\right)} \leq  
+	  \norm{(xz)^{1/2}} + \nu_k \norm{D(\xzero - \xstar)} + \nu_k \norm{D^{-1}(\zzero - \zstar)}.
 \]
-Uma aplicação direta da desigualdade triangular e a adição de um termo  $\nu \norm{D^{-1}(\zzero - \zstar)}$ extra resulta em
+Uma aplicação direta da desigualdade triangular e a adição de um termo  $\nu_k \norm{D^{-1}(\zzero - \zstar)}$ extra resulta em
 \begin{align}
-	\norm{D\dex} & =  \norm{D\left(\dex +  \nu(\xzero - \xstar)  -  \nu(\xzero - \xstar)\right)} \notag \\ 
-				 & \leq	 \norm{D\left(\dex +  \nu(\xzero - \xstar)\right)} +  \nu\norm{D(\xzero - \xstar)} \notag \\
-				 & \leq \norm{(xz)^{1/2}} + 2 \nu \norm{D(\xzero - \xstar)} + 2\nu \norm{D^{-1}(\zzero - \zstar)}.\label{eq:DxDzaff4}
+	\norm{D\dex} & =  \norm{D\left(\dex +  \nu_k(\xzero - \xstar)  -  \nu_k(\xzero - \xstar)\right)} \notag \\ 
+				 & \leq	 \norm{D\left(\dex +  \nu_k(\xzero - \xstar)\right)} +  \nu_k\norm{D(\xzero - \xstar)} \notag \\
+				 & \leq \norm{(xz)^{1/2}} + 2 \nu_k \norm{D(\xzero - \xstar)} + 2\nu_k \norm{D^{-1}(\zzero - \zstar)}.\label{eq:DxDzaff4}
 \end{align}
 
 Vamos mostrar a existência de um limitante para cada termo do lado direito de \eqref{eq:DxDzaff4} de magnitude $\Oset(\dbvec{\rho_C}^{1/2})$. Neste caso, o mesmo se aplicará à $\norm{D^{-1}\dez}$ o que finalizará esta demonstração.
@@ -353,7 +354,7 @@ Vamos mostrar a existência de um limitante para cada termo do lado direito de \
 Para o primeiro termo, note que 
 \begin{equation}
 	\label{eq:DxDzaff5}
-	\norm{(xz)^{1/2}} = \left(\sum_{i=1}^{n}x_iz_i\right)^{1/2} = (x^{T}z)^{1/2} = n^{1/2}\dbvec{\rho_C}^{1/2} \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C}^{1/2},
+	\norm{(xz)^{1/2}} = \left(\sum_{i=1}^{n}x_iz_i\right)^{1/2} = ((\xk)^{T}z)^{1/2} = n^{1/2}\dbvec{\rho_C}^{1/2} \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C}^{1/2},
 \end{equation}
 já que $\ga\in(0,1)$ e $\sqrt{n}\leq n$, para todo $n$ natural.
 
@@ -378,14 +379,14 @@ Mais que isso, como $(x,y,z)\in\Nset_{-\infty}(\ga,\be)$, temos que
 
 Com essas desigualdades para norma de $D$ e de $D^{-1}$, utilizando consistência de norma de matrizes, segue 
 \begin{align*}
- \nu \norm{D(\xzero - \xstar)} + \nu \norm{D^{-1}(\zzero - \zstar)}  & \leq \nu \norm{D}\norm{\xzero - \xstar} + \nu \norm{D^{-1}}\norm{\zzero - \zstar} \notag \\
- 					& \leq \nu\bdxzstar\left[  \norm{D} + \norm{D^{-1}}   \right] \notag \\ 
- 					& \leq \nu\bdxzstar\norm{(x,z)}_{1}\norm{(XZ)^{-1/2}} .\notag
+ \nu_k \norm{D(\xzero - \xstar)} + \nu_k \norm{D^{-1}(\zzero - \zstar)}  & \leq \nu_k \norm{D}\norm{\xzero - \xstar} + \nu_k \norm{D^{-1}}\norm{\zzero - \zstar} \notag \\
+ 					& \leq \nu_k\bdxzstar\left[  \norm{D} + \norm{D^{-1}}   \right] \notag \\ 
+ 					& \leq \nu_k\bdxzstar\norm{(x,z)}_{1}\norm{(XZ)^{-1/2}} .\notag
 \end{align*}
 
 Da Equação~\eqref{eq:DxDzaff6}, do Lema~\ref{lemma:boundxz1} e da desigualdade acima, segue que 
 \begin{equation} \label{eq:DxDzaff7}
- \nu \norm{D(\xzero - \xstar)} + \nu \norm{D^{-1}(\zzero - \zstar)}  \leq 4\be n \dbvec{\rho_C} \frac{1}{\ga^{1/2}\dbvec{\rho_{C}}^{1/2}} = \frac{4\be}{\ga^{1/2}}n\dbvec{\rho_C}^{1/2}.
+ \nu_k \norm{D(\xzero - \xstar)} + \nu_k \norm{D^{-1}(\zzero - \zstar)}  \leq 4\be n \dbvec{\rho_C} \frac{1}{\ga^{1/2}\dbvec{\rho_{C}}^{1/2}} = \frac{4\be}{\ga^{1/2}}n\dbvec{\rho_C}^{1/2}.
 \end{equation}
 
 O resultado é obtido por observar \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparar com \eqref{eq:DxDzaff4} e escolher 
@@ -622,13 +623,13 @@ em que
 
 Usando as mesmas substituições de $\nextmu$ e $\nextsig$, a função $g_L$ dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
 \[
-g_L(\al) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu   \right) +  \al\eta\dbvec{\rho_C} + 
+g_L(\al) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu_k   \right) +  \al\eta\dbvec{\rho_C} + 
    \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C}  \dbvec{L_{1,0}}   \right ) ,
 	\]
 Usando  o fato de que o ponto atual pertence à  vizinhança segue que 
  \[
 \begin{aligned}
-{g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C} -  \be_L \nu   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C} + 
+{g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C} -  \be_L \nu_k   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C} + 
    \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C}  \dbvec{L_{1,0}}   \right ) \\
    & \geq  \al\left[\eta\dbvec{\rho_C} - 
    \al \left(\abs{\dbvec{L_{0,0}}} + \abs{\eta\dbvec{\rho_C}  \dbvec{L_{1,0}}}\right)   \right ].
@@ -677,15 +678,15 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 \end{lema}
 
 
-\begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$. Com isso, basta mostrar que $\theta(\nextal)= \Oset(\nextdel/n^{4})$. Com efeito, considerando que $\dfrac{\dbvec{\rho_C}}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\leq 1$ temos que
+\begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$. Com isso, basta mostrar que $\theta(\nextal)= \Oset(\nextdel/n^{4})$. Com efeito, considerando que $\dfrac{\dbvec{\rho_C}}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\leq 1$ temos que
 
 
 \[
 	\begin{aligned}
-		\theta(\nextal)% & =  \dfrac{1}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ \nu\dbvec{\rho_L}_0\nextal + (1- \eta)\dbvec{\rho_C}\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}} \right) \right] \\
-						& = \dfrac{1}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ (\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C})\nextal -  \eta\dbvec{\rho_C}\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}} \right) \right] \\
-						& \geq \dfrac{1}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ (\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C})\nextal -  \eta\dbvec{\rho_C}\nextal - \nextal^{2}\left(\omega_1^{2} n\dbvec{\rho_C} + \tfrac{1}{2}\omega_{3}n^{2}\dbvec{\rho_C} \right) \right]\\
-						& \geq \nextal - \dfrac{\dbvec{\rho_C}}{\nu\dbvec{\rho_L}_0 + \dbvec{\rho_C}} \left[   \eta\nextal + \nextal^{2}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right]\\
+		\theta(\nextal)% & =  \dfrac{1}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ \nu_k\dbvec{\rho_L}_0\nextal + (1- \eta)\dbvec{\rho_C}\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}} \right) \right] \\
+						& = \dfrac{1}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ (\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C})\nextal -  \eta\dbvec{\rho_C}\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C} \dbvec{L_{1,0}} \right) \right] \\
+						& \geq \dfrac{1}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C}}\left[ (\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C})\nextal -  \eta\dbvec{\rho_C}\nextal - \nextal^{2}\left(\omega_1^{2} n\dbvec{\rho_C} + \tfrac{1}{2}\omega_{3}n^{2}\dbvec{\rho_C} \right) \right]\\
+						& \geq \nextal - \dfrac{\dbvec{\rho_C}}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C}} \left[   \eta\nextal + \nextal^{2}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right]\\
 						& \geq \nextal \left[ 1 -  \eta - \nextal\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right] \\
 						& \geq \frac{\delta_{1}}{n^{4}} \left[ 1 -  \eta - \frac{\delta_{1}}{n^{4}}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right] \\
 						& \geq 	 \left[ (1 -  \eta)\delta_{1} - \delta_{1}^{2}\left(\omega_1^{2} + \tfrac{1}{2}\omega_{3} \right) \right] \frac{1}{n^{4}}	\\
@@ -717,16 +718,16 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 % \begin{proof} 
 % Por conta dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, é suficiente considerar o caso em que $\nextal \neq \min\{\nextal_{C},\nextal_{L} \}$.  Considerando as definições dadas na Equação~\eqref{eq:defin-zeta-chi}, podemos rescrever \eqref{eq:theta} como
 % \[
-% \theta(\al) =  \dfrac{\al\left[ \nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} - \al\left(\zeta + \chi
-% \right) \right]}{\nu\dbvec{\rho_L}_0 +
+% \theta(\al) =  \dfrac{\al\left[ \nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C} - \al\left(\zeta + \chi
+% \right) \right]}{\nu_k\dbvec{\rho_L}_0 +
 % \dbvec{\rho_C}}.
 % \]
 	
 % 	%FIXME Verificar
-% Note que \[\theta'(0) = 1 - \frac{\eta\dbvec{\rho_{C}}}{\nu\dbvec{\rho_{L}}_{0}+\dbvec{\rho_{C}}}.\]
+% Note que \[\theta'(0) = 1 - \frac{\eta\dbvec{\rho_{C}}}{\nu_k\dbvec{\rho_{L}}_{0}+\dbvec{\rho_{C}}}.\]
 % Se 
 % \[
-% 0< \eta < \dfrac{\nu\dbvec{\rho_{L}}_{0}}{\dbvec{\rho_{C}}} + 1 % \leq \frac{\be}{\dbvec{\rho_{C}}_{0}}  + 1,
+% 0< \eta < \dfrac{\nu_k\dbvec{\rho_{L}}_{0}}{\dbvec{\rho_{C}}} + 1 % \leq \frac{\be}{\dbvec{\rho_{C}}_{0}}  + 1,
 % \]
 % então $\theta'(0)>0$ e por continuidade, temos que é possível escolher $\al_k\in(0,1]$ tal que 
 % \[
@@ -737,22 +738,22 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 % \begin{enumerate}[{Caso} (i):]
 % 	\item $(\zeta + \chi) > 0$. Neste caso, $\theta(\al)$ é uma quadrática com concavidade voltada para baixo. Assim, o seu máximo será atingido no vértice, isto é, em
 % 	\[
-% 		\nextal = \frac{\nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C}}{2(\zeta + \chi)}.
+% 		\nextal = \frac{\nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C}}{2(\zeta + \chi)}.
 % 	\]
 
 % 	Note que, neste caso, $\zeta + \chi = \abs{\zeta + \chi} \leq \abs{\zeta} + \abs{\chi}$.  Utilizando as Equações \eqref{eq:bound-zeta} e \eqref{eq:bound-chi}, vemos que  
 
 % 	\[
-% 		\nextal \geq \left( \frac{\nu\dbvec{\rho_L}_0/\dbvec{\rho_C} + (1-\eta)}{2( \omega_1^{2}/n  + \tfrac{1}{2}\omega_{3})}\right)\dfrac{1}{n^{2}}.
+% 		\nextal \geq \left( \frac{\nu_k\dbvec{\rho_L}_0/\dbvec{\rho_C} + (1-\eta)}{2( \omega_1^{2}/n  + \tfrac{1}{2}\omega_{3})}\right)\dfrac{1}{n^{2}}.
 % 	\]
 % 	\color{red}
-% 	Sei que \[ \frac{\norm{\rho_{L}}}{x^{T}z} = \frac{\dbvec{\rho_{L}}}{\dbvec{\rho_{C}}}=  \frac{\nu\dbvec{\rho_L}_0}{\dbvec{\rho_C}} \leq \frac{\beta}{\dbvec{\rho_C}_0} \] para toda iteração, por conta da vizinhança $\Nset_{\infty}(\ga,\be)$. Como garantir que o limitante de $\nextal$ seja grande o suficiente? Posso considerar que $\rho_{L}\to 0$ antes que $\rho_{C}\to 0$. Nesse caso, posso considerar que se eu escolher $\be\geq 1$ tal que $\frac{\beta}{\dbvec{\rho_C}_0} \leq 1$, então temos um limitante suficiente? 
+% 	Sei que \[ \frac{\norm{\rho_{L}}}{(\xk)^{T}z} = \frac{\dbvec{\rho_{L}}}{\dbvec{\rho_{C}}}=  \frac{\nu_k\dbvec{\rho_L}_0}{\dbvec{\rho_C}} \leq \frac{\beta}{\dbvec{\rho_C}_0} \] para toda iteração, por conta da vizinhança $\Nset_{\infty}(\ga,\be)$. Como garantir que o limitante de $\nextal$ seja grande o suficiente? Posso considerar que $\rho_{L}\to 0$ antes que $\rho_{C}\to 0$. Nesse caso, posso considerar que se eu escolher $\be\geq 1$ tal que $\frac{\beta}{\dbvec{\rho_C}_0} \leq 1$, então temos um limitante suficiente? 
 
 
 % 	\color{black}
 % 	\item $(\zeta + \chi) < 0$. Agora, $\theta(\al)$ é uma quadrática com concavidade voltada para cima. Com isso, o seu máximo será atingido em algum ponto à direita da única raiz não nula, isto é, em $\nextal$, tal que 
 % 	\[
-% 		\nextal \geq  \frac{\nu\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C}}{(\zeta + \chi)}.
+% 		\nextal \geq  \frac{\nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C}}{(\zeta + \chi)}.
 % 	\]
 % \end{enumerate}
 % \end{proof}
@@ -979,7 +980,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 
 % Por outro lado, us\text{ and }o as mesmas substituições de $\bar{\mu}$ e $\bar{\sig}$, a função $g_L$, dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
 % \[
-% g_L(\al) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu   \right) +  \al\eta\dbvec{\rho_C} + 
+% g_L(\al) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nu_k   \right) +  \al\eta\dbvec{\rho_C} + 
 %    \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C}  \dbvec{L_{1,0}}   \right ) ,
 % 	\]
 % Usando novamente o fato de que o ponto atual pertence à  vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e definindo as seguintes constantes 
@@ -992,7 +993,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % segue que 
 %  \[
 % \begin{aligned}
-% {g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C} -  \be_L \nu   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C} + 
+% {g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C} -  \be_L \nu_k   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C} + 
 %    \al^2\left( \zeta + \chi   \right ) \\
 %    & \geq  \al\left[\eta\dbvec{\rho_C} - 
 %    \al (\abs{\zeta} + \abs{\chi})   \right ].
