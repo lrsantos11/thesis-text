@@ -191,7 +191,26 @@ O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm
 em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point} e $(\xstar,\ystar,\zstar)$ é  solução ótima que satisfaz \eqref{eq:norm-xz-star}.
 
 
-É fácil ver que tal ponto satisfaz \eqref{eq:Ax0-ATyz0} e portanto vale \eqref{eq:xTziszero}, isto é, $(\tilde{x})^{T}\tilde{z} = 0$. 
+Note que 
+\[
+\begin{aligned}
+A\tilde{x} & = A(\nu\xzero+ (1-\nu)\xstar - x) = \nu(A\xzero - A\xstar) + A\xstar - Ax   \\
+& = \nu(A\xzero - b) + (b - Ax) = -\nu r_{P}^{0} + r_{P}  \\
+ & =r_{P} + r_{P} = 0,  
+\end{aligned}
+\]
+e que
+\[
+\begin{aligned}
+A^{T}\tilde{y} + \tilde{z}  & = 	A^{T}(\nu\yzero + (1-\nu)\ystar - y) + (\nu\zzero + (1-\nu)\zstar - z) \\
+							&  =  \nu \left[(A^{T}\yzero  +\zzero)  - (A^{T}\ystar  +\zstar)  \right]+  \left[(A^{T}\ystar  +\zstar)  - (A^{T}y  +z)  \right]  \\
+							& = -\nu r_{D}^{0} + r_{D}  \\
+ & =r_{D} + r_{D} = 0.   
+\end{aligned}
+\]
+
+
+Portando, $(\tilde{x},\tilde{y},\tilde{z})$  satisfaz \eqref{eq:Ax0-ATyz0} e então vale \eqref{eq:xTziszero}, isto é, $(\tilde{x})^{T}\tilde{z} = 0$. 
 
 Logo temos que 
 \begin{align}
@@ -206,7 +225,6 @@ Como todas as componentes de $(x,z)$ e $(\xstar,\zstar)$ são não-negativas, va
 	  \nu (x^{T}\zzero + (\xzero)^{T}z) \leq 
   \nu^{2}(\xzero)^T\zzero  +  x^{T}z+  \nu(1-\nu)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero).
 \end{equation}
-
 Note agora que 
 \begin{equation}
 \label{eq:normxz1}
