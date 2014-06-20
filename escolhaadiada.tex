@@ -1022,16 +1022,18 @@ como
 \begin{equation}\label{eq:Nset-infty-rho}
 \Nset_{-\infty}(\ga,\be) =
  \left\{(x,y,z) \in \Qset^+:\frac{\dbvec{\rho_L}}{\dbvec{\rho^0_L}}    \leq
-\beta\frac{\dbvec{\rho_C}}{\dbvec{\rho_C}_0}, x_iz_i \geq
+\beta\frac{\dbvec{\rho_C}}{\dbvec{\rho_C^{0}}}, x_iz_i \geq
 {\ga}\frac{x^Tz}{n},\forall i =1,\ldots,n  \right\},
 \end{equation}
 em que $\ga\in(0,1)$ e $\be\geq1$. 
 
-Por conta de \eqref{eq:nu_k} e \eqref{eq:Nset-infty-rho}, segue que 
+Por conta de \eqref{eq:nu_k} e \eqref{eq:Nset-infty-rho}, segue que para qualquer ponto $(\xk,\yk,\zk)\in \Nset_{-\infty}(\ga,\be) $ vale
 \begin{equation}
 	\label{eq:nu_k-rho0-rhok}
-	 \nu \leq \beta\dbvec{\rho_C}/\dbvec{\rho_C}_0
+	 \nu_{k} \leq \beta\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}.
 \end{equation}
+
+
 Até agora, o método proposto resolve o \ac{KKT} escalado \eqref{eq:ScaledKKT}
 e além disso usa a função de mérito $\nextphi$ dada em
 \eqref{eq:merit-function-al-mu-sig} como guia para a escolha das variáveis

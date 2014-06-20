@@ -1203,7 +1203,7 @@ resultante do sistema de Newton e o número de operações necessárias para faz
 considerado. 
     
 
-As experiências computacionais apresentadas em \cite{Gondzio:1996uw}  mostram
+As experiências computacionais apresentadas por \citeauthor{Gondzio:1996uw}, principalmente utilizando seu \emph{solver} \texttt{HOPDM} \cite{Gondzio:1995kv,Gondzio:1996uw},   mostram
 que a estratégia das múltiplas correções realmente é efetiva, pois os passos
 primais e duais calculados para a direção composta são maiores que aqueles
 correspondentes à direção preditora.
@@ -1218,7 +1218,7 @@ a solução $\hat{\om}$  maximiza o tamanho de passo $\al$.
 
 
 
-\subsection{Ponto Inicial}
+\subsection{Ponto Inicial}\label{subsec:initial-point}
 
 Como dissemos, códigos práticos que resolvem \ac{PL} através de \ac{MPI}
 utilizam passos infactíveis, exigindo apenas que $(x,z)>0$. Nada
@@ -1247,9 +1247,10 @@ duais. As soluções para estes problemas são dada por
 \]
 Tal ponto é então transladado para o ortante positivo e o ponto inicial é
 dado por
-\[
+\begin{equation}
+	\label{eq:initial-point-mehrotra}
 (x^0,y^0,z^0) = (\tilde{x}+ \vartheta_x e,\tilde{y}+\vartheta_ y e,\tilde{z}+\vartheta_z e),
-\]
+\end{equation}
 em que $\vartheta_x$, $\vartheta_y$ e $\vartheta_ z$ são escalares positivos tais que
 $(x^0,z^0)>0$.
 
@@ -1296,13 +1297,13 @@ maiores que uma fração adequada de $\tau$, e que a razão \[
 \] não seja muito grande. 
 
 Aliás, note-se que se está  utilizando a \emph{métrica} dada pela vizinhança
-$\Nset(\ga,\be)$ definida em \eqref{eq:infeasible-infty-neig}. Com isso, essas
+$\Nset_{-\infty}(\ga,\be)$ definida em \eqref{eq:infeasible-infty-neig}. Com isso, essas
 heurísticas têm como objetivo impedir que o tamanho do passo $\al$ seja muito
 pequeno, ao mesmo tempo que tendem a limitar  o valor de $\norm{(r_P^k
 ,r_D^k)}/{\tau_k}$. Além disso, ao utilizarmos $\Nset(\ga,\be)$, deseja-se que a
 infactibilidade seja levada a zero na mesma taxa que o \emph{gap} de dualidade.
-Para uma  análise aprofundada de estratégias de pontos iniciais em
-\ac{MPI} veja \cite{Gertz:2004cw,DApuzzo:2009ks}.
+Para uma  análise de várias estratégias de pontos iniciais em
+\ac{MPI} veja os trabalhos de \textcite{Gertz:2004cw,DApuzzo:2009ks,Andersen:1996un,Vanderbei:1999wv}.
 
 
 
