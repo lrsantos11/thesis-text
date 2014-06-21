@@ -940,11 +940,11 @@ propriedade da convergência global em favor da eficiência computacional.
 O método de Mehrotra gera a sequência de iterados infactíveis
 $(x,y,z)$, tais que $(x,z)>0$ e a direção de busca consiste em três componentes:
 \begin{enumerate}[(i)]
-  \item Uma  \emph{direção preditora}; 
+  \item Uma  direção afim-escala \emph{preditora} que nada mais é que uma direção puramente Newton; 
   
   \item Um termo de centralização,
   cujo tamanho é controlado pela escolha de forma adaptativa do parâmetro $\eta$;
-   \item Uma direção  \emph{corretora}.
+   \item Uma direção  \emph{corretora}  que tenta compensar de alguma forma a não-linearidade perdida na direção afim-escala.
 \end{enumerate}
 
 

@@ -169,7 +169,7 @@ Em problemas práticos, o método Simplex reinou absoluto na solução de proble
 de \ac{PL} até meados da década de 1980 como único método viável para resolver
 tal classe de problemas. Em 1984, \textcite{Karmarkar:1984cp} inicia uma nova
 abordagem que ficou conhecida como \acrodef{MPI}{Métodos de Pontos Interiores}
-\ac{MPI}. Por outro lado,  em 1967,
+\acl{MPI} (\ac{MPI}). Por outro lado,  em 1967,
 \textcite{DIKIN:InterativeSol1967} já havia publicado um trabalho, no qual um 
 \ac{PL} era resolvido usando um método de pontos interiores. O método de Dikin ficou
 conhecido como método afim-escala.
@@ -188,10 +188,13 @@ A ideia principal dos \ac{MPI} difere-se fundamentalmente da que inspira o
 método simplex. No método simplex as soluções encontradas em cada iteração estão
 na fronteira da região factível, já que o método visita os vértices do poliedro
 que define tal região. Por outro lado, nos \ac{MPI} estas soluções em cada
-iteração estão no interior desta região. Isto é feito criando-se uma família
+iteração estão no interior desta região. 
+
+Isto é feito criando-se uma família
 parametrizada de soluções que convergem assintoticamente para a solução exata,
-isto é, trata-se de um método homotópico.
-Consequentemente, usa-se uma abordagem não-linear para resolver um problema
+isto é, trata-se de um método homotópico. Com efeito, um \ac{MPI} basicamente utiliza um método do tipo Newton nas condições de otimimalidade de Primeira Ordem, ou Condições KKT, do Problema de Programação Linear. Há, nos diferentes métodos, variação  do lado direito que se usa na solução da linearização das condições KKT que o Método de Newton utiliza, podendo gerar, nesse caso,  direções de Newton diferentes. Daí o nome \emph{Métodos} de Pontos Interiores. 
+
+Em resumo, usa-se uma abordagem não-linear para resolver um problema
 linear, escapando então da  dificuldade que a dimensão do problema apresenta ao
 se lidar com as características combinatoriais  do \ac{PL}.
 
@@ -199,7 +202,7 @@ se lidar com as características combinatoriais  do \ac{PL}.
 Além disso,  como exposto acima,  no método simplex a quantidade de
 iterações cresce de acordo com o tamanho do problema,  o que não se repete
 nos \ac{MPI}. Do ponto de vista
-da complexidade computacional, esse método também é polinomial,  om
+da complexidade computacional, esse método também é polinomial,  com
 $\mathcal{O}(n(1/\eps))$~\cite{Karmarkar:1984cp}.
  
   
@@ -211,7 +214,7 @@ métodos aumentou consideravelmente, ao mesmo tempo em que variantes têm
 sido propostas, muitas delas se apresentando como alternativas computacionais
 viáveis ao método simplex.
 
-Atualmente, o melhor algoritmo de pontos interiores conhecido para \ac{PL}
+Atualmente, o melhor algoritmo de pontos interiores conhecido para \ac{PL}, pelo menos do ponto de vista teórico, 
 encontra uma solução com precisão-$\eps$ em $\Oset(\sqrt{n}\ln(1/\eps))$
 iterações~\cite{Renegar:1988cr}.
 De acordo com a teoria geral~\cite[Capítulo 4]{Nesterov:2003wi}, o termo
@@ -258,18 +261,56 @@ n}$ e $c$, $x$ e $b$ têm dimensão compatível. Com exceção da matriz $Q$, te
 mesma estrutura de um \ac{PL}.
 
 
-\section{Objetivos e estrutura desde trabalho}
+\section{Objetivos e estrutura deste trabalho}
 
-O objetivo deste trabalho é apresentar as ideias principais que foram estudadas
-durante o doutorado e mostrar os caminhos que serão percorridos para a
-finalização do trabalho em forma de tese.
 
-Nesta monografia, no Capítulo \ref{chap:mpis} é apresentado o estado da arte no
-que diz respeito aos métodos de pontos interiores. O Capítulo
-\ref{chap:merit-function} apresenta a ideia principal deste trabalho, que é o
+
+
+Desde que o Métodos de Pontos Interiroes Primais-Duais ficaram famosos nos anos 90 e que o Método Preditor-Corretor de \textcite{Mehrotra:1992wr} surgiu em \citeyear{Mehrotra:1992wr}, muito tem-se feito na tentativa de extender e melhorar tal método. Algumas das principais questões atuais em Métodos preditores-corretores de Pontos Interiores, incluem o modo como se pode combinar diferentes direções, seja direção corretora, seja preditora, seja ainda alguma outra direção de maior ordem, tal que uma melhor direção seja gerada em cada passo.  Como vimos, uma direção pode ser entendida a solução do sistema de Newton para as condições KKT do \ac{PL}. Nesse sentido, cada direção é solução de um sistema linear com matriz de coeficientes igual, porém com vetor do lado direito alterado.
+
+
+\textcite{Gondzio:1996uw}, por exemplo, combina a ideia inicial preditora-corretora de Mehrotra, porém permitindo múltiplas correções em um mesmo iterando, tentado aumentar o tamanho do passo que pode ser dado, impondo que os iterados estejam o mais perto possível da trajatória central. \textcite{Colombo:2008ia} desenvolvem essa ideia, escolhendo as direções preditora e corretora de forma diferente e permitindo, conforme o caso, quantas correções se deseje. 
+
+Um outro caminho é percorrido por \textcite{Jarre:1999tl} que resolvem, em cada iteração, um subproblema que tenta melhorar os resíduos. Tal subproblema  é em si um problema de PL de dimensão bem  menor em relação ao problema original e cujas variáveis são o peso que cada componente da direção que utilizam deve ter. A solução desse subproblema é feita através do método Simplex. Para tais autores, o subproblema que resolvem pode ser entendido como uma forma de buscar o próximo iterando no subespaço gerado pelas direções que utilizam em seu método.
+
+
+Nesse mesmo sentido, \textcite{Mehrotra:2005do}, também obtém a direção de busca combinando direções corretoras e preditoras  através de um pequeno subproblema de \ac{PL}. Entretanto, as múltiplas  direções corretoras são encontradas fazendo-se uso de informações geradas a partir de um  subespaço de Krylov apropriado.
+
+
+
+Além disso, conforme \textcite{Hung:1996br}, métodos de pontos interiores que são seguidores de caminho (veja Seção \ref{sec:path-following-methods}) geram uma sequência de pontos dentro de uma certa vizinhança da da trajetória central, a qual previne os iterados de prematuramente chegarem muito perto da fronteira da região de factibilidade. Para tanto, é necessário impor condições pré-definidas que façam com que o próximo ponto esteja dentro de uma dessas vizinhanças, garantido  o bom desempenho do método. 
+
+
+
+
+Nesta tese, mostraremos algumas alternativas de respostas para  essas e outras questões correlatas. Assim o objetivo principal desse trabalho é \emph{propor} e \emph{implementar} um Método de Pontos Interiores com pontos infactíves para \ac{PL}, do tipo seguidor de caminho, fazendo  uso de polinômios reais nas variáveis $(\al,\mu,\sig)$, em que $\al$ é o tamanho do passo, $\mu$ é o parâmetro que define a trajetória central, e $\sig$ modela o peso que uma direção corretora deve ter; trata-se portanto de um método preditor-corretor. Neste sentido, esses parâmetros são vistos como variáveis, e sua escolha é feita de forma adiada, através da solução de um subproblema que minimiza uma função de mérito \emph{preditiva} que é um polinômio nessas três variáveis e que está sujeita a restrições que impõe que o próximo iterando esteja dentro de uma vizinhança da trajetória central. A função de mérito é preditiva, no sentido que prediz os resíduos lineares e complementares do próximo iterado.
+
+
+Uma abordagem similar foi proposta primeiramente por \textcite{VillasBoas:2003tg}, em um contexto auto-dual. Já num contexto primal-dual \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, também fazem uso de uma função de mérito polinomial, porém definem uma trajetória central mais geral, que envolve também os resíduos lineares na sua definição.  Em particular, a abordagem desses autores é utilizada para resolver o subproblema que surge em nosso método.
+
+Além disso, objetivamos \emph{demonstrar} resultados de convergência do método proposto, utilizando as ferramentas de análise numérica para Métodos Preditores-Corretores do tipo Mehrotra infactíveis, apresentadas principalmente por \textcite{Zhang:2006ic} e trabalhos que são sequências desse e das ideias resumidas em \textcite[cap. 7]{Wright:Primal-dual-interior-point:1997h}. Dentre essas ferramentas, há a necessidade de estabelecer um ponto inicial adequado para que a convergência do método seja garantida. Em geral, conforme alerta \textcite[p. 112]{Wright:Primal-dual-interior-point:1997h}, esses autores utilizam pontos inicias que dependem da norma de uma solução ótima, valor que é desconhecido. As escolhas desses autores, na prática são ineficazes. 
+Daí, ao contrário deles, utilizamos um ponto inicial que tem bom desempenho na prática. Isso leva a um pior limitante no resultado de complexidade -- embora ainda polinomial -- em relação aos encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj}, mas um desempenho computacional muito superior. 
+
+
+
+
+
+
+
+Afim de alcançar  esses objetivos, esta monografia foi organizada com a seguinte estrutura: 
+
+\begin{itemize}
+	\item no Capítulo \ref{chap:mpis} é apresentado o estado da arte no
+que diz respeito aos métodos de pontos interiores; 
+\item o Capítulo \ref{chap:merit-function} apresenta-se a ideia principal deste trabalho, que é o
 desenvolvimento de um polinômio de grau três como função de mérito  que sirva não só como medida
 de factibilidade e otimalidade de um ponto, mas que permita escolher, de forma
 adiada, os parâmetros que determinam uma melhor direção em cada iteração
-de um método de pontos interiores do tipo seguidor de caminho primal dual. Nas
-Considerações Finais estão expostas as ideias que pretendem ser
-desenvolvidas para complementação e finalização deste trabalho.
+de um método de pontos interiores primal-dual do tipo seguidor de caminhos; 
+\item no Capítulo \ref{chap:convergence} é feita a análise de convergência e de complexidade do método proposto; 
+\item no Capítulo \ref{chap:numerical} é feita a explanação de como se resolve o subproblema de otimização em cada iteração e são relatados os experimentos numéricos que foram realizados;
+\item  no último capítulo são feitas considerações finais e encaminhamentos para trabalhos futuros.
+
+
+\end{itemize}
+
