@@ -222,7 +222,11 @@ O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm
 
 
 \begin{lema}\label{lemma:boundxz1}
-	Suponha que as Condições \ref{cond:xzzero}, \ref{cond:xzstar} e \ref{cond:x0-x*+z0-z*} são válidas. Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}, existe uma constante positiva $\omega_{0}>0$ independente de $n$ tal que 
+	Suponha que as Condições \ref{cond:xzzero}, \ref{cond:xzstar} e \ref{cond:x0-x*+z0-z*} são válidas e seja a constante 
+	\begin{equation}\label{eq:omega-0}
+		\omega_{0} = \bdxzzero^{-1}\left(1  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right) >1.
+		\end{equation} 
+	 Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}, vale
 	\begin{equation}
 		\label{eq:bound-xkzk}
 		\nu_k\norm{(\xk,\zk)}_{1} \leq  \omega_{0} n^{3} \dbvec{\rho_C^{k}},
@@ -280,11 +284,11 @@ Seja a constante $\bdxzzero>0$ dada em \eqref{eq:bdxzzero}. Como  $(\xk,\zk)>0$,
 (\xk)^{T}\zzero + (\xzero)^{T}\zk.
 \end{equation}
 
-Por outro lado, usado a desiguladade de Hölder e as equações \eqref{eq:norm-xz-zero} e \eqref{eq:norm-xz-star}  temos que 
+Por outro lado,  para  $p = 1 $, $q = \infty$, vale a desigualdade de desigualdade de Hölder \cite[p. 53]{Golub:1996wp}, isto é, $\abs{u^{T}v} \leq \norm{u}_{1}\norm{v}_{\infty}$, para $u,v\in\Real^{n}$ quaisquer. Assim, notando que $(\xzero,\zzero)>$ e $(\xstar,\zstar)>0$, podemos dispensar o módulo e usar a desigualdade de Hölder no último termo do lado direito da desigualdade \eqref{eq:xTzero+xzeroTz} em conjunto com as  equações \eqref{eq:norm-xz-zero} e \eqref{eq:norm-xz-star}  obtendo
 	\begin{align}
 	(\xzero)^{T}\zstar + (\xstar)^{T}\zzero  & \leq \norm{\xzero}_{1}\norm{\zstar}_{\infty} + \norm{\zzero}_{1}\norm{\xstar}_{\infty} \notag \\
 	& \leq \norm{(\xzero,\zzero)}_1 \norm{(\xstar,\zstar)}_{\infty} \notag \\
-	&  \leq \bdxzstar^{2} n^3 \label{eq:norm-star-zero-infty-1} 
+	&  \leq \bdxzstar^{2} n^3. \label{eq:norm-star-zero-infty-1} 
 	\end{align}
 
 
@@ -300,10 +304,10 @@ Utilizando os as equações \eqref{eq:xTzero+xzeroTz},  \eqref{eq:normxz1} e \eq
 	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1} &\leq \nu_k^{2}n\dbvec{\rho_C^0} + n\dbvec{\rho_C^{k}} + \nu_k(1-\nu_k)(\bdxzstar^{2} n^3 ) \\ 
 								&\leq \nu_k n\dbvec{\rho_C^0}+ n\dbvec{\rho_C^{k}} + \nu_k(\bdxzstar^{2} n^3 ) \\ 
 								&\leq \be n\dbvec{\rho_C^{k}}+ n\dbvec{\rho_C^{k}} + \be\left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ) \\	
-								&\leq \left(\frac{1}{2n^{2}}  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}} \\
-								&  \leq \left(1  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}}.								
+								&\leq \left(\frac{2}{n^{2}}  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}} \\
+								&  \leq \left(2  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}}.								
 \end{align*}
-Fazendo $\omega_{0} = \bdxzzero^{-1}\left(1  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)$ obtemos o resultado desejado.
+Fazendo $\omega_{0} = \bdxzzero^{-1}\left(1  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)$, obtemos o resultado desejado.
 \end{proof}
 
 
