@@ -224,7 +224,7 @@ O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm
 \begin{lema}\label{lemma:boundxz1}
 	Suponha que as Condições \ref{cond:xzzero}, \ref{cond:xzstar} e \ref{cond:x0-x*+z0-z*} são válidas e seja a constante 
 	\begin{equation}\label{eq:omega-0}
-		\omega_{0} = \bdxzzero^{-1}\left(1  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right) >1.
+		\omega_{0} = \bdxzzero^{-1}\left(2  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right) >1.
 		\end{equation} 
 	 Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}, vale
 	\begin{equation}
@@ -280,7 +280,7 @@ Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\leq 0$, vale $((\xk)^{T}\zstar + (\xstar)
 Seja a constante $\bdxzzero>0$ dada em \eqref{eq:bdxzzero}. Como  $(\xk,\zk)>0$, segue 
 \begin{equation}
 	\label{eq:normxz1}
-	\bdxzzero\norm{(\xk,\zk)}_{1} \leq \min_{i}(\zzero_{i})\norm{\xk}_{1} + \min_{i}(\xzero_{i})\norm{\zk}_{1}\leq
+	\bdxzzero\norm{(\xk,\zk)}_{1} = \bdxzzero\left(\sum_{i=1}^{n}\xk_{i} + \sum_{i=1}^{n}\zk_{i} \right) \leq \min_{i}(\zzero_{i})\norm{\xk}_{1} + \min_{i}(\xzero_{i})\norm{\zk}_{1}\leq
 (\xk)^{T}\zzero + (\xzero)^{T}\zk.
 \end{equation}
 
@@ -299,18 +299,33 @@ Por outro lado,  para  $p = 1 $, $q = \infty$, vale a desigualdade de desigualda
 % 	(\xzero)^{T}\zzero = n\dbvec{\rho_C^0} = n\bdxzstar^{2}\label{eq:initial-conseq-c}
 % \end{gather*}
 
-Utilizando os as equações \eqref{eq:xTzero+xzeroTz},  \eqref{eq:normxz1} e \eqref{eq:norm-star-zero-infty-1}, considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$, e portanto vale  \eqref{eq:nu_k-rho0-rhok}, e ainda notando que  $\nu_k\in(0,1)$, que $(\xk)^{T}\zk = n\dbvec{\rho_{C}^{k}}$ e que escolhemos $\be=1$, obtemos
+Multiplicando a desigualdade  \eqref{eq:normxz1} por $\nu_k$, temos 
+\[
+	\nu_k\bdxzzero\norm{(\xk,\zk)}_{1} \leq \nu_k((\xk)^{T}\zzero + (\xzero)^{T}\zk),
+\]
+que é exatamente o lado esquerdo de \eqref{eq:xTzero+xzeroTz}. Comparando essa última desigualdade com  \eqref{eq:xTzero+xzeroTz} obtemos 
+\[
+	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1}  \leq \nu_k^{2}(\xzero)^T\zzero  + (\xk)^{T}z+  \nu_k(1-\nu_k)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero). 
+\]
+Agora, como  $\nu_k\in(0,1)$ implica que $\nu_{k}^{2}< \nu_{k}$ e que $\nu_k(1-\nu_k) < \nu_k$. Além disso, para qualquer $k$, $(\xk)^{T}\zk = n\dbvec{\rho_{C}^{k}}$.  Usando esses argumentos e substituindo \eqref{eq:norm-star-zero-infty-1} na última desigualdade obtemos
+\[
+	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1} 	\leq \nu_k n\dbvec{\rho_C^0} + n\dbvec{\rho_C^{k}} + \nu_k(\bdxzstar^{2} n^3 ).  
+\]
+
+Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$, e portanto vale  \eqref{eq:nu_k-rho0-rhok}, temos que $\nu_k \dbvec{\rho_C^0} \leq \be \dbvec{\rho_C^{k}}$. 
+\[
+	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1}   \leq \be n\dbvec{\rho_C^{k}}+ n\dbvec{\rho_C^{k}} + \be\left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ). 
+\]Já que escolhemos $\be=1$, obtemos 
 \begin{align*}
-	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1} &\leq \nu_k^{2}n\dbvec{\rho_C^0} + n\dbvec{\rho_C^{k}} + \nu_k(1-\nu_k)(\bdxzstar^{2} n^3 ) \\ 
-								&\leq \nu_k n\dbvec{\rho_C^0}+ n\dbvec{\rho_C^{k}} + \nu_k(\bdxzstar^{2} n^3 ) \\ 
-								&\leq \be n\dbvec{\rho_C^{k}}+ n\dbvec{\rho_C^{k}} + \be\left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ) \\	
-								&\leq \left(\frac{2}{n^{2}}  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}} \\
-								&  \leq \left(2  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}}.								
+	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1}  & \leq 2 n\dbvec{\rho_C^{k}}+ \left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ) \\	
+								 &= \left(\frac{2}{n^{2}}  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}} \\
+								 &  \leq \left(2  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}}.								
 \end{align*}
-Fazendo $\omega_{0} = \bdxzzero^{-1}\left(1  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)$, obtemos o resultado desejado.
+Fazendo $\omega_{0} = \bdxzzero^{-1}\left(2  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)$, obtemos o resultado desejado.
 \end{proof}
 
-
+% e \eqref{eq:norm-star-zero-infty-1} 
+% Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$, e portanto vale  \eqref{eq:nu_k-rho0-rhok}, e ainda  e que escolhemos $\be=1$, obtemos
 
 
 
