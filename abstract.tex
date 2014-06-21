@@ -4,19 +4,20 @@
 
 \selectlanguage{english}
 % FIXME Delete lines from this one until 14th.
-This is the abstract. It must be no longer than 500 words. One easy way to get
-a closer number of the words is using:
-\begin{lstlisting}
-$ detex -l abstract.tex | wc -l
-\end{lstlisting}
 
-The keywords that can be used are listed in
-\href{http://acervus.unicamp.br/}{Base Acervus}.
-% TODO Inserir o resumo em inglês aqui.
+
+
+In this work we propose a predictor-corrector interior point method for linear programming in a primal-dual context, in which the next iterate will be chosen by the minimization of a polynomial merit function  of three variables-parameters: the first one is the steplenght, the second one defines the central path and the last one models the weight that a corrector direction should have. The merit function minimization is performed by subjecting it to constraints defined by a neighbourhood of the central path that allows wide steps. 
+
+
+Nesta tese, propomos um método de pontos interiores do tipo preditor-corretor para programação linear em um contexto primal-dual, em que o próximo iterado será escolhido através de um subproblema de minimização de uma função de mérito polinomial a três variáveis-parâmetros: a primeira  define o tamanho de passo, a segunda define a trajetória central e o última modela o peso que uma direção corretora deve ter. A minimização da função de mérito é feita   sujeitando-a à restrições  definidas por uma vizinhança da trajetória central que permite passos largos. Dessa maneira, combinamos diferentes direções, tais como preditora, corretora e de centralização com o objetivo de produzir uma direção melhor. O método proposto generaliza grande parte dos métodos de pontos interiores preditores-corretores, a depender da escolha das variáveis-parâmetros acima descritas. É feita, então uma análise de convergência do método, considerando um ponto inicial que tem ótimo desempenho na prática, que resulta em convergência linear dos iterados em complexidade polinomial. São feitos experimentos numéricos, utilizando o conjunto de testes Netlib, que mostram que essa abordagem é competitiva, quando comparada a implementações de pontos interiores mais bem estabelecidas como o PCx.
+
+
+% In this work we solve linear optimization problems on an Interior Point Methods environment by combining different directions, such as predictor, corrector or centering ones, to produce a better direction. We measure how good the new direction is by using a polynomial merit function on three variables. One of them is the step length, the other defines the central path and the last one models the weight that a corrector directions should have in a predictor-corrector method. Some numerical tests show that this approach is competitive when compared to more well established solvers as PCx, using the Netlib test set.
 
 \vspace{.5cm}
 \textbf{Keywords}:
 % FIXME Remover a linha abaixo.
-keyword01, keyword02, keyword03.
+Linear Programming, Interior Point Methods.
 % TODO Inserir as palavras-chave em inglês aqui.
 \selectlanguage{brazilian}
