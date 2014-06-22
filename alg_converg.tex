@@ -118,24 +118,23 @@ A fim de demonstrarmos a convergência e a complexidade do Algoritmo proposto, n
 
 Em demonstrações de convergência e polinomialidade de Métodos de Pontos Interiores  infactíveis, é  necessária a aceitação de algumas hipóteses ou condições sobre o ponto inicial e o sobre o ponto ótimo. Veja por exemplo os trabalhos de \textcite{Wright:1994jd}, \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h}, \textcite{Wright:1996kj,Zhang:2006ic,Zhang:1994fz,Zhang:1995fu}. Em particular, tais hipóteses permitem estabelecer um limitante para a sequência $\{(\xk,\zk)\}$, o que é de vital importância para as demonstrações.
 
-No entanto, embora as hipóteses utilizadas nos trabalhos acima, permitam uma ordem de convergência  polinomial, ao mesmo tempo, são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento do algoritmo e ao mesmo tempo, exigem um limitante para o ponto ótimo que não pode ser calculado e que na prática, para conjuntos de testes.
+No entanto, embora as hipóteses utilizadas nos trabalhos acima, permitam uma ordem de convergência  polinomial, ao mesmo tempo, são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento do algoritmo e ao mesmo tempo, exigem o conhecimento \emph{a priori}  deum limitante para o ponto ótimo, o que torna o algoritmo não implementável. 
 
 Nesse trabalho, preferimos de obter uma ordem de convergência maior, embora polinomial, porém com um ponto inicial cuja eficácia é bem demonstrada na prática e com  condições para limitantes  do ponto ótimo e do ponto inicial que possam ser verificada como verdadeiras, pelo menos para nosso conjunto de testes. Em resumo, isso significa que a análise de convergência é feita utilizando o Algoritmo que é de fato implementado.
 
 
 
-Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por \textcite{Mehrotra:1992wr} é uma das mais utilizadas em diversos Metódos de Pontos Interiores, por suas características e consequente bom desempenho na prática.
-Considere então que estaremos utilizando o ponto inicial de \textcite{Mehrotra:1992wr}, isto é, que $(\xzero ,\yzero,\zzero )$ seja dado pela equação \eqref{eq:initial-point-mehrotra}. Seja também, para este ponto inicial, a constante positiva
-
+Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por \textcite{Mehrotra:1992wr} é uma das mais utilizadas em diversas implementações de \acl{MPI}, por suas características de fácil implementação e bem como por seu  bom desempenho na prática.
+Assim, estaremos utilizando o ponto inicial de \citeauthor{Mehrotra:1992wr}, isto é, o ponto inicial $(\xzero ,\yzero,\zzero )$ é dado pela equação \eqref{eq:initial-point-mehrotra}. Seja também, para este ponto inicial, a constante positiva
 \begin{equation}
 \label{eq:bdxzzero}
-	\bdxzzero= \min_{i=1,\ldots,n}\min\{\xzero_{i},\zzero_{i}\}.
+	\bdxzzero= \min_{i=1,\ldots,n}\min\{\xzero_{i},\zzero_{i}\},
 \end{equation}
+a qual será utilizada na sequência.
 
 
 
-
-Formalizamos agora as condições sobre o ponto inicial e o ponto final que utilizaremos nas demonstrações abaixo. Para isso, definimos a constante positiva
+Formalizamos agora as condições sobre o ponto inicial e o ponto ótimo, que utilizaremos nas demonstrações abaixo. Para isso, definimos a constante positiva
 \begin{equation}
 	\label{eq:max-norm-data}
  	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \},
@@ -172,7 +171,7 @@ em que  $\bdxzstar>0$ calculado por \eqref{eq:max-norm-data}.
 \end{cond}
 
 
-Reiteramos aqui que  as três Condições acima foram verificadas como válidas em nosso conjunto de testes. Isso significa, que na prática, essas condições são razoáveis. No Capítulo \ref{chap:numerical}, tal conjunto de testes é defendido. Neste sentido, daqui por diante, assumimos que tais condições são válidas. 
+Reiteramos aqui que  as três Condições acima foram verificadas como válidas em nosso conjunto de testes. Isso significa, que na prática, essas condições são razoáveis. No Capítulo \ref{chap:numerical}, tal conjunto de testes é defendido. Com isso, daqui por diante, assumimos que tais condições são válidas. 
 
 %FIXME comentar a respeito dessa hipótese, depois dos resultados numéricos
 % Definimos nosso ponto inicial como
@@ -197,7 +196,7 @@ Afim de prosseguir com as demonstrações, faz-se necessário  escolher  $\gamma
 \]
 o que garante que o ponto inicial satisfaz a desigualdade~\eqref{eq:symmetric-polynomials-b}.
 
-Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\dbvec{\rho_C^k }$, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L}$. Para facilitar os raciocínios, do ponto de vista teórico, vamos escolher o menor valor para $\beta$, isto é, $\be=1$.
+Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\dbvec{\rho_C^k }$, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L^{k}}$. Para facilitar os raciocínios, do ponto de vista teórico, vamos escolher o menor valor possível para $\beta$, isto é, $\be=1$.
 
 
 \begin{obs}
@@ -217,7 +216,7 @@ então
 
 % Esta análise é  baseada naquelas feitas por \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h},  \textcite{Zhang:2006ic,Zhang:1995fu}. 
 
-O primeiro lema importante mostra a existência de um limitante para $\nu_k\norm{(\xk,\zk)}_{1}$. Uma demonstração similar, porém com condições diferentes das que aceitamos aqui, pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação bem como às condições que aqui assumimos.
+O primeiro lema importante que exibiremos, mostra a existência de um limitante para $\nu_k\norm{(\xk,\zk)}_{1}$. Uma demonstração similar, porém com condições diferentes das que aceitamos aqui, pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação bem como às condições que aqui assumimos.
  % Ademais, na demonstração deste e dos outros resultados, omitiremos o índice da iteração $k$ dos vetores, para fins de clareza. 
 
 
@@ -319,11 +318,13 @@ Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\b
 \[
 	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1}   \leq \be n\dbvec{\rho_C^{k}}+ n\dbvec{\rho_C^{k}} + \be\left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ). 
 \]Já que escolhemos $\be=1$, obtemos 
-\begin{align*}
+\[
+\begin{aligned}
 	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1}  & \leq 2 n\dbvec{\rho_C^{k}}+ \left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ) \\	
 								 &= \left(\frac{2}{n^{2}}  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}} \\
 								 &  \leq \left(2  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}}.								
-\end{align*}
+\end{aligned}
+\]
 Fazendo $\omega_{0} = \bdxzzero^{-1}\left(2  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)$, obtemos o resultado desejado.
 \end{proof}
 
@@ -343,13 +344,15 @@ A próxima proposição será utilizada nas demonstrações que seguem e é um f
 		\norm{uv}\leq \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right)
 	\end{equation}
 \end{prop}
-\begin{proof} A primeira desigualdade é valida por conta da equivalência de normas~\cite{Golub:1996wp}. Quanto às demais, vejamos que 
-	\begin{align*}
+\begin{proof} A primeira desigualdade é valida por conta da equivalência de normas~\cite[p.~53]{Golub:1996wp}. Quanto às demais, vejamos que 
+\[
+	\begin{aligned}
 		\norm{uv}_1^{2} & = \left( \sum_{i=1}^{n}u_i v_i  \right)^{2} \leq  \sum_{i=1}^{n}\abs{u_iv_i}^{2}\\
 						& = \norm{uv}^{2} = (uv)^{T}(uv)  = v^{T}D^{-T}D^{T}u^{T}DD^{-1} uv\\
 						& = v^{T}D^{-T}D^{T}u^{T}DuD^{-1}v\\
 						& = \norm{Du}^{2}\norm{D^{-1}v}^{2}.
-	\end{align*}
+	\end{aligned}
+	\]
 e logo a segunda desigualdade de \eqref{eq:prop-uvDuDv} está provada. 
 
 Com relação a terceira desigualdade, note que  
@@ -451,11 +454,13 @@ Mais que isso, como $(\xk,\yk,\zk)\in\Nset_{-\infty}(\ga,\be)$, temos que
 \end{equation}
 
 Com essas desigualdades para norma de $\Dk$ e de $\Dik$, utilizando consistência de norma de matrizes e a Condição \ref{cond:x0-x*+z0-z*}, segue 
-\begin{align*}
+\[
+\begin{aligned}
  \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)}  & \leq \nu_k \norm{\Dk}\norm{\xzero - \xstar} + \nu_k \norm{\Dik}\norm{\zzero - \zstar} \notag \\
  					& \leq \bdxzstar n^2 \nu_k\left[  \norm{\Dk} + \norm{\Dik}   \right] \notag \\ 
  					& \leq \bdxzstar n^2 \nu_k\norm{(\xk,\zk)}_{1}\norm{(\Xk\Zk)^{-1/2}} .\notag
-\end{align*}
+\end{aligned}
+\]
 
 Da equação~\eqref{eq:DxDzaff6}, do Lema~\ref{lemma:boundxz1} e da desigualdade acima, segue que 
 \begin{equation} \label{eq:DxDzaff7}
@@ -463,11 +468,13 @@ Da equação~\eqref{eq:DxDzaff6}, do Lema~\ref{lemma:boundxz1} e da desigualdade
 \end{equation}
 
 Se usarmos as equações \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparando-as com \eqref{eq:DxDzaff4} temos que 
-\begin{align*}
+\[
+\begin{aligned}
 \norm{\Dk \dekx} & \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C^k }^{1/2} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{5} \dbvec{\rho_C^{k}}^{1/2} \\
 				& = \left( \frac{1}{n^{4}\ga^{1/2}} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} \right)n^{5} \dbvec{\rho_C^{k}}^{1/2}\\
 				& \leq \frac{1 + 2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{5} \dbvec{\rho_C^{k}}^{1/2}.
-\end{align*}
+\end{aligned}
+\]
 Podemos definir
 \begin{equation}
 	\label{eq:omega1}
@@ -528,13 +535,15 @@ Assim, usando consistência de normas e o fato de que  $(x,y,z)\in\Nset_{-\infty
 
 
 Utilizando as desigualdades de \eqref{eq:normDxDzaff}, fixando $\mu = \nextmu =\eta \dbvec{\rho_C^k }$ como anteriormente e notando que para todo $n$ natural vake $\sqrt{n} \leq n^{2}$, o lado esquerdo de~\eqref{eq:DxDzc1} é tal que
-\begin{align*}
+\[
+\begin{aligned}
 	% (\ga\dbvec{\rho_C^k })^{-1}\left(\nextmu\sqrt{n} +\abs{\nextsig}\norm{ \dekx  \dekz }\right)^{2}  
 	\norm{\Dk\Decox}^{2} + \norm{\Dik\Decoz}^{2}
 							& \leq (\ga\dbvec{\rho_C^k })^{-1}\left(\eta\dbvec{\rho_C^k }\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\dbvec{\rho_C^k }\right)^{2}\\
 							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\right)^{2}\dbvec{\rho_C^k }\\
 							& \leq (\ga)^{-1}\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}n^{4}\dbvec{\rho_C^k }.
-\end{align*}
+\end{aligned}
+\]
 
 Seja
 \begin{equation}
@@ -569,11 +578,12 @@ em que $\omega_{3} = 4(\omega_1\omega_2^{1/2})\geq 4 $.
 
 \begin{proof}
 	Da equação \eqref{eq:prop-uvDuDv} e dos Lemas~\ref{lemma:boundDxDzaff} e \ref{lemma:boundDxDzc} segue que  
-	\begin{align*}	
+	\[
+	\begin{aligned}	
 		\norm{ \dekx \Decoz}_{1} & \leq \norm{\Dk \dekx }\norm{\Dik\Decoz}\\
 							  & \leq 	\omega_1 n\dbvec{\rho_C^k }^{1/2}(\omega_2 n^{4}\dbvec{\rho_C^k })^{1/2}  \\
 							  & = (\omega_1\omega_2^{1/2})n^{3}\dbvec{\rho_C^k }.
-	\end{align*}			  
+	\end{aligned}\]			  
 Similarmente, 	$\norm{\Decox \dekz }_{1} \leq (\omega_1\omega_2^{1/2})n^{3}\dbvec{\rho_C^k }$. Com isso temos o resultado desejado, isto é,
 \[
 		\norm{ \dekx \Decoz + \Decox \dekz }_{1} \leq 2(\omega_1\omega_2^{1/2})n^{3}\dbvec{\rho_C^k }.\qedhere

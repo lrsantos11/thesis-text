@@ -1163,17 +1163,18 @@ Resumidamente, o subproblema de otimização global pode ser escrito como
 \displaystyle \min_{(\al,\mu,\si)} & \hat\varphi(\al,\mu,\si) \\
 \text{s. a.} &\begin{cases} g_C^i(\al,\mu,\sig) \geq 0 \quad \forall i = 1,\ldots,n \\
 				g_L(\al,\mu,\sig)   \geq 0 	\\
-				 0\leq (\al,\mu,\si) \leq \varsigma,
+				 0\leq (\al,\mu,\si) \leq u,
 				 	
 				 \end{cases}\
 \end{array}
 \label{eq:pop-subproblem}
 \end{equation}
-em que   $\varsigma\in\Real^3$ é um vetor de limitantes superiores para  $(\al,\mu,\sig)$. Para
-$\al$, $\varsigma_1<1$, pois  não queremos que o próximo ponto saia do interior do ortante positivo. Com efeito, também não queremos $\al=0$ e por isso mesmo,  durante a
+em que   $u\in\Real^3$ é um vetor de limitantes superiores para  $(\al,\mu,\sig)$. Para
+$\al$, $u_1<1$, pois  não queremos que o próximo ponto saia do interior do ortante positivo. Com efeito, também não queremos $\al=0$ e por isso mesmo,  durante a
 demonstração de convergência dar-se-á garantia de que é possível reduzir a
-função de mérito usando $\al>0$.
-Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $\varsigma_{2}$ e $\varsigma_{3}$ são escalares positivos que podem ou não ser diferente para esses dois parâmetros.
+função de mérito usando $\al>0$. Com efeito, o teste da razão é sempre executado em cada iteração para garantir isso.
+
+Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $u_{2}$ e $u_{3}$ são escalares positivos que podem ou não ser diferente para esses dois parâmetros.
 
  
 O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto neste capítulo. A escolha do ponto inicial e do critério de parada, serão descritas no Capítulo \ref{chap:numerical}, junto aos resultados numéricos.

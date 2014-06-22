@@ -3,10 +3,10 @@
 \usepackage[utf8]{inputenx}
 \usepackage{cmap}
 \usepackage[T1]{fontenc}
-\usepackage{ae}
+ \usepackage{ae}
 \usepackage[english,brazilian]{babel}
 \usepackage{indentfirst}
-\usepackage[top=3cm,bottom=3cm,outer=2cm,inner=2cm]{geometry}
+\usepackage[top=3cm,bottom=3cm,outer=2cm,inner=2.5cm]{geometry}
 \usepackage[backend=biber,sortcites=true,hyperref=true,maxbibnames=9,sorting=nyt]{biblatex}
 \usepackage{csquotes}
 % FIXME Para compatibilidade de alguns pacotes com Koma-Script
@@ -112,6 +112,8 @@
 
 \usepackage{enumerate} %Controle melhor do env enumerate
 \usepackage{acronym}
- % \usepackage[pagewise]{lineno}
- % \linenumbers
 \usepackage{lrsmath,lrsthm}
+%use as the last one to correct enviroments
+ \usepackage[pagewise,displaymath,mathlines]{lineno}
+ \linenumbers
+ % \let\oldalign\align{}\def\align{\par\vspace{-\parskip}\oldalign}
