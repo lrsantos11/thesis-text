@@ -126,10 +126,13 @@ Nesse trabalho, preferimos de obter uma ordem de convergência maior, embora pol
 
 Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por \textcite{Mehrotra:1992wr} é uma das mais utilizadas em diversos Metódos de Pontos Interiores, por suas características e consequente bom desempenho na prática.
 Considere então que estaremos utilizando o ponto inicial de \textcite{Mehrotra:1992wr}, isto é, que $(\xzero ,\yzero,\zzero )$ seja dado pela equação \eqref{eq:initial-point-mehrotra}. Seja também, para este ponto inicial, a constante positiva
+
 \begin{equation}
 \label{eq:bdxzzero}
-	\bdxzzero= \min_{i=1,\ldots,n}\min(\xzero_{i},\zzero_{i}).
+	\bdxzzero= \min_{i=1,\ldots,n}\min\{\xzero_{i},\zzero_{i}\}.
 \end{equation}
+
+
 
 
 Formalizamos agora as condições sobre o ponto inicial e o ponto final que utilizaremos nas demonstrações abaixo. Para isso, definimos a constante positiva
