@@ -105,24 +105,17 @@ es\fi: \coorientador
 \end{minipage}
 \vspace{1cm}
 
-\noindent
+\begin{tabular}{l@{\hskip 1in}l}
 {\small\textbf{Assinatura
 \ifx\femaleOrientador\undefined
 do Orientador
 \else
 da Orientadora
 \fi
-}
-
-\vspace{.5cm}
-\noindent
-\rule[1pt]{7cm}{.5pt}  % Linha para assinatura do orientador
-}
-\vspace{.5cm}
+}} & 
 
 \ifx\coorientador\undefined
 \else
-\noindent
 {\small\textbf{Assinatura
 \ifx\femaleCoorientador\undefined
 do\ifx\Coorientadores\undefined
@@ -131,14 +124,13 @@ Coorientador\ifx\Coorientadores\undefined
 \else es \fi 
 \else
 da Coorientadora
-\fi
-}
+\fi } }\\[0.6cm]
 
-\vspace{.5cm}
-\noindent
+\rule[1pt]{6cm}{.5pt}  % Linha para assinatura do orientador
+ & 
 \rule[1pt]{7cm}{.5pt}  % Linha para assinatura do coorientador
-}
-\fi
+\end{tabular}
+
 \vfill
 \begin{center}
   {\small\textbf{\textsc{ Campinas \\ \ano}}}

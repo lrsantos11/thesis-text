@@ -15,7 +15,7 @@
 		 		letterpaper, 
 				twoside,
 				bibliography=totoc, 
-				cleardoublepage=empty,
+				cleardoublepage=plain,
 				chapterprefix, 
                 appendixprefix, 
                 ]{scrbook}  
@@ -69,17 +69,18 @@
 \frontmatter
 %
 \input{capa}  % Não edite esse arquivo.
-\newpage\mbox{}\thispagestyle{plain}\newpage  % Pagina em branco.
+% \newpage\mbox{}\thispagestyle{empty}\newpage  % Pagina em branco.
 %
 % WARNING A folha de rosto precisa ser assinada pelos orientadores.
 % FIXME Substitua arquivo folha-de-rosto.pdf por uma copia escaneada, comente
 % esta linha e descomente a próxima.
-\input{folha-de-rosto}
+% \input{folha-de-rosto}
 % \includepdf{folha-de-rosto.pdf}
 %
 % WARNING A ficha catalográfica deve estar no verso da folha de rosto.
 % FIXME O arquivo ficha-catalografica.pdf deve ser sobrescrito com uma cópia
 % do arquivo pdf que a biblioteca lhe enviar.
+% \input{ficha-catalografica}
 % \includepdf{ficha-catalografica}
 %
 % WARNING A folha de aprovação deve ser assinada pelos membros da banca apos a

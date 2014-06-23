@@ -8,11 +8,11 @@ first.''}}
 
 
 
-	\chapter{Um polinômio como função de mérito em \ac{MPI}}
+	\chapter{Método de Escolha Otimizada de Parâmetros em \ac{MPI}}
 \label{chap:merit-function}
 
 
-Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção . Além disso, escreve-se a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções n na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}. Neste caso, a escolha será determinada em cada passo do algoritmo. Isso significa, como veremos a seguir, que nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
+Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escreve-se a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada passo do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   método de escolha otimizada de parâmetros. Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
 
 \section{Um KKT escalado}
 
@@ -967,7 +967,7 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para um polinômio
 Vamos considerar, antes de mais nada, a relação existente entre o resíduo linear escalado $\rho_L$ na iteração $k$ com o resíduo 
 linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a  proposição seguinte que trata do resíduo, quanto do resíduo escalado. 
 \begin{prop}\label{prop:nu_k}
- Seja $\{(x^k,y^k,z^k)\}$ gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}. Então para $k\geq0$, vale  
+ Seja $\{(x^k,y^k,z^k)\}$ gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters}. Então para $k\geq0$, vale  
 
 \begin{equation}
 \label{eq:residual-norm-relation-nonscaled}
@@ -1214,7 +1214,7 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto n
 
 \begin{algorithm}
 \onehalfspacing
-\caption{Método de Escolha Adiada de Parâmetros.}
+\caption{Método de Escolha Otimizada de Parâmetros.}
 \label{alg:optimized-choice-of-parameters} \begin{algorithmic}[1]
 \Procedure{ResolveLP}{$A,b,c$}
 \State $k \gets 0$
