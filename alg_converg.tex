@@ -200,15 +200,15 @@ Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 
 
 
 \begin{obs}
-	Em vários momentos da análise que segue vamos considerar que para qualquer terna de vetores $(\tilde{x},\tilde{y},\tilde{z})$ ,  tal que 
+	Em vários momentos da análise que segue vamos considerar que, para qualquer terna de direções $(\Dex,\Dey,\Dez)$,  tal que 
 \begin{equation}
 	\label{eq:Ax0-ATyz0}
-	A\tilde{x}=0 \text{ e } A^T\tilde{y} + \tilde{z} = 0,
+	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0,
 \end{equation}
 então
 \begin{equation}
 	\label{eq:xTziszero}
-	\tilde{x}^T\tilde{z} =  - \tilde{x}^T(A^T\tilde{y})  = -(A\Dex)^T\tilde{y} = 0.
+	\Dex^T\Dez =  - \Dex^T(A^T\Dey)  = -(A\Dex)^T\Dey = 0.
 \end{equation}
 \end{obs}
 
@@ -248,8 +248,8 @@ Note que
 \[
 \begin{aligned}
 A\tilde{x} & = A(\nu_k\xzero+ (1-\nu_k)\xstar -\xk) = \nu_k(A\xzero - A\xstar) + A\xstar - A\xk   \\
-& = \nu_k(A\xzero - b) + (b - A\xk) = -\nu_k r_{P}^{0} + r_{P}^{k}  \\
- & =r_{P}^{k} + r_{P}^{k} = 0,  
+& = \nu_k(A\xzero - b) + (b - A\xk) = \nu_k r_{P}^{0} - r_{P}^{k}  \\
+ & = r_{P}^{k} - r_{P}^{k} = 0,  
 \end{aligned}
 \]
 e que
@@ -257,13 +257,13 @@ e que
 \begin{aligned}
 A^{T}\tilde{y} + \tilde{z}  & = 	A^{T}(\nu_k\yzero + (1-\nu_k)\ystar - \yk) + (\nu_k\zzero + (1-\nu_k)\zstar - \zk) \\
 							&  =  \nu_k \left[(A^{T}\yzero  +\zzero)  - (A^{T}\ystar  +\zstar)  \right]+  \left[(A^{T}\ystar  +\zstar)  - (A^{T}\yk  +\zk)  \right]  \\
-							& = -\nu_k r_{D}^{0} + r_{D}^{k}  \\
- & =r_{D}^{k} + r_{D}^{k} = 0.   
+							& = \nu_k r_{D}^{0} - r_{D}^{k}  \\
+ & = r_{D}^{k} - r_{D}^{k} = 0.   
 \end{aligned}
 \]
 
 
-Portando, $(\tilde{x},\tilde{y},\tilde{z})$  satisfaz \eqref{eq:Ax0-ATyz0} e então vale \eqref{eq:xTziszero}, isto é, $(\tilde{x})^{T}\tilde{z} = 0$. 
+Portando, $(\tilde{x},\tilde{y},\tilde{z})$ também satisfaz \eqref{eq:Ax0-ATyz0} e então vale \eqref{eq:xTziszero}, isto é, $(\tilde{x})^{T}\tilde{z} = 0$. 
 
 Logo temos que 
 \begin{align}
@@ -321,11 +321,11 @@ Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\b
 \[
 \begin{aligned}
 	\bdxzzero\nu_k\norm{(\xk,\zk)}_{1}  & \leq 2 n\dbvec{\rho_C^{k}}+ \left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)(\bdxzstar^{2} n^3  ) \\	
-								 &= \left(\frac{2}{n^{2}}  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}} \\
-								 &  \leq \left(2  + \frac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)  n^{3}\dbvec{\rho_C^{k}}.								
+								 &= \left(\frac{2}{n^{3}}  + \frac{\bdxzstar^{2}}{(\xzero)^{T}\zzero}\right)  n^{4}\dbvec{\rho_C^{k}} \\
+								 &  \leq \left(2  + \frac{\bdxzstar^{2}}{(\xzero)^{T}\zzero}\right)  n^{4}\dbvec{\rho_C^{k}}.								
 \end{aligned}
 \]
-Fazendo $\omega_{0} = \bdxzzero^{-1}\left(2  + \dfrac{\bdxzstar^{2}}{\dbvec{\rho_C^{0}}}\right)$, obtemos o resultado desejado.
+Fazendo $\omega_{0} = \bdxzzero^{-1}\left(2  + \frac{\bdxzstar^{2}}{(\xzero)^{T}\zzero}\right)$, obtemos o resultado desejado.
 \end{proof}
 
 % e \eqref{eq:norm-star-zero-infty-1} 
@@ -379,19 +379,39 @@ Assim, podemos enunciar o seguinte lema.
 	\end{equation}
 \end{lema}
 \begin{proof}
-	Seja o ponto auxiliar
+	Seja a direção  auxiliar
 	\[
-		(\tilde{x},\tilde{y},\tilde{z})  = ( \dekx,  \deky  ,  \dekz  ) + \nu_k(\xzero - \xstar,\yzero - \ystar,\zzero - \zstar), 
+		(\Dex,\Dey,\Dez)  = ( \dekx,  \deky  ,  \dekz  ) + \nu_k(\xzero - \xstar,\yzero - \ystar,\zzero - \zstar), 
 	\]
-em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point-mehrotra} e que satisfaz \eqref{eq:norm-xz-zero} e  $(\xstar,\ystar,\zstar)$ é  solução ótima que satisfaz \eqref{eq:norm-xz-star}.
-	Tal ponto satisfaz \eqref{eq:Ax0-ATyz0} e logo 
+em que $(\xzero,\yzero,\zzero)$ é o ponto inicial dado por \eqref{eq:initial-point-mehrotra} e que satisfaz \eqref{eq:norm-xz-zero} e  $(\xstar,\ystar,\zstar)$ é a  solução ótima que satisfaz \eqref{eq:norm-xz-star}.
+	
+	Note que 
+\[
+\begin{aligned}
+A\Dex & = A( \dekx + \nu_k(\xzero - \xstar)) \\
+& =  A\dekx + \nu_k(A\xzero - A\xstar)  =  A\dekx + \nu_k(A\xzero - b)\\
+& = -r_{P}^{k}  + \nu_k r_{P}^{0}   = -r_{P}^{k} + r_{P}^{k} = 0,  
+\end{aligned}
+\]
+e que
+\[
+\begin{aligned}
+A^{T}\Dey + \Dez  & = 	A^{T}(\deky + \nu_k(\yzero - \ystar)) + (\dekz + \nu_k(\zzero - \zstar)) \\
+							& = 	(A^{T}\deky  + \dekz) + \nu_k(A^{T}\yzero  + \zzero  - (A^{T}\ystar +  \zstar)) \\
+							& = 	- r_{D}^{k} + \nu_k(A^{T}\yzero  + \zzero  - c) \\
+							& = - r_{D}^{k}  + \nu_k r_{D}^{0}   = -r_{D}^{k} + r_{D}^{k} = 0.   
+\end{aligned}
+\]
+
+
+Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{eq:xTziszero}, isto é, $\Dex^{T}\Dez = 0$. Assim, 
 	\begin{equation}
 		\label{eq:DxDzaff1}
-			 0 = \tilde{x}^{T}\tilde{z} = \left( \dekx +  \nu_k(\xzero - \xstar)\right)^{T}\left(  \dekz   +  \nu_k(\zzero - \zstar)\right).
+			 0 = \Dex^{T}\Dez = \left( \dekx +  \nu_k(\xzero - \xstar)\right)^{T}\left(  \dekz   +  \nu_k(\zzero - \zstar)\right).
 	\end{equation}
 	
 
-	 Usando este ponto auxiliar na equação \eqref{eq:affine-scaling-system-compl}, obtemos 
+	 Usando essa direçãoo auxiliar na equação \eqref{eq:affine-scaling-system-compl}, obtemos 
 	 \[
 	 \Zk\left( \dekx +  \nu_k(\xzero - \xstar)\right)+ \Xk \left(  \dekz   +  \nu_k(\zzero - \zstar)\right) = -\xk\zk + \nu_k \Zk(\xzero - \xstar) + \nu_k \Xk(\zzero - \zstar).
 	 \]
@@ -440,7 +460,7 @@ já que $\ga\in(0,1)$ e $\sqrt{n}\leq n$, para todo $n$ natural.
 
 A norma-2 da matriz  $\Dk$ será
 \[
- \norm{\Dk} = \max_{i=1,\ldots,n} \abs{\Dk_{ii}} = \norm{\Dk e}_{\infty} = \norm{(\Xk\Zk)^{-1/2}z}_{\infty} \leq \norm{(\Xk\Zk)^{-1/2}}\norm{\zk}_{1},
+ \norm{\Dk} = \max_{i=1,\ldots,n} \abs{\Dk_{ii}} = \norm{\Dk e}_{\infty} = \norm{(\Xk\Zk)^{-1/2}\zk}_{\infty} \leq \norm{(\Xk\Zk)^{-1/2}}\norm{\zk}_{1},
 \]
 e similarmente
 \[
@@ -464,15 +484,15 @@ Com essas desigualdades para norma de $\Dk$ e de $\Dik$, utilizando consistênci
 
 Da equação~\eqref{eq:DxDzaff6}, do Lema~\ref{lemma:boundxz1} e da desigualdade acima, segue que 
 \begin{equation} \label{eq:DxDzaff7}
- \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)}  \leq \bdxzstar n^2 \omega_{0} n^{3} \dbvec{\rho_C^{k}}\frac{1}{\ga^{1/2}\dbvec{\rho_{C}^k}^{1/2}} \leq   \frac{\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{5} \dbvec{\rho_C^{k}}^{1/2} .
+ \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)}  \leq \bdxzstar n^2 \omega_{0} n^{4} \dbvec{\rho_C^{k}}\frac{1}{\ga^{1/2}\dbvec{\rho_{C}^k}^{1/2}} \leq   \frac{\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{6} \dbvec{\rho_C^{k}}^{1/2} .
 \end{equation}
 
 Se usarmos as equações \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparando-as com \eqref{eq:DxDzaff4} temos que 
 \[
 \begin{aligned}
-\norm{\Dk \dekx} & \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C^k }^{1/2} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{5} \dbvec{\rho_C^{k}}^{1/2} \\
-				& = \left( \frac{1}{n^{4}\ga^{1/2}} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} \right)n^{5} \dbvec{\rho_C^{k}}^{1/2}\\
-				& \leq \frac{1 + 2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{5} \dbvec{\rho_C^{k}}^{1/2}.
+\norm{\Dk \dekx} & \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C^k }^{1/2} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{6} \dbvec{\rho_C^{k}}^{1/2} \\
+				& = \left( \frac{1}{n^{4}\ga^{1/2}} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} \right)n^{6} \dbvec{\rho_C^{k}}^{1/2}\\
+				& \leq \frac{1 + 2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{6} \dbvec{\rho_C^{k}}^{1/2}.
 \end{aligned}
 \]
 Podemos definir
@@ -487,8 +507,8 @@ Um corolário  das desigualdades dadas pela Proposição~\ref{prop:norm-uv} e do
 \begin{multline}
 \label{eq:normDxDzaff}
 	\norm{ \dekx  \dekz  } \leq \norm{ \dekx  \dekz  }_{1}  \\ \leq \frac{1}{2}\left(\norm{\Dk \dekx}^{2} + \norm{\Dik  \dekz  }^{2}\right)
-  					 \leq \left(\omega_1 n^5\dbvec{\rho_C^{k}}^{1/2}\right)^{2}
-  					 = \omega_1^{2} n^{10}\dbvec{\rho_C^{k}}.
+  					 \leq \left(\omega_1 n^6\dbvec{\rho_C^{k}}^{1/2}\right)^{2}
+  					 = \omega_1^{2} n^{12}\dbvec{\rho_C^{k}}.
 \end{multline}
 
 \begin{lema}\label{lemma:boundDxDzc}

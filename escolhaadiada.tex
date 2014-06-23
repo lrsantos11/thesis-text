@@ -965,10 +965,19 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para um polinômio
 
 
 Vamos considerar, antes de mais nada, a relação existente entre o resíduo linear escalado $\rho_L$ na iteração $k$ com o resíduo 
-linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a seguinte proposição. 
+linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a  proposição seguinte que trata do resíduo, quanto do resíduo escalado. 
 \begin{prop}\label{prop:nu_k}
  Seja $\{(x^k,y^k,z^k)\}$ gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters-simplified}. Então para $k\geq0$, vale  
 
+\begin{equation}
+\label{eq:residual-norm-relation-nonscaled}
+% \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\al_k) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
+\begin{aligned}
+ r_P^{k+1}  & = (1-\al_k) r_P^{k} = \nu_{k+1}  r_P^{0}, \\
+  r_D^{k+1}  & = (1-\al_k) r_D^{k} = \nu_{k+1}  r_D^{0}, \\
+\end{aligned}
+\end{equation}
+e além disso
 \begin{equation}
 \label{eq:residual-norm-relation}
 % \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\al_k) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
@@ -982,22 +991,46 @@ em que  $\nu_0 = 1$ e
 \end{prop}
 
 \begin{proof}
-	Usando a primeira equação \eqref{eq:next-residual-all} do Teorema \ref{thm:next=residual},  temos que  o resíduo linear na iteração $k$ será dado por $\rho_L^{k} = (1-\al)\rho_L^{k}$, em que $\rho_L^{k} = (\rho_P^{k},\rho_D^{k})$. Assim, por raciocínio indutivo vale
-	\begin{align*}
-		\rho_L^{k} & = (1-\al_{k-1})\rho_L^{k-1}\\
-				   & = (1-\al_{k-1})\cdots(1-\al_{0})\rho_L^{0}\notag\\
-				   & = \nu_k \rho_L^{0}. \qedhere
-	\end{align*}
+	Pela definição de resíduos  dada em \eqref{eq:KKT-residuals}   e pela Definição \ref{def:residual-vector}, temos que para todo $k$, $\rho_{P}^{k} = H_{P}r_{P}^{k} $ e  $\rho_{D}^{k} = H_{D}r_{D}^{k} $. 
+
+	Como $H_{P}$ e $H_{D}$ são não-singulares, e como $\rho_L^{k} = (\rho_P^{k},\rho_D^{k})$,  da primeira equação de \eqref{eq:next-residual-all} do Teorema \ref{thm:next=residual}, segue que $\rho_P^{k}  = (1-\al_{k-1})\rho_P^{k-1}$ e logo $
+			H_{P}r_{P}^{k}  = (1-\al_{k-1})H_{P}r_{P}^{k-1}$ concluindo que  
+		$H_{P}^{-1}H_{P}r_{P}^{k}  = (1-\al_{k-1})r_{P}^{k-1}$, isto é, $r_{P}^{k}  = (1-\al_{k-1})r_{P}^{k-1}$.
+
+	Daí, por raciocínio indutivo segue que 
+	\[
+	\begin{aligned}
+		r_{P}^{k} & = (1-\al_{k-1})r_{P}^{k-1} \\
+	  			   & = (1-\al_{k-1})\cdots(1-\al_{0})r_{P}^{0}\\
+				   & = \nu_k r_{P}^{0}. 
+	\end{aligned}
+	\]
+Similarmente,  $\rho_D^{k}  = (1-\al_{k-1})\rho_D^{k-1}$ e logo $
+			H_{D}r_{D}^{k}  = (1-\al_{k-1})H_{D}r_{D}^{k-1}$, o que significa que   $r_{D}^{k}  = (1-\al_{k-1})r_{D}^{k-1}$. Novamente,  por raciocínio indutivo segue que 
+	\[
+	\begin{aligned}
+		r_{D}^{k} & = (1-\al_{k-1})r_{D}^{k-1} \\
+	  			   & = (1-\al_{k-1})\cdots(1-\al_{0})r_{D}^{0}\\
+				   & = \nu_k r_{D}^{0}. 
+	\end{aligned}
+	\]
+
+	Finalmente, temos que 
+	\begin{multline*}
+	\rho_L^{k} = (\rho_P^{k},\rho_D^{k}) = (H_{P}r_P^{k},H_{D}r_D^{k}) =\\ = (H_{P}\nu_k r_{P}^{0},H_{D}\nu_k r_{D}^{0})  
+	= \nu_k (H_{P}r_{P}^{0},H_{D} r_{D}^{0}) =\nu_k(\rho_P^{0},\rho_D^{0}) = \nu_k \rho_L^{0},
+		\end{multline*}	
+		o 	que finaliza a demonstração.
 \end{proof}
 
-Como  $\nu_k$ é uma constante não negativa,  uma consequência desta proposição é que se $\rho_L^0\neq 0 $, para toda norma-p, vale 
+Como  $\nu_k$ é uma constante não negativa,  uma consequência desta proposição é que se $r_L^0\neq 0 $, o que implica que $\rho_L^0\neq 0 $, para toda norma-p, vale 
 \[
-\nu_k = \frac{\norm{\rho_L^{k}}_p}{\norm{\rho_L^{0}}_p},
+\nu_k =\frac{\norm{r_L^{k}}_p}{\norm{r_L^{0}}_p} = \frac{\norm{\rho_L^{k}}_p}{\norm{\rho_L^{0}}_p}.
 \]
-e logo, pela definição de \emph{operador média}, segue que
+Logo, pela definição de \emph{operador média}, segue que
 \begin{equation}
 	\label{eq:nu_k}
-	\nu_k = \frac{\dbvec{\rho_L^k}}{\dbvec{\rho_L^0}}.
+	\nu_k = {\dbvec{\rho_L^k}}/{\dbvec{\rho_L^0}}.
 \end{equation}
 
 Caso $\rho_L^0 = 0$, então encontramos um ponto inicial factível e o Algoritmo resolve o problema como um método factível o faz. Na prática, porém, essa situação é rara.
@@ -1013,7 +1046,7 @@ método infactível a vizinhança de passo largo infactível $\Nset_{-\infty}(\g
   \eqref{eq:KKT-residuals-c}.
   \item O termo  \[\tau = \frac{x^Tz}{n} = \frac{1}{n}\sum_{i=1}^nx_iz_i\]
   pode ser entendido como a média dos resíduos, no que diz respeito à parte
-  complementar de KKT.
+  complementar de KKT. Em nossa notação, $\tau = \dbvec{\rho_{C}}$. Além disso, $x_iz_i = (\rho_{C})_i$.
 \end{itemize}
 
 Com tudo isso, mais a Definição \ref{def:residual-vector} e a Proposição \ref{prop:nu_k}, é possível rescrever  a vizinhança
@@ -1022,8 +1055,8 @@ como
 \begin{equation}\label{eq:Nset-infty-rho}
 \Nset_{-\infty}(\ga,\be) =
  \left\{(x,y,z) \in \Qset^+:\frac{\dbvec{\rho_L}}{\dbvec{\rho^0_L}}    \leq
-\beta\frac{\dbvec{\rho_C}}{\dbvec{\rho_C^{0}}}, x_iz_i \geq
-{\ga}\frac{x^Tz}{n},\forall i =1,\ldots,n  \right\},
+\beta\frac{\dbvec{\rho_C}}{\dbvec{\rho_C^{0}}}, (\rho_{C})_i \geq
+{\ga}\dbvec{\rho_{C}},\forall i =1,\ldots,n  \right\},
 \end{equation}
 em que $\ga\in(0,1)$ e $\be\geq1$. 
 
@@ -1059,7 +1092,7 @@ $\Nset_{-\infty}(\ga,\be)$ para o sistema \ac{KKT} escalado, se valerem as  desi
 \begin{align} 
   (\rho_C)_i(x,y,z) -  \ga\dbvec{\rho_C}(x,y,z)  & \geq 0, \quad \forall i=1,\ldots,n %\leq  \frac{1}{\ga}\dbvec{\rho_C}(x,y,z),
  \label{eq:symmetric-polynomials-b} \\ 
-   \dbvec{\rho_C}(x,y,z) - \frac{\nu}{\be} \dbvec{\rho_C^0}  &\geq 0 .
+   \dbvec{\rho_C}(x,y,z) - \frac{\nu_{k}}{\be} \dbvec{\rho_C^0}  &\geq 0 .
  \label{eq:symmetric-polynomials-a}
 \end{align} 
 \end{subequations}

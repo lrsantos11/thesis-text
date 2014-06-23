@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"wr",
+				"wr Wright:1994jd: An infeasible-interior-point algorithm for linear complementarity problems"
+			],
+			[
+				"zhan",
+				"zhan Zhang:1996it: A Mehrotra-type predictor-corrector algorithm with polynomiality and Q-subquadratic convergence"
+			],
+			[
+				"Zha",
+				"Zha Zhang:1994fz: Superlinear convergence of infeasible-interior-point methods for linear programming"
+			],
+			[
+				"x0",
+				"cond:x0-x*+z0-z*"
+			],
+			[
+				"eq",
+				"eq	Equation"
+			],
+			[
+				"vander",
+				"Vanderbei:1999wv: An Interior-Point Algorithm for Nonconvex Nonlinear Programming"
+			],
+			[
+				"bd",
+				"eq:bdxzzero"
+			],
+			[
 				"n",
 				"eq:nu_k"
 			],
@@ -76,10 +104,6 @@
 				"alg:optimized-choice-of-parameters-simplified"
 			],
 			[
-				"eq",
-				"eq	Equation"
-			],
-			[
 				"symm",
 				"eq:symmetric-polynomials"
 			],
@@ -108,10 +132,6 @@
 				"chap:mpis"
 			],
 			[
-				"Zha",
-				"Zha Zhang:2006ic: On the convergence of a class of infeasible interior-point methods for the horizontal linear complementarity problem"
-			],
-			[
 				"pr",
 				"prod"
 			],
@@ -131,23 +151,15 @@
 			"file": "tese.tex",
 			"settings":
 			{
-				"buffer_size": 5449,
+				"buffer_size": 5469,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "alg_converg.tex",
+			"contents": "Remote:   origin @ https://github.com/lrsantos11/thesis-text.git\nLocal:    new_lema4.2 ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     e29d13c Some tweaks for Line numbering\n\n\nChanges:\n	Modified   abstract.tex\n	Modified   resumo.tex\n	Modified   tese.tex\n\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
 			"settings":
 			{
-				"buffer_size": 58649,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Local:    new_lema4.2 ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     9992342 Inserted iteration index k until Lemma 4.2\n\n\nNothing to commit (working directory clean)\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
-			"settings":
-			{
-				"buffer_size": 948,
+				"buffer_size": 1036,
 				"line_ending": "Unix",
 				"name": "*git-status*: thesis-text",
 				"read_only": true,
@@ -155,34 +167,10 @@
 			}
 		},
 		{
-			"file": "convergencia.tex",
+			"file": "resumo.tex",
 			"settings":
 			{
-				"buffer_size": 1138,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "concl.tex",
-			"settings":
-			{
-				"buffer_size": 3234,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "numericos.tex",
-			"settings":
-			{
-				"buffer_size": 1021,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "pacotes.tex",
-			"settings":
-			{
-				"buffer_size": 4147,
+				"buffer_size": 1968,
 				"line_ending": "Unix"
 			}
 		},
@@ -190,8 +178,32 @@
 			"file": "escolhaadiada.tex",
 			"settings":
 			{
-				"buffer_size": 49692,
+				"buffer_size": 49822,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "alg_converg.tex",
+			"settings":
+			{
+				"buffer_size": 65752,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "abstract.tex",
+			"settings":
+			{
+				"buffer_size": 2155,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "int.tex",
+			"settings":
+			{
+				"buffer_size": 20212,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -203,10 +215,10 @@
 			}
 		},
 		{
-			"file": "configuracao.tex",
+			"file": "pacotes.tex",
 			"settings":
 			{
-				"buffer_size": 3810,
+				"buffer_size": 4322,
 				"line_ending": "Unix"
 			}
 		}
@@ -214,28 +226,64 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 127.0,
 		"selected_items":
 		[
 			[
-				"mer",
+				"push",
+				"Git: Push"
+			],
+			[
+				"merge",
 				"Git: Merge"
-			],
-			[
-				"che",
-				"Git: Checkout"
-			],
-			[
-				"chekc",
-				"Git: Checkout New Branch"
 			],
 			[
 				"chek",
 				"Git: Checkout"
 			],
 			[
-				"push",
-				"Git: Push"
+				"",
+				"Anaconda: Vagrant Up"
+			],
+			[
+				"che",
+				"Git: Checkout"
+			],
+			[
+				"git:ch",
+				"Git: Checkout"
+			],
+			[
+				"chekc",
+				"Git: Checkout Commit"
+			],
+			[
+				"mer",
+				"Git: Merge"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"list paga",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"merg",
+				"Git: Merge"
+			],
+			[
+				"new",
+				"Git: Checkout New Branch"
+			],
+			[
+				"check",
+				"Git: Checkout New Branch"
 			],
 			[
 				"pull",
@@ -244,14 +292,6 @@
 			[
 				"git:mer",
 				"Git: Merge"
-			],
-			[
-				"merge",
-				"Git: Merge"
-			],
-			[
-				"git:ch",
-				"Git: Checkout"
 			],
 			[
 				"sta",
@@ -292,10 +332,6 @@
 			[
 				"git:stat",
 				"Git: Status"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"pak",
@@ -364,10 +400,6 @@
 			[
 				"package",
 				"Package Control: Install Package"
-			],
-			[
-				"",
-				"Convert Case: Upper Case"
 			]
 		],
 		"width": 449.0
@@ -391,6 +423,24 @@
 	},
 	"file_history":
 	[
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.idx",
+		"/usr/local/texlive/2013/texmf-dist/tex/latex/lineno/lineno.sty",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/alg_converg.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.log",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/resumo.tex",
+		"/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsthm.sty",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/dedicatoria.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/pacotes.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/abstract.tex",
+		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/LaTeX Word Count/LaTeXWordCount.sublime-settings",
+		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXWordCount.sublime-settings",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/convergencia.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
 		"/usr/local/texlive/2013/texmf-dist/scripts/texliveonfly/texliveonfly.py",
 		"/Users/lrsantos/Downloads/texliveonfly",
@@ -403,38 +453,27 @@
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/README.markdown",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/SublimeGit/SublimeGit.sublime-settings",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/texliveonfly",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.aux",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/lrsantos/Downloads/www.Torrenting.com - 30.for.30.S02E18.Bad.Boys.480p.HDTV.x264-mSD/30.for.30.S02E18.Bad.Boys.480p.HDTV.x264-mSD.nfo",
 		"/Users/lrsantos/Dropbox/IFC/Docência/documentos/2014/Edital-029/texto/Projeto_Pesquisa_edita29_LRS.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-project",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.log",
 		"/Users/lrsantos/Dropbox/UFSC/Concurso_270-13/memorial/ProjetoAcademico/ProjetoAcademicoLRS.tex",
 		"/Users/lrsantos/Dropbox/IFC/Docência/documentos/2013/Edital_Pesquisa_39_2013/texto/Projeto_Pesquisa_edita23_LRS.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/references_bibdesk_papers.bib",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese_antiga.tex",
 		"/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/pacotes.tex",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/CheckBounce/CheckBounce.sublime-settings",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/ficha-catalografica.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/folha_rosto.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/dedicatoria.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/agradecimentos.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/myabbrvnat.bst",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/alg_converg.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/capa.tex",
 		"/Users/lrsantos/Dropbox/.gitignore_global",
 		"/Dropbox/.gitignore_global",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/modelo_tese_imecc/tese.tex",
 		"/Users/lrsantos/Library/texmf/tex/latex/lrsmath/lrsthm.sty",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/begin{equation}",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/convergencia.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/limitante_xz.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/README.md",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/texto/tese.tex",
@@ -458,9 +497,49 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"align*",
+			"equation",
+			"lineno",
+			"\\varpi",
+			"\\vartheta",
+			"\\theta",
+			"\\xi",
+			"bdzxzero",
+			"\\varsigma_0",
+			"Métodos",
+			"eq:omega1",
+			"aligned",
+			"\\rho_C",
+			"\\xk \\xk",
+			"\\xz \\xk",
+			"\\xz ",
+			"\\xz",
+			"xz",
+			"xz)",
+			"xz",
+			"\\dey",
+			"\\dez",
+			"\\dex",
+			"\\dezk",
+			"\\deyk",
+			"\\dexk",
+			"(\\dey)^{k}",
+			"(\\dez)^{k}",
+			"(\\dex)^{k}",
+			"D^{k}",
+			"(D^{k})^{-1}",
+			"D^{k}",
+			"D^k",
+			"D",
+			"D^{-1}",
+			"Z",
+			"\\intertext",
+			"eq:initial-point",
+			"pres",
+			"aligned",
 			"_{i}",
 			"z",
 			"x^{T}",
@@ -547,6 +626,31 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\\rho_C^k ",
+			" \\xk \\zk ",
+			" \\xk ",
+			" \\xk\\xz )",
+			" \\xk\\xz ",
+			" \\deky ",
+			" \\dekz ",
+			" \\dekx ",
+			" \\dekx",
+			" \\dekx ",
+			" \\dekx",
+			" \\dekz",
+			" \\deky",
+			" \\dekx",
+			" \\deyk  ",
+			" \\dezk  ",
+			"\\dexk",
+			"\\Dk",
+			"\\Dik",
+			"\\Dk",
+			"\\\\Dk",
+			"\\Dk",
+			"\\Dik",
+			"\\Zk",
+			"eq:initial-point-mehrotra",
 			"\\nextphi",
 			"\\textcite{",
 			"\\textcite[",
@@ -563,7 +667,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -572,15 +676,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5449,
+						"buffer_size": 5469,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4438,
-								4438
+								1101,
+								1101
 							]
 						],
 						"settings":
@@ -696,164 +800,26 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2116.0,
+						"translation.y": 361.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "alg_converg.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 58649,
+						"buffer_size": 1036,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13569,
-								13569
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": true,
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_check": false,
-							"spell_tag": 2,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5348.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 948,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								143,
-								143
+								936,
+								936
 							]
 						],
 						"settings":
@@ -873,689 +839,167 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "convergencia.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1138,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								693,
-								693
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 13,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "concl.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3234,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								115,
-								115
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 125,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "numericos.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1021,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								163,
-								163
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 126,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "pacotes.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4147,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2224,
-								2224
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": true,
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 2,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "escolhaadiada.tex",
+					"buffer": 2,
+					"file": "resumo.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 49692,
+						"buffer_size": 1968,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								41077,
-								41077
+								69,
+								69
 							]
 						],
 						"settings":
 						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 27,
-							"sublime_auto_complete": true,
+							"spell_tag": 7,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 18919.0,
+						"translation.y": 3.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "escolhaadiada.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 49822,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								47343,
+								47343
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 23,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 21759.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "alg_converg.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 65752,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								25890,
+								25890
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 24,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 9964.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "abstract.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2155,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1216,
+								1216
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 1829,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 6,
+					"file": "int.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20212,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15802,
+								15802
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 8,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 5149.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
 					"semi_transient": false,
 					"settings":
@@ -1687,140 +1131,35 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "configuracao.tex",
+					"buffer": 8,
+					"file": "pacotes.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3810,
+						"buffer_size": 4322,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2940,
-								2948
+								4199,
+								4199
 							]
 						],
 						"settings":
 						{
-							"WordCountShouldRun": true,
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 3,
-							"sublime_auto_complete": true,
+							"spell_tag": 2,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1810.0,
+						"translation.y": 1497.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1891,7 +1230,7 @@
 	"project": "tese.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
