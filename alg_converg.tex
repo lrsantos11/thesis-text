@@ -272,7 +272,7 @@ Logo temos que
 	  & \textcolor{white}{=} +(\xk)^{T}\zk - \nu_k ((\xk)^{T}\zzero + (\xzero)^{T}\zk) - (1-\nu_k) ((\xk)^{T}\zstar + (\xstar)^{T}\zk).\label{eq:boundxz1}
 \end{align}
 
-Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\leq 0$, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nu_k\in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
+Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\geq 0$, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nu_k\in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
 \begin{equation}
 	\label{eq:xTzero+xzeroTz}
 	  \nu_k ((\xk)^{T}\zzero + (\xzero)^{T}z) \leq 
@@ -286,7 +286,7 @@ Seja a constante $\bdxzzero>0$ dada em \eqref{eq:bdxzzero}. Como  $(\xk,\zk)>0$,
 (\xk)^{T}\zzero + (\xzero)^{T}\zk.
 \end{equation}
 
-Por outro lado,  para  $p = 1 $, $q = \infty$, vale a desigualdade de desigualdade de Hölder \cite[p. 53]{Golub:1996wp}, isto é, $\abs{u^{T}v} \leq \norm{u}_{1}\norm{v}_{\infty}$, para $u,v\in\Real^{n}$ quaisquer. Assim, notando que $(\xzero,\zzero)>$ e $(\xstar,\zstar)>0$, podemos dispensar o módulo e usar a desigualdade de Hölder no último termo do lado direito da desigualdade \eqref{eq:xTzero+xzeroTz} em conjunto com as  equações \eqref{eq:norm-xz-zero} e \eqref{eq:norm-xz-star}  obtendo
+Por outro lado,  para  $p = 1 $, $q = \infty$, vale a desigualdade de desigualdade de Hölder \cite[p. 53]{Golub:1996wp}, isto é, $\abs{u^{T}v} \leq \norm{u}_{1}\norm{v}_{\infty}$, para $u,v\in\Real^{n}$ quaisquer. Assim, notando que $(\xzero,\zzero)>$ e $(\xstar,\zstar)\geq0$, podemos dispensar o módulo e usar a desigualdade de Hölder no último termo do lado direito da desigualdade \eqref{eq:xTzero+xzeroTz} em conjunto com as  equações \eqref{eq:norm-xz-zero} e \eqref{eq:norm-xz-star}  obtendo
 	\begin{align}
 	(\xzero)^{T}\zstar + (\xstar)^{T}\zzero  & \leq \norm{\xzero}_{1}\norm{\zstar}_{\infty} + \norm{\zzero}_{1}\norm{\xstar}_{\infty} \notag \\
 	& \leq \norm{(\xzero,\zzero)}_1 \norm{(\xstar,\zstar)}_{\infty} \notag \\
@@ -334,7 +334,7 @@ Fazendo $\omega_{0} = \bdxzzero^{-1}\left(2  + \frac{\bdxzstar^{2}}{(\xzero)^{T}
 
 
 
-\subsection{Limitantes paras normas de direções} 
+% \subsection{Limitantes paras normas de direções} 
 
 A próxima proposição será utilizada nas demonstrações que seguem e é um fato conhecido e bastante utilizado em \ac{MPI}.
 
@@ -348,7 +348,7 @@ A próxima proposição será utilizada nas demonstrações que seguem e é um f
 \begin{proof} A primeira desigualdade é valida por conta da equivalência de normas~\cite[p.~53]{Golub:1996wp}. Quanto às demais, vejamos que 
 \[
 	\begin{aligned}
-		\norm{uv}_1^{2} & = \left( \sum_{i=1}^{n}u_i v_i  \right)^{2} \leq  \sum_{i=1}^{n}\abs{u_iv_i}^{2}\\
+		\norm{uv}_1^{2} & = \left( \sum_{i=1}^{n}\abs{u_i v_i}  \right)^{2} \leq  \sum_{i=1}^{n}\abs{u_iv_i}^{2}\\
 						& = \norm{uv}^{2} = (uv)^{T}(uv)  = v^{T}D^{-T}D^{T}u^{T}DD^{-1} uv\\
 						& = v^{T}D^{-T}D^{T}u^{T}DuD^{-1}v\\
 						& = \norm{Du}^{2}\norm{D^{-1}v}^{2}.
@@ -358,7 +358,7 @@ e logo a segunda desigualdade de \eqref{eq:prop-uvDuDv} está provada.
 
 Com relação a terceira desigualdade, note que  
 \[
-0 \leq \left(\norm{Du}^{1} - \norm{D^{-1}v}^{2}\right)^{2} = \norm{Du}^{2} - 2\norm{Du}\norm{D^{-1}v} + \norm{D^{-1}v}^{2}
+0 \leq \left(\norm{Du} - \norm{D^{-1}v}\right)^{2} = \norm{Du}^{2} - 2\norm{Du}\norm{D^{-1}v} + \norm{D^{-1}v}^{2}
 \]
 e portanto temos a validade de
 \[
@@ -370,7 +370,6 @@ De agora em diante, dados $(\xk,\zk)$ gerado pelo Algoritmo, definimos a matriz 
 \[
 \Dk =(\Xk)^{-1/2}(\Zk)^{1/2}.
 \]
-
 Assim, podemos enunciar o seguinte lema.
 
 \begin{lema}\label{lemma:boundDxDzaff}
