@@ -164,10 +164,10 @@
 			}
 		},
 		{
-			"contents": "Remote:   origin @ https://github.com/lrsantos11/thesis-text.git\nLocal:    new_lema4.2 ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     e74ea30 Changed nu_k and omega_0. Also changed first pages of thesis\n\n\nChanges:\n	Modified   alg_converg.tex\n\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
+			"contents": "Remote:   origin @ https://github.com/lrsantos11/thesis-text.git\nLocal:    new_lema4.2 ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     b858d52 Minor corrections suggested by Fernando\n\n\nNothing to commit (working directory clean)\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
 			"settings":
 			{
-				"buffer_size": 1025,
+				"buffer_size": 1010,
 				"line_ending": "Unix",
 				"name": "*git-status*: thesis-text",
 				"read_only": true,
@@ -178,7 +178,7 @@
 			"file": "alg_converg.tex",
 			"settings":
 			{
-				"buffer_size": 66546,
+				"buffer_size": 66589,
 				"line_ending": "Unix"
 			}
 		},
@@ -202,9 +202,21 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 147.0,
 		"selected_items":
 		[
+			[
+				"chek",
+				"Git: Checkout"
+			],
+			[
+				"check",
+				"Git: Checkout"
+			],
+			[
+				"STATU",
+				"Git: Status"
+			],
 			[
 				"push",
 				"Git: Push"
@@ -212,10 +224,6 @@
 			[
 				"merge",
 				"Git: Merge"
-			],
-			[
-				"chek",
-				"Git: Checkout"
 			],
 			[
 				"",
@@ -255,10 +263,6 @@
 			],
 			[
 				"new",
-				"Git: Checkout New Branch"
-			],
-			[
-				"check",
 				"Git: Checkout New Branch"
 			],
 			[
@@ -399,6 +403,8 @@
 	},
 	"file_history":
 	[
+		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-workspace",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/capa.tex",
@@ -421,7 +427,6 @@
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/convergencia.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
-		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
 		"/usr/local/texlive/2013/texmf-dist/scripts/texliveonfly/texliveonfly.py",
 		"/Users/lrsantos/Downloads/texliveonfly",
 		"/Users/lrsantos/Dropbox/IFC/Docência/Superior/Matemática/alunos/rafaela_filipozzi/VI-FICE/tex/teofundarit_v2.tex",
@@ -787,7 +792,7 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 659.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -798,15 +803,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1025,
+						"buffer_size": 1010,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								226,
-								226
+								205,
+								205
 							]
 						],
 						"settings":
@@ -835,27 +840,29 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 66546,
+						"buffer_size": 66589,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								21590,
-								21590
+								14160,
+								14160
 							]
 						],
 						"settings":
 						{
+							"cite auto trigger": true,
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
+							"ref auto trigger": true,
 							"spell_tag": 24,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8290.0,
+						"translation.y": 4943.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
