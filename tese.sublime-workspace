@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"assu",
+				"eq:assump-lemma-boundDxDzaff"
+			],
+			[
 				"tab",
 				"tab	Tabular"
 			],
@@ -164,10 +168,10 @@
 			}
 		},
 		{
-			"contents": "Remote:   origin @ https://github.com/lrsantos11/thesis-text.git\nLocal:    new_lema4.2 ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     b858d52 Minor corrections suggested by Fernando\n\n\nNothing to commit (working directory clean)\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
+			"contents": "Remote:   origin @ https://github.com/lrsantos11/thesis-text.git\nLocal:    new_lema4.2 ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     656f4f4 sub conditions by assumtions on lemmas 4.2 and 4.4\n\n\nNothing to commit (working directory clean)\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
 			"settings":
 			{
-				"buffer_size": 1010,
+				"buffer_size": 1021,
 				"line_ending": "Unix",
 				"name": "*git-status*: thesis-text",
 				"read_only": true,
@@ -178,7 +182,7 @@
 			"file": "alg_converg.tex",
 			"settings":
 			{
-				"buffer_size": 66589,
+				"buffer_size": 65487,
 				"line_ending": "Unix"
 			}
 		},
@@ -195,6 +199,14 @@
 			"settings":
 			{
 				"buffer_size": 4322,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "configuracao.tex",
+			"settings":
+			{
+				"buffer_size": 3938,
 				"line_ending": "Unix"
 			}
 		}
@@ -483,6 +495,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"eq:DxDzaff3",
+			"eq:normxz1",
+			"bdxzzero",
+			"equation",
 			"alg:optimized-choice-of-parameters-simplified",
 			"multline",
 			"k",
@@ -606,11 +622,7 @@
 			"\\sf",
 			"\\sf ",
 			"\\sf",
-			"\\sf ",
-			"\n\\",
-			"\\sf",
-			"\\bf",
-			"\\Deco"
+			"\\sf "
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -792,10 +804,10 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2141.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -803,15 +815,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1010,
+						"buffer_size": 1021,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								205,
-								205
+								216,
+								216
 							]
 						],
 						"settings":
@@ -840,15 +852,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 66589,
+						"buffer_size": 65487,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14160,
-								14160
+								54422,
+								54422
 							]
 						],
 						"settings":
@@ -862,7 +874,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4943.0,
+						"translation.y": 22918.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1001,7 +1013,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1029,10 +1041,41 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 522.0,
+						"translation.y": 1497.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "configuracao.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3938,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3920,
+								3920
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 12,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2433.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

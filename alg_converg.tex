@@ -1,17 +1,36 @@
 %!TEX root = tese.tex
 
 
-\section{Convergência  Polinomial do Algoritmo de Escolha Adiada de Parâmetros}
+\setchapterpreamble[u]{% 
+% \dictum[Thomas A.~ Edison]{``There is no substitute for hard work.''}
+\dictum[Booker T.~Washington]{``Nothing ever comes to one, that is worth having, except as a result of hard work.''}
+}
 
 
 
-Vamos provar  a convergência do Algoritmo \ref{alg:optimized-choice-of-parameters}. Para tanto, estrategicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
+\chapter{Convergência  Polinomial do Método de Escolha Otimizada de Parâmetros}
+
+
+\label{chap:convergence}
+
+
+Conforme esclarecem \textcite{Zhang:1993gn}, do ponto de vista matemático os conceitos de polinomialidade de um algoritmo e de taxa de convergência são incompatíveis. Enquanto a polinomialidade tem sentido apenas quando o algoritmo termina em um número finito de passos, a taxa de convergência  está definida apenas para algoritmos que tomam infinitos passos para convergir. Quando diz-se que um Método de Pontos Interiores é polinomial, tem-se em mente dados inteiros ou racionais e terminação finta. Por outro lado, quando diz-se que o mesmo algoritmo tem convergência linear, por exemplo, isso é feito  no sentido tradicional da análise numérica~\cite{Ortega:2000vd}.
+Daí, da mesma forma que esses autores, discutiremos aqui tanto polinomialidade quanto taxa de convergência do Método de Escolha Otimizada de Parâmetros. Daí, o objetivo principal  deste capítulo é   provar  que o Algoritmo \ref{alg:optimized-choice-of-parameters} converge em uma taxa Q-linear e tem ordem polinomial de iterações.
+
+
+
+
+
+
+ Para tanto, estrategicamente fixaremos os parâmetros $(\mu,\sig)$. Neste sentido escolheremos para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
 em que $\eta\in (\eta_{\min},\eta_{\max} )$, enquanto o parâmetro $\sig$ será fixado como $\nextsig = 0$. Essas escolhas  podem fazer com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}.  No entanto, para fins de clareza, e sem perda de generalidade, vamos supor $\eta$ fixo. Os valores dos limitantes de $\eta$ para essa escolha de $\sig$ e $\mu$ são $\eta_{\min} = \sqrt{\ga}$ e $\eta_{\max} = 1$, conforme  determinado no Lema~\ref{lemma:next-phi-delta-n4}.
 
 
- Na prática, porém, esperamos que  o método  tenha desempenho melhor do que a convergência teórica, já que se buscará, em cada iteração $k$,
-o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$ e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para  $\hat{\al}$ definido abaixo.
+ A fixação desses dois parâmetros permite as demonstrações que seguem e a consequente prova da convergência do método. No entanto, na prática, o método  tem desempenho melhor, já que se buscará, em cada iteração $k$,
+o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$ e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para algum   $\hat{\al}$.
+
+De fato, com $\mu$ e $\sig$ fixos, vamos determinar que este $\nextal$ existe, está no intervalo $(0,1)$, cumpre com as condições da vizinhança $N_{-\infty}(\ga,\be)$, para algum $\ga$ e $\be$  e principalmente, é grande o suficiente para fazer com que a função de mérito $\nextphi$ decresça suficientemente. Vejamos como isso se dá.
 
 
 % Com essas alterações, podemos rescrever o Algoritmo~\ref{alg:optimized-choice-of-parameters} como o  Algoritmo Simplificado \ref{alg:optimized-choice-of-parameters}.
@@ -27,7 +46,7 @@ Pelo Teorema \ref{thm:varphi}, a função de mérito para o próximo ponto   é,
 \begin{equation*}
 % \label{eq:merit-function-al-mu-sig}
 {\nextphi}(\al,\mu,\sig) =  (1-\al)(\dbvec{\rho_L} +
-\dbvec{\rho_C^k }) + \al\mu + \al(\al-\sig)\dbvec{L_{0,0}} +
+\rhoCkb ) + \al\mu + \al(\al-\sig)\dbvec{L_{0,0}} +
 \al^2\dbvec{\Lambda(\mu,\sig)} ,
 \end{equation*}
 em que 
@@ -38,21 +57,21 @@ em que
  \]
 
 
-Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2}} = 0$. Fazendo $\mu = \nextmu = \eta\frac{x^Tz}{n} = \eta\dbvec{\rho_C^k } $
+Como vimos na Observação \ref{obs:L_02-L20},  $\dbvec{L_{2,0}} = \dbvec{L_{0,2}} = 0$. Fixando $\mu = \nextmu = \eta\frac{x^Tz}{n} = \eta\rhoCkb  $
  e $\sig = \nextsig=0$ e usando a Proposição \ref{prop:nu_k},   podemos rescrever a função de mérito para o próximo ponto, dependendo apenas de uma escolha de  $\al$ como
 \begin{equation}
 	\label{eq:simplified-merit-function-al}
-\nextphi(\al)  = (1-\al)(\nu_k\dbvec{\rho_L}_0 +
-\dbvec{\rho_C^k }) + \al\eta\dbvec{\rho_C^k } + \al^2\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}}
+\nextphi(\al)  = (1-\al)(\nuk \dbvec{\rho_L}_0 +
+\rhoCkb ) + \al\eta\rhoCkb  + \al^2\left(\dbvec{L_{0,0}} + \eta\rhoCkb  \dbvec{L_{1,0}}
 \right) .
 \end{equation}
 
 Seja a função auxiliar  dada por
 \begin{equation}
 	\label{eq:theta}
-\theta(\al) =  \dfrac{\al\left[ \nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C^k } - \al\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}}
-\right) \right]}{\nu_k\dbvec{\rho_L}_0 +
-\dbvec{\rho_C^k }}.
+\theta(\al) =  \dfrac{\al\left[ \nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb  - \al\left(\dbvec{L_{0,0}} + \eta\rhoCkb  \dbvec{L_{1,0}}
+\right) \right]}{\nuk \dbvec{\rho_L^{0}} +
+\rhoCkb }.
 \end{equation}
 Usando tal definição, deriva-se a seguinte relação entre a função de mérito atual  $\varphi$  e a da próxima iteração  $\nextphi$: 
 \begin{equation}
@@ -66,7 +85,7 @@ Como é necessário garantir que  $\nextphi  $  seja não negativa, deve-se esco
 
 
 
- Em vista disso, para garantirmos a convergência dos pontos gerados pelo Algoritmo para uma solução ótima $(\xstar,\ystar,\zstar)$ do problema de \ac{PL}, além de ser  crucial que exista $\hat{\al}>0$  tal que,  para toda iteração $k$, tenha-se  $\al_k\in(0,\hat{\al}]$, de modo que a equação~\eqref{eq:relation-phi-next-phi} seja válida, é preciso que todo   ponto  $({x}^{k} ,{y}^{k},{z}^{k})$ pertença à vizinhança $\Nset_{-\infty}(\gamma,\beta)$.
+Como vimos, para garantirmos a convergência dos pontos gerados pelo Algoritmo para uma solução ótima $(\xstar,\ystar,\zstar)$ do problema de \ac{PL}, além de ser  crucial que exista $\hat{\al}>0$  tal que,  para toda iteração $k$, tenha-se  $\al_k\in(0,\hat{\al}]$, de modo que a equação~\eqref{eq:relation-phi-next-phi} seja válida, é preciso que todo   ponto  $(\xk ,\yk,\zk)$ pertença à vizinhança $\Nset_{-\infty}(\gamma,\beta)$.
 
 Para tanto, sejam  
 \begin{equation}
@@ -99,7 +118,7 @@ em que $\nextal_{C}$ e $\nextal_{L}$ são definidos nos Lemas \ref{lemma:alC_del
 % De fato, a função $\theta(\al)$ é uma quadrática, e por conta disso, o problema \eqref{eq:nex-al} é resolvido por comparar os valores funcionais de $\theta(\al)$ em seus pontos críticos no interior do intervalo e o valor funcional no ponto mais a direita do intervalo.
 
 
- Essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda faz com que $({x}^{k} ,{y}^{k},{z}^{k})$ convirja para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
+Veremos que essa escolha garante que  o Algoritmo \ref{alg:optimized-choice-of-parameters} gere uma sequência $\{\varphi_k\}$ que decresce de maneira suficiente a cada passo, tal que $\varphi_k \to 0$, quando $k\to \infty$. Assim, o Algoritmo gera pontos $({x}^{k} ,{y}^{k},{z}^{k})$ que tem as boas propriedades da vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e ainda faz com que $({x}^{k} ,{y}^{k},{z}^{k})$ convirja para  alguma solução ótima $(\xstar ,\ystar,\zstar)$ do problema primal-dual  (\ref{eq:primal}-\ref{eq:dual}).
 
 
 Em seguida, fazemos a demonstração da convergência do Algoritmo proposto. A análise que segue é  baseada naquelas feitas por \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h},  \textcite{Zhang:2006ic,Zhang:1995fu}. 
@@ -113,18 +132,41 @@ Em seguida, fazemos a demonstração da convergência do Algoritmo proposto. A a
 
 A fim de demonstrarmos a convergência e a complexidade do Algoritmo proposto, na presente seção provaremos alguns lemas técnicos que serão utilizados para estabelecer nossos principais resultados de convergência. 
 
+Primeiramente, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
+\textcite{Colombo:2008ia} que utilizam $\ga = 1/10$. No entanto, vamos escolher $\ga$ tal que  
+\[
+\gamma \leq  \min\left\{ \frac{\displaystyle \min_{i}(\xzero_{i} \zzero_{i} )}{(\xzero )^T\zzero /n}, \frac{1}{10}\right\},
+\]
+o que garante que o ponto inicial satisfaz a desigualdade~\eqref{eq:symmetric-polynomials-b}.
+
+Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\rhoCkb $, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L^{k}}$. Para facilitar os raciocínios, do ponto de vista teórico, vamos escolher o menor valor possível para $\beta$, isto é, $\be=1$.
+
+Além disso a seguinte observação será  útil.
+
+
+\begin{obs}
+	Seja  $(\Dex,\Dey,\Dez)$ uma terna qualquer de direções. Se 
+\begin{equation}
+	\label{eq:Ax0-ATyz0}
+	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0.
+\end{equation}
+então
+\begin{equation}
+	\label{eq:xTziszero}
+	\Dex^T\Dez =  - \Dex^T(A^T\Dey)  = -(A\Dex)^T\Dey = 0.
+\end{equation}
+\end{obs}
 
 
 
-Em demonstrações de convergência e polinomialidade de Métodos de Pontos Interiores  infactíveis, é  necessária a aceitação de algumas hipóteses ou condições sobre o ponto inicial e o sobre o ponto ótimo. Veja por exemplo os trabalhos de \textcite{Wright:1994jd}, \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h}, \textcite{Wright:1996kj,Zhang:2006ic,Zhang:1994fz,Zhang:1995fu}. Em particular, tais hipóteses permitem estabelecer um limitante para a sequência $\{(\xk,\zk)\}$, o que é de vital importância para as demonstrações.
+Em demonstrações de convergência e polinomialidade de Métodos de Pontos Interiores  infactíveis, em particular no métodos do tipo Mehrotra como o que propomos,  é  necessária a aceitação de algumas hipóteses ou condições sobre o ponto inicial e  sobre uma solução ótima. Veja por exemplo os trabalhos de \textcite{Wright:1994jd}, \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h}, \textcite{Wright:1996kj,Zhang:2006ic,Zhang:1994fz,Zhang:1995fu}. Tais hipóteses permitem estabelecer um limitante para a sequência $\{(\xk,\zk)\}$, o que é de vital importância para as demonstrações.
 
-No entanto, embora as hipóteses utilizadas nos trabalhos acima, permitam uma ordem de convergência  polinomial, ao mesmo tempo, são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento do algoritmo e ao mesmo tempo, exigem o conhecimento \emph{a priori}  deum limitante para o ponto ótimo, o que torna o algoritmo não implementável. 
+No entanto, embora as hipóteses  utilizadas nos trabalhos acima produzam uma ordem de convergência  polinomial, estas são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento do algoritmo e ao mesmo tempo, exigem o conhecimento \emph{a priori}  de um limitante para a solução  ótima, o que torna o algoritmo não implementável. 
 
-Nesse trabalho, preferimos de obter uma ordem de convergência maior, embora polinomial, porém com um ponto inicial cuja eficácia é bem demonstrada na prática e com  condições para limitantes  do ponto ótimo e do ponto inicial que possam ser verificada como verdadeiras, pelo menos para nosso conjunto de testes. Em resumo, isso significa que a análise de convergência é feita utilizando o Algoritmo que é de fato implementado.
+Nesse trabalho, preferimos  obter uma ordem de convergência um pouco maior, embora ainda polinomial, porém com um ponto inicial cuja eficácia é bem demonstrada na prática e com uma condição que envolve o ponto inicial e uma solução ótima, condição esta foi verificada como válida, em nosso conjunto de testes. Em resumo, isso significa que a análise de convergência é feita utilizando o Algoritmo que é de fato implementado.
 
 
-Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por \textcite{Mehrotra:1992wr} é uma das mais utilizadas em diversas implementações de \acl{MPI}, por suas características de fácil implementação e bem como por seu  bom desempenho na prática.
- Assim,  utilizaremos em nosso Algoritmo o ponto inicial de \citeauthor{Mehrotra:1992wr}, isto é, o ponto inicial $(\xzero ,\yzero,\zzero )$  dado pela equação \eqref{eq:initial-point-mehrotra}. 
+Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por \textcite{Mehrotra:1992wr} é uma das mais utilizadas em diversas implementações de \acl{MPI}, por suas características de fácil utilização, bem como por seu  ótimo desempenho na prática.  Assim,  utilizaremos em nosso Algoritmo o ponto inicial de \citeauthor{Mehrotra:1992wr}, isto é, o ponto inicial $(\xzero ,\yzero,\zzero )$  dado pela equação \eqref{eq:initial-point-mehrotra}. 
 
  % Seja também, para este ponto inicial, a constante positiva
 % \begin{equation}
@@ -134,16 +176,12 @@ Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por 
 % a qual será utilizada na sequência.
 
 
-
-Nos lemas que seguem, imporemos algumas hipóteses, que são verificadas como verdadeiras par ao ponto inicial escolhido, para todo o conjunto de testes da Neltib.  Tais hipótes utilizam a constante positiva
+ Seja a constante positiva 
 \begin{equation}
 	\label{eq:max-norm-data}
- 	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \},
+ 	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \}.
 \end{equation}
-que nada mais é que o maior valor absoluto de todos os dados de entrada do problema. 
-
-
-% Com isso podemos assumir como verdadeiras as  condições a seguir, que caracterizam o ponto inicial e um ponto ótimo do problema de PL que estamos resolvendo. 
+$\bdxzstar$ é o maior valor absoluto de todos os dados de entrada do problema (\ref{eq:primal}-\ref{eq:dual}). Esta constante será utilizada nas demonstrações abaixo, em particular a partir da Condição \ref{cond:xzzero-xzstar}, a qual caracteriza uma relação existente entre  o ponto inicial e uma solução ótima do \ac{PL} que estamos resolvendo. 
 
 % \begin{cond} \label{cond:xzzero} O ponto inicial $(\xzero ,\yzero,\zzero )$ satisfaz 
 % \begin{equation}
@@ -153,13 +191,13 @@ que nada mais é que o maior valor absoluto de todos os dados de entrada do prob
 % em que  $\bdxzstar>0$ calculado por \eqref{eq:max-norm-data}.
 % \end{cond}
 
-% \begin{cond} \label{cond:xzstar} Existe uma solução ótima $(\xstar,\ystar,\zstar)$  do problema (\ref{eq:primal}-\ref{eq:dual}) que satisfaz 
-% \begin{equation}
-% 	\label{eq:norm-xz-star}
-% 	\norm{(\xstar,\zstar)}_{\infty} \leq \bdxzstar n^2,
-% \end{equation}
-% em que  $\bdxzstar>0$ calculado por \eqref{eq:max-norm-data}. 
-% \end{cond}
+\begin{cond} \label{cond:xzzero-xzstar} Para o ponto inicial dado por \eqref{eq:initial-point-mehrotra}, com $(\xzero,\zzero)>0$,  existe uma solução ótima $(\xstar,\ystar,\zstar)$  do problema (\ref{eq:primal}-\ref{eq:dual}) que satisfaz 
+\begin{equation}
+	 	\label{eq:cond:xzzero-xzstar}
+	 		\dfrac{2(\xzero)^T\zzero  + (\xzero)^T\zstar + (\xstar)^T\zzero}{(\xzero)^T\zzero \minxzinit} \norm{(\xzero,\zzero) - (\xstar,\zstar)} < \bdxzstar^{4},
+\end{equation}
+em que  $\bdxzstar>0$ é calculado por \eqref{eq:max-norm-data}. 
+\end{cond}
 
 
 
@@ -192,77 +230,51 @@ que nada mais é que o maior valor absoluto de todos os dados de entrada do prob
 
 
 
-Afim de prosseguir com as demonstrações, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
-\textcite{Colombo:2008ia} que utilizam $\ga = 1/10$. No entanto, vamos escolher $\ga$ tal que  
-\[
-\gamma \leq  \min\left\{ \frac{\displaystyle \min_{i}(\xzero_{i} \zzero_{i} )}{(\xzero )^T\zzero /n}, \frac{1}{10}\right\},
-\]
-o que garante que o ponto inicial satisfaz a desigualdade~\eqref{eq:symmetric-polynomials-b}.
-
-Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\dbvec{\rho_C^k }$, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L^{k}}$. Para facilitar os raciocínios, do ponto de vista teórico, vamos escolher o menor valor possível para $\beta$, isto é, $\be=1$.
 
 
-\begin{obs}
-	Em vários momentos da análise que segue vamos considerar que, para qualquer terna de direções $(\Dex,\Dey,\Dez)$,  tal que 
-\begin{equation}
-	\label{eq:Ax0-ATyz0}
-	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0,
-\end{equation}
-então
-\begin{equation}
-	\label{eq:xTziszero}
-	\Dex^T\Dez =  - \Dex^T(A^T\Dey)  = -(A\Dex)^T\Dey = 0.
-\end{equation}
-\end{obs}
 
 
 
 % Esta análise é  baseada naquelas feitas por \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h},  \textcite{Zhang:2006ic,Zhang:1995fu}. 
 
-O primeiro lema importante que exibiremos, mostra a existência de um limitante para $\nu_k\norm{(\xk,\zk)}_{1}$. Uma demonstração similar, porém com condições diferentes das que aceitamos aqui, pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação bem como às condições que aqui assumimos.
+O primeiro lema importante que exibiremos, mostra a existência de um limitante para $\nuk \norm{(\xk,\zk)}_{1}$. Uma demonstração similar, porém com condições para o ponto inicial e para a solução ótima diferentes da que aceitamos aqui, pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação bem como à hipótese que aqui assumimos.
  % Ademais, na demonstração deste e dos outros resultados, omitiremos o índice da iteração $k$ dos vetores, para fins de clareza. 
 
 
-% \subsection{Limitante para \texorpdfstring{$\nu_k_k\norm{(\xk,\zk)}_{1}$}{a norma dos iterandos}}
+% \subsection{Limitante para \texorpdfstring{$\nuk _k\norm{(\xk,\zk)}_{1}$}{a norma dos iterandos}}
 
 
 \begin{lema}\label{lemma:boundxz1}
-
-	Seja o ponto inicial dado por \eqref{eq:initial-point-mehrotra}, com $(\xzero,\zzero)>0$. Se existir uma solução ótima $(\xstar,\ystar,\zstar)$ tal que 
-	 	\begin{equation}
-	 	\label{eq:assumtion-lemma-boundxz1}
-	 		\dfrac{2(\xzero)^T\zzero  + (\xzero)^T\zstar + (\xstar)^T\zzero}{(\xzero)^T\zzero \minxzinit} < \bdxzstar^{2},
-	 	\end{equation}
-	 em que $\bdxzstar$ é dado em \eqref{eq:max-norm-data}, então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, vale
+	Seja o ponto inicial dado por \eqref{eq:initial-point-mehrotra}, com $(\xzero,\zzero)>0$ e suponha que  a Condição \ref{cond:xzzero-xzstar} seja válida. Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, vale
 	\begin{equation}
 		\label{eq:bound-xkzk}
-		\nu_k\norm{(\xk,\zk)}_{1} \leq  \bdxzstar^{2} n \dbvec{\rho_C^{k}},
+		\nuk \norm{(\xk,\zk)}_{1} \norm{(\xzero,\zzero) - (\xstar,\zstar)} \leq \bdxzstar^{4} n \rhoCkb ,
 	\end{equation}
-	em que $\nu_k$ é definido em \eqref{eq:nu_k+1}.
+	em que $\nuk $ é definido em \eqref{eq:nu_k+1}.
 \end{lema}
 
 \begin{proof}
 	Seja o ponto auxiliar
 	\[
-		(\tilde{x},\tilde{y},\tilde{z})  = \nu_k(\xzero,\yzero,\zzero) + (1-\nu_k)(\xstar,\ystar,\zstar) - (\xk,\yk,\zk). 
+		(\tilde{x},\tilde{y},\tilde{z})  = \nuk (\xzero,\yzero,\zzero) + (1-\nuk )(\xstar,\ystar,\zstar) - (\xk,\yk,\zk). 
 	\]
-em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point-mehrotra} e $(\xstar,\ystar,\zstar)$ é  uma solução ótima, para o qual é válido \eqref{eq:assumtion-lemma-boundxz1}.
+em que $(\xzero,\yzero,\zzero)$ é ponto inicial dado por \eqref{eq:initial-point-mehrotra} e $(\xstar,\ystar,\zstar)$ é  uma solução ótima, para os quais é válido \eqref{eq:cond:xzzero-xzstar}.
 
 
 Note que 
 \[
 \begin{aligned}
-A\tilde{x} & = A(\nu_k\xzero+ (1-\nu_k)\xstar -\xk) = \nu_k(A\xzero - A\xstar) + A\xstar - A\xk   \\
-& = \nu_k(A\xzero - b) + (b - A\xk) = \nu_k r_{P}^{0} - r_{P}^{k}  \\
+A\tilde{x} & = A(\nuk \xzero+ (1-\nuk )\xstar -\xk) = \nuk (A\xzero - A\xstar) + A\xstar - A\xk   \\
+& = \nuk (A\xzero - b) + (b - A\xk) = \nuk  r_{P}^{0} - r_{P}^{k}  \\
  & = r_{P}^{k} - r_{P}^{k} = 0,  
 \end{aligned}
 \]
 e que
 \[
 \begin{aligned}
-A^{T}\tilde{y} + \tilde{z}  & = 	A^{T}(\nu_k\yzero + (1-\nu_k)\ystar - \yk) + (\nu_k\zzero + (1-\nu_k)\zstar - \zk) \\
-							&  =  \nu_k \left[(A^{T}\yzero  +\zzero)  - (A^{T}\ystar  +\zstar)  \right]+  \left[(A^{T}\ystar  +\zstar)  - (A^{T}\yk  +\zk)  \right]  \\
-							& = \nu_k r_{D}^{0} - r_{D}^{k}  \\
+A^{T}\tilde{y} + \tilde{z}  & = 	A^{T}(\nuk \yzero + (1-\nuk )\ystar - \yk) + (\nuk \zzero + (1-\nuk )\zstar - \zk) \\
+							&  =  \nuk  \left[(A^{T}\yzero  +\zzero)  - (A^{T}\ystar  +\zstar)  \right]+  \left[(A^{T}\ystar  +\zstar)  - (A^{T}\yk  +\zk)  \right]  \\
+							& = \nuk  r_{D}^{0} - r_{D}^{k}  \\
  & = r_{D}^{k} - r_{D}^{k} = 0.   
 \end{aligned}
 \]
@@ -272,16 +284,16 @@ Portando, $(\tilde{x},\tilde{y},\tilde{z})$ também satisfaz \eqref{eq:Ax0-ATyz0
 
 Logo temos que 
 \begin{align}
-	0  = \tilde{x}^{T}\tilde{z} & = (\nu_k\xzero + (1-\nu_k)\xstar -\xk)^{T}(\nu_k\zzero + (1-\nu_k)\zstar -\zk)\notag\\
-	  & = \nu_k^{2}(\xzero)^T\zzero + (1-\nu_k)^{2}(\xstar)^{T}\zstar + \nu_k(1-\nu_k)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero) \notag\\
-	  & \textcolor{white}{=} +(\xk)^{T}\zk - \nu_k ((\xk)^{T}\zzero + (\xzero)^{T}\zk) - (1-\nu_k) ((\xk)^{T}\zstar + (\xstar)^{T}\zk).\label{eq:boundxz1}
+	0  = \tilde{x}^{T}\tilde{z} & = (\nuk \xzero + (1-\nuk )\xstar -\xk)^{T}(\nuk \zzero + (1-\nuk )\zstar -\zk)\notag\\
+	  & = \nuk ^{2}(\xzero)^T\zzero + (1-\nuk )^{2}(\xstar)^{T}\zstar + \nuk (1-\nuk )((\xzero)^{T}\zstar + (\xstar)^{T}\zzero) \notag\\
+	  & \textcolor{white}{=} +(\xk)^{T}\zk - \nuk  ((\xk)^{T}\zzero + (\xzero)^{T}\zk) - (1-\nuk ) ((\xk)^{T}\zstar + (\xstar)^{T}\zk).\label{eq:boundxz1}
 \end{align}
 
-Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\geq 0$, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nu_k\in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
+Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\geq 0$, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nuk \in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
 \begin{equation}
 	\label{eq:xTzero+xzeroTz}
-	  \nu_k ((\xk)^{T}\zzero + (\xzero)^{T}z) \leq 
-  \nu_k^{2}(\xzero)^T\zzero  + (\xk)^{T}z+  \nu_k(1-\nu_k)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero).
+	  \nuk  ((\xk)^{T}\zzero + (\xzero)^{T}z) \leq 
+  \nuk ^{2}(\xzero)^T\zzero  + (\xk)^{T}z+  \nuk (1-\nuk )((\xzero)^{T}\zstar + (\xstar)^{T}\zzero).
 \end{equation}
 
 Note que como  $(\xk,\zk)>0$, segue que 
@@ -291,29 +303,38 @@ Note que como  $(\xk,\zk)>0$, segue que
 (\xk)^{T}\zzero + (\xzero)^{T}\zk,
 \end{multline*}
 o que implica que $
-	\nu_k\norm{(\xk,\zk)}_{1} \leq  \nu_k((\xk)^{T}\zzero + (\xzero)^{T}\zk)  \, \dfrac{1}{\minxzinit}.$
+	\nuk \norm{(\xk,\zk)}_{1} \leq  \nuk ((\xk)^{T}\zzero + (\xzero)^{T}\zk)  \, \dfrac{1}{\minxzinit}.$
 % \bigskip
 
  Comparando o primeiro termo do lado direito dessa desigualdade com  \eqref{eq:xTzero+xzeroTz} obtemos 
 \[
-	\nu_k\norm{(\xk,\zk)}_{1}  \leq\left[ \nu_k^{2}(\xzero)^T\zzero  + (\xk)^{T}\zk+  \nu_k(1-\nu_k)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit}. 
+	\nuk \norm{(\xk,\zk)}_{1}  \leq\left[ \nuk ^{2}(\xzero)^T\zzero  + (\xk)^{T}\zk+  \nuk (1-\nuk )((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit}. 
 \]
-Agora,   $\nu_k\in(0,1)$ implica que $\nu_{k}^{2}< \nu_{k}$ e que $\nu_k(1-\nu_k) < \nu_k$. Além disso, para qualquer $k$, $(\xk)^{T}\zk = n\dbvec{\rho_{C}^{k}}$.  Usando esses argumentos na última desigualdade obtemos
+Agora,   $\nuk \in(0,1)$ implica que $\nu_{k}^{2}< \nu_{k}$ e que $\nuk (1-\nuk ) < \nuk $. Além disso, para qualquer $k$, $(\xk)^{T}\zk = n\rhoCkb $.  Usando esses argumentos na última desigualdade obtemos
 \[
-	\nu_k\norm{(\xk,\zk)}_{1} 	\leq \left[ n \nu_k \dbvec{\rho_C^0} + n\dbvec{\rho_C^{k}} + \nu_k((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit}.  
+	\nuk \norm{(\xk,\zk)}_{1} 	\leq \left[ n \nuk  \dbvec{\rho_C^0} + n\rhoCkb  + \nuk ((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit}.  
 \]
 
-Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$ e portanto vale  \eqref{eq:nu_k-rho0-rhok},  e considerando ainda que  $\be=1$, temos que $\nu_k \dbvec{\rho_C^0} \leq  \dbvec{\rho_C^{k}}$.  
-Por tudo isso, finalmente obtemos 
+Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$ e portanto vale  \eqref{eq:nu_k-rho0-rhok},  e considerando ainda que  $\be=1$, temos que $\nuk  \dbvec{\rho_C^0} \leq  \rhoCkb $.  
+
+
+Por tudo isso,  obtemos 
 \[
 	\begin{aligned}
-		\nu_k\norm{(\xk,\zk)}_{1}  & 	\leq \left[ n\dbvec{\rho_C^{k}} + n\dbvec{\rho_C^{k}} + \left(\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}\right)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit} \\ 
-								& =  \left[ 2n\dbvec{\rho_C^{k}} +\frac{n\dbvec{\rho_C^{k}}}{(\xzero)^{T}\zzero}((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit} \\ 
-								& = \dfrac{ 2(\xzero)^{T}\zzero  + ((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)} {(\xzero)^{T}\zzero \minxzinit} \, n\dbvec{\rho_C^{k}} \\ 
-								& < \bdxzstar^{2}n \dbvec{\rho_C^{k}}, 
+		\nuk \norm{(\xk,\zk)}_{1}  & 	\leq \left[ n\rhoCkb  + n\rhoCkb  + \left(\rhoCkb /\dbvec{\rho_C^{0}}\right)((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit} \\ 
+								& =  \left[ 2n\rhoCkb  +\frac{n\rhoCkb }{(\xzero)^{T}\zzero}((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit} \\ 
+								& = \dfrac{ 2(\xzero)^{T}\zzero  + ((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)} {(\xzero)^{T}\zzero \minxzinit} \, n\rhoCkb .
 		\end{aligned}
 \]
-em que na última desigualdade  utilizamos \eqref{eq:assumtion-lemma-boundxz1}.
+ Multiplicando  ambos os lados  dessa última desiguladade por $ \norm{(\xzero,\zzero) - (\xstar,\zstar)}$ e utilizando a Equação \eqref{eq:cond:xzzero-xzstar} da Condição \ref{cond:xzzero-xzstar} finalmente obtemos
+
+\[
+	\begin{aligned}
+		\nuk \norm{(\xk,\zk)}_{1}\norm{(\xzero,\zzero) - (\xstar,\zstar)}  & \leq \dfrac{ 2(\xzero)^{T}\zzero  + ((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)} {(\xzero)^{T}\zzero \minxzinit} \norm{(\xzero,\zzero) - (\xstar,\zstar)} \, n\rhoCkb  \\
+					& < \bdxzstar^{4}n\rhoCkb ,
+		\end{aligned}
+\]
+como queríamos demonstrar.
 \end{proof}
 
 
@@ -334,8 +355,7 @@ A próxima proposição será utilizada nas demonstrações que seguem e é um f
 	\begin{aligned}
 		\norm{uv}_1^{2} & = \left( \sum_{i=1}^{n}\abs{u_i v_i}  \right)^{2} \leq  \sum_{i=1}^{n}\abs{u_iv_i}^{2}\\
 						& = \norm{uv}^{2} = (uv)^{T}(uv)  = v^{T}D^{-T}D^{T}u^{T}DD^{-1} uv\\
-						& = v^{T}D^{-T}D^{T}u^{T}DuD^{-1}v\\
-						& = \norm{Du}^{2}\norm{D^{-1}v}^{2}.
+						& = v^{T}D^{-T}D^{T}u^{T}DuD^{-1}v = \norm{Du}^{2}\norm{D^{-1}v}^{2}.
 	\end{aligned}
 	\]
 e logo a segunda desigualdade de \eqref{eq:prop-uvDuDv} está provada. 
@@ -357,14 +377,9 @@ De agora em diante, dados $(\xk,\zk)$ gerado pelo Algoritmo, definimos a matriz 
 
 Podemos agora enunciar o seguinte lema.
 \begin{lema}\label{lemma:boundDxDzaff}
-Seja o ponto inicial $(\xzero ,\yzero,\zzero )$ dado em \eqref{eq:initial-point-mehrotra}. Se existir uma solução ótima $(\xstar,\ystar,\zstar)$ tal que que 
-\begin{equation}
-	\label{eq:assump-lemma-boundDxDzaff}
-	\norm{(\xzero,\zzero) - (\xstar,\zstar)} \leq \bdxzstar^{2}n,
-\end{equation}
- então existe uma constante $\omega_1>1$   independente de $n$ tal que 
+Seja o ponto inicial $(\xzero ,\yzero,\zzero )$ dado em \eqref{eq:initial-point-mehrotra} e suponha válida a Condição  \ref{cond:xzzero-xzstar}. Então existe uma constante $\omega_1>1$   independente de $n$ tal que 
 	\begin{equation}
-		\norm{\Dk  \dekx }\leq \omega_1 n^5\dbvec{\rho_C^{k}}^{1/2}\text{ e } \quad  \norm{\Dik  \dekz  }\leq \omega_1 n^5\dbvec{\rho_C^{k}}^{1/2}.
+		\norm{\Dk  \dekx }\leq \omega_1 n\rhoCkb ^{1/2}\text{ e } \quad  \norm{\Dik  \dekz  }\leq \omega_1 n\rhoCkb ^{1/2}.
 	\end{equation}
 
 
@@ -372,25 +387,25 @@ Seja o ponto inicial $(\xzero ,\yzero,\zzero )$ dado em \eqref{eq:initial-point-
 \begin{proof}
 	Seja a direção  auxiliar
 	\[
-		(\Dex,\Dey,\Dez)  = ( \dekx,  \deky  ,  \dekz  ) + \nu_k(\xzero - \xstar,\yzero - \ystar,\zzero - \zstar), 
+		(\Dex,\Dey,\Dez)  = ( \dekx,  \deky  ,  \dekz  ) + \nuk (\xzero - \xstar,\yzero - \ystar,\zzero - \zstar), 
 	\]
-em que $(\xzero,\yzero,\zzero)$ é o ponto inicial dado por \eqref{eq:initial-point-mehrotra} e  $(\xstar,\ystar,\zstar)$ é uma  solução ótima, satisfazendo \eqref{eq:assumtion-lemma-boundxz1} e \eqref{eq:assump-lemma-boundDxDzaff}.
+em que $(\xzero,\yzero,\zzero)$ é o ponto inicial dado por \eqref{eq:initial-point-mehrotra} e  $(\xstar,\ystar,\zstar)$ é uma  solução ótima, satisfazendo \eqref{eq:cond:xzzero-xzstar}.
 	
 	Note que 
 \[
 \begin{aligned}
-A\Dex & = A( \dekx + \nu_k(\xzero - \xstar)) \\
-& =  A\dekx + \nu_k(A\xzero - A\xstar)  =  A\dekx + \nu_k(A\xzero - b)\\
-& = -r_{P}^{k}  + \nu_k r_{P}^{0}   = -r_{P}^{k} + r_{P}^{k} = 0,  
+A\Dex & = A( \dekx + \nuk (\xzero - \xstar)) \\
+& =  A\dekx + \nuk (A\xzero - A\xstar)  =  A\dekx + \nuk (A\xzero - b)\\
+& = -r_{P}^{k}  + \nuk  r_{P}^{0}   = -r_{P}^{k} + r_{P}^{k} = 0,  
 \end{aligned}
 \]
 e que
 \[
 \begin{aligned}
-A^{T}\Dey + \Dez  & = 	A^{T}(\deky + \nu_k(\yzero - \ystar)) + (\dekz + \nu_k(\zzero - \zstar)) \\
-							& = 	(A^{T}\deky  + \dekz) + \nu_k(A^{T}\yzero  + \zzero  - (A^{T}\ystar +  \zstar)) \\
-							& = 	- r_{D}^{k} + \nu_k(A^{T}\yzero  + \zzero  - c) \\
-							& = - r_{D}^{k}  + \nu_k r_{D}^{0}   = -r_{D}^{k} + r_{D}^{k} = 0.   
+A^{T}\Dey + \Dez  & = 	A^{T}(\deky + \nuk (\yzero - \ystar)) + (\dekz + \nuk (\zzero - \zstar)) \\
+							& = 	(A^{T}\deky  + \dekz) + \nuk (A^{T}\yzero  + \zzero  - (A^{T}\ystar +  \zstar)) \\
+							& = 	- r_{D}^{k} + \nuk (A^{T}\yzero  + \zzero  - c) \\
+							& = - r_{D}^{k}  + \nuk  r_{D}^{0}   = -r_{D}^{k} + r_{D}^{k} = 0.   
 \end{aligned}
 \]
 
@@ -398,49 +413,49 @@ A^{T}\Dey + \Dez  & = 	A^{T}(\deky + \nu_k(\yzero - \ystar)) + (\dekz + \nu_k(\z
 Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{eq:xTziszero}, isto é, $\Dex^{T}\Dez = 0$. Assim, 
 	\begin{equation}
 		\label{eq:DxDzaff1}
-			 0 = \Dex^{T}\Dez = \left( \dekx +  \nu_k(\xzero - \xstar)\right)^{T}\left(  \dekz   +  \nu_k(\zzero - \zstar)\right).
+			 0 = \Dex^{T}\Dez = \left( \dekx +  \nuk (\xzero - \xstar)\right)^{T}\left(  \dekz   +  \nuk (\zzero - \zstar)\right).
 	\end{equation}
 	
 
 	 Usando essa direção auxiliar na equação \eqref{eq:affine-scaling-system-compl}, obtemos 
 	 \[
-	 \Zk\left( \dekx +  \nu_k(\xzero - \xstar)\right)+ \Xk \left(  \dekz   +  \nu_k(\zzero - \zstar)\right) = -\xk\zk + \nu_k \Zk(\xzero - \xstar) + \nu_k \Xk(\zzero - \zstar).
+	 \Zk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Xk \left(  \dekz   +  \nuk (\zzero - \zstar)\right) = -\xk\zk + \nuk  \Zk(\xzero - \xstar) + \nuk  \Xk(\zzero - \zstar).
 	 \]
 	 Multiplicando toda essa expressão por $(\Xk\Zk)^{-1/2}$, e notando que $\Dk=(\Xk\Zk)^{-1/2}\Zk$ e que $\Dik=(\Xk\Zk)^{-1/2}\Xk$, resulta em 
 	\begin{multline}
 		\label{eq:DxDzaff2}
-		 \Dk\left( \dekx  +  \nu_k(\xzero - \xstar)\right)+ \Dik \left(  \dekz   +  \nu_k(\zzero - \zstar)\right) = \\ -(\xk\zk)^{1/2} + \nu_k \Dk(\xzero - \xstar) + \nu_k \Dik(\zzero - \zstar).
+		 \Dk\left( \dekx  +  \nuk (\xzero - \xstar)\right)+ \Dik \left(  \dekz   +  \nuk (\zzero - \zstar)\right) = \\ -(\xk\zk)^{1/2} + \nuk  \Dk(\xzero - \xstar) + \nuk  \Dik(\zzero - \zstar).
 		\end{multline}
 	 
 	 Note que, como vale  \eqref{eq:DxDzaff1}, pode-se utilizar o Teorema de Pitágoras para norma-2 de vetores e logo, tomando a norma-2 ao quadrado do lado esquerdo de \eqref{eq:DxDzaff2} obtemos
 	\begin{multline*}
-			 	 \norm{\Dk\left( \dekx +  \nu_k(\xzero - \xstar)\right)+ \Dik \left( \dekz  +  \nu_k(\zzero - \zstar)\right)}^{2} =\\
-	 	 	 	 	 \norm{\Dk\left( \dekx +  \nu_k(\xzero - \xstar)\right)}^{2}+ \norm{\Dik \left( \dekz  +  \nu_k(\zzero - \zstar)\right)}^{2}.
+			 	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2} =\\
+	 	 	 	 	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)}^{2}+ \norm{\Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2}.
 	\end{multline*}
 	 Se  usarmos este resultado e a desigualdade triangular, após tomarmos a norma-2 ao quadrado de ambos os lados de \eqref{eq:DxDzaff2}, obtemos 
 	 \begin{multline*}\label{eq:DxDzaff3}
-	 \norm{\Dk\left( \dekx +  \nu_k(\xzero - \xstar)\right)}^{2}+ \norm{\Dik \left( \dekz  +  \nu_k(\zzero - \zstar)\right)}^{2} \leq \\ 
-	 \left\{ \norm{(  \xk \zk   )^{1/2}} + \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)} \right\}^{2}.
+	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)}^{2}+ \norm{\Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2} \leq \\ 
+	 \left\{ \norm{(  \xk \zk   )^{1/2}} + \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)} \right\}^{2}.
 	 \end{multline*}
 
 Isolando o primeiro termo dessa equação, obtemos
 \[
-\norm{\Dk\left( \dekx +  \nu_k(\xzero - \xstar)\right)} \leq  
-	  \norm{(  \xk \zk  )^{1/2}} + \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)}.
+\norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)} \leq  
+	  \norm{(  \xk \zk  )^{1/2}} + \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)}.
 \]
-Uma aplicação direta da desigualdade triangular e a adição de um termo  $\nu_k \norm{\Dik(\zzero - \zstar)}$ extra resulta em
+Uma aplicação direta da desigualdade triangular e a adição de um termo  $\nuk  \norm{\Dik(\zzero - \zstar)}$ extra resulta em
 \begin{align}
-	\norm{\Dk \dekx} & =  \norm{\Dk\left( \dekx  +  \nu_k(\xzero - \xstar)  -  \nu_k(\xzero - \xstar)\right)} \notag \\ 
-				 & \leq	 \norm{\Dk\left( \dekx  +  \nu_k(\xzero - \xstar)\right)} +  \nu_k\norm{\Dk(\xzero - \xstar)} \notag \\
-				 & \leq \norm{(  \xk \zk  )^{1/2}} + 2 \nu_k \norm{\Dk(\xzero - \xstar)} + 2\nu_k \norm{\Dik(\zzero - \zstar)}.\label{eq:DxDzaff4}
+	\norm{\Dk \dekx} & =  \norm{\Dk\left( \dekx  +  \nuk (\xzero - \xstar)  -  \nuk (\xzero - \xstar)\right)} \notag \\ 
+				 & \leq	 \norm{\Dk\left( \dekx  +  \nuk (\xzero - \xstar)\right)} +  \nuk \norm{\Dk(\xzero - \xstar)} \notag \\
+				 & \leq \norm{(  \xk \zk  )^{1/2}} + 2 \nuk  \norm{\Dk(\xzero - \xstar)} + 2\nuk  \norm{\Dik(\zzero - \zstar)}.\label{eq:DxDzaff4}
 \end{align}
 
-Vamos mostrar a existência de um limitante para cada termo do lado direito de \eqref{eq:DxDzaff4} de magnitude $\Oset\left(\dbvec{\rho_C^k}^{1/2}\right)$. Neste caso, o mesmo se aplicará à $\norm{\Dik \dekz }$ o que finalizará esta demonstração.
+Vamos mostrar a existência de um limitante para cada termo do lado direito de \eqref{eq:DxDzaff4} de magnitude $\Oset\left(\rhoCkb ^{1/2}\right)$. Nesse caso, o mesmo se aplicará à $\norm{\Dik \dekz }$ o que finalizará esta demonstração.
 
 Para o primeiro termo, note que 
 \begin{equation}
 	\label{eq:DxDzaff5}
-	\norm{(  \xk \zk  )^{1/2}} = \left(\sum_{i=1}^{n}\xk_i \zk_i\right)^{1/2} = ((\xk)^{T}\zk)^{1/2} = n^{1/2}\dbvec{\rho_C^k }^{1/2} \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C^k }^{1/2},
+	\norm{(  \xk \zk  )^{1/2}} = \left(\sum_{i=1}^{n}\xk_i \zk_i\right)^{1/2} = ((\xk)^{T}\zk)^{1/2} = n^{1/2}\rhoCkb ^{1/2} \leq \frac{n}{\ga^{1/2}}\rhoCkb ^{1/2},
 \end{equation}
 já que $\ga\in(0,1)$ e $\sqrt{n}\leq n$, para todo $n$ natural.
 
@@ -461,42 +476,41 @@ e similarmente
 Mais que isso, como $(\xk,\yk,\zk)\in\Nset_{-\infty}(\ga,\be)$, temos que 
 \begin{equation}
 \label{eq:DxDzaff6}
-	\norm{(\Xk\Zk)^{-1/2}} = \max_{i=1,\ldots,n}\frac{1}{(\xk_i\zk_i)^{1/2}} \leq \frac{1}{\ga^{1/2}\dbvec{\rho_{C}^k}^{1/2}}.
+	\norm{(\Xk\Zk)^{-1/2}} = \max_{i=1,\ldots,n}\frac{1}{(\xk_i\zk_i)^{1/2}} \leq \frac{1}{\ga^{1/2}\rhoCkb^{1/2}}.
 \end{equation}
 
-Com essas desigualdades para norma de $\Dk$ e de $\Dik$, utilizando consistência de norma de matrizes e a Condição \ref{cond:x0-x*+z0-z*}, segue 
+Com essas desigualdades para norma de $\Dk$ e de $\Dik$, utilizando propriedades de norma de matrizes e vetores segue que
 \[
 \begin{aligned}
- \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)}  & \leq \nu_k \norm{\Dk}\norm{\xzero - \xstar} + \nu_k \norm{\Dik}\norm{\zzero - \zstar} \notag \\
- 					& \leq \bdxzstar n^2 \nu_k\left[  \norm{\Dk} + \norm{\Dik}   \right] \notag \\ 
- 					& \leq \bdxzstar n^2 \nu_k\norm{(\xk,\zk)}_{1}\norm{(\Xk\Zk)^{-1/2}} .\notag
+ \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)}  & \leq \nuk  \norm{\Dk}\norm{\xzero - \xstar} + \nuk  \norm{\Dik}\norm{\zzero - \zstar} \notag \\
+ 					& \leq \nuk \left(  \norm{\Dk} + \norm{\Dik}   \right)\norm{(\xzero,\zzero) - (\xstar,\zstar)} \\
+ 					& \leq \nuk  \norm{(\Xk\Zk)^{-1/2}} \left(  \norm{\xk}_{1}  +\norm{\zk}_{1}   \right)\norm{(\xzero,\zzero) - (\xstar,\zstar)} \\ 
+ 					& \leq  \nuk \norm{(\xk,\zk)}_{1}\norm{(\xzero,\zzero) - (\xstar,\zstar)}\norm{(\Xk\Zk)^{-1/2}}.
 \end{aligned}
 \]
 
-Da equação~\eqref{eq:DxDzaff6}, do Lema~\ref{lemma:boundxz1} e da desigualdade acima, segue que 
+Do Lema~\ref{lemma:boundxz1}, da Equação~\eqref{eq:DxDzaff6}  e da desigualdade acima segue que 
 \begin{equation} \label{eq:DxDzaff7}
- \nu_k \norm{\Dk(\xzero - \xstar)} + \nu_k \norm{\Dik(\zzero - \zstar)}  \leq \bdxzstar n^2 \omega_{0} n^{4} \dbvec{\rho_C^{k}}\frac{1}{\ga^{1/2}\dbvec{\rho_{C}^k}^{1/2}} \leq   \frac{\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{6} \dbvec{\rho_C^{k}}^{1/2} .
+ \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)}  \leq \bdxzstar^{4} n  \rhoCkb \frac{1}{\ga^{1/2}\rhoCkb ^{1/2}}  = \frac{\bdxzstar^{4}}{\ga^{1/2}}n \rhoCkb ^{1/2}.
 \end{equation}
 
 Se usarmos as equações \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparando-as com \eqref{eq:DxDzaff4} temos que 
 \[
 \begin{aligned}
-\norm{\Dk \dekx} & \leq \frac{n}{\ga^{1/2}}\dbvec{\rho_C^k }^{1/2} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{6} \dbvec{\rho_C^{k}}^{1/2} \\
-				& = \left( \frac{1}{n^{4}\ga^{1/2}} +  \frac{2\bdxzstar  \omega_{0}}{\ga^{1/2}} \right)n^{6} \dbvec{\rho_C^{k}}^{1/2}\\
-				& \leq \frac{1 + 2\bdxzstar  \omega_{0}}{\ga^{1/2}} n^{6} \dbvec{\rho_C^{k}}^{1/2}.
+\norm{\Dk \dekx} & \leq \frac{n}{\ga^{1/2}}\rhoCkb ^{1/2} +  \frac{2\bdxzstar^{4}}{\ga^{1/2}}n \rhoCkb ^{1/2} \\
+				& \leq \frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}} n \rhoCkb ^{1/2}.
 \end{aligned}
 \]
 Podemos definir
 \begin{equation}
 	\label{eq:omega1}
-	\omega_1 = \frac{1 + 2\bdxzstar  \omega_{0}}{\ga^{1/2}},
+	\omega_1 = \frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}},
 \end{equation}
 e como  $\ga\in(0,1)$, temos que $\omega_1>1$ como requisitado.
 \end{proof}
 
 
 
-Reiteramos aqui que as as hipóteses dadas nas equações \eqref{eq:assumtion-lemma-boundxz1} e \eqref{eq:assump-lemma-boundDxDzaff} usadas nos lemas acima foram verificadas como válidas em nosso conjunto de testes numéricos. Isso significa que, na prática, essas condições são razoáveis. No Capítulo \ref{chap:numerical}, tal conjunto de testes é defendido. 
 
 
 
@@ -504,17 +518,17 @@ Um corolário  das desigualdades dadas pela Proposição~\ref{prop:norm-uv} e do
 \begin{multline}
 \label{eq:normDxDzaff}
 	\norm{ \dekx  \dekz  } \leq \norm{ \dekx  \dekz  }_{1}  \\ \leq \frac{1}{2}\left(\norm{\Dk \dekx}^{2} + \norm{\Dik  \dekz  }^{2}\right)
-  					 \leq \left(\omega_1 n^6\dbvec{\rho_C^{k}}^{1/2}\right)^{2}
-  					 = \omega_1^{2} n^{12}\dbvec{\rho_C^{k}}.
+  					 \leq \left(\omega_1 n\rhoCkb ^{1/2}\right)^{2}
+  					 = \omega_1^{2} n^{2}\rhoCkb .
 \end{multline}
 
 \begin{lema}\label{lemma:boundDxDzc}
-	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point-mehrotra} e que \begin{equation}
+	Seja o  ponto inicial escolhido como em \eqref{eq:initial-point-mehrotra} suponha válida a Condição  \ref{cond:xzzero-xzstar}. Se  \begin{equation}
 	\label{eq:sig-eta-relation}
-	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}}.
-\end{equation} Então existe uma constante $\omega_2\geq1$  independente de $n$ tal que 
+	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}},
+\end{equation} então existe uma constante $\omega_2\geq1$  independente de $n$ tal que 
 	\begin{equation}\label{eq:lemma-boundDxDzcx}
-		\norm{\Dk(\Decox)^{k}}^{2} + \norm{\Dik(\Decoz)^{k}}^{2} \leq \omega_2 n^{4}\dbvec{\rho_C^{k}}.
+		\norm{\Dk(\Decox)^{k}}^{2} + \norm{\Dik(\Decoz)^{k}}^{2} \leq \omega_2 n^{4}\rhoCkb .
 	\end{equation}
 \end{lema}
 
@@ -545,20 +559,20 @@ Assim, usando consistência de normas e o fato de que  $(x,y,z)\in\Nset_{-\infty
 \begin{align}
 	\norm{\Dk\Decox}^{2} + \norm{\Dik\Decoz}^{2} & = \norm{(  \xk \zk  )^{-1/2}(\nextmu e+ \nextsig \dekx  \dekz )}^{2} \notag\\ 
 												& \leq \norm{(  \xk \zk  )^{-1/2}}^{2}\norm{(\nextmu e+ \nextsig \dekx  \dekz )}^{2} \notag\\ 
-												& \leq \min\left({x_iz_i}\right)^{-1}\left(\nextmu\norm{ e} +{\nextsig}\norm{ \dekx  \dekz }\right)^{2}\notag\\
-												& \leq (\ga\dbvec{\rho_C^k })^{-1}\left(\nextmu\sqrt{n} +{\nextsig}\norm{ \dekx  \dekz }\right)^{2} \label{eq:DxDzc1}		
+												& \leq \min\left({\xk_i\zk_i}\right)^{-1}\left(\nextmu\norm{ e} +{\nextsig}\norm{ \dekx  \dekz }\right)^{2}\notag\\
+												& \leq (\ga\rhoCkb )^{-1}\left(\nextmu\sqrt{n} +{\nextsig}\norm{ \dekx  \dekz }\right)^{2} \label{eq:DxDzc1}		
 \end{align}
 
 
 
-Utilizando as desigualdades de \eqref{eq:normDxDzaff}, fixando $\mu = \nextmu =\eta \dbvec{\rho_C^k }$ como anteriormente e notando que para todo $n$ natural vake $\sqrt{n} \leq n^{2}$, o lado esquerdo de~\eqref{eq:DxDzc1} é tal que
+Utilizando \eqref{eq:normDxDzaff}, fixando $\mu = \nextmu =\eta \rhoCkb $ como anteriormente e notando que para todo $n$ natural vake $\sqrt{n} \leq n^{2}$, o lado esquerdo de~\eqref{eq:DxDzc1} é tal que
 \[
 \begin{aligned}
-	% (\ga\dbvec{\rho_C^k })^{-1}\left(\nextmu\sqrt{n} +\abs{\nextsig}\norm{ \dekx  \dekz }\right)^{2}  
+	% (\ga\rhoCkb )^{-1}\left(\nextmu\sqrt{n} +\abs{\nextsig}\norm{ \dekx  \dekz }\right)^{2}  
 	\norm{\Dk\Decox}^{2} + \norm{\Dik\Decoz}^{2}
-							& \leq (\ga\dbvec{\rho_C^k })^{-1}\left(\eta\dbvec{\rho_C^k }\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\dbvec{\rho_C^k }\right)^{2}\\
-							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\right)^{2}\dbvec{\rho_C^k }\\
-							& \leq (\ga)^{-1}\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}n^{4}\dbvec{\rho_C^k }.
+							& \leq (\ga\rhoCkb )^{-1}\left(\eta\rhoCkb \sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\rhoCkb \right)^{2}\\
+							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +{\nextsig} \omega_1^{2} n^{2}\right)^{2}\rhoCkb \\
+							& \leq (\ga)^{-1}\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}n^{4}\rhoCkb .
 \end{aligned}
 \]
 
@@ -567,7 +581,7 @@ Seja
 \label{eq:omega2}
 	\omega_2 = \frac{\left(\eta +{\nextsig} \omega_1^{2} \right)^{2}}{\ga}.
 	\end{equation}
-Observando que  $\omega_1 \geq 1/10$ e  $\ga\in(0,1)$,  se $\eta\in[0,1]$ e se \eqref{eq:sig-eta-relation} for satisfeita, então garante-se que $\omega_2\geq 1$, como queríamos. \qedhere
+Observando que  $\omega_1 > 1$ e  $\ga\in(0,1)$,  se $\eta\in[0,1]$ e se \eqref{eq:sig-eta-relation} for satisfeita, então garante-se que $\omega_2\geq 1$, como queríamos. \qedhere
 % \begin{equation}
 % 	\label{eq:sig-eta-relation}
 % 	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}},
@@ -586,9 +600,9 @@ Observando que  $\omega_1 \geq 1/10$ e  $\ga\in(0,1)$,  se $\eta\in[0,1]$ e se \
 \end{proof}
 
 \begin{lema}\label{lemma:boundDxDzaff-c}
-	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point-mehrotra}. Então 
+	Suponha um ponto inicial escolhido como em \eqref{eq:initial-point-mehrotra} e suponha válida a Condição  \ref{cond:xzzero-xzstar}. Então vale 
 	\begin{equation}\label{eq:lemma-boundDxDzaff-c}
-		\norm{ \dekx(\Decoz)^{k} + (\Decox)^{k}  \dekz  }_{1} \leq  \tfrac{1}{2}\omega_{3}n^{3}\dbvec{\rho_C^{k}},
+		\norm{ \dekx(\Decoz)^{k} + (\Decox)^{k}  \dekz  }_{1} \leq \frac{1}{2} \omega_{3}n^{3}\rhoCkb ,
 	\end{equation}
 em que $\omega_{3} = 4(\omega_1\omega_2^{1/2})\geq 4 $.
 \end{lema}
@@ -598,18 +612,18 @@ em que $\omega_{3} = 4(\omega_1\omega_2^{1/2})\geq 4 $.
 	\[
 	\begin{aligned}	
 		\norm{ \dekx \Decoz}_{1} & \leq \norm{\Dk \dekx }\norm{\Dik\Decoz}\\
-							  & \leq 	\omega_1 n\dbvec{\rho_C^k }^{1/2}(\omega_2 n^{4}\dbvec{\rho_C^k })^{1/2}  \\
-							  & = (\omega_1\omega_2^{1/2})n^{3}\dbvec{\rho_C^k }.
+							  & \leq 	\omega_1 n\rhoCkb ^{1/2}(\omega_2 n^{4}\rhoCkb )^{1/2}  \\
+							  & = (\omega_1\omega_2^{1/2})n^{3}\rhoCkb .
 	\end{aligned}\]			  
-Similarmente, 	$\norm{\Decox \dekz }_{1} \leq (\omega_1\omega_2^{1/2})n^{3}\dbvec{\rho_C^k }$. Com isso temos o resultado desejado, isto é,
+Similarmente, 	$\norm{\Decox \dekz }_{1} \leq (\omega_1\omega_2^{1/2})n^{3}\rhoCkb $. Com isso temos o resultado desejado, isto é,
 \[
-		\norm{ \dekx \Decoz + \Decox \dekz }_{1} \leq 2(\omega_1\omega_2^{1/2})n^{3}\dbvec{\rho_C^k }.\qedhere
+		\norm{ \dekx \Decoz + \Decox \dekz }_{1} \leq 2(\omega_1\omega_2^{1/2})n^{3}\rhoCkb .\qedhere
 \]
 \end{proof}
 
 \section{Teorema de Convergência}
 
-A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\nextmu $ e  $\nextsig$, basta encontrar um  tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
+A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters} esteja bem definido, é necessário que exista em cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\nextmu = \eta\rhoCkb$ e  $\nextsig$, basta encontrar um  tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
 $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. É o que os próximos resultados garantem. Observe que, por conta de \eqref{eq:sig-eta-relation}, garantiremos que $\eta>\sqrt{\ga}$.
 
 
@@ -629,9 +643,9 @@ em que
  Primeiramente, considere que  utilizando a Equação \eqref{eq:simplified-merit-function-al}, é possível rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, tal função pode ser escrita escrita nos seguintes termos
 \[
 \begin{aligned}
-{g}_C^i (\al)				& = (1-\al)(\rho_C^k )_i+ \al\eta\dbvec{\rho_C^k }+ \al^2\left[(L_{0,0})_i + \eta\dbvec{\rho_C^k } ({L_{1,0}})_i 
-				+ (\eta\dbvec{\rho_C^k })^2(L_{2,0})_i \right]  + \\
-				& \quad -\ga\left[  (1-\al)\dbvec{\rho_C^k } + \al\eta\dbvec{\rho_C^k } + \al^2\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}}.
+{g}_C^i (\al)				& = (1-\al)(\rho_C^k )_i+ \al\eta\rhoCkb + \al^2\left[(L_{0,0})_i + \eta\rhoCkb  ({L_{1,0}})_i 
+				+ (\eta\rhoCkb )^2(L_{2,0})_i \right]  + \\
+				& \quad -\ga\left[  (1-\al)\rhoCkb  + \al\eta\rhoCkb  + \al^2\left(\dbvec{L_{0,0}} + \eta\rhoCkb  \dbvec{L_{1,0}}.
 \right)  \right]
 \end{aligned}
 \]
@@ -641,8 +655,8 @@ Sejam as constantes
 \label{eq:defin-zeta-i+chi-i+xi-i}
 	\begin{aligned}
 \zeta_i & = (L_{0,0})_i - \ga \dbvec{L_{0,0}}, \\
-\chi_i  & = \eta\dbvec{\rho_C^k } \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
-\xi_i	& =  (\eta\dbvec{\rho_C^k })^2(L_{2,0})_i . \\ 	
+\chi_i  & = \eta\rhoCkb  \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
+\xi_i	& =  (\eta\rhoCkb )^2(L_{2,0})_i . \\ 	
 \end{aligned}
 \end{equation}
 
@@ -651,10 +665,10 @@ Sejam as constantes
 Usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$, e as definições da Equação~\eqref{eq:defin-zeta-i+chi-i+xi-i} reescreve-se  $g_C^i(\al) $ como
 \[
 \begin{aligned}
-	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\dbvec{\rho_C^k })}_{\geq 0}  + (1-\ga)\eta\dbvec{\rho_C^k } \al+  (\zeta_i + 				\chi_i + \xi_i)\al^2  \\
-				& \geq (1-\ga)\eta\dbvec{\rho_C^k } \al +  (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
-				& \geq (1-\ga)\eta\dbvec{\rho_C^k } \al -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al^2 \\
-				& = \al \left[	(1-\ga)\eta\dbvec{\rho_C^k }  -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] = h^i(\al),
+	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\rhoCkb )}_{\geq 0}  + (1-\ga)\eta\rhoCkb  \al+  (\zeta_i + 				\chi_i + \xi_i)\al^2  \\
+				& \geq (1-\ga)\eta\rhoCkb  \al +  (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
+				& \geq (1-\ga)\eta\rhoCkb  \al -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al^2 \\
+				& = \al \left[	(1-\ga)\eta\rhoCkb   -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] = h^i(\al),
 \end{aligned}
 \]
 em que $h^i$ é uma quadrática côncava em função de $\al$ com uma raiz nula e uma positiva. 
@@ -663,27 +677,27 @@ Considere, para as substituições que seguem, as definições dos vetores $L_{i
 \begin{align}
 \abs{\zeta_i} & = \abs{(L_{0,0})_i - \ga \dbvec{L_{0,0}}} \leq \abs{(L_{0,0})_i} + \ga \abs{\dbvec{L_{0,0}}} \notag \\
 			  & \leq	\norm{L_{0,0}}_1  + \dfrac{\ga}{n}\norm{L_{0,0}}_1   \leq 2\norm{L_{0,0}}_1 \notag \\
-			  & = 2\norm{ \dekx  \dekz }_1   \leq 2\omega_1^{2} n^{2}\dbvec{\rho_C^k }. \label{eq:bound-zeta-i}
+			  & = 2\norm{ \dekx  \dekz }_1   \leq 2\omega_1^{2} n^{2}\rhoCkb . \label{eq:bound-zeta-i}
 \end{align}
-Como $\sig = \nextsig=0$, usando a equação \eqref{eq:Corrector-spllited} e sabendo que $\mu=\nextmu = \eta\dbvec{\rho_{C}}$ fixado, temos que 
+Como $\sig = \nextsig=0$, usando a equação \eqref{eq:Corrector-spllited} e sabendo que $\mu=\nextmu = \eta\rhoCkb$ fixado, temos que 
 	\[
-		\eta\dbvec{\rho_{C}}\Dex^\mu =  \nextmu\Dex^\mu = \Decox   \quad \text{ e } \quad \eta\dbvec{\rho_{C}}\Dez^\mu=  \nextmu\Dez^\mu=  \Decoz .
+		\eta\rhoCkb \Dex^\mu =  \nextmu\Dex^\mu = \Decox   \quad \text{ e } \quad \eta\rhoCkb \Dez^\mu=  \nextmu\Dez^\mu=  \Decoz .
 	\]
 	Assim, do Lema~\ref{lemma:boundDxDzaff-c} segue que
 \begin{align}
-	\abs{\chi_i }  	& = \abs{\eta\dbvec{\rho_C^k } \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \leq \abs{\eta\dbvec{\rho_C^k }  ({L_{1,0}})_i} + \ga\abs { \eta\dbvec{\rho_C^k }\dbvec{L_{1,0}}} 
+	\abs{\chi_i }  	& = \abs{\eta\rhoCkb  \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \leq \abs{\eta\rhoCkb   ({L_{1,0}})_i} + \ga\abs { \eta\rhoCkb \dbvec{L_{1,0}}} 
 					\notag \\
-					&\leq \norm{\eta\dbvec{\rho_C^k }  L_{1,0}}_1 + \dfrac{\ga}{n}\norm{\eta\dbvec{\rho_C^k }  L_{1,0}}_1 \notag\\
+					&\leq \norm{\eta\rhoCkb   L_{1,0}}_1 + \dfrac{\ga}{n}\norm{\eta\rhoCkb   L_{1,0}}_1 \notag\\
 					& \leq \norm{ \dekx \Decoz + \Decox \dekz }_1 + \dfrac{\ga}{n}\norm{ \dekx \Decoz + \Decox \dekz }_1 \notag\\
-					& \leq 2 \norm{ \dekx \Decoz + \Decox \dekz }_1  \leq \omega_{3}n^{3}\dbvec{\rho_C^k }. \label{eq:bound-chi-i}
+					& \leq 2 \norm{ \dekx \Decoz + \Decox \dekz }_1  \leq \omega_{3}n^{3}\rhoCkb . \label{eq:bound-chi-i}
 \end{align}
-Se utilizarmos  a equação \eqref{eq:Corrector-spllited}, novamente com as escolhas $\sig = \nextsig=0$ e $\mu=\nextmu = \eta\dbvec{\rho_{C}}$ temos
+Se utilizarmos  a equação \eqref{eq:Corrector-spllited}, novamente com as escolhas $\sig = \nextsig=0$ e $\mu=\nextmu = \eta\rhoCkb $ temos
 \[
-	(\eta\dbvec{\rho_C^k })^2(L_{2,0}) = (\eta\dbvec{\rho_C^k }\Dex^\mu)(\eta\dbvec{\rho_C^k }\Dez^\mu) = \Decox\Decoz.
+	(\eta\rhoCkb )^2(L_{2,0}) = (\eta\rhoCkb \Dex^\mu)(\eta\rhoCkb \Dez^\mu) = \Decox\Decoz.
 \]
-Portanto, do Lema~\ref{lemma:boundDxDzc} e da Proposição~\ref{eq:prop-uvDuDv} vem que
+Portanto, da Equação~\ref{eq:prop-uvDuDv} edo Lema~\ref{lemma:boundDxDzc} segue que
 \begin{equation}\label{eq:bound-xi-i}
-	\abs{\xi_i}	 =  \abs{(\eta\dbvec{\rho_C^k })^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1 \leq \tfrac{1}{2} \omega_2 n^{4}\dbvec{\rho_C^k }.
+	\abs{\xi_i}	 =  \abs{(\eta\rhoCkb )^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1 \leq \tfrac{1}{2} \omega_2 n^{4}\rhoCkb .
 \end{equation}
 	
 
@@ -692,7 +706,7 @@ Agora, note que, para $\al>0$ e $i=1,\ldots,n$, se $h^i(\al)\geq0$ então $g_C^i
 
 Com efeito, a única raiz positiva de $h^i$ é dada por
 \[
-\al_{C}^i = \dfrac{(1-\ga)\eta\dbvec{\rho_C^k }}{\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}}
+\al_{C}^i = \dfrac{(1-\ga)\eta\rhoCkb }{\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}}
 \]
 e $h^i(\al)\geq 0$ sempre que $\al\in[0,\al_{C}^i].$ 
 
@@ -729,38 +743,38 @@ em que
 
 Usando as mesmas substituições de $\nextmu$ e $\nextsig$, a função $g_L$ dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
 \[
-g_L(\al) =     (1-\al)\left(\dbvec{\rho_C^k } -  \be_L \nu_k   \right) +  \al\eta\dbvec{\rho_C^k } + 
-   \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k }  \dbvec{L_{1,0}}   \right ) ,
+g_L(\al) =     (1-\al)\left(\rhoCkb  -  \be_L \nuk    \right) +  \al\eta\rhoCkb  + 
+   \al^2\left( \dbvec{L_{0,0}} + \eta\rhoCkb   \dbvec{L_{1,0}}   \right ) ,
 	\]
 Usando  o fato de que o ponto atual pertence à  vizinhança segue que 
  \[
 \begin{aligned}
-{g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C^k } -  \be_L \nu_k   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C^k } + 
-   \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k }  \dbvec{L_{1,0}}   \right ) \\
-   & \geq  \al\left[\eta\dbvec{\rho_C^k } - 
-   \al \left(\abs{\dbvec{L_{0,0}}} + \abs{\eta\dbvec{\rho_C^k }  \dbvec{L_{1,0}}}\right)   \right ].
+{g}_L(\al) & =     (1-\al)\underbrace{\left(\rhoCkb  -  \be_L \nuk    \right)}_{\geq 0} +  \al\eta\rhoCkb  + 
+   \al^2\left( \dbvec{L_{0,0}} + \eta\rhoCkb   \dbvec{L_{1,0}}   \right ) \\
+   & \geq  \al\left[\eta\rhoCkb  - 
+   \al \left(\abs{\dbvec{L_{0,0}}} + \abs{\eta\rhoCkb   \dbvec{L_{1,0}}}\right)   \right ].
 \end{aligned}
  \]
 Note que  $\nextal_L\in(0,1]$ -- definido em \eqref{eq:al-C+al-L} -- é o maior número tal que  $g_L(\al)\geq 0$, para  $\al\in[0,\nextal_L]$. Por conta da última inequação acima, temos que 
 \begin{equation}
 	\label{eq:next-al-ineq}
-\nextal_L \geq \frac{\eta\dbvec{\rho_C^k } }{\abs{\dbvec{L_{0,0}}} + \abs{\eta\dbvec{\rho_C^k }  \dbvec{L_{1,0}}}}.
+\nextal_L \geq \frac{\eta\rhoCkb  }{\abs{\dbvec{L_{0,0}}} + \abs{\eta\rhoCkb   \dbvec{L_{1,0}}}}.
 \end{equation}
 Da Equação~\eqref{eq:normDxDzaff}  vem que  
 \begin{align}
 \abs{\dbvec{L_{0,0}}} &  = \abs{\dfrac{( \dekx )^T \dekz }{n}} \notag \\
-			& \leq \dfrac{1}{n} \norm{ \dekx  \dekz }_1  \leq  \omega_1^{2} n\dbvec{\rho_C^k }\label{eq:bound-zeta}
+			& \leq \dfrac{1}{n} \norm{ \dekx  \dekz }_1  \leq  \omega_1^{2} n\rhoCkb \label{eq:bound-zeta}
 \end{align}
-Novamente, fazemos $\sig = \nextsig=0$ e  $\mu=\nextmu = \eta\dbvec{\rho_{C}}$. Usando a equação \eqref{eq:Corrector-spllited} temos que 
+Novamente, fazemos $\sig = \nextsig=0$ e  $\mu=\nextmu = \eta\rhoCkb $. Usando a equação \eqref{eq:Corrector-spllited} temos que 
 	\[
-		\eta\dbvec{\rho_{C}}\Dex^\mu =  \nextmu\Dex^\mu = \Decox   \quad \text{ e } \quad \eta\dbvec{\rho_{C}}\Dez^\mu=  \nextmu\Dez^\mu=  \Decoz .
+		\eta\rhoCkb \Dex^\mu =  \nextmu\Dex^\mu = \Decox   \quad \text{ e } \quad \eta\rhoCkb \Dez^\mu=  \nextmu\Dez^\mu=  \Decoz .
 	\]
 	Assim, do Lema~\ref{lemma:boundDxDzaff-c} segue que
 	\begin{align}
-	\abs{\eta\dbvec{\rho_C^k } \dbvec{L_{1,0}}} & = \abs{\dfrac{( \dekx )^T(\nextmu\Dez^\mu) + (\nextmu\Dex^\mu)^T \dekz }{n}   }  \notag \\ 
+	\abs{\eta\rhoCkb  \dbvec{L_{1,0}}} & = \abs{\dfrac{( \dekx )^T(\nextmu\Dez^\mu) + (\nextmu\Dex^\mu)^T \dekz }{n}   }  \notag \\ 
 	&  = \abs{\dfrac{( \dekx )^T(\Decoz) + (\Decox)^T \dekz }{n} } \notag \\
 	& \leq \dfrac{1}{n} \norm{ \dekx \Decoz + \Decox \dekz }_1 \notag\\
-	&\leq \tfrac{1}{2}\omega_{3}n^{2}\dbvec{\rho_C^k }.\label{eq:bound-chi}
+	&\leq \tfrac{1}{2}\omega_{3}n^{2}\rhoCkb .\label{eq:bound-chi}
 	\end{align}
 
 A prova do lema termina por juntar a Equação \eqref{eq:next-al-ineq} com \eqref{eq:bound-zeta} e \eqref{eq:bound-chi}, derivando 
@@ -784,15 +798,15 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 \end{lema}
 
 
-\begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$. Com isso, basta mostrar que $\theta(\nextal)= \Oset(\nextdel/n^{4})$. Com efeito, considerando que $\dfrac{\dbvec{\rho_C^k }}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k }}\leq 1$ temos que
+\begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$. Com isso, basta mostrar que $\theta(\nextal)= \Oset(\nextdel/n^{4})$. Com efeito, considerando que $\dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\leq 1$ temos que
 
 
 \[
 	\begin{aligned}
-		\theta(\nextal)% & =  \dfrac{1}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k }}\left[ \nu_k\dbvec{\rho_L}_0\nextal + (1- \eta)\dbvec{\rho_C^k }\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}} \right) \right] \\
-						& = \dfrac{1}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k }}\left[ (\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k })\nextal -  \eta\dbvec{\rho_C^k }\nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}} \right) \right] \\
-						& \geq \dfrac{1}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k }}\left[ (\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k })\nextal -  \eta\dbvec{\rho_C^k }\nextal - \nextal^{2}\left(\omega_1^{2} n\dbvec{\rho_C^k } + \tfrac{1}{2}\omega_{3}n^{2}\dbvec{\rho_C^k } \right) \right]\\
-						& \geq \nextal - \dfrac{\dbvec{\rho_C^k }}{\nu_k\dbvec{\rho_L}_0 + \dbvec{\rho_C^k }} \left[   \eta\nextal + \nextal^{2}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right]\\
+		\theta(\nextal)% & =  \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ \nuk \dbvec{\rho_L}_0\nextal + (1- \eta)\rhoCkb \nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\rhoCkb  \dbvec{L_{1,0}} \right) \right] \\
+						& = \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ (\nuk \dbvec{\rho_L}_0 + \rhoCkb )\nextal -  \eta\rhoCkb \nextal - \nextal^{2}\left(\dbvec{L_{0,0}} + \eta\rhoCkb  \dbvec{L_{1,0}} \right) \right] \\
+						& \geq \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ (\nuk \dbvec{\rho_L}_0 + \rhoCkb )\nextal -  \eta\rhoCkb \nextal - \nextal^{2}\left(\omega_1^{2} n\rhoCkb  + \tfrac{1}{2}\omega_{3}n^{2}\rhoCkb  \right) \right]\\
+						& \geq \nextal - \dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb } \left[   \eta\nextal + \nextal^{2}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right]\\
 						& \geq \nextal \left[ 1 -  \eta - \nextal\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right] \\
 						& \geq \frac{\delta_{1}}{n^{4}} \left[ 1 -  \eta - \frac{\delta_{1}}{n^{4}}\left(\omega_1^{2} n + \tfrac{1}{2}\omega_{3}n^{2} \right) \right] \\
 						& \geq 	 \left[ (1 -  \eta)\delta_{1} - \delta_{1}^{2}\left(\omega_1^{2} + \tfrac{1}{2}\omega_{3} \right) \right] \frac{1}{n^{4}}	\\
@@ -824,16 +838,16 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 % \begin{proof} 
 % Por conta dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, é suficiente considerar o caso em que $\nextal \neq \min\{\nextal_{C},\nextal_{L} \}$.  Considerando as definições dadas na Equação~\eqref{eq:defin-zeta-chi}, podemos rescrever \eqref{eq:theta} como
 % \[
-% \theta(\al) =  \dfrac{\al\left[ \nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C^k } - \al\left(\zeta + \chi
-% \right) \right]}{\nu_k\dbvec{\rho_L}_0 +
-% \dbvec{\rho_C^k }}.
+% \theta(\al) =  \dfrac{\al\left[ \nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb  - \al\left(\zeta + \chi
+% \right) \right]}{\nuk \dbvec{\rho_L}_0 +
+% \rhoCkb }.
 % \]
 	
 % 	%FIXME Verificar
-% Note que \[\theta'(0) = 1 - \frac{\eta\dbvec{\rho_{C}}}{\nu_k\dbvec{\rho_{L}}_{0}+\dbvec{\rho_{C}}}.\]
+% Note que \[\theta'(0) = 1 - \frac{\eta\rhoCkb }{\nuk \dbvec{\rho_{L}}_{0}+\rhoCkb }.\]
 % Se 
 % \[
-% 0< \eta < \dfrac{\nu_k\dbvec{\rho_{L}}_{0}}{\dbvec{\rho_{C}}} + 1 % \leq \frac{\be}{\dbvec{\rho_{C}}_{0}}  + 1,
+% 0< \eta < \dfrac{\nuk \dbvec{\rho_{L}}_{0}}{\rhoCkb } + 1 % \leq \frac{\be}{\rhoCkb _{0}}  + 1,
 % \]
 % então $\theta'(0)>0$ e por continuidade, temos que é possível escolher $\al_k\in(0,1]$ tal que 
 % \[
@@ -844,22 +858,22 @@ A sequência $\{(x^{k},y^{k},z^{k})\}$ gerada pelo Algoritmo~\ref{alg:optimized-
 % \begin{enumerate}[{Caso} (i):]
 % 	\item $(\zeta + \chi) > 0$. Neste caso, $\theta(\al)$ é uma quadrática com concavidade voltada para baixo. Assim, o seu máximo será atingido no vértice, isto é, em
 % 	\[
-% 		\nextal = \frac{\nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C^k }}{2(\zeta + \chi)}.
+% 		\nextal = \frac{\nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb }{2(\zeta + \chi)}.
 % 	\]
 
 % 	Note que, neste caso, $\zeta + \chi = \abs{\zeta + \chi} \leq \abs{\zeta} + \abs{\chi}$.  Utilizando as Equações \eqref{eq:bound-zeta} e \eqref{eq:bound-chi}, vemos que  
 
 % 	\[
-% 		\nextal \geq \left( \frac{\nu_k\dbvec{\rho_L}_0/\dbvec{\rho_C^k } + (1-\eta)}{2( \omega_1^{2}/n  + \tfrac{1}{2}\omega_{3})}\right)\dfrac{1}{n^{2}}.
+% 		\nextal \geq \left( \frac{\nuk \dbvec{\rho_L}_0/\rhoCkb  + (1-\eta)}{2( \omega_1^{2}/n  + \tfrac{1}{2}\omega_{3})}\right)\dfrac{1}{n^{2}}.
 % 	\]
 % 	\color{red}
-% 	Sei que \[ \frac{\norm{\rho_{L}}}{(\xk)^{T}z} = \frac{\dbvec{\rho_{L}}}{\dbvec{\rho_{C}}}=  \frac{\nu_k\dbvec{\rho_L}_0}{\dbvec{\rho_C^k }} \leq \frac{\beta}{\dbvec{\rho_C^k }_0} \] para toda iteração, por conta da vizinhança $\Nset_{\infty}(\ga,\be)$. Como garantir que o limitante de $\nextal$ seja grande o suficiente? Posso considerar que $\rho_{L}\to 0$ antes que $\rho_{C}\to 0$. Nesse caso, posso considerar que se eu escolher $\be\geq 1$ tal que $\frac{\beta}{\dbvec{\rho_C^k }_0} \leq 1$, então temos um limitante suficiente? 
+% 	Sei que \[ \frac{\norm{\rho_{L}}}{(\xk)^{T}z} = \frac{\dbvec{\rho_{L}}}{\rhoCkb }=  \frac{\nuk \dbvec{\rho_L}_0}{\rhoCkb } \leq \frac{\beta}{\rhoCkb _0} \] para toda iteração, por conta da vizinhança $\Nset_{\infty}(\ga,\be)$. Como garantir que o limitante de $\nextal$ seja grande o suficiente? Posso considerar que $\rho_{L}\to 0$ antes que $\rho_{C}\to 0$. Nesse caso, posso considerar que se eu escolher $\be\geq 1$ tal que $\frac{\beta}{\rhoCkb _0} \leq 1$, então temos um limitante suficiente? 
 
 
 % 	\color{black}
 % 	\item $(\zeta + \chi) < 0$. Agora, $\theta(\al)$ é uma quadrática com concavidade voltada para cima. Com isso, o seu máximo será atingido em algum ponto à direita da única raiz não nula, isto é, em $\nextal$, tal que 
 % 	\[
-% 		\nextal \geq  \frac{\nu_k\dbvec{\rho_L}_0 + (1-\eta)\dbvec{\rho_C^k }}{(\zeta + \chi)}.
+% 		\nextal \geq  \frac{\nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb }{(\zeta + \chi)}.
 % 	\]
 % \end{enumerate}
 % \end{proof}
@@ -1004,7 +1018,7 @@ Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que
 % \end{algorithmic}
 % \end{algorithm}
 
-No presente capítulo, estabelecemos os resultados de $\eps$-convergência e polinomialidade do nosso método, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}, com uma escolha particular do ponto inicial. Além disso, garantimos que é possível escolher um $\eps>0$ tal que um critério de parada equivalente ao usado em várias implementações. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Adiada de Parâmetros (MPI-EAP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns experimentos numéricos feitos com este método.
+No presente capítulo, estabelecemos os resultados de $\eps$-convergência e polinomialidade do nosso método, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}, com uma escolha particular do ponto inicial. Além disso, garantimos que é possível escolher um $\eps>0$ tal que um critério de parada equivalente ao usado em várias implementações. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (MPI-EAP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns experimentos numéricos feitos com este método.
 
 
 
@@ -1015,13 +1029,13 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters-simplified} esteja bem definido, é necessário que exista para cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ e $\sig$ como $\bar{\mu} $ e  $\bar{\sig}$, basta encontrar um o tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
 % $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. 
 
-% Para tanto, considere-se novamente que vamos fixar $\mu$ e $\sig$ com  as seguintes escolhas $ \mu = \bar{\mu} = \eta\dbvec{\rho_C^k } $ e $\sig = \bar{\sig} \in[\sig_{\min},\sig_{\min}]$ a definir.
+% Para tanto, considere-se novamente que vamos fixar $\mu$ e $\sig$ com  as seguintes escolhas $ \mu = \bar{\mu} = \eta\rhoCkb  $ e $\sig = \bar{\sig} \in[\sig_{\min},\sig_{\min}]$ a definir.
 
 %  Primeiramente, utilizando a Equação \eqref{eq:simplified-merit-function-al}, é possível rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, tal função pode ser escrita escrita nos seguintes termos:
 % \begin{multline*}
-% {g}_C^i (\al)	 = (1-\al)(\rho_C^k )_i+ \al\left(\eta\dbvec{\rho_C^k }\right) +  \al(\al - \barsig) ({L_{0,0}})_i + 
-% 				\\ + \al^2\left[  (\eta\dbvec{\rho_C^k })^2(L_{2,0})_i + \eta\dbvec{\rho_C^k } ({L_{1,0}})_i +	\barsig\eta\dbvec{\rho_C^k } ({L_{1,1}})_i		+	    \barsig ({L_{0,1}})_i + \barsig^2(L_{0,2})_i \right]  + \\
-% 				 -\ga\left[  (1-\al)\dbvec{\rho_C^k } + \al\left(\eta\dbvec{\rho_C^k } + (\al- \barsig) \dbvec{L_{0,0}} \right) + \al^2\left( \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}} + \barsig\eta\dbvec{\rho_C^k } 
+% {g}_C^i (\al)	 = (1-\al)(\rho_C^k )_i+ \al\left(\eta\rhoCkb \right) +  \al(\al - \barsig) ({L_{0,0}})_i + 
+% 				\\ + \al^2\left[  (\eta\rhoCkb )^2(L_{2,0})_i + \eta\rhoCkb  ({L_{1,0}})_i +	\barsig\eta\rhoCkb  ({L_{1,1}})_i		+	    \barsig ({L_{0,1}})_i + \barsig^2(L_{0,2})_i \right]  + \\
+% 				 -\ga\left[  (1-\al)\rhoCkb  + \al\left(\eta\rhoCkb  + (\al- \barsig) \dbvec{L_{0,0}} \right) + \al^2\left( \eta\rhoCkb  \dbvec{L_{1,0}} + \barsig\eta\rhoCkb  
 % 				 \dbvec{L_{1,1}}	+	    \barsig \dbvec{L_{0,1}} \right)  \right].
 % \end{multline*}
 
@@ -1029,18 +1043,18 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % \[
 % \begin{aligned}
 % \zeta_i & = (L_{0,0})_i - \ga \dbvec{L_{0,0}}, \\
-% \chi_i  & = \eta\dbvec{\rho_C^k } \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right) + \barsig\left( ({L_{0,1}})_i - \ga\dbvec{L_{0,1}} \right),   \\
-% \xi_i	& =  (\eta\dbvec{\rho_C^k })^2(L_{2,0})_i + \barsig\eta\dbvec{\rho_C^k } 
+% \chi_i  & = \eta\rhoCkb  \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right) + \barsig\left( ({L_{0,1}})_i - \ga\dbvec{L_{0,1}} \right),   \\
+% \xi_i	& =  (\eta\rhoCkb )^2(L_{2,0})_i + \barsig\eta\rhoCkb  
 % 				 \left(({L_{1,1}})_i - \ga	 \dbvec{L_{1,1}}\right) + \barsig^2(L_{0,2})_i, \\ 	
 % \end{aligned}
 % \]
 %  usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e as propriedades de módulo de um escalar, temos
 % \[
 % \begin{aligned}
-% 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\dbvec{\rho_C^k })}_{\geq 0}  + (1-\ga)\eta\dbvec{\rho_C^k } \al + \al(\al - \sig) \zeta_i +  (\chi_i + \xi_i)\al^2  \\
-% 				& \geq \left( (1-\ga)\eta\dbvec{\rho_C^k }  - \barsig\zeta_i\right)\al + (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
-% 				& \geq \left( (1-\ga)\eta\dbvec{\rho_C^k }  - {\barsig}{\zeta_i}\right)\al -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al^2 \\
-% 				& = \al \left[	(1-\ga)\eta\dbvec{\rho_C^k }  - {\barsig}{\zeta_i}	  -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] \\
+% 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\rhoCkb )}_{\geq 0}  + (1-\ga)\eta\rhoCkb  \al + \al(\al - \sig) \zeta_i +  (\chi_i + \xi_i)\al^2  \\
+% 				& \geq \left( (1-\ga)\eta\rhoCkb   - \barsig\zeta_i\right)\al + (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
+% 				& \geq \left( (1-\ga)\eta\rhoCkb   - {\barsig}{\zeta_i}\right)\al -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al^2 \\
+% 				& = \al \left[	(1-\ga)\eta\rhoCkb   - {\barsig}{\zeta_i}	  -  (\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i})\al	\right] \\
 % 				& = h^i(\al).
 % \end{aligned}
 % \] 
@@ -1048,7 +1062,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % em que $h^i$ é uma quadrática côncava em função de $\al$ com apenas uma raiz nula. Como queremos que $\al>0$ precisamos que a outra raiz seja positiva. Para tanto, exigimos que 
 % \begin{equation}
 % 	\label{eq:barsig-bound1}
-% 	\barsig\zeta_{i} < (1-\ga)\eta\dbvec{\rho_C^k }.
+% 	\barsig\zeta_{i} < (1-\ga)\eta\rhoCkb .
 % \end{equation}
 
 
@@ -1063,7 +1077,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 
 % Com efeito, se \eqref{eq:barsig-bound1} for satisfeito, a única raiz positiva de $h^i$ é dada por
 % \[
-% \al_{C}^i = \dfrac{(1-\ga)\eta\dbvec{\rho_C^k } - {\barsig}{\zeta_i}}{\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}}
+% \al_{C}^i = \dfrac{(1-\ga)\eta\rhoCkb  - {\barsig}{\zeta_i}}{\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}}
 % \]
 % e $h^i(\al)\geq 0 $ sempre que $\al\in[0,\al_{C}^i].$ 
 
@@ -1086,22 +1100,22 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 
 % Por outro lado, us\text{ and }o as mesmas substituições de $\bar{\mu}$ e $\bar{\sig}$, a função $g_L$, dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
 % \[
-% g_L(\al) =     (1-\al)\left(\dbvec{\rho_C^k } -  \be_L \nu_k   \right) +  \al\eta\dbvec{\rho_C^k } + 
-%    \al^2\left( \dbvec{L_{0,0}} + \eta\dbvec{\rho_C^k }  \dbvec{L_{1,0}}   \right ) ,
+% g_L(\al) =     (1-\al)\left(\rhoCkb  -  \be_L \nuk    \right) +  \al\eta\rhoCkb  + 
+%    \al^2\left( \dbvec{L_{0,0}} + \eta\rhoCkb   \dbvec{L_{1,0}}   \right ) ,
 % 	\]
 % Usando novamente o fato de que o ponto atual pertence à  vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e definindo as seguintes constantes 
 % \[
 % \begin{aligned}
 % \zeta & =  \dbvec{L_{0,0}}, \\
-% \chi  & = \eta\dbvec{\rho_C^k } \dbvec{L_{1,0}},
+% \chi  & = \eta\rhoCkb  \dbvec{L_{1,0}},
 % \end{aligned}
 % \]
 % segue que 
 %  \[
 % \begin{aligned}
-% {g}_L(\al) & =     (1-\al)\underbrace{\left(\dbvec{\rho_C^k } -  \be_L \nu_k   \right)}_{\geq 0} +  \al\eta\dbvec{\rho_C^k } + 
+% {g}_L(\al) & =     (1-\al)\underbrace{\left(\rhoCkb  -  \be_L \nuk    \right)}_{\geq 0} +  \al\eta\rhoCkb  + 
 %    \al^2\left( \zeta + \chi   \right ) \\
-%    & \geq  \al\left[\eta\dbvec{\rho_C^k } - 
+%    & \geq  \al\left[\eta\rhoCkb  - 
 %    \al (\abs{\zeta} + \abs{\chi})   \right ].
 % \end{aligned}
 %  \]
@@ -1111,7 +1125,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 
 % Seja $\al_L\in(0,1]$ o maior número tal que  $g_L(\al)\geq 0$, para  $\al\in[0,\al_L]$. Por conta da última inequação acima, temos que se 
 % \[
-% \al_L \geq \frac{\eta\dbvec{\rho_C^k } }{\abs{\zeta} + \abs{\chi}},
+% \al_L \geq \frac{\eta\rhoCkb  }{\abs{\zeta} + \abs{\chi}},
 % \]
 %  então certamente a condição \eqref{eq:symmetric-polynomials-a} será satisfeita. 
 
@@ -1140,7 +1154,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % \begin{multline*}
 % {g}_C^i (\al)	 = (1-\al)(\rho_C^k )_i+   \al(\al - \barsig) ({L_{0,0}})_i  
 % 				 + \al^2\left[  ( \barsig ({L_{0,1}})_i + \barsig^2(L_{0,2})_i \right]  + \\
-% 				 -\ga\left[  (1-\al)\dbvec{\rho_C^k } +  \al(\al- \barsig) \dbvec{L_{0,0}}  + \al^2\left(   \barsig \dbvec{L_{0,1}} \right)  \right].
+% 				 -\ga\left[  (1-\al)\rhoCkb  +  \al(\al- \barsig) \dbvec{L_{0,0}}  + \al^2\left(   \barsig \dbvec{L_{0,1}} \right)  \right].
 % \end{multline*}
 
 % Definindo $\nextsig=1$, e as constantes
@@ -1154,7 +1168,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 %  usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ e as propriedades de módulo de um escalar, temos
 % \[
 % \begin{aligned}
-% 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\dbvec{\rho_C^k })}_{\geq 0}  + \al(\al - 1) \zeta_i +  (\chi_i + \xi_i)\al^2  \\
+% 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\rhoCkb )}_{\geq 0}  + \al(\al - 1) \zeta_i +  (\chi_i + \xi_i)\al^2  \\
 % 				& \geq  - \zeta_i\al + (\zeta_i + 				\chi_i + \xi_i)\al^2 \\ 
 % 				& = h^i(\al).
 % \end{aligned}
@@ -1198,7 +1212,7 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % 	Assim,  
 % 	\[
 % 	\begin{aligned}
-% 	\abs{\chi} & = \abs{\eta\dbvec{\rho_C^k } \dbvec{L_{1,0}}} = \abs{\dfrac{(\dex)^T(\bar{\mu}\Dez^\mu) + (\bar{\mu}\Dex^\mu)^T\dez}{n}   }  \\ 
+% 	\abs{\chi} & = \abs{\eta\rhoCkb  \dbvec{L_{1,0}}} = \abs{\dfrac{(\dex)^T(\bar{\mu}\Dez^\mu) + (\bar{\mu}\Dex^\mu)^T\dez}{n}   }  \\ 
 % 	&  = \abs{\dfrac{(\dex)^T(\Decoz) + (\Decox)^T\dez}{n} }  \\
 % 	& \leq \dfrac{1}{n} \norm{\dex\Decoz + \Decox\dez}_1.
 % 	\end{aligned}
@@ -1209,9 +1223,9 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % \item Utilizando as ideias de (ii) segue que  
 % \[
 % \begin{aligned}
-% 	\abs{\chi_i }  & = \abs{\eta\dbvec{\rho_C^k } \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \\
+% 	\abs{\chi_i }  & = \abs{\eta\rhoCkb  \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right)} \\
 % 	&  \leq 
-% 						\abs{\eta\dbvec{\rho_C^k }  ({L_{1,0}})_i} + \ga\abs { \eta\dbvec{\rho_C^k }\dbvec{L_{1,0}} } \\
+% 						\abs{\eta\rhoCkb   ({L_{1,0}})_i} + \ga\abs { \eta\rhoCkb \dbvec{L_{1,0}} } \\
 % 						& \leq \norm{\dex\Decoz + \Decox\dez}_1 + \dfrac{\ga}{n}\norm{\dex\Decoz + \Decox\dez}_1	\\
 % 						& \leq 2 \norm{\dex\Decoz + \Decox\dez}_1
 % \end{aligned}
@@ -1219,11 +1233,11 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 
 % \item Novamente, considerando $\sig=0$, usando a equação \eqref{eq:Corrector-spllited},  vale
 % \[
-% 	(\eta\dbvec{\rho_C^k })^2(L_{2,0}) = (\eta\dbvec{\rho_C^k }\Dex^\mu)(\eta\dbvec{\rho_C^k }\Dez^\mu) = \Decox\Decoz.
+% 	(\eta\rhoCkb )^2(L_{2,0}) = (\eta\rhoCkb \Dex^\mu)(\eta\rhoCkb \Dez^\mu) = \Decox\Decoz.
 % \]
 % Assim
 % \[
-% 	\abs{\xi_i}	 =  \abs{(\eta\dbvec{\rho_C^k })^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1
+% 	\abs{\xi_i}	 =  \abs{(\eta\rhoCkb )^2(L_{2,0})_i}  = \abs{(\Decox\Decoz)_i} \leq \norm{\Decox\Decoz}_1
 % \]
 
 % \end{enumerate}
@@ -1231,5 +1245,5 @@ No presente capítulo, estabelecemos os resultados de $\eps$-convergência e pol
 % Assim precisamos de limitantes para $\norm{\dex\dez}_1$, $\norm{\dex\Decoz + \Decox\dez}_1$ e $\norm{\Decox\Decoz}_1$.
 
 
-% \chi_i  & = \eta\dbvec{\rho_C^k } \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
-% \xi_i	& =  (\eta\dbvec{\rho_C^k })^2(L_{2,0})_i , \\ 
+% \chi_i  & = \eta\rhoCkb  \left( ({L_{1,0}})_i - \ga\dbvec{L_{1,0}} \right),   \\
+% \xi_i	& =  (\eta\rhoCkb )^2(L_{2,0})_i , \\ 

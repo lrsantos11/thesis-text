@@ -654,11 +654,11 @@ garantimos que, $\rho^0\geq 0$, $0\leq\al\leq1 $, por  indução, o corolário
 se verifica.
 
 A parte da complementaridade, por construção,  é positiva, já que 
-$(x,y,z)\in\Qset^+$. Além disso, faremos a cada iteração o teste da razão, isto é, escolheremos $\al_k$,
+$(x,y,z)\in\Qset^+$. Além disso, faremos a cada iteração o teste da razão, isto é, escolheremos $\alk $,
 tal que 
 \begin{equation}
 	\label{eq:ratio-test}
-\al_k < \tilde{\al}_k = \frac{-1}{\min\left\{
+\alk  < \tilde{\al}_k = \frac{-1}{\min\left\{
 (X^k)^{-1}\Dex^k,(Z^k)^{-1}\Dez^k,-1 \right\}}. 
 \end{equation}
 
@@ -850,9 +850,9 @@ Com efeito, pelas equações \eqref{eq:corrector-linear-matrix} e \eqref{eq:corr
 
 Definindo os coeficientes \[ \left\{
 \begin{aligned}
-a_{0,0,0} &= (\dbvec{\rho_L}_k + \dbvec{\rho_C}_k)     & a_{2,1,1} &=
+a_{0,0,0} &= (\dbvec{\rho_L}+ \dbvec{\rho_C})     & a_{2,1,1} &=
 \dbvec{L_{1,1}}\\
-a_{1,0,0} &= - (\dbvec{\rho_L}_k + \dbvec{\rho_C}_k)   & a_{2,1,0} &=
+a_{1,0,0} &= - (\dbvec{\rho_L} + \dbvec{\rho_C})   & a_{2,1,0} &=
 \dbvec{L_{1,0}}\\
 a_{1,1,0} &= 1 				    & a_{2,2,0} &= \dbvec{L_{2,0}}=0\\
 a_{1,0,1} &= -  \dbvec{L_{0,0}} & a_{2,0,1} &= \dbvec{L_{0,1}}\\
@@ -971,66 +971,66 @@ linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possíve
 
 \begin{equation}
 \label{eq:residual-norm-relation-nonscaled}
-% \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\al_k) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
+% \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\alk ) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
 \begin{aligned}
- r_P^{k+1}  & = (1-\al_k) r_P^{k} = \nu_{k+1}  r_P^{0}, \\
-  r_D^{k+1}  & = (1-\al_k) r_D^{k} = \nu_{k+1}  r_D^{0}, \\
+ r_P^{k+1}  & = (1-\alk) r_P^{k} = \nu^{k+1}  r_P^{0}, \\
+  r_D^{k+1}  & = (1-\alk) r_D^{k} = \nu^{k+1}  r_D^{0}, \\
 \end{aligned}
 \end{equation}
 e além disso
 \begin{equation}
 \label{eq:residual-norm-relation}
-% \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\al_k) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
- \rho_L^{k+1}  = (1-\al_k) \rho_L^{k} = \nu_{k+1}  \rho_L^{0},
+% \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\alk ) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
+ \rho_L^{k+1}  = (1-\alk) \rho_L^{k} = \nu^{k+1}  \rho_L^{0},
 \end{equation}
 em que  $\nu_0 = 1$ e 
 \begin{equation}
 	\label{eq:nu_k+1}
-\nu_{k+1} = (1-\al_k)\nu_k = \prod_{j=0}^{k}(1-\al_j) \geq 0.
+\nu^{k+1} = (1-\alk)\nuk = \prod_{j=0}^{k}(1-\al^j) \geq 0.
 \end{equation}
 \end{prop}
 
 \begin{proof}
 	Pela definição de resíduos  dada em \eqref{eq:KKT-residuals}   e pela Definição \ref{def:residual-vector}, temos que para todo $k$, $\rho_{P}^{k} = H_{P}r_{P}^{k} $ e  $\rho_{D}^{k} = H_{D}r_{D}^{k} $. 
 
-	Como $H_{P}$ e $H_{D}$ são não-singulares, e como $\rho_L^{k} = (\rho_P^{k},\rho_D^{k})$,  da primeira equação de \eqref{eq:next-residual-all} do Teorema \ref{thm:next=residual}, segue que $\rho_P^{k}  = (1-\al_{k-1})\rho_P^{k-1}$ e logo $
-			H_{P}r_{P}^{k}  = (1-\al_{k-1})H_{P}r_{P}^{k-1}$ concluindo que  
-		$H_{P}^{-1}H_{P}r_{P}^{k}  = (1-\al_{k-1})r_{P}^{k-1}$, isto é, $r_{P}^{k}  = (1-\al_{k-1})r_{P}^{k-1}$.
+	Como $H_{P}$ e $H_{D}$ são não-singulares, e como $\rho_L^{k} = (\rho_P^{k},\rho_D^{k})$,  da primeira equação de \eqref{eq:next-residual-all} do Teorema \ref{thm:next=residual}, segue que $\rho_P^{k}  = (1-\al^{k-1})\rho_P^{k-1}$ e logo $
+			H_{P}r_{P}^{k}  = (1-\al^{k-1})H_{P}r_{P}^{k-1}$ concluindo que  
+		$H_{P}^{-1}H_{P}r_{P}^{k}  = (1-\al^{k-1})r_{P}^{k-1}$, isto é, $r_{P}^{k}  = (1-\al^{k-1})r_{P}^{k-1}$.
 
 	Daí, por raciocínio indutivo segue que 
 	\[
 	\begin{aligned}
-		r_{P}^{k} & = (1-\al_{k-1})r_{P}^{k-1} \\
-	  			   & = (1-\al_{k-1})\cdots(1-\al_{0})r_{P}^{0}\\
-				   & = \nu_k r_{P}^{0}. 
+		r_{P}^{k} & = (1-\al^{k-1})r_{P}^{k-1} \\
+	  			   & = (1-\al^{k-1})\cdots(1-\al^{0})r_{P}^{0}\\
+				   & = \nuk r_{P}^{0}. 
 	\end{aligned}
 	\]
-Similarmente,  $\rho_D^{k}  = (1-\al_{k-1})\rho_D^{k-1}$ e logo $
-			H_{D}r_{D}^{k}  = (1-\al_{k-1})H_{D}r_{D}^{k-1}$, o que significa que   $r_{D}^{k}  = (1-\al_{k-1})r_{D}^{k-1}$. Novamente,  por raciocínio indutivo segue que 
+Similarmente,  $\rho_D^{k}  = (1-\al^{k-1})\rho_D^{k-1}$ e logo $
+			H_{D}r_{D}^{k}  = (1-\al^{k-1})H_{D}r_{D}^{k-1}$, o que significa que   $r_{D}^{k}  = (1-\al^{k-1})r_{D}^{k-1}$. Novamente,  por raciocínio indutivo segue que 
 	\[
 	\begin{aligned}
-		r_{D}^{k} & = (1-\al_{k-1})r_{D}^{k-1} \\
-	  			   & = (1-\al_{k-1})\cdots(1-\al_{0})r_{D}^{0}\\
-				   & = \nu_k r_{D}^{0}. 
+		r_{D}^{k} & = (1-\al^{k -1})r_{D}^{k-1} \\
+	  			   & = (1-\al^{k -1})\cdots(1-\al_{0})r_{D}^{0}\\
+				   & = \nuk   r_{D}^{0}. 
 	\end{aligned}
 	\]
 
 	Finalmente, temos que 
 	\begin{multline*}
-	\rho_L^{k} = (\rho_P^{k},\rho_D^{k}) = (H_{P}r_P^{k},H_{D}r_D^{k}) =\\ = (H_{P}\nu_k r_{P}^{0},H_{D}\nu_k r_{D}^{0})  
-	= \nu_k (H_{P}r_{P}^{0},H_{D} r_{D}^{0}) =\nu_k(\rho_P^{0},\rho_D^{0}) = \nu_k \rho_L^{0},
+	\rho_L^{k} = (\rho_P^{k},\rho_D^{k}) = (H_{P}r_P^{k},H_{D}r_D^{k}) =\\ = (H_{P}\nuk r_{P}^{0},H_{D}\nuk r_{D}^{0})  
+	= \nuk (H_{P}r_{P}^{0},H_{D} r_{D}^{0}) =\nuk (\rho_P^{0},\rho_D^{0}) = \nuk  \rho_L^{0},
 		\end{multline*}	
 		o 	que finaliza a demonstração.
 \end{proof}
 
-Como  $\nu_k$ é uma constante não negativa,  uma consequência desta proposição é que se $r_L^0\neq 0 $, o que implica que $\rho_L^0\neq 0 $, para toda norma-p, vale 
+Como  $\nuk $ é uma constante não negativa,  uma consequência desta proposição é que se $r_L^0\neq 0 $, o que implica que $\rho_L^0\neq 0 $, para toda norma-p, vale 
 \[
-\nu_k =\frac{\norm{r_L^{k}}_p}{\norm{r_L^{0}}_p} = \frac{\norm{\rho_L^{k}}_p}{\norm{\rho_L^{0}}_p}.
+\nuk  =\frac{\norm{r_L^{k}}_p}{\norm{r_L^{0}}_p} = \frac{\norm{\rho_L^{k}}_p}{\norm{\rho_L^{0}}_p}.
 \]
 Logo, pela definição de \emph{operador média}, segue que
 \begin{equation}
 	\label{eq:nu_k}
-	\nu_k = {\dbvec{\rho_L^k}}/{\dbvec{\rho_L^0}}.
+	\nuk  = {\dbvec{\rho_L^k}}/{\dbvec{\rho_L^0}}.
 \end{equation}
 
 Caso $\rho_L^0 = 0$, então encontramos um ponto inicial factível e o Algoritmo resolve o problema como um método factível o faz. Na prática, porém, essa situação é rara.
@@ -1063,7 +1063,7 @@ em que $\ga\in(0,1)$ e $\be\geq1$.
 Por conta de \eqref{eq:nu_k} e \eqref{eq:Nset-infty-rho}, segue que para qualquer ponto $(\xk,\yk,\zk)\in \Nset_{-\infty}(\ga,\be) $ vale
 \begin{equation}
 	\label{eq:nu_k-rho0-rhok}
-	 \nu_{k} \leq \beta\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}.
+	 \nuk \leq \beta\dbvec{\rho_C^{k}}/\dbvec{\rho_C^{0}}.
 \end{equation}
 
 
@@ -1092,7 +1092,7 @@ $\Nset_{-\infty}(\ga,\be)$ para o sistema \ac{KKT} escalado, se valerem as  desi
 \begin{align} 
   (\rho_C)_i(x,y,z) -  \ga\dbvec{\rho_C}(x,y,z)  & \geq 0, \quad \forall i=1,\ldots,n %\leq  \frac{1}{\ga}\dbvec{\rho_C}(x,y,z),
  \label{eq:symmetric-polynomials-b} \\ 
-   \dbvec{\rho_C}(x,y,z) - \frac{\nu_{k}}{\be} \dbvec{\rho_C^0}  &\geq 0 .
+   \dbvec{\rho_C}(x,y,z) - \frac{\nuk}{\be} \dbvec{\rho_C^0}  &\geq 0 .
  \label{eq:symmetric-polynomials-a}
 \end{align} 
 \end{subequations}
@@ -1229,20 +1229,20 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto n
 		\State Calcule os coeficientes de  $\nextphi(\al,\mu,\sig)$ usando
 		\eqref{eq:merit-function-al-mu-sig} 
 		\State Calcule os coeficienes de $g_{L}(\al,\mu,\sig)$ e $g^{i}_{C}(\al,\mu,\sig)$ utilizando \eqref{eq:g_Ci+G_L-explicit}.
-		\State Encontre $(\al_{k},\mu_{k},\sig_{k})$ resolvendo o subproblema de
+		\State Encontre $(\alk,\muk,\sigk)$ resolvendo o subproblema de
 		otimização global 
 		\eqref{eq:pop-subproblem}.
-		\State Garanta que $\al_k\in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ usando \eqref{eq:ratio-test} e faça
+		\State Garanta que $\alk \in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ usando \eqref{eq:ratio-test} e faça
 		\[
 		\begin{aligned}	
-		& x^{k+1} = x^{k} + \al_k((\dex)^{k} + \mu_{k}(\Dex^\mu)^{k} +
-		\sig_{k}(\Dex^\sig)^{k} )
+		& x^{k+1} = x^{k} + \alk ((\dex)^{k} + \muk (\Dex^\mu)^{k} +
+		\sigk(\Dex^\sig)^{k} )
 		\\
-		& y^{k+1} = y^{k} + \al_k((\dey)^{k} + \mu_{k}(\Dey^\mu)^{k} +
-		\sig_{k}(\Dey^\sig)^{k} )
+		& y^{k+1} = y^{k} + \alk ((\dey)^{k} + \muk (\Dey^\mu)^{k} +
+		\sigk (\Dey^\sig)^{k} )
 		\\
-		& z^{k+1} = z^{k} + \al_k((\dez)^{k} + \mu_{k}(\Dez^\mu)^{k} +
-		\sig_{k}(\Dez^\sig)^{k} ) \end{aligned}. 
+		& z^{k+1} = z^{k} + \alk ((\dez)^{k} + \muk (\Dez^\mu)^{k} +
+		\sigk (\Dez^\sig)^{k} ) \end{aligned}. 
 		\]		
 		\State $k\gets k+1$
 	\Until{O critério de parada ser satisfeito.}

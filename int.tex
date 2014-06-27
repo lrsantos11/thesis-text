@@ -1,275 +1,17 @@
 %!TEX root = tese.tex
-\chapter{Introdução}
-
-
-Neste capítulo será feita uma breve introdução aos problemas de
-\acrodef{PL}{Programação Linear} \ac{PL}, bem como a aspectos preliminares de
-alguns métodos criados para resolvê-los. Posteriormente  serão definidos os
-objetivos deste trabalho e o modo como o mesmo foi estruturado.
-
-
-\section{Programação linear}  
-   
-\acl{PL} é um tópico que tem sido amplamente estudado no escopo da otimização e
-que ganhou relevância a partir da década de 1940 com os trabalhos de Dantzig,
-Kantorovich, Koopmans e von Neumann. A criação do método simplex por Dantzig 
-acelerou o interesse pelo tema, já que se encontrou um meio de resolver tal problema. O
-mesmo Dantzig, em um texto comemorativo de 1991, faz um resumo histórico do
-desenvolvimento da \ac{PL} e a define de maneira genérica:
-\begin{quotation} 
-\small``Linear programming can be viewed as part of a great
-revolutionary development which has given mankind the ability to state general
-goals and to lay out a path of detailed decisions to take in order to
- `best' achieve its goals when faced with practical situations of great
-complexity.''\cite{Dantzig:2002td}. 
-\end{quotation}  
-A partir da necessidade de tratar matematicamente problemas econômicos
-e de planejamento militar nos anos que se seguiram à Segunda Guerra Mundial, ao
-mesmo tempo em que os computadores passaram a poder realizar operações
-matemáticas com maior velocidade, houve um crescimento espantoso da utilização
-da \ac{PL} e, por extensão, da otimização em geral. Para um resumo histórico há
-boas fontes
-\cite{Schrijver:Theory-of-Linear:1986k,Dantzig:Linear-Programming:1963t}.
-
-Um problema de otimização pode ser descrito em termos de variáveis de decisão,
-conjuntos de restrições e uma função objetivo. Resolver um problema de
-otimização significa encontrar a ``melhor maneira'' na qual as variáveis
-satisfaçam as restrições ao mesmo tempo em que se otimiza -- 
-minimiza ou maximiza --  a função objetivo. 
- 
-Um problema de \emph{\acl{PL}}  é um problema de otimização no qual as
-restrições e a função objetivo são lineares. A \ac{PL}\footnote{Usaremos
-problema de PL e PL como sinônimos.} surge diretamente em várias aplicações
-reais, por exemplo, em problemas de economia, logística, planejamento e controle
-da produção, entre outros. Ela aparece ainda em aproximações de problemas mais
-complexos ou na solução relaxada de problemas de programação inteira ou mista.
-
-
-    
-Matematicamente, podemos escrever qualquer \ac{PL} na seguinte \emph{forma
-padrão}:
-\begin{equation*}
-	\begin{array}{lc}
-\displaystyle \min_{x} & c^Tx \\
-\text{sujeito a} &\begin{cases} Ax = b \\
-				 x \geq 0	
-				 \end{cases}
-\end{array}.
-\label{eq:PL}
-\end{equation*}
-em que $A\in \Real^{m\times n}$ e $c$, $x$ e $b$ têm dimensões compatíveis. A
-região $\Pset = \{x\in\Real^n | Ax=b \text{ e } x\geq 0\}$ é conhecida como
-região factível do problema e é um poliedro com pelo menos um vértice ou
-ponto extremo.
-
-Como uma função linear é convexa, problemas de \ac{PL} tem a particularidade
-dada pelo seguinte
-teorema~\cite[cap.~3]{Bazaraa:2009uu}:
-
-\begin{teo}[Teorema Fundamental da \acl{PL}] \label{teo:fundamental-pl} Em um
-problema de \acl{PL} com região factível $\Pset$, ou o valor ótimo da função objetivo é  ilimitado ou então este valor
-será atingido em um ponto extremo de  $\Pset$.
-\end{teo}
-
-
-Um conjunto de restrições lineares define um \emph{poliedro} que constitui
-então a \emph{região factível}. De acordo com o
-Teorema~\ref{teo:fundamental-pl}, uma forma de encontrar a solução de um
-problema de \ac{PL} seria percorrer todos os vértices da região factível
-comparando os valores da função objetivo e selecionando o melhor dentre eles.
-
-Essa estratégia, no entanto, é pouco eficiente, haja vista o poliedro ser
-resultante de um sistema linear de	$m$ restrições e $n$  variáveis $(m<n)$
-podendo ter um número de vértices totalizando
-\[ 
-\binom{n}{m} = \dfrac{n!}{m!(n-m)!} \geq 
-\left(\dfrac{n}{m}\right)^m,
-\]
-quando o problema está na forma padrão. Por conta disso, um método do tipo
-exaustão seria pouco eficiente. Por outro lado, o fato de o número de vértices
-ser limitado garante terminação finita para qualquer método que funcione desta
-forma. Entretanto, esse número é exponencial,
-já que 
-\[
-\left(\dfrac{n}{m}\right)^m \geq 2^m  \text{ para }   n\geq 2m.
-\]
-Encontrar o \emph{vértice ótimo} de maneira  eficiente é o
-segredo dos bons métodos para resolver problemas de \ac{PL}.
-
-\subsection{Método simplex}
-
-O Método Simplex foi apresentado por
-\textcite{Dantzig:Maximization-of-a-linear:1951y} em 1947 e foi desenvolvido ao
-mesmo tempo em que houve a percepção do poder da \ac{PL} como ferramenta auxiliar na
-tomada de decisões. Seu pioneirismo deve-se à busca da solução do \ac{PL}
-caminhando pelos vértices de maneira a utilizar o valor da função objetivo --
-caso não degenerado -- para determinar qual o próximo vértice adjacente deve ser
-visitado, fazendo assim uma aplicação do Teorema~\ref{teo:fundamental-pl}.
-
-Mais que isso, dado um método de escolha do próximo vértice, o conjunto de
-vértices possíveis decresce em cada iteração,  ainda no caso não degenerado.
-Degenerescência (primal) ocorre quando um vértice em $\Real^n$ é definido por
-$p>n$ restrições, e um passo de tamanho zero pode ser produzido pelo método. Desta
-maneira, o método simplex não sairia do lugar, logo nenhuma melhora na função
-objetivo seria alcançada. 
-
-
-O método simplex se mostrou, e ainda se mostra, robusto e eficiente em grande
-quantidade de problemas, e por isso mesmo foi considerado \emph{o método
-preferencial} para se resolver \ac{PL}'s. Entretanto, dado o número exponencial
-de possíveis vértices, havia sempre o receio de que seria necessário esforço
-exponencial, isto é, que fosse  todos os vértices da região viável fossem
-visitados para que se encontrasse a solução ótima. De fato, \textcite{Klee:1972wi}
-foram os primeiros a apresentar uma classe de exemplos patológicos para a qual esse
-comportamento patológico do método simplex apareceu. No exemplo criado por estes
-autores, com $n$ variáveis e $2n$ restrições, o método simplex de Dantzig 
-precisou passar por todos os $2^n-1$ pontos extremos da região viável antes de
-encontrar a solução ótima. 
-
-
-Apesar disso, nenhum caso com número exponencial de iterações foi encontrado na
-vida real, e geralmente apenas uma pequena porcentagem de vértices é
-consultada até que se chegue a uma solução ótima. Mais que isso, em geral, o método
-simplex mostra comportamento polinomial, sendo linear em relação à $m$ e
-sublinear em relação à $n$~\cite[pg.~94]{Fang:1993wu}. Um resumo sobre a
-eficiência do método simplex pode ser encontrada no artigo
-de~\textcite{Shamir:1987th}.
- 
-
-\subsection{Método elipsoide}
-
-Enquanto na prática o método Simplex continuava como o método mais robusto e
-eficiente, a busca por um método que tivesse complexidade polinomial no pior
-caso foi satisfeita por \textcite{Khachiyan:A-polynomial-algorithm:1979y} através
-de seu  \emph{Método Elipsoide}.
-Este método, ao contrário do método simplex,  não se baseia em caminhar pelos
-vértices da região factível mas em diminuir o volume de um elipsoide que
-contenha um potencial ponto de solução através de um conjunto de desigualdades
-lineares estritas.
-
-Inquestionavelmente, o método elipsoide representou um grande avanço teórico,
-significando que um \ac{PL} faz parte dos problemas polinomiais, isto é, que
-pode ser resolvido por um algoritmo de complexidade polinomial já que provou-se
-que a complexidade deste método é  $\mathcal{O}(n^2(1/\eps))$, em
-que $\eps$ é a precisão desejada para o algoritmo.
-Todavia, do ponto de vista prático, o método elipsoide não conseguiu competir com o
-método simplex~\cite{Bland:1981vn}, pois sua convergência era muito lenta, na
-presença de erros de arredondamento perdia robustez e em cada iteração a
-quantidade de memória necessária para armazenamento era muito grande.
-Consequentemente, embora desafortunadamente o método simplex tenha complexidade
-exponencial na análise do \emph{pior caso}, experimentos numéricos indicaram que
-na prática este era absolutamente superior ao método elipsoide.
-
-
-\subsection{Métodos de pontos interiores}
+\addchap{Introdução}
 
 
 
-Em problemas práticos, o método Simplex reinou absoluto na solução de problemas
-de \ac{PL} até meados da década de 1980 como único método viável para resolver
-tal classe de problemas. Em 1984, \textcite{Karmarkar:1984cp} inicia uma nova
-abordagem que ficou conhecida como \acrodef{MPI}{Métodos de Pontos Interiores}
-\acl{MPI} (\ac{MPI}). Por outro lado,  em 1967,
-\textcite{DIKIN:InterativeSol1967} já havia publicado um trabalho, no qual um 
-\ac{PL} era resolvido usando um método de pontos interiores. O método de Dikin ficou
-conhecido como método afim-escala.
-      
-% De fato, uma busca histórica mostra que em 1955  o primeiro \emph{\acl{MPI}} é
-% atribuído a \textcite{Frisch:The-logarithmic-potential:1955t}.
-% Este trabalho implementa uma função barreira-logarítmica para encontrar o mínimo local de uma
-% função \emph{não-linear}, sujeita a restrições de desigualdade. O método foi
-% extensamente estudado por \textcite{Fiacco:Nonlinear-programming::1968y}, porém
-% caiu em desuso por conta de sua ineficiência bem como pela presença de
-% competidores muito fortes como a programação quadrática sequencial.
-
-
-
-A ideia principal dos \ac{MPI} difere-se fundamentalmente da que inspira o
-método simplex. No método simplex as soluções encontradas em cada iteração estão
-na fronteira da região factível, já que o método visita os vértices do poliedro
-que define tal região. Por outro lado, nos \ac{MPI} estas soluções em cada
-iteração estão no interior desta região. 
-
-Isto é feito criando-se uma família
-parametrizada de soluções que convergem assintoticamente para a solução exata,
-isto é, trata-se de um método homotópico. Com efeito, um \ac{MPI} basicamente utiliza um método do tipo Newton nas condições de otimimalidade de Primeira Ordem, ou Condições KKT, do Problema de Programação Linear. Há, nos diferentes métodos, variação  do lado direito que se usa na solução da linearização das condições KKT que o Método de Newton utiliza, podendo gerar, nesse caso,  direções de Newton diferentes. Daí o nome \emph{Métodos} de Pontos Interiores. 
-
-Em resumo, usa-se uma abordagem não-linear para resolver um problema
-linear, escapando então da  dificuldade que a dimensão do problema apresenta ao
-se lidar com as características combinatoriais  do \ac{PL}.
-
-
-Além disso,  como exposto acima,  no método simplex a quantidade de
-iterações cresce de acordo com o tamanho do problema,  o que não se repete
-nos \ac{MPI}. Do ponto de vista
-da complexidade computacional, esse método também é polinomial,  com
-$\mathcal{O}(n(1/\eps))$~\cite{Karmarkar:1984cp}.
- 
-  
-Ao contrário do método elipsoide, o método de Karmarkar tem um desempenho muito
-melhor e compete com o simplex, sendo consideravelmente melhor  que este em
-problemas de larga escala. Uma variante do método de Karmarkar foi implementada
-por~\textcite{Adler:1989fw}, e desde então a compreensão do funcionamento desses
-métodos aumentou consideravelmente, ao mesmo tempo em que variantes têm
-sido propostas, muitas delas se apresentando como alternativas computacionais
-viáveis ao método simplex.
-
-Atualmente, o melhor algoritmo de pontos interiores conhecido para \ac{PL}, pelo menos do ponto de vista teórico, 
-encontra uma solução com precisão-$\eps$ em $\Oset(\sqrt{n}\ln(1/\eps))$
-iterações~\cite{Renegar:1988cr}.
-De acordo com a teoria geral~\cite[Capítulo 4]{Nesterov:2003wi}, o termo
-$\sqrt{n}$  é o melhor que se pode esperar para um \ac{MPI} usando uma função barreira como a
-logarítmica. Na prática, no entanto, \ac{MPI} tem desempenho muito melhor que
-isso e o número de iterações é quase constante, independente da dimensão do
-problema~\cite{Colombo:2008ia}.
-
-Em linhas gerais, há classes de problemas que são melhores resolvidos
-pelo método simplex e outras para os quais os métodos de pontos interiores são mais
-adequados. Tamanho e estrutura de esparsidade, entre outros, são fatores
-preponderantes para a escolha do  método apropriado. Entretanto, pode-se dizer
-que com o aumento da dimensão do problema, os \ac{MPI} ficam mais atraentes e
-efetivos. Este fato entretanto não vale para problemas muito esparsos, em que o
-método simplex é virtualmente imbatível~\cite{Hall:2005vw}, e para problemas
-de fluxo em rede, nos quais uma especialização do método simplex permite
-explorar a estrutura do problema de maneira muito
-eficiente~\cite{Nemhauser:Integer-and-combinatorial:1988s}. Vale a pena notar
-que, para um problema de fluxo de rede com de milhões de variáveis, 
-\textcite{Resende:1993hh} mostraram que um \ac{MPI} foi mais
-eficientes.
-
-
-
-  
-
-Embora esta tese trate de \ac{MPI} para problemas de \ac{PL}, tais
-métodos também podem ser utilizados para resolver problemas não-lineares
-de certos tipos.
-Em particular, problemas de \acrodef{QP}{Programação Quadrática} \ac{QP} convexa
-são usualmente resolvidos com \ac{MPI}, principalmente
-quando são de larga escala. Com efeito, um \ac{QP} convexo pode ser  escrito como
-\begin{equation*}
-	\begin{array}{lc}
-\displaystyle \min_{x} & x^TQx + c^Tx \\
-\text{sujeito a} &\begin{cases} Ax = b \\
-				 x \geq 0	
-				 \end{cases}
-\end{array},
-\label{eq:QP}
-\end{equation*}
-em que $Q\in\Real^{n\times n}$ é simétrica definida positiva, $A\in \Real^{m\times
-n}$ e $c$, $x$ e $b$ têm dimensão compatível. Com exceção da matriz $Q$, temos a
-mesma estrutura de um \ac{PL}.
-
-
-\section{Objetivos e estrutura deste trabalho}
+\section*{Objetivos e estrutura deste trabalho}
 
 
 
 
-Desde que o Métodos de Pontos Interiroes Primais-Duais ficaram famosos nos anos 90 e que o Método Preditor-Corretor de \textcite{Mehrotra:1992wr} surgiu em \citeyear{Mehrotra:1992wr}, muito tem-se feito na tentativa de extender e melhorar tal método. Algumas das principais questões atuais em Métodos preditores-corretores de Pontos Interiores, incluem o modo como se pode combinar diferentes direções, seja direção corretora, seja preditora, seja ainda alguma outra direção de maior ordem, tal que uma melhor direção seja gerada em cada passo.  Como vimos, uma direção pode ser entendida a solução do sistema de Newton para as condições KKT do \ac{PL}. Nesse sentido, cada direção é solução de um sistema linear com matriz de coeficientes igual, porém com vetor do lado direito alterado.
+Desde que o  \acrodef{MPI}{Métodos de Pontos Interiores} \acf{MPI} Primais-Duais ficaram famosos nos anos 90 e que o Método Preditor-Corretor de \textcite{Mehrotra:1992wr} surgiu em \citeyear{Mehrotra:1992wr}, muito tem-se feito na tentativa de estender e melhorar tal método. Algumas das principais questões atuais em \ac{MPI} , incluem o modo como se pode combinar diferentes direções, seja direção corretora, seja preditora, seja ainda alguma outra direção de maior ordem, tal que uma melhor direção seja gerada em cada passo.  Como vimos, uma direção pode ser entendida a solução do sistema de Newton para as condições KKT do \ac{PL}. Nesse sentido, cada direção é solução de um sistema linear com matriz de coeficientes igual, porém com vetor do lado direito alterado.
 
 
-\textcite{Gondzio:1996uw}, por exemplo, combina a ideia inicial preditora-corretora de Mehrotra, porém permitindo múltiplas correções em um mesmo iterando, tentado aumentar o tamanho do passo que pode ser dado, impondo que os iterados estejam o mais perto possível da trajatória central. \textcite{Colombo:2008ia} desenvolvem essa ideia, escolhendo as direções preditora e corretora de forma diferente e permitindo, conforme o caso, quantas correções se deseje. 
+\textcite{Gondzio:1996uw}, por exemplo, combina a ideia inicial preditora-corretora de Mehrotra, porém permitindo múltiplas correções em um mesmo iterando, tentado aumentar o tamanho do passo que pode ser dado, impondo que os iterados estejam o mais perto possível da trajetória central. \textcite{Colombo:2008ia} desenvolvem essa ideia, escolhendo as direções preditora e corretora de forma diferente e permitindo, conforme o caso, quantas correções se deseje. 
 
 Um outro caminho é percorrido por \textcite{Jarre:1999tl} que resolvem, em cada iteração, um subproblema que tenta melhorar os resíduos. Tal subproblema  é em si um problema de PL de dimensão bem  menor em relação ao problema original e cujas variáveis são o peso que cada componente da direção que utilizam deve ter. A solução desse subproblema é feita através do método Simplex. Para tais autores, o subproblema que resolvem pode ser entendido como uma forma de buscar o próximo iterando no subespaço gerado pelas direções que utilizam em seu método.
 
@@ -289,7 +31,7 @@ Nesta tese, mostraremos algumas alternativas de respostas para  essas e outras q
 Uma abordagem similar foi proposta primeiramente por \textcite{VillasBoas:2003tg}, em um contexto auto-dual. Já num contexto primal-dual \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, também fazem uso de uma função de mérito polinomial, porém definem uma trajetória central mais geral, que envolve também os resíduos lineares na sua definição.  Em particular, a abordagem desses autores é utilizada para resolver o subproblema que surge em nosso método.
 
 Além disso, objetivamos \emph{demonstrar} resultados de convergência do método proposto, utilizando as ferramentas de análise numérica para Métodos Preditores-Corretores do tipo Mehrotra infactíveis, apresentadas principalmente por \textcite{Zhang:2006ic} e trabalhos que são sequências desse e das ideias resumidas em \textcite[cap. 7]{Wright:Primal-dual-interior-point:1997h}. Dentre essas ferramentas, há a necessidade de estabelecer um ponto inicial adequado para que a convergência do método seja garantida. Em geral, conforme alerta \textcite[p. 112]{Wright:Primal-dual-interior-point:1997h}, esses autores utilizam pontos inicias que dependem da norma de uma solução ótima, valor que é desconhecido. As escolhas desses autores, na prática são ineficazes. 
-Daí, ao contrário deles, utilizamos um ponto inicial que tem bom desempenho na prática. Isso leva a um pior limitante no resultado de complexidade -- embora ainda polinomial -- em relação aos encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj}, mas um desempenho computacional muito superior. 
+Daí, ao contrário deles, utilizamos um ponto inicial que tem bom desempenho na prática. Isso leva a um  limitante no resultado de complexidade um pouco pior  em relação aos encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj} -- embora ainda polinomial --, mas um desempenho computacional muito superior. 
 
 
 Em relação a experimentos computacionais, o objetivo é implementar o método proposto e testá-lo. Para os testes, utilizaremos o conjunto de testes \texttt{Netlib}\footnote{Disponível em \url{www.netlib.org/lp/data}}~\cite{Dongarra:1987jk,Gay:1985ts}. Também objetiva-se comparar nosso método com o PCx \cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de Mehrotra. 
@@ -299,8 +41,8 @@ Em relação a experimentos computacionais, o objetivo é implementar o método 
 Com o fim de alcançar  esses objetivos, esta monografia foi organizada com a seguinte estrutura: 
 
 \begin{itemize}
-	\item no Capítulo \ref{chap:mpis} é apresentado o estado da arte no
-que diz respeito aos métodos de pontos interiores; 
+
+	\item nos Capítulos \ref{chap:linprog} e  \ref{chap:mpis} são apresentados o problema de programação linear, bem como é  apresentado o estado da arte no que diz respeito aos métodos de pontos interiores; 
 \item o Capítulo \ref{chap:merit-function} apresenta-se a ideia principal deste trabalho, que é o
 desenvolvimento de um polinômio de grau três como função de mérito  que sirva não só como medida
 de factibilidade e otimalidade de um ponto, mas que permita escolher, de forma
