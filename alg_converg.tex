@@ -133,7 +133,7 @@ Em seguida, fazemos a demonstração da convergência do Algoritmo proposto. A a
 A fim de demonstrarmos a convergência e a complexidade do Algoritmo proposto, na presente seção provaremos alguns lemas técnicos que serão utilizados para estabelecer nossos principais resultados de convergência. 
 
 Primeiramente, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
-\textcite{Colombo:2008ia} que utilizam $\ga = 1/10$. No entanto, vamos escolher $\ga$ tal que  
+\textcite{Colombo:2008ia} que utilizam $\ga = 1/10$. Vamos escolher $\ga$ tal que  
 \[
 \gamma \leq  \min\left\{ \frac{\displaystyle \min_{i}(\xzero_{i} \zzero_{i} )}{(\xzero )^T\zzero /n}, \frac{1}{10}\right\},
 \]
@@ -245,7 +245,7 @@ O primeiro lema importante que exibiremos, mostra a existência de um limitante 
 
 
 \begin{lema}\label{lemma:boundxz1}
-	Seja o ponto inicial dado por \eqref{eq:initial-point-mehrotra}, com $(\xzero,\zzero)>0$ e suponha que  a Condição \ref{cond:xzzero-xzstar} seja válida. Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, vale
+	Suponha que  a Condição \ref{cond:xzzero-xzstar} seja válida. Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, vale
 	\begin{equation}
 		\label{eq:bound-xkzk}
 		\nuk \norm{(\xk,\zk)}_{1} \norm{(\xzero,\zzero) - (\xstar,\zstar)} \leq \bdxzstar^{4} n \rhoCkb ,
@@ -377,12 +377,10 @@ De agora em diante, dados $(\xk,\zk)$ gerado pelo Algoritmo, definimos a matriz 
 
 Podemos agora enunciar o seguinte lema.
 \begin{lema}\label{lemma:boundDxDzaff}
-Seja o ponto inicial $(\xzero ,\yzero,\zzero )$ dado em \eqref{eq:initial-point-mehrotra} e suponha válida a Condição  \ref{cond:xzzero-xzstar}. Então existe uma constante $\omega_1>1$   independente de $n$ tal que 
+Suponha válida a Condição  \ref{cond:xzzero-xzstar}. Então 
 	\begin{equation}
-		\norm{\Dk  \dekx }\leq \omega_1 n\rhoCkb ^{1/2}\text{ e } \quad  \norm{\Dik  \dekz  }\leq \omega_1 n\rhoCkb ^{1/2}.
-	\end{equation}
-
-
+		\norm{\Dk  \dekx }\leq \left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right) n\rhoCkb ^{1/2}\text{ e } \quad  \norm{\Dik  \dekz  }\leq \left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right)n\rhoCkb ^{1/2}.
+		\end{equation}
 \end{lema}
 \begin{proof}
 	Seja a direção  auxiliar
@@ -501,12 +499,12 @@ Se usarmos as equações \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparando-a
 				& \leq \frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}} n \rhoCkb ^{1/2}.
 \end{aligned}
 \]
-Podemos definir
+
+Note ainda que  como  $\ga\in(0,1)$, temos que 
 \begin{equation}
-	\label{eq:omega1}
-	\omega_1 = \frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}},
+	\label{eq:boundDxDzaff-const}
+	\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}} >1. \qedhere
 \end{equation}
-e como  $\ga\in(0,1)$, temos que $\omega_1>1$ como requisitado.
 \end{proof}
 
 
@@ -515,17 +513,18 @@ e como  $\ga\in(0,1)$, temos que $\omega_1>1$ como requisitado.
 
 
 Um corolário  das desigualdades dadas pela Proposição~\ref{prop:norm-uv} e do Lema~\ref{lemma:boundDxDzaff} acima é que 
-\begin{multline}
-\label{eq:normDxDzaff}
-	\norm{ \dekx  \dekz  } \leq \norm{ \dekx  \dekz  }_{1}  \\ \leq \frac{1}{2}\left(\norm{\Dk \dekx}^{2} + \norm{\Dik  \dekz  }^{2}\right)
-  					 \leq \left(\omega_1 n\rhoCkb ^{1/2}\right)^{2}
-  					 = \omega_1^{2} n^{2}\rhoCkb .
-\end{multline}
+\begin{align}
+	\norm{ \dekx  \dekz  } \leq \norm{ \dekx  \dekz  }_{1}   & \leq \frac{1}{2}\left(\norm{\Dk \dekx}^{2} + \norm{\Dik  \dekz  }^{2}\right) \notag
+  					\\ 
+  					& \leq \left[\left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right)  n\rhoCkb ^{1/2}\right]^{2}
+  				= \frac{(1 + 2\bdxzstar^{4})^{2} }{\ga} n^{2}\rhoCkb .
+  				 \label{eq:normDxDzaff}
+\end{align}
 
 \begin{lema}\label{lemma:boundDxDzc}
-	Seja o  ponto inicial escolhido como em \eqref{eq:initial-point-mehrotra} suponha válida a Condição  \ref{cond:xzzero-xzstar}. Se  \begin{equation}
+Suponha válida a Condição  \ref{cond:xzzero-xzstar}. Se  \begin{equation}
 	\label{eq:sig-eta-relation}
-	\nextsig \geq \frac{\sqrt{\ga} - \eta}{\omega_1^{2}},
+	\nextsig \geq \frac{\ga(\sqrt{\ga} - \eta)}{(1+2\bdxzstar^{2})^{2}},
 \end{equation} então existe uma constante $\omega_2\geq1$  independente de $n$ tal que 
 	\begin{equation}\label{eq:lemma-boundDxDzcx}
 		\norm{\Dk(\Decox)^{k}}^{2} + \norm{\Dik(\Decoz)^{k}}^{2} \leq \omega_2 n^{4}\rhoCkb .

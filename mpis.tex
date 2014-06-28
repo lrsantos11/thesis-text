@@ -62,7 +62,7 @@ Sejam
 \begin{equation}
 \label{eq:primal-dual-feas-set}
 \Pset = \{x : Ax = b, x\geq 0\} \quad\text{ e } \quad
-\Dset = \{ (y,z) : A^Ty + z = b, z\geq 0\}
+\Dset = \{ (y, z) : A^Ty + z = b, z\geq 0\}
 \end{equation}
  os conjuntos de pontos factíveis primais e duais 
 respectivamente. Usando essa notação, o par primal-dual de
@@ -70,14 +70,14 @@ respectivamente. Usando essa notação, o par primal-dual de
 \begin{equation}
 \label{eq:primal-dual-reescrito}
 \min_x\; c^Tx \; \text{ s.a. }\; x\in \Pset \qquad\text{ e } \qquad
-\max_{(y,z)}
-b^Tx \; \text{ s.a. }\; (y,z) \in \Dset.
+\max_{(y, z)}
+b^Tx \; \text{ s.a. }\; (y, z) \in \Dset.
 \end{equation}
 
 
 Denomina-se $\Fset = \Pset\times\Dset$ o conjuntos dos pontos primais-duais
 factíveis.
- Para fins de notação, pode-se dizer que se  $w = (x,y,z)$ é primal-dual factível, então $w\in\Fset$. Define-se também os conjuntos \[ \Qset =
+ Para fins de notação, pode-se dizer que se  $w = (x, y, z)$ é primal-dual factível, então $w\in\Fset$. Define-se também os conjuntos \[ \Qset =
  \{w\in\Real^{2n+m}:(x,z)\geq 0\} \] e \[ \Qset^+ = \{w\in\Real^{2n+m}:(x,z) >
  0\} \] respectivamente  como os
 conjuntos dos pontos de $\Real^{2n+m}$ não-negativos e positivos nas variáveis
@@ -191,14 +191,14 @@ entre o gap de complementaridade e o gap de dualidade mostrado em
 \eqref{eq:gap-complementarity} só vale quando o ponto é factível. 
 
 
-\begin{obs}
- Para fins  de
-notação, dados vetores $u$ e $v$ em $\Real^n$,  o vetor $UVe$ poderá
-ser representado usando-se o produto de Hadamard~\cite[p.~455]{Horn:1985tf},
-isto é, $uv$ é o vetor em $\Real^n$, tal que cada componente  $(uv)_i  = u_iv_i$, para $i=1,\ldots,n$.
-Além disso, a substituição $\xi e$ por $\xi$ pode ser feita, quando  $\xi$ for
-um escalar e $e = (1,\ldots,1)$, sempre respeitando e adequando as dimensões.
-\end{obs}
+% \begin{obs}
+%  Para fins  de
+% notação, dados vetores $u$ e $v$ em $\Real^n$,  o vetor $UVe$ poderá
+% ser representado usando-se o produto de Hadamard~\cite[p.~455]{Horn:1985tf},
+% isto é, $uv$ é o vetor em $\Real^n$, tal que cada componente  $(uv)_i  = u_iv_i$, para $i=1,\ldots,n$.
+% Além disso, a substituição $\xi e$ por $\xi$ pode ser feita, quando  $\xi$ for
+% um escalar e $e = (1,\ldots,1)$, sempre respeitando e adequando as dimensões.
+% \end{obs}
 
 
 
@@ -647,7 +647,7 @@ $\Nset_{-\infty}(\ga)$, baseada na norma-$\infty$, dada por
 todo }i =1,\dotsc,n \right\},
 \end{equation}
 para algum $\ga\in(0,1)$\footnote{Tipicamente são usados os seguintes valores 
-para os parâmetros: $\theta = 0.5$ e $\ga = 10^{-3}$~\cite[pg.
+para os parâmetros: $\theta = \num{0,5}$ e $\ga = \num{e-3}$~\cite[pg.
 9]{Wright:Primal-dual-interior-point:1997h}.}.
 
 A vizinhança $\Nset_2(\theta)$ é mais restrita já que certos pontos de $\Fset^+$
@@ -714,7 +714,7 @@ positividade exigida de $(x,z)$.
  A razão 
 \begin{equation}
 \label{eq:ratio-complementarity}
-\varrho(xz) = \frac{\min\{xz\}}{\max\{xz\}}
+\varrho(xz) = \frac{\min_i\{x_iz_i\}}{\max_i\{x_iz_i\}}
 \end{equation}
 dá uma medida de proporção entre o maior e o menor par de complementaridade.
  Claramente, $\varrho(xz)\in(0,1)$ e quando o iterado é perfeitamente
@@ -758,7 +758,7 @@ superior mais estreito:
 \[
 n> \frac{1+\ga}{\ga}
 \]
-Para um $\ga=0.1$, o limite é estreito sempre que $n>11$. 
+Para um $\ga=\num{0.1}$, o limite é estreito sempre que $n>11$. 
 
 Além disso, a complexidade do pior caso  para um método de passo-longo factível
 que utiliza a vizinhança simétrica $\Nset_s$ é $\Oset(n\ln(1/\eps))$~\cite{Colombo:2008ia}.
@@ -1101,7 +1101,7 @@ o sistema não linear \[ z\Dex + x\Dez = -xz + \eta\tau
  A principal vantagem do \ac{MPC-M} é que, na prática, ele produz tamanho de
  passos maiores antes de violar as restrições de não-negatividade. Isso normalmente
  significa que se está economizando número de iterações: de fato Mehrotra relata
- que temos economia da ordem de 35\%-50\% quando comparada com outras
+ que temos economia da ordem de 35\% a 50\% quando comparada com outras
  estratégias~\cite{Mehrotra:1992wr}. Nesse
  caso, o custo é apenas de um \emph{backsolve} a mais, já que a matriz do
  sistema de Newton é sempre a mesma. Assim, se o custo da fatoração é elevado,
