@@ -15,8 +15,8 @@ columns at once''~\cite{Karmarkar:1984cp}}}
 Este capítulo tem o objetivo de apresentar os \acl{MPI} primais-duais seguidores
 de caminho. A teoria central que versa sobre \ac{MPI} está bem estabelecida e há
 ótimos textos sobre o
-assunto~\cite{Vanderbei:2008vp,Wright:Primal-dual-interior-point:1997h}.
-Recentemente \textcite{Gondzio:2011ta} fez um resumo histórico no qual resgata as
+assunto~\cite{Vanderbei:2008vp,Wright:Primal-dual-interior-point:1997h,Bazaraa:2009uu,Fang:1993wu}.
+Recentemente \textcite{Gondzio:2011ta} fez um resumo histórico, no qual resgata as
 principais contribuições no tema.  Estas referências servem como texto
 introdutório e foi com base nelas e nos trabalhos de 
  \textcite{Colombo:2008wm} e \textcite{Villas-Boas:2000}, que este capítulo foi
@@ -25,7 +25,6 @@ introdutório e foi com base nelas e nos trabalhos de
 
      
 
-   
    
 \section{Um método de  pontos interiores}
 O  problema de \ac{PL} na forma padrão, 
@@ -56,7 +55,7 @@ em que $A\in \Real^{m\times n}$ é uma matriz de posto completo, $c,x,z\in
 \Real^n$, $y,b\in\Real^m$ e $m<n$. Chamamos o vetor $y$ de
 \emph{variáveis duais}, enquanto que  $z$ é o vetor das \emph{folgas duais}.
 Note que, como $A$ tem posto completo, existe uma relação unívoca entre
-$y$ e $z$. 
+$z$ e $y$. 
 
 Sejam
 \begin{equation}
@@ -85,21 +84,20 @@ $x$ e $z$.
 
 
 
-Com isso, seja
+Com isso, 
 \begin{equation}
   	\label{eq:F+}
   	\Fset^+ = \Fset \cap \Qset^+
   \end{equation}   o conjunto dos
 pontos primais e duais interiores. Como o próprio nome sugere, em Métodos de 
 Pontos Interiores dedica-se especialmente a estudar iterados que estejam
-contidos em $\Fset^+$, no caso de métodos factíveis, ou iniciando com pontos em $\Qset^{+}$, no caso de métodos infactíveis. 
+contidos em $\Fset^+$, no caso de métodos factíveis, ou iniciando com pontos em $\Qset^{+}$, no caso de métodos infactíveis. Ainda utilizamos as notações $\Pset^{+}$ e $\Dset^{+}$ para indicar os conjuntos primal e dual estritamente factíveis, isto é, respectivamente.
 
 
 Neste trabalho, o seguinte pressuposto é assumido como verdadeiro:
 
 \begin{pressup}\label{ass:interior-nonempty}
- O conjunto $\Fset^+$ é não-vazio, isto é, o ambos os conjuntos $\Pset$ e
- $\Dset$ contém algum vetor estritamente positivo.
+ O conjunto $\Fset^+$ é não-vazio, isto é, existe $(x,y,z)\in\Fset$, tal que $(x,z)\in\Qset^+$.
 \end{pressup}
 
 
@@ -119,9 +117,7 @@ $\Fset$.
 
 
 Apresenta-se agora  alguns resultados bem conhecidos sobre a relação entre o par
-primal-dual. Para maiores detalhes consulte-se
-\textcite{Colombo:2008wm,Wright:Primal-dual-interior-point:1997h,Bazaraa:2009uu,Fang:1993wu},
-textos que inspiraram esta apresentação.
+primal-dual. 
 
 \begin{lema}[Dualidade Fraca]\label{lema:weak-duality}
 Seja $(x,y,z)\in\Fset$. Então $c^Tx \geq b^Ty$.
@@ -227,13 +223,13 @@ F(w) = \bbm Ax - b \\ A^Ty + z - c \\ xz \ebm = 0\label{eq:KKT-Newton-F},\\
 (x,z)\geq 0. \label{eq:KKT-Newton-NN}
 \end{gather}
 \end{subequations}
-Todos os métodos primais-duais geram iterados $w^k = (x^k, y^k,z^k)$ que satisfazem
+Todos os \acl{MPI} primais-duais geram iterados $w^k = (x^k, y^k,z^k)$ que satisfazem
 \eqref{eq:KKT-Newton-NN} estritamente, isto é, $(x^k, z^k) > 0$. Esta
 propriedade dá origem ao termo \emph{ponto interior}. Ao respeitar estes
 limites, impede-se iterados tais que $F(w^k)=0$, mas que  não satisfaçam
 $(x,z)\geq 0$. Estes tipos de soluções são facilmente encontrados, no entanto
 não nos dão informações úteis para a solução de \eqref{eq:primal} e
-\eqref{eq:dual}. Alguns métodos primais-duais exigem que $w^k\in\Fset^0$, ou
+\eqref{eq:dual}. Alguns métodos primais-duais exigem que $w^k\in\Fset^+$, ou
 seja, que o ponto seja estritamente factível. No entanto, atualmente os métodos
 mais competitivos trabalham com pontos infactíveis, exigindo somente que o ponto
 seja estritamente interior (veja Seção~\ref{sec:infeasible_inicial_point})
@@ -260,7 +256,7 @@ seria  dada por
 Z& 0 & X
 \ebm.\] 
 
-Note que o passo Newton é encontrado 
+A direção de Newton é encontrado 
 ao resolver
 \begin{equation}
 \label{eq:KKT-Newton-step}
@@ -284,19 +280,18 @@ possível caminhar nesta direção com passo completo, isto é, $w + \Dew$
 geralmente viola o limite \eqref{eq:KKT-Newton-NN}. Para evitar essa dificuldade
 pode ser feita uma busca linear na direção de Newton tal que o novo iterado
 será \[ w + \alpha\Dew \] em que $\alpha \in (0,1]$ é o parâmetro da busca
-linear. Mesmo assim, geralmente podemos apenas dar passos pequenos nesta direção
+linear. Mesmo assim, geralmente podemos apenas realizar passos pequenos nesta direção
 ($\alpha \ll 1$) antes de violar a condição $(x,z) > 0$. Consequentemente passos
 puramente afim-escala não nos permitem um bom progresso em direção à solução.
 
-%\section{A trajetória central}
 
  De modo a poder contornar os problemas do método afim-escala, os métodos
- primais-duais sugerem algumas estratégias diferentes do  procedimento padrão de
+ seguidores de caminho sugerem algumas estratégias diferentes do  procedimento padrão de
  Newton:
  \begin{enumerate}[(i)]
 \item Enviesar a direção de busca de modo a fazê-la apontar para dentro do
 interior do ortante não-negativo $(x,z)\geq 0$, de tal forma que seja possível
-mover-se suficientemente ao longe dessa direção antes que algum componente de
+mover-se suficientemente  longe da fronteira de tal ortante, antes que algum componente de
 $(x,z)$ se torne negativo.
 \item Manter os componentes de $(x,z)$  longe do limite do ortante não negativo.
 Direções de busca calculadas por meio de pontos próximos a este limite tendem a
@@ -315,7 +310,7 @@ possível definir um \emph{problema de barreira} correspondente
 \begin{equation}
 \begin{array}{cc}
 \displaystyle \min_{x} & \displaystyle c^Tx - \tau\sum_{i=1}^n \ln x \\[6mm]
-\text{s.a.} & x\in\Pset^0
+\text{s.a.} & x\in\Pset^{+}
 \end{array}\tag{$P_\tau$},
 \label{eq:primal-barrier}
 \end{equation}
@@ -391,7 +386,7 @@ de que $c^T x (\tau) \geq c^Tx^* = b^T y^* \geq b^Ty(\tau)$, implicam que
 
  \[ c^Tx(\tau) \xrightarrow{\tau \to 0} c^Tx^* \quad \text{ e } \quad b^Ty(\tau)
  \xrightarrow{\tau \to 0} b^Ty^*.
-\] Assim, os valores objetivos do problema perturbado convergem para aqueles
+\] Assim, as funções objetivos do problema perturbado convergem para aqueles
 obtidos por uma solução ótima $(x^*,y^*,z^*)$ do problema original. Mais que isso, vale
 o seguinte resultado~\cite{Meggido:Pathways-to-the-optimal:1988u}:
  
@@ -521,7 +516,7 @@ sucesso, geralmente não são ótimas.
 
 
 \subsection{Modelo geral para métodos seguidores de caminho}
- A maioria dos métodos primais-duais seguidores de caminho dão passos de Newton
+ A maioria dos métodos primais-duais seguidores de caminho realizam passos de Newton
  em direção a pontos de $\Cset$ para os quais $\tau>0$, ao invés de passos
  puramente Newton para $F$. Como vimos,  o sistema \eqref{eq:KKT} é resolvido
  por fazer os pares complementares se alinhem (veja Equação
@@ -680,7 +675,7 @@ positividade exigida de $(x,z)$.
  iteração, dando lugar aos chamados \emph{métodos de passo-curto}. Esta
  propriedade impõe e ao mesmo tempo produz os melhores resultados de
  complexidade existentes para \ac{PL}: algoritmos de passo curto tem
- complexidade $\Oset(\sqrt{n}\ln (1/\eps))$. Os métodos de passo curto
+ iterações de ordem $\Oset(\sqrt{n}\ln (1/\eps))$. Os métodos de passo curto
  são os mais simples dos \ac{MPI} pois fixam $\al_k\equiv  1$ e $\eta_k \equiv \eta$
  dependente de $\theta$ e foram introduzidos por
  \textcite{Kojima:1989fw} e \textcite{Monteiro:1989go}. Como a redução do
@@ -756,12 +751,12 @@ pares complementares que são muito grandes, permitindo uma melhor centralidade.
 determinou o valor de $n$ para o qual a vizinhança simétrica impõe um limite
 superior mais estreito:
 \[
-n> \frac{1+\ga}{\ga}
+n> \frac{1+\ga}{\ga}.
 \]
 Para um $\ga=\num{0.1}$, o limite é estreito sempre que $n>11$. 
 
 Além disso, a complexidade do pior caso  para um método de passo-longo factível
-que utiliza a vizinhança simétrica $\Nset_s$ é $\Oset(n\ln(1/\eps))$~\cite{Colombo:2008ia}.
+que utiliza a vizinhança simétrica $\Nset_s$ é de ordem $\Oset(n\ln(1/\eps))$ de iterações~\cite{Colombo:2008ia}.
 Isso significa que  os limites superiores que diferenciam a vizinhança simétrica
 de $\Nset_{-\infty}$ não produzem perdas teóricas, ao mesmo tempo em que,
 contribuem com  a possibilidade de deixar os iterados mais centrados.
@@ -822,8 +817,8 @@ colunas densas.  Além disso, a região factível pode ter o interior vazio, o q
 torna inválida a teoria apresentada até aqui. Uma abordagem totalmente diferente
 é baseada na formulação
 auto-dual~\cite{Ye:1994gq}, mas, nesse caso, para tornar o problema sempre
-factível, aumenta-se o tamanho do problema, o que de certa forma aumenta o tempo computacional por exigir dois
-\emph{backsolves} adicionais no cálculo de próximo iterado, devido à
+factível, aumenta-se o tamanho do problema, o que de certa forma aumenta o tempo computacional por exigir duas retrosubstituições\footnote{Utilizaremos aqui o termo retrosubstituição pra indicar ambas a substituição progressiva e a retrosubstituição.} -- ou
+\emph{backsolves} -- adicionais no cálculo de próximo iterado, devido à
 introdução de colunas extra.
 
 \subsubsection{Métodos Infactíveis}
@@ -842,7 +837,7 @@ $(x({\eta\tau}),y({\eta\tau}),z({\eta\tau}))\in\Cset$. Pode-se provar
 que se fosse possível dar um passo completo  $(\al=1)$,  a
 infactibilidade seria eliminada. No entanto, na prática,  o limite da sequência
 de iterados é o ponto ótimo e somente quando o ponto atual está em uma
-vizinhança apropriada deste ótimo é que se dá um passo que zera os resíduos.
+vizinhança apropriada deste ótimo é que se dá um passo completo.
 
 \textcite{Kojima:1993fe}
 estabeleceram resultados de convergência para um \ac{MPI} infactível bem como uma regra para o
@@ -893,10 +888,10 @@ completa de métodos infactíveis veja \textcite[cap. 6]{Wright:Primal-dual-inte
 Do ponto de vista prático, a maioria dos códigos de implementação de \ac{MPI}
 baseia-se em alguma variação de um método do tipo  preditor-corretor
  devido a \textcite{Mehrotra:1992wr}. O \acrodef{MPC-M}{Método Preditor Corretor de Mehrotra} \ac{MPC-M} baseia-se no modelo geral
-para Métodos Seguidores de Caminho, dado no Pseudo-código
+para métodos seguidores de caminho, dado no Pseudo-código
 \ref{alg:modelo-geral}, mas altera a busca de direção puramente Newton com
-correções que são muito baratas computacionalmente mas que auxiliam a obter uma
-direção melhor. Além disso, um escolha adaptativa do parâmetro de centragem
+correções que são computacionalmente muito baratas  porém que auxiliam a obter uma
+melhor direção. Além disso, um escolha adaptativa do parâmetro de centragem
 $\eta$ é feita em cada iteração. Atualmente, nos códigos mais utilizados, tanto
 acadêmicos como \texttt{BPMPD}, \texttt{HOPDM}, \texttt{OOPS}, \texttt{OOQP},
 \texttt{PCx}, bem como  comerciais tais quais \texttt{Cplex}, \texttt{Mosek} e
@@ -914,8 +909,8 @@ do passo e o ponto inicial.
 
 Até aqui o tamanho de passo foi sempre considerado igual tanto para o problema
 primal, quanto para o problema dual. No entanto, a quase totalidade das
-implementações do método de Mehrotra usa passos diferentes para a variáveis
-primais e duais. Esta ideia não tem origem em Mehrotra, mas tem sido usada em
+implementações dos métodos de pontos interiores usa passos diferentes para a variáveis
+primais e duais. Esta ideia  tem sido usada em
 quase todos os desenvolvimentos práticos de métodos primais-duais e  contribui
 para reduzir em até 10\% no número de iterações, tendo como base de testes o
 conjunto  \texttt{Netlib}~\cite[pg.
@@ -944,7 +939,7 @@ $(x,y,z)$, tais que $(x,z)>0$ e a direção de busca consiste em três component
   
   \item Um termo de centralização,
   cujo tamanho é controlado pela escolha de forma adaptativa do parâmetro $\eta$;
-   \item Uma direção  \emph{corretora}  que tenta compensar de alguma forma a não-linearidade perdida na direção afim-escala.
+   \item Uma direção  \emph{corretora}  que tenta compensar de alguma forma a não-linearidade perdida na direção de Newton.
 \end{enumerate}
 
 
@@ -990,7 +985,7 @@ afim-escala, dado por
 \begin{equation}
 \label{eq:tau-affine}
  \tau_{\text{af}} = \frac{g_{\text{af}}}{n} = \frac{(x+\al_P^{\text{af}}\dex)^T
-(z+\al_D^{\text{af}}\dez)}{n}.
+(z+\al_D^{\text{af}}\dez)}{n},
 \end{equation}
 em que $g_{\text{af}}$ é o gap de complementaridade previsto para a direção afim-escala.
 Note que $\tau_{\text{af}}/\tau\in(0,1)$. Se $\tau_{\text{af}}\ll\tau$ então a direção afim-escala é
@@ -1004,7 +999,7 @@ melhor posicionado para reduzir o gap de complementaridade.
  \textcite{Mehrotra:1992wr} utiliza a seguinte heurística na escolha do parâmetro
  de centralização foi usada:
 \begin{equation}\label{eq:Mehrotra-centralizer-parameter}
-\eta = \left(\frac{\tau_{\text{af}}}{\tau}\right)^3
+\eta = \left(\frac{\tau_{\text{af}}}{\tau}\right)^3.
 \end{equation}
 Essa escolha sugere um parâmetro de barreira dado por 
 \begin{equation}\label{eq:Mehrotra-barrier-parameter}
@@ -1103,7 +1098,7 @@ o sistema não linear \[ z\Dex + x\Dez = -xz + \eta\tau
  significa que se está economizando número de iterações: de fato Mehrotra relata
  que temos economia da ordem de 35\% a 50\% quando comparada com outras
  estratégias~\cite{Mehrotra:1992wr}. Nesse
- caso, o custo é apenas de um \emph{backsolve} a mais, já que a matriz do
+ caso, o custo é apenas de uma retrosubstituição a mais, já que a matriz do
  sistema de Newton é sempre a mesma. Assim, se o custo da fatoração é elevado,
  economia nos custos computacionais também é alcançada por essa técnica. De 
  fato, o método de Mehrotra é vantajoso em relação a todas as implementações
@@ -1116,8 +1111,8 @@ o sistema não linear \[ z\Dex + x\Dez = -xz + \eta\tau
 O \acl{MPC-M} é baseado na hipótese de que um passo
 completo na direção corretora ocorre, o que raramente é possível. Mais que
 isso,  tentar corrigir a complementaridade fazendo todos os seus produtos
-iguais ao valor $\tau$ é um pedido muito forte e algumas vezes pouco eficaz. 
-É possível tentar remediar estes problemas através de uma extensão do \ac{MPC-M}
+iguais ao valor $\tau$ é um objetivo muito forte e algumas vezes pouco eficaz. 
+É possível minorar estes problemas através de uma extensão do \ac{MPC-M}
 que utiliza mais correções lineares de uma forma inteligente.
 
 O \emph{Método de Múltiplas Correções} deve-se a
@@ -1152,7 +1147,7 @@ Obviamente os produtos $\tilde{t}$ dificilmente serão iguais a $\tau$ como
 desejaríamos. Alguns componentes são bem menores que $\tau$ -- inclusive
 podendo ser negativos -- e outros muito maiores. Impondo que
 $\tilde{t}\in\Nset_s(\ga)$, colocamos limites superiores e inferiores para cada
-par complementar, também checamos as componentes que não satisfazem a
+par complementar, também verificamos as componentes que não satisfazem a
 vizinhança simétrica. 
 
 De fato, o que faremos é  mover produtos pequenos
@@ -1169,7 +1164,7 @@ com o lado direito dado por
 \label{eq:multiply-correctors-rhs}
 r = \bbm 0\\ 0\\ \xi\ebm
 \end{equation}
-em que o alvo $\xi$ é definido como
+em que a meta $\xi$ é definida como
 \[
 \xi_i = 
 \begin{cases}
@@ -1182,23 +1177,22 @@ em que o alvo $\xi$ é definido como
 
 Ressalte-se que o ponto que estamos buscando não pertence à trajetória central
 mas à vizinhança simétrica e que nem todos os produtos complementares sofrem
-correção. Assim, o alvo dado por \eqref{eq:multiply-correctors-rhs} é
-realmente alcançado. 
+correção. Assim, a meta dada por \eqref{eq:multiply-correctors-rhs} é
+realmente alcançada. 
 
 Dada uma nova direção, poderemos repetir o processo de atualizá-la tantas vezes
 quantas forem convenientes. Basta fazer-se $\DeMe  \leftarrow \De$ e procurar
 novamente a direção $\DeMu$. No entanto, o número máximo de correções de
 centralização permitida depende do problema. Tal número é obtido em
 \cite{Gondzio:1996uw} de modo heurístico. Note que a direção corretora
-obtida é aceita contanto que o tamanho do passo tenha aumentado de uma fração
+obtida é aceita contanto que o tamanho do passo tenha aumentado  uma fração
 desejada.
 
 
 Em códigos como o \texttt{PCx}~\cite{Czyzyk:1999hk}, o
 número máximo de correções é calculado considerando-se o esforço relativo entre o
 número de operações necessárias para calcular a decomposição da matriz
-resultante do sistema de Newton e o número de operações necessárias para fazer o
-\emph{backsolve}. Além disso estima-se a redução do número de iterações. Em
+resultante do sistema de Newton e o número de operações necessárias para fazer a retrosubstituição. Além disso estima-se a redução do número de iterações. Em
 \cite{Gondzio:1996uw}  o custo da fatoração não foi
 considerado. 
     
@@ -1221,7 +1215,7 @@ a solução $\hat{\om}$  maximiza o tamanho de passo $\al$.
 \subsection{Ponto Inicial}\label{subsec:initial-point}
 
 Como dissemos, códigos práticos que resolvem \ac{PL} através de \ac{MPI}
-utilizam passos infactíveis, exigindo apenas que $(x,z)>0$. Nada
+utilizam pontos infactíveis, exigindo apenas que $(x,z)>0$. Nada
 obstante, encontrar tal ponto seja tarefa mais fácil que encontrar
 um ponto inicial factível, obviamente deseja-se que a escolha seja feita de forma a
 acelerar a convergência do método. 
@@ -1311,15 +1305,15 @@ Para uma  análise de várias estratégias de pontos iniciais em
   
 \subsection{Critério de Parada}
 
-Os \ac{MPI}, ao contrário do  Simplex, por exemplo, encontram a solução apenas
+Os \ac{MPI}, ao contrário do  Simplex, por exemplo, encontram uma solução apenas
 assintoticamente. Por conta do parâmetro de barreira $\tau$, um \ac{MPI} jamais encontra
-a solução exata do problema de \ac{PL}. Com isso, é necessário um critério de
+umaa solução exata do problema de \ac{PL}. Com isso, é necessário um critério de
 parada que possa decidir quando o iterado atual está próximo o suficiente 
 do conjunto solução. 
 
 
 Códigos práticos de pontos-interiores,  geralmente geram uma sequência de
-pontos estritamente factíveis $\{(x^k,y^k,z^k)\}$ para os quais $x^k$ e $z^k$
+pontos  $\{(x^k,y^k,z^k)\}$ para os quais $x^k$ e $z^k$
 são ambos estritamente positivos. Nenhum desses iterados pode ser uma solução de
 fato do \ac{PL} já que para estes, $x^k_iz^k_i>0$, para $k=0,1,2,\ldots$, o que
 viola a condição de complementaridade \eqref{eq:KKT-nao-negativ}. Com efeito, os
@@ -1380,7 +1374,7 @@ em que $\tol = 10^{-8}$. Note que agora, em contraste com
 \eqref{eq:termination-criteria-pcx-primal} e
 \eqref{eq:termination-criteria-pcx-dual} são fixos, o que de certa maneira
 diminui a quantidade de operações, já que não é mais necessário encontrar a
-norma  -- ainda que norma-$\infty$ --  dos vetores $x$ e $y$ em cada
+norma  -- ainda que norma-$\infty$ --  dos vetores $x$ e $z$ em cada
 iteração. O valor de $x^{T}z$,  é usado em \eqref{eq:termination-criteria-pcx-gap} ao
  invés do \emph{gap} dual  como em \eqref{eq:termination-criteria-gap}, pois além de para pontos factíveis, \emph{gap} dual e \emph{gap} de complementaridade são iguais -- vide Equação \eqref{eq:gap-complementarity} -- é razoável que se $x^{T}z$ convergir para zero, então o \emph{gap} dual também converge para zero.
 

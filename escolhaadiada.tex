@@ -403,7 +403,7 @@ t^\mu = - X^{-1}e \text{\quad e \quad} t^\sig = X^{-1}\deX\dez.
 \]
 
 Desta forma, o maior esforço computacional por iteração do método proposto consiste
-em uma fatoração de Cholesky da matriz $B^{-1}$, seguido de três retrosubstituições ou \emph{backsolves}.
+em uma fatoração de Cholesky da matriz $B^{-1}$, seguido de três retrosubstituições.
  
  
 Define-se o próximo ponto, para cada uma das variáveis, como sendo \[\hat{w} = w
@@ -423,7 +423,7 @@ separando as direções, na forma
 Até o presente momento, a tripla $(\al, \mu,\sig)$, em que $\al$ é o tamanho do
 passo, ainda não foi escolhida. Para de fato dar o passo indicado acima, a
 abordagem proposta neste trabalho é tratar algebricamente $(\al, \mu,\sig)$ como
-uma tripla de variáveis reais, utilizar no máximo três \emph{backsolves} para
+uma tripla de variáveis reais, utilizar no máximo três retrosubstituições para
 escolhê-las e finalmente usar a combinação linear das direções $\dew$,
 $\Dew^\mu$ e $\Dew^\sig$, com $\al,\mu$ e $\sig$ determinando
 as constantes -- ou pesos --  de tal combinação.
