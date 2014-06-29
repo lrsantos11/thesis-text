@@ -1,8 +1,30 @@
 %!TEX root = tese.tex
-\chapter{Resultados Numéricos}
+\chapter{Experimentos Numéricos}
 \label{chap:numerical}
 
-\section{Heurística para Otimizacão \texorpdfstring{de $\nextphi$}{da função de mérito}}
+Neste capítulo descrevemos alguns detalhes de implementação que utilizamos em nossos experimento numéricos, bem os resultados de nosso algoritmo, comparando-o com o  PCx~\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de \textcite{Mehrotra:1992wr} que inclui correções múltiplas de \textcite{Gondzio:1996uw}. 
+
+
+
+\section{Detalhes de Implementação}
+
+O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++}, utilizando a \emph{framework} que o PCx disponibiliza. Isso significa, que todas as rotinas de álgebra linear, ponto inicial, critério de parada, entre outras, foram compartilhadas entre nosso algoritmo e o PCx. Além disso, todas as opções de compilação são as mesmas. Com efeito, a chamada do programa é exatamente igual e há apenas um comando \texttt{\#define} que faz com que o compilador seja desviado, dentro do \emph{loop} principal do PCx, para executar nosso algoritmo, retornando em seguida para a rotina principal e dar prosseguimento a execução usual do PCx.
+Por conta disso, chamaremos nossa implementação de PCx-EOP. Isso foi feito, para fazermos uma comparação justa entre nossos resultados e os que o PCx produz. 
+
+
+
+compilado com  compilador Intel  Composer 2013
+
+
+\subsection{Ponto Inicial}
+
+Documentação do PCx
+
+\subsection{Critério de Parada}
+
+Recompute Dual Variable
+
+\subsection{Solução do subproblema de otimização \texorpdfstring{de $\nextphi$}{da função de mérito}}
 
 
 \begin{itemize}
@@ -22,3 +44,6 @@ numéricos com conjunto de teste da \texttt{Netlib} e complementares, com
 comparação ao \texttt{PCx} e com o método desenvolvido pelo grupo.
 \end{itemize}
 
+
+
+\section{Resultados Numéricos}
