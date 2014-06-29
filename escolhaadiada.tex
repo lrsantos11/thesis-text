@@ -12,7 +12,7 @@ first.''}}
 \label{chap:merit-function}
 
 
-Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escreve-se a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada passo do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   método de escolha otimizada de parâmetros. Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
+Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escreve-se a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada iteração do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   método de escolha otimizada de parâmetros. Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
 
 \section{Um KKT escalado}
 
@@ -213,10 +213,9 @@ r_P = 0$ e logo
 em que \begin{equation}
 \label{eq:define-B}
 B = (ADA^T)^{-1}
-\end{equation} e portanto $B^{-1}$ é sempre simétrica definida positiva.
+\end{equation} e portanto $B^{-1}$ é sempre simétrica definida positiva, já ue $A$ tem posto completo.
 Consequentemente, para encontrar $\dew$ usa-se uma fatoração de 
-Cholesky de $B^{-1}$ e um
-\emph{backsolve} -- ou retrosubstituição.
+Cholesky de $B^{-1}$ e uma retrosubstituição.
 %XXX Como traduzir o Backsolve?
 
 \subsection{A direção ideal}
@@ -314,7 +313,7 @@ utilizados atualmente~\cite{Wright:Primal-dual-interior-point:1997h}. Isso signi
 Alguns autores 
 combinam direções de correção utilizando pesos para essas direções.
  \textcite{Colombo:2008ia} generalizam e estendem o trabalho de \textcite{Gondzio:1996uw},
-fazendo com que a combinação das correções múltiplas  tenha um peso, que é
+fazendo com que a combinação das múltiplas correções   tenha um peso, que é
 escolhido fazendo-se uma busca linear. Já \textcite{Jarre:1999tl}  propõem um subproblema
 linear que é resolvido a cada iteração e cuja solução determina os pesos que as direções de 
 correções de ordem superior terão na direção final. 
@@ -421,7 +420,7 @@ separando as direções, na forma
 \end{subequations}
 
 Até o presente momento, a tripla $(\al, \mu,\sig)$, em que $\al$ é o tamanho do
-passo, ainda não foi escolhida. Para de fato dar o passo indicado acima, a
+passo, ainda não foi escolhida. Para de fato realizar o passo indicado acima, a
 abordagem proposta neste trabalho é tratar algebricamente $(\al, \mu,\sig)$ como
 uma tripla de variáveis reais, utilizar no máximo três retrosubstituições para
 escolhê-las e finalmente usar a combinação linear das direções $\dew$,
@@ -505,7 +504,7 @@ e
 
 O Teorema \ref{thm:next=residual} é consequência direta da aplicação
 dos Lemas \ref{lemma:linear-residual} e \ref{lemma:nonlinear-residual}, que
-atacam a parte linear e não linear de  $\hat{\rho}$ de forma separada. Esses lemas
+consideram a parte linear e não linear de  $\hat{\rho}$ de forma separada. Esses lemas
 e suas demonstrações encontram-se na sequência. %no Apêndice
 % \ref{sec:tech-resultas}. 
  
@@ -672,7 +671,7 @@ Em geral, funções de mérito para \ac{MPI} servem para dar uma medida de quão
 próximo se está da solução do problema, embora nem sempre elas sejam usadas como
 critério de parada do algoritmo. 
 
-\textcite{Zhang:2006ic}, por exemplo, quer escolher o tamanho de passo de seu
+\textcite{Zhang:2006ic}, por exemplo, escolhe o tamanho de passo de seu
 algoritmo, tal que a  complementaridade e a factibilidade primal-dual sejam
 reduzidas. Para isso, este autor define sua função de mérito como a soma do
 \emph{gap} de complementaridade e da norma-2 do resíduo primal-dual, i.e., \[\phi(x,y,z) =
@@ -688,7 +687,7 @@ ou sub-ótima. Nesse caso, a função é dada por
 \{1,\norm{c} \} } + \frac{c^Tx - b^Ty}{\max \{1,\norm{b},\norm{c} \} }.
 \]
 Note que essa função de mérito tem relação com o próprio critério de parada
-do algoritmo, como visto em  \eqref{eq:termination-criteria-pcx}.
+da implementação, como visto em  \eqref{eq:termination-criteria-pcx}.
 
 
 
@@ -724,9 +723,9 @@ saber:
 
 \item \label{it:obs-Choice-merit-rho-l} A utilização das matrizes $H_P$ e $H_D$  e o Corolário
 \ref{cor:positive-residual} garantem que dado $(x,y,z)$ calculado pelo
-método e que esteja em $\Qset^+$ ,  o sinal de cada linha de $\rho_{L}$ permanece igual em todas as iterações --  de fato, determinamos que tais linhas sejam não-negativo. Neste caso, temos certeza de que para cada linha $i$ de $\rho_{L}$,  $\rho_L(x,y,z)_{i}\geq 0$. Portanto, podemos descartar o módulo na utilização da norma-1 de $\rho_{L}$, isto é,
+método e que esteja em $\Qset^+$ ,  o sinal de cada linha de $\rho_{L}$ permanece igual em todas as iterações --  de fato, determinamos que tais linhas sejam não-negativas. Neste caso, temos certeza de que para cada linha $i$ de $\rho_{L}$,  $\rho_L(x,y,z)_{i}\geq 0$. Portanto, podemos descartar o módulo na utilização da norma-1 de $\rho_{L}$, isto é,
 \[\frac{1}{m+n}\norm{\rho_L}_1 = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell. \] 
-Tal escolha permite transforma a função de mérito em um polinômio nas variáveis $(\al,\mu,\sig)$, conforme veremos a seguir; 
+Tal escolha permite transformar a função de mérito em um polinômio nas variáveis $(\al,\mu,\sig)$, conforme veremos a seguir; 
 
 
 
@@ -883,7 +882,7 @@ a_{1,0,1}\al\sig
 Esses 8 
 % \textcolor{red}{(10)} 
 coeficientes de três índices  não-nulos são
-os únicos coeficientes que são calculados nessa implementação, além das
+os únicos coeficientes que são calculados em nossa implementação, além das
 direções.
 
 % \textcolor{red}{
@@ -973,44 +972,44 @@ linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possíve
 \label{eq:residual-norm-relation-nonscaled}
 % \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\alk ) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
 \begin{aligned}
- r_P^{k+1}  & = (1-\alk) r_P^{k} = \nu^{k+1}  r_P^{0}, \\
-  r_D^{k+1}  & = (1-\alk) r_D^{k} = \nu^{k+1}  r_D^{0}, \\
+ r_P^{k+1}  & = (1-\alk) r_P^{k} = \nu_{k+1}  r_P^{0}, \\
+  r_D^{k+1}  & = (1-\alk) r_D^{k} = \nu_{k+1}  r_D^{0}, \\
 \end{aligned}
 \end{equation}
 e além disso
 \begin{equation}
 \label{eq:residual-norm-relation}
 % \norm{(\rho_P^{k+1},\rho_D^{k+1})}_1  = (1-\alk ) \norm{(\rho_P^{k},\rho_D^{k})}_1 = \nu_{k+1} \norm{(\rho_P^{0},\rho_D^{0})}_1,
- \rho_L^{k+1}  = (1-\alk) \rho_L^{k} = \nu^{k+1}  \rho_L^{0},
+ \rho_L^{k+1}  = (1-\alk) \rho_L^{k} = \nu_{k+1}  \rho_L^{0},
 \end{equation}
 em que  $\nu_0 = 1$ e 
 \begin{equation}
 	\label{eq:nu_k+1}
-\nu^{k+1} = (1-\alk)\nuk = \prod_{j=0}^{k}(1-\al^j) \geq 0.
+\nu_{k+1} = (1-\alk)\nuk = \prod_{j=0}^{k}(1-\al_j) \geq 0.
 \end{equation}
 \end{prop}
 
 \begin{proof}
 	Pela definição de resíduos  dada em \eqref{eq:KKT-residuals}   e pela Definição \ref{def:residual-vector}, temos que para todo $k$, $\rho_{P}^{k} = H_{P}r_{P}^{k} $ e  $\rho_{D}^{k} = H_{D}r_{D}^{k} $. 
 
-	Como $H_{P}$ e $H_{D}$ são não-singulares, e como $\rho_L^{k} = (\rho_P^{k},\rho_D^{k})$,  da primeira equação de \eqref{eq:next-residual-all} do Teorema \ref{thm:next=residual}, segue que $\rho_P^{k}  = (1-\al^{k-1})\rho_P^{k-1}$ e logo $
-			H_{P}r_{P}^{k}  = (1-\al^{k-1})H_{P}r_{P}^{k-1}$ concluindo que  
-		$H_{P}^{-1}H_{P}r_{P}^{k}  = (1-\al^{k-1})r_{P}^{k-1}$, isto é, $r_{P}^{k}  = (1-\al^{k-1})r_{P}^{k-1}$.
+	Como $H_{P}$ e $H_{D}$ são não-singulares, e como $\rho_L^{k} = (\rho_P^{k},\rho_D^{k})$,  da primeira equação de \eqref{eq:next-residual-all} do Teorema \ref{thm:next=residual}, segue que $\rho_P^{k}  = (1-\al_{k-1})\rho_P^{k-1}$ e logo $
+			H_{P}r_{P}^{k}  = (1-\al_{k-1})H_{P}r_{P}^{k-1}$ concluindo que  
+		$H_{P}^{-1}H_{P}r_{P}^{k}  = (1-\al_{k-1})r_{P}^{k-1}$, isto é, $r_{P}^{k}  = (1-\al_{k-1})r_{P}^{k-1}$.
 
 	Daí, por raciocínio indutivo segue que 
 	\[
 	\begin{aligned}
-		r_{P}^{k} & = (1-\al^{k-1})r_{P}^{k-1} \\
-	  			   & = (1-\al^{k-1})\cdots(1-\al^{0})r_{P}^{0}\\
+		r_{P}^{k} & = (1-\al_{k-1})r_{P}^{k-1} \\
+	  			   & = (1-\al_{k-1})\cdots(1-\al_{0})r_{P}^{0}\\
 				   & = \nuk r_{P}^{0}. 
 	\end{aligned}
 	\]
-Similarmente,  $\rho_D^{k}  = (1-\al^{k-1})\rho_D^{k-1}$ e logo $
-			H_{D}r_{D}^{k}  = (1-\al^{k-1})H_{D}r_{D}^{k-1}$, o que significa que   $r_{D}^{k}  = (1-\al^{k-1})r_{D}^{k-1}$. Novamente,  por raciocínio indutivo segue que 
+Similarmente,  $\rho_D^{k}  = (1-\al_{k-1})\rho_D^{k-1}$ e logo $
+			H_{D}r_{D}^{k}  = (1-\al_{k-1})H_{D}r_{D}^{k-1}$, o que significa que   $r_{D}^{k}  = (1-\al_{k-1})r_{D}^{k-1}$. Novamente,  por raciocínio indutivo segue que 
 	\[
 	\begin{aligned}
-		r_{D}^{k} & = (1-\al^{k -1})r_{D}^{k-1} \\
-	  			   & = (1-\al^{k -1})\cdots(1-\al_{0})r_{D}^{0}\\
+		r_{D}^{k} & = (1-\al_{k -1})r_{D}^{k-1} \\
+	  			   & = (1-\al_{k -1})\cdots(1-\al_{0})r_{D}^{0}\\
 				   & = \nuk   r_{D}^{0}. 
 	\end{aligned}
 	\]
@@ -1170,7 +1169,7 @@ g_C^i(\al,\mu,\sig)=      (1-\al)\left((\rho_C)_i - \ga\dbvec{\rho_C} \right) + 
  \al(\al-\sig)\left((L_{0,0})_i - \ga \dbvec{L_{0,0}}\right)   + \al^2\left(\La(\mu,\sig)_i  - \ga \dbvec{\La(\mu,\sig)}\right). 
 \end{multline}
 
-Por outro lado, considerando que $\nu^{k+1} = \nextnu = (1-\al)\nuk$ e levando em conta novamente os Teoremas  \ref{thm:next=residual} e  \ref{thm:varphi} em conjunto com \eqref{eq:def-g_L}, obtemos $g_L$,  também em função de $(\al,\mu,\sig)$ com a seguinte expressão
+Por outro lado, considerando que $\nextnu  = \nu_{k+1} =  (1-\al)\nuk$ e levando em conta novamente os Teoremas  \ref{thm:next=residual} e  \ref{thm:varphi} em conjunto com \eqref{eq:def-g_L}, obtemos $g_L$,  também em função de $(\al,\mu,\sig)$ com a seguinte expressão
 \begin{equation}
 \label{eq:g-L_explicit}
 g_L(\al,\mu,\sig) =     (1-\al)\left(\dbvec{\rho_C} -  \be_L \nuk   \right) + \al\mu  + 
@@ -1205,12 +1204,11 @@ Resumidamente, o subproblema de otimização global pode ser escrito como
 em que   $u\in\Real^3$ é um vetor de limitantes superiores para  $(\al,\mu,\sig)$. Para
 $\al$, $u_1<1$, pois  não queremos que o próximo ponto saia do interior do ortante positivo. Com efeito, também não queremos $\al=0$ e por isso mesmo,  durante a
 demonstração de convergência dar-se-á garantia de que é possível reduzir a
-função de mérito usando $\al>0$. Com efeito, o teste da razão é sempre executado em cada iteração para garantir isso.
-
+função de mérito usando $\al>0$. Com efeito, o teste da razão é sempre utilizado em cada iteração para garantir isso.
 Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $u_{2}$ e $u_{3}$ são escalares positivos que podem ou não ser diferente para esses dois parâmetros.
 
  
-O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto neste capítulo. A escolha do ponto inicial e do critério de parada, serão descritas no Capítulo \ref{chap:numerical}, junto aos resultados numéricos.
+O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto neste capítulo. A escolha do ponto inicial e do critério de parada, serão descritas no Capítulo \ref{chap:numerical}, assim como os resultados numéricos obtidos.
 
 \begin{algorithm}
 \onehalfspacing
@@ -1250,5 +1248,5 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto n
 \end{algorithmic}
 \end{algorithm}
   
- No próximo capítulo estabeleceremos os resultados teóricos dessa abordagem, garantindo convergência e polinomialidade do algoritmo, em relação a diminuição da função de mérito e da garantia de que o próximo ponto esteja na vizinhança $\Nset_{-\infty}$.
+ No próximo capítulo estabeleceremos os resultados teóricos dessa abordagem, garantindo convergência e polinomialidade do algoritmo, em relação a redução da função de mérito e da garantia de que o próximo ponto esteja na vizinhança $\Nset_{-\infty}$.
  
