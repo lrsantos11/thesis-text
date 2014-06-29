@@ -14,7 +14,7 @@
 \label{chap:convergence}
 
 
-Conforme esclarecem \textcite{Zhang:1993gn}, do ponto de vista matemático, os conceitos de polinomialidade de um algoritmo e de taxa de convergência são incompatíveis. Enquanto a polinomialidade tem sentido apenas quando o algoritmo termina em um número finito de passos, a taxa de convergência  está definida apenas para algoritmos que tomam infinitos passos para convergir. Quando diz-se que um Método de Pontos Interiores é polinomial, tem-se em mente dados inteiros ou racionais e terminação finta. Por outro lado, quando diz-se que o mesmo algoritmo tem convergência linear, por exemplo, isso é feito  no sentido tradicional da análise numérica~\cite{Ortega:2000vd}.
+Conforme esclarecem \textcite{Zhang:1993gn}, do ponto de vista matemático, os conceitos de polinomialidade de um algoritmo e de taxa de convergência são incompatíveis. Enquanto a polinomialidade tem sentido apenas quando o algoritmo termina em um número finito de passos, a taxa de convergência  está definida apenas para métodos que tomam infinitos passos para convergir. Quando diz-se que um Método de Pontos Interiores é polinomial, tem-se em mente dados inteiros ou racionais e terminação finta. Por outro lado, quando diz-se que o mesmo algoritmo tem convergência linear, por exemplo, isso é feito  no sentido tradicional da análise numérica~\cite{Ortega:2000vd}.
 Daí, da mesma forma que esses autores, discutiremos aqui tanto polinomialidade quanto taxa de convergência do Método de Escolha Otimizada de Parâmetros. Daí, o objetivo principal  deste capítulo é   provar  que o Algoritmo \ref{alg:optimized-choice-of-parameters} converge em uma taxa Q-linear e tem ordem polinomial de iterações.
 
 
@@ -167,7 +167,7 @@ então
 
 Em demonstrações de convergência e polinomialidade de Métodos de Pontos Interiores  infactíveis, em particular no métodos do tipo Mehrotra como o que propomos,  é  necessária a aceitação de algumas hipóteses ou condições sobre o ponto inicial e  sobre uma solução ótima. Veja por exemplo os trabalhos de \textcite{Wright:1994jd}, \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h}, \textcite{Wright:1996kj,Zhang:2006ic,Zhang:1994fz,Zhang:1995fu}. Tais hipóteses permitem estabelecer um limitante para a sequência $\{(\xk,\zk)\}$, o que é de vital importância para as demonstrações.
 
-No entanto, embora as hipóteses  utilizadas nos trabalhos acima produzam uma ordem de convergência  polinomial, estas são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento do algoritmo e ao mesmo tempo, exigem o conhecimento \emph{a priori}  de um limitante para a solução  ótima, o que torna o algoritmo não implementável. 
+No entanto, embora as hipóteses  utilizadas nos trabalhos acima produzam uma ordem de convergência  polinomial, estas são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento quando utilizados e ao mesmo tempo, exigem o conhecimento \emph{a priori}  de um limitante para a solução  ótima. 
 
 Nesse trabalho, preferimos  obter uma ordem de convergência um pouco maior, embora ainda polinomial, porém com um ponto inicial cuja eficácia é bem demonstrada na prática e com uma condição que envolve o ponto inicial e uma solução ótima, condição esta foi verificada como válida, em nosso conjunto de testes. Em resumo, isso significa que a análise de convergência é feita utilizando o Algoritmo que é de fato implementado.
 
@@ -358,7 +358,7 @@ A próxima proposição será utilizada nas demonstrações que seguem e é um f
 		\norm{uv}\leq \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right)
 	\end{equation}
 \end{prop}
-\begin{proof} A primeira desigualdade é valida por conta da equivalência de normas~\cite[p.~53]{Golub:1996wp}. Quanto às demais, vejamos que 
+\begin{proof} A primeira desigualdade é válida por conta da equivalência de normas~\cite[p.~53]{Golub:1996wp}. Quanto às demais, vejamos que 
 \[
 	\begin{aligned}
 		\norm{uv}_1^{2} & = \left( \sum_{i=1}^{n}\abs{u_i v_i}  \right)^{2} \leq  \sum_{i=1}^{n}\abs{u_iv_i}^{2}\\
