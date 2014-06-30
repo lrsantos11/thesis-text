@@ -677,10 +677,17 @@ $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <
 
 
 \begin{lema}\label{lemma:alC_delta-1}
-Seja $\nextal_{C}$ dado em \eqref{eq:al-C+al-L}. Então existe uma constante $\delta_{1}$ independente de $n$ tal que 
+Seja $\nextal_{C}$ dado em \eqref{eq:al-C+al-L}. Então  
 \[
-\nextal_{C} > \delta_{1}/n^{4}.
+\nextal_{C} \geq \delta_{1}/n^{4},
 \]
+em que 
+\begin{equation}
+	\label{eq:delta1}
+	\de_{1} = \dfrac{2\eta\ga(1-\ga)}{\eta^{2} + 8\eta (1+2\bdxzstar^{4}) + 4 (1+2\bdxzstar^{4})^{2}   },
+\end{equation}
+
+é uma constante independente de $n$.
 \end{lema}
 
 \begin{proof}
@@ -777,10 +784,10 @@ Os Lemas \ref{lemma:boundDxDzaff},   \ref{lemma:boundDxDzc} e \ref{lemma:boundDx
 												\dfrac{4(1+2\bdxzstar^{4})\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]}{\ga^{2}}\: n^{3}\rhoCkb + 	 \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{2\ga^{3}} \: n^{4}\rhoCkb.
 \end{multline*}
 
-Como $\nextsig = 0$ e $n^{2}<n^{3}<n^{4}$ e definindo $t = (1 + 2\bdxzstar^{4})$, temos que 
+Como $\nextsig = 0$ e $n^{2}\leq n^{3}\leq  n^{4}$ e definindo $t = (1 + 2\bdxzstar^{4})$, temos que 
 
 	\begin{align}
-	\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i} & < \left[ \frac{2(1 + 2\bdxzstar^{4})^{2} }{\ga} + 												\dfrac{4\eta(1+2\bdxzstar^{4})}{\ga} +	 \dfrac{\eta^{2}}{2\ga} \right] n^{4}\rhoCkb \notag \\
+	\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i} & \leq \left[ \frac{2(1 + 2\bdxzstar^{4})^{2} }{\ga} + 												\dfrac{4\eta(1+2\bdxzstar^{4})}{\ga} +	 \dfrac{\eta^{2}}{2\ga} \right] n^{4}\rhoCkb \notag \\
 										& =	\dfrac{1}{\ga}\left[ 2t^{2} + 4\eta t + \eta^{2}/2 \right] n^{4}\rhoCkb
 										\label{eq:zeta+chi+xi}
 	\end{align}
@@ -791,14 +798,11 @@ Como $\nextal^{i}_{C}$, dada em \eqref{eq:al-C+al-L}, é o maior número em $(0,
 Por conta disso, e a partir  de \eqref{eq:al-Ci-final} e de \eqref{eq:zeta+chi+xi} temos que 
 \[
 \begin{aligned}
-\nextal_{C}^i \geq \al_{C}^{i} & > \dfrac{(1-\ga)\eta\rhoCkb}{\dfrac{1}{\ga}\left( 2t^{2} + 4\eta t + \eta^{2}/2 \right)\rhoCkb n^{4} } \\			 
+\nextal_{C}^i \geq \al_{C}^{i} & \geq \dfrac{(1-\ga)\eta\rhoCkb}{\dfrac{1}{\ga}\left( 2t^{2} + 4\eta t + \eta^{2}/2 \right)\rhoCkb n^{4} } \\			 
 							& = \dfrac{\ga(1-\ga)\eta}{ 2t^{2} + 4\eta t + \eta^{2}/2 } \:\dfrac{1}{n^{4}} = \dfrac{\de_{1}}{n^{4}},
 \end{aligned}
 \]
-com 
-\begin{equation} \label{eq:delta1}
-\de_{1} = \dfrac{\eta\ga(1-\ga)}{ 2t^{2} + 4\eta t + \eta^{2}/2 } = \dfrac{2\eta\ga(1-\ga)}{\eta^{2} + 8\eta (1+2\bdxzstar^{4}) + 4 (1+2\bdxzstar^{4})^{2}   } .
-\end{equation}
+em que a substituição de $t$ na penúltima igualdade acima, nos dá a Equação~\eqref{eq:delta1}.
 
  O lema fica provado, considerando que para algum $j\in\{1,\ldots,n\}$, $ \al_{C}^{j}=\nextal_{C} $.
  \end{proof}
@@ -809,10 +813,15 @@ com
 
 
 \begin{lema}\label{lemma:alL_delta-2}
-Seja $\nextal_{L}$ dado em \eqref{eq:al-C+al-L}. Então existe uma constante $\delta_{2}$ independente de $n$ tal que  
+Seja $\nextal_{L}$ dado em \eqref{eq:al-C+al-L}. Então 
 \[
-\nextal_{L} \geq \delta_{2}/n^{2}.
-\]
+\nextal_{L} \geq \delta_{2}/n^{2},
+\]em que 
+\begin{equation}
+	\label{eq:delta2}
+	\delta_{2} = \dfrac{\ga\eta } {(1 + 2\bdxzstar^{4})^{2}  + 2(1+2\bdxzstar^{4})\eta}
+\end{equation}
+é uma constante independente de $n$.
 \end{lema}
 
 
@@ -862,10 +871,10 @@ Os Lema~\ref{lemma:boundDxDzaff-c} e  \ref{lemma:boundDxDzaff} em conjunto com  
 \begin{aligned}
 \nextal_L  & \geq \frac{\eta\rhoCkb  } {\dfrac{1}{n} \left(\norm{ \dekx  \dekz }_1 +  \norm{ \dekx \Decoz  \Decox \dekz }_1 \right) } \\
 		   & \geq \dfrac{\eta\rhoCkb  } {\dfrac{1}{n} \left(\dfrac{(1 + 2\bdxzstar^{4})^{2} }{\ga} n^{2}\rhoCkb + \dfrac{2(1+2\bdxzstar^{4})\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]}{\ga^{2}}\: n^{3}\rhoCkb  \right) } \\
-		   & = \left( \dfrac{\ga\eta } {(1 + 2\bdxzstar^{4})^{2}  + 2(1+2\bdxzstar^{4})\eta}\right) \dfrac{1}{n^{2}}, 
+		   & = \left( \dfrac{\ga\eta } {(1 + 2\bdxzstar^{4})^{2}  + 2(1+2\bdxzstar^{4})\eta}\right) \dfrac{1}{n^{2}} = \frac{\delta_{2}}{n^{2}}, 
 \end{aligned}
 \]
-o que finalizam a demonstração. 
+em que $\de_{2}$ é exatamente o dado na Equação \eqref{eq:delta2}
 \end{proof}
  
 Agora podemos enunciar e demonstrar  Teorema que mostra que a sequência $\left\{ \varphi_{k}\right\}$ gerada pelo nosso Algoritmo tem taxa de convergência Q-linear. 
@@ -910,9 +919,12 @@ Daí, considerando que $\dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\leq 1
 						& = \frac{\nextdel}{n^{4}},		
 		\end{aligned}
 	\]
-	com 	\[\nextdel = 
-	(1 -  \eta)\delta_{1} - \delta_{1}^{2}t_{1}\left(\ga t_{1}  + 2\eta    \right) = (1 -  \eta)\delta_{1} - \dfrac{\delta_{1}^{2}}{\ga}\left((1+2\bdxzstar^{4})^{2}  + 2\eta(1+2\bdxzstar^{4})    \right) 
-	.\] 
+	com 	\begin{equation}
+		\label{eq:nextdelta}
+		\nextdel = 
+	(1 -  \eta)\delta_{1} - \delta_{1}^{2}t_{1}\left(\ga t_{1}  + 2\eta    \right) = (1 -  \eta)\delta_{1} - \dfrac{\delta_{1}^{2}}{\ga}\left((1+2\bdxzstar^{4})^{2}  + 2\eta(1+2\bdxzstar^{4})    \right).
+	\end{equation} 
+	
 	 A demonstração será finalizada ao verificarmos que $0<\nextdel<1$.
 
 Agora, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substituindo na última igualdade, encontramos o valor de $\nextdel$ a depender de $\ga$ e $\eta$,  ou seja, 
@@ -930,7 +942,7 @@ Agora, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substitui
 
 	Considerando que $t\geq3$, pois $\bdxzstar\geq1$ e $\sqrt{\ga}<\eta<1$, para $0 < \ga \leq 1/10$, segue que
 	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0.\]
-	Sob essas condições, como o $p$ é polinômio de grau 3 em $\eta$, pelo Teorema do Valor Intermediário de Bolzano \cite[Teorema 5.3.7]{Bartle:2011tr}, escolhido $\ga$, existe pelo menos uma  raiz  de $p$ no intervalo $(\sqrt{1/10},1)$. 
+	Sob essas condições, escolhido $\ga$,  $p$ um é polinômio de grau 3 em $\eta$. Pelo Teorema do Valor Intermediário de Bolzano~\cite[Teorema 5.3.7]{Bartle:2011tr},  existe pelo menos uma  raiz  de $p$ no intervalo $(\sqrt{1/10},1)$. 
 
 	Seja $\eta_{1}$ a menor dessas raízes. Nesse caso, por continuidade de $p$, para qualquer $\eta  < \eta_{1}$ e $\ga$ escolhido como acima, temos que  $p(\eta,\ga) >0$. 
 
@@ -940,49 +952,6 @@ Agora, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substitui
 
 
 
-
-% \begin{proof} 
-% Por conta dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, é suficiente considerar o caso em que $\nextal \neq \min\{\nextal_{C},\nextal_{L} \}$.  Considerando as definições dadas na Equação~\eqref{eq:defin-zeta-chi}, podemos rescrever \eqref{eq:theta} como
-% \[
-% \theta(\al) =  \dfrac{\al\left[ \nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb  - \al\left(\zeta + \chi
-% \right) \right]}{\nuk \dbvec{\rho_L}_0 +
-% \rhoCkb }.
-% \]
-	
-% 	%FIXME Verificar
-% Note que \[\theta'(0) = 1 - \frac{\eta\rhoCkb }{\nuk \dbvec{\rho_{L}}_{0}+\rhoCkb }.\]
-% Se 
-% \[
-% 0< \eta < \dfrac{\nuk \dbvec{\rho_{L}}_{0}}{\rhoCkb } + 1 % \leq \frac{\be}{\rhoCkb _{0}}  + 1,
-% \]
-% então $\theta'(0)>0$ e por continuidade, temos que é possível escolher $\al_k\in(0,1]$ tal que 
-% \[
-% 0 < \theta_k = \theta(\al_k) < 1.
-% \]
-
-% Portanto, vamos estabelecer um limitante inferior para $\nextal$. Teremos dois casos a considerar. 
-% \begin{enumerate}[{Caso} (i):]
-% 	\item $(\zeta + \chi) > 0$. Neste caso, $\theta(\al)$ é uma quadrática com concavidade voltada para baixo. Assim, o seu máximo será atingido no vértice, isto é, em
-% 	\[
-% 		\nextal = \frac{\nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb }{2(\zeta + \chi)}.
-% 	\]
-
-% 	Note que, neste caso, $\zeta + \chi = \abs{\zeta + \chi} \leq \abs{\zeta} + \abs{\chi}$.  Utilizando as Equações \eqref{eq:bound-zeta} e \eqref{eq:bound-chi}, vemos que  
-
-% 	\[
-% 		\nextal \geq \left( \frac{\nuk \dbvec{\rho_L}_0/\rhoCkb  + (1-\eta)}{2( \omega_1^{2}/n  + \tfrac{1}{2}\omega_{3})}\right)\dfrac{1}{n^{2}}.
-% 	\]
-% 	\color{red}
-% 	Sei que \[ \frac{\norm{\rho_{L}}}{(\xk)^{T}z} = \frac{\dbvec{\rho_{L}}}{\rhoCkb }=  \frac{\nuk \dbvec{\rho_L}_0}{\rhoCkb } \leq \frac{\beta}{\rhoCkb _0} \] para toda iteração, por conta da vizinhança $\Nset_{\infty}(\ga,\be)$. Como garantir que o limitante de $\nextal$ seja grande o suficiente? Posso considerar que $\rho_{L}\to 0$ antes que $\rho_{C}\to 0$. Nesse caso, posso considerar que se eu escolher $\be\geq 1$ tal que $\frac{\beta}{\rhoCkb _0} \leq 1$, então temos um limitante suficiente? 
-
-
-% 	\color{black}
-% 	\item $(\zeta + \chi) < 0$. Agora, $\theta(\al)$ é uma quadrática com concavidade voltada para cima. Com isso, o seu máximo será atingido em algum ponto à direita da única raiz não nula, isto é, em $\nextal$, tal que 
-% 	\[
-% 		\nextal \geq  \frac{\nuk \dbvec{\rho_L}_0 + (1-\eta)\rhoCkb }{(\zeta + \chi)}.
-% 	\]
-% \end{enumerate}
-% \end{proof}
 
 
 
@@ -996,7 +965,7 @@ Finalmente podemos enunciar e provar o Teorema de complexidade.
 	para o ponto inicial $(\xzero,\yzero,\zzero)$ dado em \eqref{eq:initial-point-mehrotra} seja válido	
 	\begin{equation}
 	\label{eq:varphi0-eps-kappa}
-		\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}}
+		\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}},
 	\end{equation} 
 	com  $\kappa$ uma constante positiva. Então  existe um índice \[K =  \Oset\left(n^{4}{\ln\frac{1}{\varepsilon}}\right),\] tal que 
 	 $\varphi_{k}\leq \varepsilon \text{ para todo } k \geq K$.
@@ -1034,8 +1003,9 @@ o que termina a demonstração.
 
 
 
-% \color{red}
-O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\{\norm{(r_{P}^{k},r_{D}^{k})}\}$ tem taxa de convergência R-linear.
+
+
+O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}.
 
 \begin{corol}
 Suponha que escolha-se  $\tol = \num{e-8}$  e $\varepsilon$   tal que 
@@ -1124,6 +1094,13 @@ Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que
 % \end{algorithmic}
 % \end{algorithm}
 
-No presente capítulo, estabelecemos os resultados de $\eps$-convergência e polinomialidade do nosso método, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}, com uma escolha particular do ponto inicial. Além disso, garantimos que é possível escolher um $\eps>0$ tal que um critério de parada equivalente ao usado em várias implementações. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (EOP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns experimentos numéricos feitos com este método.
+
+
+A melhor complexidade para métodos de pontos interiores preditores-corretores do tipo Mehrotra com ponto inicial infactível é dado por \textcite{Zhang:1996it}, com ordem de iterações $\Oset(n^{\num{1.5}})$ e taxa de convergência Q-subquadrática. Nossa análise demonstrou que temos uma ordem de iterações um pouco maior, $\Oset(n^{\num{4}})$, porém polinomial, e convergência Q-linear. 
+
+No entanto, note-se que diferentemente do MPI-EOP, 
+
+
+No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (EOP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns detalhes dos experimentos numéricos feitos com este método.
 
 
