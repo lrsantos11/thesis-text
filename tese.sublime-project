@@ -8,6 +8,11 @@
 	],
 	"settings":
 	{
-		"TEXroot": "tese.tex"
+		"TEXroot": "tese.tex",
+		"cmd": ["latexmk", "-cd",
+					"-e", "\\$pdflatex = 'pdflatex %O -interaction=nonstopmode -synctex=1 %S'",
+					//"-silent",
+					"--shell-escape",
+					"-f", "-pdf"]
 	}
 }

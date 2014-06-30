@@ -180,37 +180,40 @@
 	"buffers":
 	[
 		{
-			"file": "configuracao.tex",
+			"contents": "Local:    numerical ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     7afc9e9 Delta1 and Delta2 added to statement of lemmas\n\n\nChanges:\n	Modified   numericos.tex\n	Modified   pacotes.tex\n\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
 			"settings":
 			{
-				"buffer_size": 4280,
+				"buffer_size": 966,
+				"line_ending": "Unix",
+				"name": "*git-status*: thesis-text",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"file": "mpis.tex",
+			"settings":
+			{
+				"buffer_size": 65380,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "pacotes.tex",
-			"settings":
-			{
-				"buffer_size": 4359,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "%!TEX root = tese.tex\n\\chapter{Detalhes deResultados Numéricos}\n\\label{chap:numerical}\n\n\\section{Heurística para Otimizacão \\texorpdfstring{de $\\nextphi$}{da função de mérito}}\n\n\n\\begin{itemize}\n\\item Descrever a heurística utilizada para resolver o subproblema de otimização\nglobal de polinômios. Artigo escrito em conjunto com os orientadores está sendo\nfinalizado para submissão em que tal subproblema também aparece, porém num\nmétodo similar. Tal trabalho contempla também uma biblioteca para resolver o\nsubproblema de otimização de polinômios.\n\\begin{itemize}\n  \\item Este método similar, já em fase final de implementação,\n  demonstra-se competitivo com o \\texttt{PCx} nos testes preliminares\n \\end{itemize}\n\\item Implementação do método proposto, utilizando-se da biblioteca supra\ncitada para resolver os subproblemas de otimização de polinômios.\n\\item Realizar  testes\nnuméricos com conjunto de teste da \\texttt{Netlib} e complementares, com\ncomparação ao \\texttt{PCx} e com o método desenvolvido pelo grupo.\n\\end{itemize}\n\n",
+			"contents": "%!TEX root = tese.tex\n\\chapter{Experimentos Numéricos}\n\\label{chap:numerical}\n\nNeste capítulo descrevemos alguns detalhes de implementação que utilizamos em nossos experimento numéricos, bem os resultados de nosso algoritmo, comparando-o com o  PCx~\\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de \\textcite{Mehrotra:1992wr} que inclui correções múltiplas de \\textcite{Gondzio:1996uw}. \n\n\n\n\\section{Detalhes de Implementação}\n\nO Algoritmo \\ref{alg:optimized-choice-of-parameters} foi implementado em  \\texttt{C/C++}, utilizando como base a implementação PCx~\\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \\textcite{Mehrotra:1992wr}. O PCx permite correções de ordem superior de \\textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além de  de  o refinamento por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência PCx-r.\n\n Com efeito, a chamada do programa é exatamente igual e há a introdução do código de nosso algoritmo dentro do \\emph{loop} principal do PCx-r,  retornando em seguida para a rotina principal e dar prosseguimento a execução usual do PCx-r. Com isso, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalamento, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de , ponto inicial,   bem como todas as rotinas de álgebra linear -- incluindo-se aí as rotinas de \\textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky bem como refinametno por gradientes conjugados --, critério de parada, saída de dados, entre outras. Por conta disso, chamaremos nossa implementação de PCx-EOP. Isso foi feito, para fazermos uma comparação justa entre nossos resultados e os que o PCx produz. \n\n\n\nAlém disso, para todos os códigos foram usadas as mesmas opções de compilação e o mesmo computador. Com essa estratégia, diferenças nos tempos de CPU ou no número de iterações podem ser atribuídas apenas à implementação de cada algoritmo.\n\\subsection{Ponto Inicial}\n\nO ponto inicial dado por \\textcite{Mehrotra:1992wr}, foi genericamente descrito na seção \\ref{subsec:initial-point}. Ali, mostramos que  encontra-se o ponto $(\\xtil,\\ytil,\\ztil)$ que é solução de norma mínima que satisfaz as restrições primais e\nduais. As soluções para estes problemas são dada por \n\\begin{equation}\n	\\label{eq:intial-point-LSquare}\n	\\xtil = A^T(AA^T)^{-1}b, \\quad \\ytil = (AA^T)^{-1}Ac\\quad \\text{ e }\n\\quad \\ztil = c - A^T\\ytil.\n\\end{equation}\n\nAlém disso, o ponto é transladado para o ortante positivo \natravés do uso de constantes  $\\vartheta_x>0$ e $\\vartheta_ z>0$ tais que  $(x^0,y^0,z^0) = (\\xtil+ \\vartheta_x e,\\ytil,\\ztil+\\vartheta_z e)$ garantindo que $(x^0,z^0)>0$.\n\n A rotina \\verb|InitialPoint()| do PCx é responsável por gerar o ponto inicial, e portanto calcular  $\\vartheta_x,\\vartheta_ z)$. A implementação feita no PCx possui  pequenas alterações em relação ao proposto por \\citeauthor{Mehrotra:1992wr}, porém que não  estão documentadas no Manual de Utilização do PCx~\\cite{Czyzyk:1998vw}. Por isso, documentaremos tal ponto, no intuito de deixar claro qual o modo como calculamos de fato o ponto inicial. Tal ponto inicial é utilizado em ambos PCx-r e PCx-EOP e a análise de convergência e complexidade relatada no Capítulo~\\ref{chap:convergence}, em particular a Condição~\\ref{cond:xzzero-xzstar} continua válida ao utilizá-lo para iniciar nosso algoritmo.\n\nA partir de $(\\xtil,\\ytil,\\ztil)$ dado por \\eqref{eq:intial-point-LSquare}, calcula-se as constantes\n$\\tilde{\\vartheta_x} = \\max\\{\\displaystyle\\num{-1.5}*\\min_{i},\\{\\xtil_{i}\\};\\num{0.1}\\}$ e $\\tilde{\\vartheta_z} = \\max\\{\\displaystyle\\num{-1.5}*\\min_{i},\\{\\ztil_{i}\\},\\num{0.1}\\}$. Daí se obtém\n\n\\[\n\\vartheta_{x} = \\tilde{\\vartheta_x} + \\num{0.5}\n\\]\n\n\n\\subsection{Critério de Parada}\n\nRecompute Dual Variable\n\n\\subsection{Solução do subproblema de otimização \\texorpdfstring{de $\\nextphi$}{da função de mérito}}\n\n\n\\begin{itemize}\n\\item Descrever a heurística utilizada para resolver o subproblema de otimização\nglobal de polinômios. Artigo escrito em conjunto com os orientadores está sendo\nfinalizado para submissão em que tal subproblema também aparece, porém num\nmétodo similar. Tal trabalho contempla também uma biblioteca para resolver o\nsubproblema de otimização de polinômios.\n\\begin{itemize}\n  \\item Este método similar, já em fase final de implementação,\n  demonstra-se competitivo com o \\texttt{PCx} nos testes preliminares\n \\end{itemize}\n\\item Implementação do método proposto, utilizando-se da biblioteca supra\ncitada para resolver os subproblemas de otimização de polinômios.\n\\item Realizar  testes\nnuméricos com conjunto de teste da \\texttt{Netlib} e complementares, com\ncomparação ao \\texttt{PCx} e com o método desenvolvido pelo grupo.\n\\end{itemize}\n\n\n\n\\subsection{Conjunto de Problemas de teste}\n\n\\begin{tabular}{llll}\n\\toprule\nNome     & Linhas  & Colunas  & NEN \\\\\n\\midrule\n25fv47   & 822   & 1571  & 11127    \\\\\n80bau3b  & 2263  & 9799  & 29063    \\\\\nadlittle & 57    & 97    & 465      \\\\\nafiro    & 28    & 32    & 88       \\\\\nagg      & 489   & 163   & 2541     \\\\\nagg2     & 517   & 302   & 4515     \\\\\nagg3     & 517   & 302   & 4531     \\\\\nbandm    & 306   & 472   & 2659     \\\\\nbeaconfd & 174   & 262   & 3476     \\\\\nblend    & 75    & 83    & 521      \\\\\nbnl1     & 644   & 1175  & 6129     \\\\\nbnl2     & 2325  & 3489  & 16124    \\\\\nboeing1  & 351   & 384   & 3865     \\\\\nboeing2  & 167   & 143   & 1339     \\\\\nbore3d   & 234   & 315   & 1525     \\\\\nbrandy   & 221   & 249   & 2150     \\\\\ncapri    & 272   & 353   & 1786     \\\\\ncycle    & 1904  & 2857  & 21322    \\\\\nczprob   & 930   & 3523  & 14173    \\\\\nd2q06c   & 2172  & 5167  & 35674    \\\\\nd6cube   & 416   & 6184  & 43888    \\\\\ndegen2   & 445   & 534   & 4449     \\\\\ndegen3   & 1504  & 1818  & 26230    \\\\\ndfl001   & 6072  & 12230 & 41873    \\\\\ne226     & 224   & 282   & 2767     \\\\\netamacro & 401   & 688   & 2489     \\\\\nfffff800 & 525   & 854   & 6235     \\\\\nfinnis   & 498   & 614   & 2714     \\\\\nfit1d    & 25    & 1026  & 14430    \\\\\nfit1p    & 628   & 1677  & 10894    \\\\\nfit2d    & 26    & 10500 & 138018   \\\\\nfit2p    & 3001  & 13525 & 60784    \\\\\nforplan  & 162   & 421   & 4916     \\\\\nganges   & 1310  & 1681  & 7021     \\\\\ngfrd-pnc & 617   & 1092  & 3467     \\\\\ngreenbea & 2393  & 5405  & 31499    \\\\\ngreenbeb & 2393  & 5405  & 31499    \\\\\ngrow15   & 301   & 645   & 5665     \\\\\ngrow22   & 441   & 946   & 8318     \\\\\ngrow7    & 141   & 301   & 2633     \\\\\nisrael   & 175   & 142   & 2358     \\\\\nkb2      & 44    & 41    & 291      \\\\\nlotfi    & 154   & 308   & 1086     \\\\\nmaros    & 847   & 1443  & 10006    \\\\\nmaros-r7 & 3137  & 9408  & 151120   \\\\\nmodszk1  & 688   & 1620  & 4158     \\\\\nnesm     & 663   & 2923  & 13988    \\\\\nperold   & 626   & 1376  & 6026     \\\\\npilot    & 1442  & 3652  & 43220    \\\\\npilot.ja & 941   & 1988  & 14706    \\\\\npilot.we & 723   & 2789  & 9218     \\\\\npilot4   & 411   & 1000  & 5145     \\\\\npilot87  & 2031  & 4883  & 73804    \\\\\npilotnov & 976   & 2172  & 13129    \\\\\nqap8     & 913   & 1632  & 8304     \\\\\nqap12    & 3193  & 8856  & 44244    \\\\\nqap15    & 6331  & 22275 & 110700   \\\\\nrecipe   & 92    & 180   & 752      \\\\\nsc105    & 106   & 103   & 281      \\\\\nsc205    & 206   & 203   & 552      \\\\\nsc50a    & 51    & 48    & 131      \\\\\nsc50b    & 51    & 48    & 119      \\\\\nscagr25  & 472   & 500   & 2029     \\\\\nscagr7   & 130   & 140   & 553      \\\\\nscfxm1   & 331   & 457   & 2612     \\\\\nscfxm2   & 661   & 914   & 5229     \\\\\nscfxm3   & 991   & 1371  & 7846     \\\\\nscorpion & 389   & 358   & 1708     \\\\\nscrs8    & 491   & 1169  & 4029     \\\\\nscsd1    & 78    & 760   & 3148     \\\\\nscsd6    & 148   & 1350  & 5666     \\\\\nscsd8    & 398   & 2750  & 11334    \\\\\nsctap1   & 301   & 480   & 2052     \\\\\nsctap2   & 1091  & 1880  & 8124     \\\\\nsctap3   & 1481  & 2480  & 10734    \\\\\nseba     & 516   & 1028  & 4874     \\\\\nshare1b  & 118   & 225   & 1182     \\\\\nshare2b  & 97    & 79    & 730      \\\\\nshell    & 537   & 1775  & 4900     \\\\\nship04l  & 403   & 2118  & 8450     \\\\\nship04s  & 403   & 1458  & 5810     \\\\\nship08l  & 779   & 4283  & 17085    \\\\\nship08s  & 779   & 2387  & 9501     \\\\\nship12l  & 1152  & 5427  & 21597    \\\\\nship12s  & 1152  & 2763  & 10941    \\\\\nsierra   & 1228  & 2036  & 9252     \\\\\nstair    & 357   & 467   & 3857     \\\\\nstandata & 360   & 1075  & 3038     \\\\\nstandgub & 362   & 1184  & 3147     \\\\\nstandmps & 468   & 1075  & 3686     \\\\\nstocfor1 & 118   & 111   & 474      \\\\\nstocfor2 & 2158  & 2031  & 9492     \\\\\nstocfor3 & 16676 & 15695 & 74004    \\\\\ntruss    & 1001  & 8806  & 36642    \\\\\ntuff     & 334   & 587   & 4523     \\\\\nvtp.base & 199   & 203   & 914      \\\\\nwood1p   & 245   & 2594  & 70216    \\\\\nwoodw    & 1099  & 8405  & 37478    \\\\\n\\bottomrule\n\\end{tabular}\n\n\\section{Resultados Numéricos}",
 			"file": "numericos.tex",
-			"file_size": 1054,
-			"file_write_time": 130447425090000000,
+			"file_size": 8992,
+			"file_write_time": 130486091060000000,
 			"settings":
 			{
-				"buffer_size": 1032,
+				"buffer_size": 8918,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "alg_converg.tex",
+			"file": "tese.log",
 			"settings":
 			{
-				"buffer_size": 60672,
+				"buffer_size": 110276,
 				"line_ending": "Unix"
 			}
 		},
@@ -223,10 +226,18 @@
 			}
 		},
 		{
-			"file": "tese.tex",
+			"file": "pacotes.tex",
 			"settings":
 			{
-				"buffer_size": 5520,
+				"buffer_size": 4383,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "configuracao.tex",
+			"settings":
+			{
+				"buffer_size": 4363,
 				"line_ending": "Unix"
 			}
 		},
@@ -242,15 +253,47 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 227.0,
+		"height": 392.0,
 		"selected_items":
 		[
 			[
-				"status",
-				"Git: Status"
+				"cas",
+				"Convert Case: Lower Case"
+			],
+			[
+				"mer",
+				"Git: Merge"
+			],
+			[
+				"che",
+				"Git: Checkout"
+			],
+			[
+				"chek",
+				"Git: Checkout New Branch"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"merge",
+				"Git: Merge"
+			],
+			[
+				"chekc",
+				"Git: Checkout New Branch"
+			],
+			[
+				"check",
+				"Git: Checkout"
 			],
 			[
 				"git",
+				"Git: Status"
+			],
+			[
+				"status",
 				"Git: Status"
 			],
 			[
@@ -262,44 +305,16 @@
 				"Package Control: Remove Package"
 			],
 			[
-				"chek",
-				"Git: Checkout"
-			],
-			[
-				"check",
-				"Git: Checkout"
-			],
-			[
 				"STATU",
 				"Git: Status"
-			],
-			[
-				"push",
-				"Git: Push"
-			],
-			[
-				"merge",
-				"Git: Merge"
 			],
 			[
 				"",
 				"Anaconda: Vagrant Up"
 			],
 			[
-				"che",
-				"Git: Checkout"
-			],
-			[
 				"git:ch",
 				"Git: Checkout"
-			],
-			[
-				"chekc",
-				"Git: Checkout Commit"
-			],
-			[
-				"mer",
-				"Git: Merge"
 			],
 			[
 				"list",
@@ -455,26 +470,30 @@
 	},
 	"file_history":
 	[
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.aux",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/minted.sty",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-project",
+		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
+		"/Users/lrsantos/Downloads/25fv47.txt",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/alg_converg.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/pacotes.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.aux",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.log",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/simbolos.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/dedicatoria.tex",
 		"/usr/local/texlive/2013/texmf-dist/tex/latex/siunitx/siunitx.sty",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/folha-de-rosto.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-project",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/alg_converg.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/convergencia.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/linprog.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/references_bibdesk_papers.bib",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/CheckBounce/README.mdown",
 		"/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
-		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-workspace",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/capa.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/ficha-catalografica.tex",
@@ -486,8 +505,6 @@
 		"/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsthm.sty",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/LaTeX Word Count/LaTeXWordCount.sublime-settings",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXWordCount.sublime-settings",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
 		"/usr/local/texlive/2013/texmf-dist/scripts/texliveonfly/texliveonfly.py",
 		"/Users/lrsantos/Downloads/texliveonfly",
 		"/Users/lrsantos/Dropbox/IFC/Docência/Superior/Matemática/alunos/rafaela_filipozzi/VI-FICE/tex/teofundarit_v2.tex",
@@ -540,6 +557,24 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"tilz",
+			"tily",
+			"tilx",
+			"tilde{z}",
+			"tilde{y}",
+			"tilde{x}",
+			"ê",
+			"â",
+			"í",
+			"",
+			"á",
+			"ó",
+			"ã",
+			"õ",
+			"ç",
+			",",
+			"backsolve",
+			"bakcsolve",
 			"eq:lemma-boundDxDzcx",
 			"eq:boundDxDzaff-const",
 			"y",
@@ -649,25 +684,7 @@
 			"D",
 			"D^{-1}",
 			"Z",
-			"\\intertext",
-			"eq:initial-point",
-			"pres",
-			"aligned",
-			"_{i}",
-			"z",
-			"x^{T}",
-			" z",
-			"\\nu",
-			" x",
-			"x",
-			"P",
-			"+09",
-			"Cholesky factor will have",
-			"+11",
-			"+10",
-			"+09",
-			"+10",
-			"+09"
+			"\\intertext"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -729,61 +746,66 @@
 			[
 				{
 					"buffer": 0,
-					"file": "configuracao.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4280,
+						"buffer_size": 966,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4086,
-								4086
+								542,
+								542
 							]
 						],
 						"settings":
 						{
+							"__vi_external_disable": true,
+							"draw_white_space": "none",
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 2,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+							"git_repo": "/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text",
+							"git_status": true,
+							"git_view": "status",
+							"syntax": "Packages/SublimeGit/syntax/SublimeGit Status.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2689.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "pacotes.tex",
+					"file": "mpis.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4359,
+						"buffer_size": 65380,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4290,
-								4290
+								57694,
+								57770
 							]
 						],
 						"settings":
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 176,
+							"spell_tag": 111,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1435.0,
+						"translation.y": 22441.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -795,15 +817,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1032,
+						"buffer_size": 8918,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								42,
-								42
+								3892,
+								3892
 							]
 						],
 						"settings":
@@ -814,7 +836,7 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 589.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -822,34 +844,35 @@
 				},
 				{
 					"buffer": 3,
-					"file": "alg_converg.tex",
+					"file": "tese.log",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 60672,
+						"buffer_size": 110276,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								54732,
-								54732
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 3,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"spell_tag": 13,
+							"syntax": "Packages/LaTeX/LaTeX Log.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 22953.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -865,8 +888,8 @@
 						"selection":
 						[
 							[
-								1005,
-								1005
+								408,
+								408
 							]
 						],
 						"settings":
@@ -879,7 +902,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 291.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
@@ -887,30 +910,30 @@
 				},
 				{
 					"buffer": 5,
-					"file": "tese.tex",
+					"file": "pacotes.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5520,
+						"buffer_size": 4383,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4364,
-								4364
+								3564,
+								3564
 							]
 						],
 						"settings":
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 5,
+							"spell_tag": 8,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1339.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -918,6 +941,37 @@
 				},
 				{
 					"buffer": 6,
+					"file": "configuracao.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4363,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3706,
+								3706
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 9,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2375.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
 					"semi_transient": false,
 					"settings":
@@ -937,13 +991,15 @@
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"syntax": "Packages/LaTeX/TeX.tmLanguage"
+							"syntax": "Packages/LaTeX/TeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3601.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1029,7 +1085,7 @@
 		[
 			[
 				"",
-				"~/Documents/Matematica/Unicamp/doutorado/tese/testes/PCx-LRS/PCx_LRS.sublime-workspace"
+				"~/Documents/Matematica/Unicamp/doutorado/tese/testes/PCx-LRS/PCx-LRS.sublime-project"
 			]
 		],
 		"width": 380.0
