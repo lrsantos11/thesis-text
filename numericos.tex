@@ -10,7 +10,9 @@ Neste capítulo descrevemos alguns detalhes de implementação que utilizamos em
 
 O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++}, utilizando como base a implementação PCx~\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \textcite{Mehrotra:1992wr}. O PCx pode ser configurado para executar correções de ordem superior de \textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além de  refinamento da solução por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência como PCx-r.
 
-  Chamaremos nossa implementação de PCx-EOP. Com efeito, a chamada de PCx-EOP coincide com a da implemenatação de referência e há a introdução do código de nosso algoritmo dentro do \emph{loop} principal de PCx-r,  retornando em seguida para a rotina principal e dando prosseguimento a sua execução usual. Com isso, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalamento, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de ponto inicial, de critério de parada e saída de dados,   bem como todas as rotinas de álgebra linear -- incluindo-se aí as rotinas de \textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky  e refinamento por gradientes conjugados. Isso foi feito, para fazermos uma comparação justa entre nossos resultados e os que o PCx-r produz. 
+  Chamaremos nossa implementação de PCx-EOP. Com efeito, a chamada de PCx-EOP coincide com a da implementação de referência e há a introdução do código de nosso algoritmo dentro do \emph{loop} principal de PCx-r,  retornando em seguida para a rotina principal e dando prosseguimento a sua execução usual. Isso foi feito, para fazermos uma comparação justa entre nossos resultados e os que o PCx-r produz. 
+
+  Assim, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalamento, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de ponto inicial, de critério de parada e saída de dados,   bem como todas as rotinas de álgebra linear -- incluindo-se aí as rotinas de \textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky  e refinamento por gradientes conjugados. Além disso, para problemas canalizados, a estrutura de dados do PCx emula de forma eficiente a introdução da matriz $E$ e as transformações usadas em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded}, fazendo com que problemas canalizados tenham sua resolução feita exatamente com  as mesmas funcionalidades dos problemas não canalizados de forma eficiente. 
 
 
 
@@ -70,16 +72,24 @@ O PCx tem implementado dois critérios de parada que podem ser escolhidos pelo u
 \]
 em que $\tol$ é a tolerância aceita. Essa escolha tem o inconveniente de tornar o numerador menor, já que o divide por $n$, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque, usar esse numerador, equivale a utilizar como tolerância para o critério dado em \eqref{eq:termination-criteria-pcx-gap} $n\cdot\tol$. 
 
-Fizemos uma pequena alteração ao critério de parada, que nos parece  contribuir para um melhor desempenho  no que diz respeito a verificação da otimalidade do ponto em questão. Para tanto reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já tem-se indicação de otimalidade e o programa saiu do \emph{loop} principal e é responsável por recalcular as variáveis duais relacionadas à  $x\geq0$, de modo à tentar eliminar algum erro de arredondamento.
+Fizemos uma pequena alteração no momento que usamos o critério de parada, que nos parece  contribuir para um melhor desempenho  no que diz respeito a verificação da otimalidade do ponto em questão. Para tanto reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já tem-se indicação de otimalidade, o programa saiu do \emph{loop} principal.
 
-Descrevemos agora a rotina \verb|RecomputeDualVariables|. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz, é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. No entanto, note que  se para algum $i$, $t_{i}$
+Descrevemos agora a rotina \verb|RecomputeDualVariables|. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz, é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. 
 
- O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, faz-se $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, esteja na borda do politopo, quando ela deve estar. 
+ O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, faz-se $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, tenha o valor calculado pela definição do problema dual, e não pelo algoritmo. O teste para verificar se $t_{i}$ é negativo serve para detectar possíveis valores inconvenientes, já que $\zstar\geq 0$.
+
+ Pois bem, a alteração que fizemos utiliza os princípios da rotina   \verb|RecomputeDualVariables| em toda iteração $k$. Neste caso, o que fazemos é encontrar $t= c - A^T\yk$. Testamos então se para algum  $i$ tem-se $t_{i}<0$ e em caso afirmativo assinalamos $t_{i}\leftarrow 0$. Com isso, consideramos a terna $(\xk,\yk,t)$ com a qual realizamos os testes de otimalidade dados por
+ \eqref{eq:termination-criteria-pcx}, porém com as seguintes modificações: o critério \eqref{eq:termination-criteria-pcx-dual} transforma-se em
+\[\dfrac{\norm{t}}{1 + \norm{c}} \leq \tol,\]	
+e o critério  \eqref{eq:termination-criteria-pcx-gap} transforma-se em 
+\[
+	\dfrac{(\xk)^{T}t}{1 + \abs{c^Tt}}\leq\tol.
+\]
+Se esses testes são satisfeitos, então assinalamos otimalidade no algoritmo e saímos do \emph{loop} principal. 
+Isso é feito porque,  como $t$ não é mais interior, $(\xk)^{T}t$ tem possivelmente valor menor que $(\xk)^{T}\zk$. Essa estratégia diz que $(\xk,\yk,t)$ pode ser um ponto melhor que $(\xk,\yk,\zk)$.  Caso não seja satisfeito, continuamos a execução do programa com o ponto atual sendo $(\xk,\yk,\zk)$. Em ambos os casos $t$ é descartado e o ponto utilizado é sempre $(\xk,\yk,\zk)$. Considere que se tivermos otimalidade, \verb|RecomputeDualVariables| será chamada e assinala-se $(\xk,\yk,\zk)\leftarrow (\xk,\yk,t)$. 
 
 
-
-
-O critério de parada   na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria}, porém com uma garantia a mais. Criamos a rotina \verb|RecomputeDualVariablesOpt| que em cada iteração $k$, calcula  com que $(\xk,\yk,\zk)$ passe pela 
+O critério de parada usado  na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria-pcx}, porém com  a alteração relatada acima. 
 
 
 
@@ -107,109 +117,109 @@ comparação ao \texttt{PCx} e com o método desenvolvido pelo grupo.
 
 \subsection{Conjunto de Problemas de teste}
 
-\begin{tabular}{llll}
-\toprule
-Nome     & Linhas  & Colunas  & NEN \\
-\midrule
-25fv47   & 822   & 1571  & 11127    \\
-80bau3b  & 2263  & 9799  & 29063    \\
-adlittle & 57    & 97    & 465      \\
-afiro    & 28    & 32    & 88       \\
-agg      & 489   & 163   & 2541     \\
-agg2     & 517   & 302   & 4515     \\
-agg3     & 517   & 302   & 4531     \\
-bandm    & 306   & 472   & 2659     \\
-beaconfd & 174   & 262   & 3476     \\
-blend    & 75    & 83    & 521      \\
-bnl1     & 644   & 1175  & 6129     \\
-bnl2     & 2325  & 3489  & 16124    \\
-boeing1  & 351   & 384   & 3865     \\
-boeing2  & 167   & 143   & 1339     \\
-bore3d   & 234   & 315   & 1525     \\
-brandy   & 221   & 249   & 2150     \\
-capri    & 272   & 353   & 1786     \\
-cycle    & 1904  & 2857  & 21322    \\
-czprob   & 930   & 3523  & 14173    \\
-d2q06c   & 2172  & 5167  & 35674    \\
-d6cube   & 416   & 6184  & 43888    \\
-degen2   & 445   & 534   & 4449     \\
-degen3   & 1504  & 1818  & 26230    \\
-dfl001   & 6072  & 12230 & 41873    \\
-e226     & 224   & 282   & 2767     \\
-etamacro & 401   & 688   & 2489     \\
-fffff800 & 525   & 854   & 6235     \\
-finnis   & 498   & 614   & 2714     \\
-fit1d    & 25    & 1026  & 14430    \\
-fit1p    & 628   & 1677  & 10894    \\
-fit2d    & 26    & 10500 & 138018   \\
-fit2p    & 3001  & 13525 & 60784    \\
-forplan  & 162   & 421   & 4916     \\
-ganges   & 1310  & 1681  & 7021     \\
-gfrd-pnc & 617   & 1092  & 3467     \\
-greenbea & 2393  & 5405  & 31499    \\
-greenbeb & 2393  & 5405  & 31499    \\
-grow15   & 301   & 645   & 5665     \\
-grow22   & 441   & 946   & 8318     \\
-grow7    & 141   & 301   & 2633     \\
-israel   & 175   & 142   & 2358     \\
-kb2      & 44    & 41    & 291      \\
-lotfi    & 154   & 308   & 1086     \\
-maros    & 847   & 1443  & 10006    \\
-maros-r7 & 3137  & 9408  & 151120   \\
-modszk1  & 688   & 1620  & 4158     \\
-nesm     & 663   & 2923  & 13988    \\
-perold   & 626   & 1376  & 6026     \\
-pilot    & 1442  & 3652  & 43220    \\
-pilot.ja & 941   & 1988  & 14706    \\
-pilot.we & 723   & 2789  & 9218     \\
-pilot4   & 411   & 1000  & 5145     \\
-pilot87  & 2031  & 4883  & 73804    \\
-pilotnov & 976   & 2172  & 13129    \\
-qap8     & 913   & 1632  & 8304     \\
-qap12    & 3193  & 8856  & 44244    \\
-qap15    & 6331  & 22275 & 110700   \\
-recipe   & 92    & 180   & 752      \\
-sc105    & 106   & 103   & 281      \\
-sc205    & 206   & 203   & 552      \\
-sc50a    & 51    & 48    & 131      \\
-sc50b    & 51    & 48    & 119      \\
-scagr25  & 472   & 500   & 2029     \\
-scagr7   & 130   & 140   & 553      \\
-scfxm1   & 331   & 457   & 2612     \\
-scfxm2   & 661   & 914   & 5229     \\
-scfxm3   & 991   & 1371  & 7846     \\
-scorpion & 389   & 358   & 1708     \\
-scrs8    & 491   & 1169  & 4029     \\
-scsd1    & 78    & 760   & 3148     \\
-scsd6    & 148   & 1350  & 5666     \\
-scsd8    & 398   & 2750  & 11334    \\
-sctap1   & 301   & 480   & 2052     \\
-sctap2   & 1091  & 1880  & 8124     \\
-sctap3   & 1481  & 2480  & 10734    \\
-seba     & 516   & 1028  & 4874     \\
-share1b  & 118   & 225   & 1182     \\
-share2b  & 97    & 79    & 730      \\
-shell    & 537   & 1775  & 4900     \\
-ship04l  & 403   & 2118  & 8450     \\
-ship04s  & 403   & 1458  & 5810     \\
-ship08l  & 779   & 4283  & 17085    \\
-ship08s  & 779   & 2387  & 9501     \\
-ship12l  & 1152  & 5427  & 21597    \\
-ship12s  & 1152  & 2763  & 10941    \\
-sierra   & 1228  & 2036  & 9252     \\
-stair    & 357   & 467   & 3857     \\
-standata & 360   & 1075  & 3038     \\
-standgub & 362   & 1184  & 3147     \\
-standmps & 468   & 1075  & 3686     \\
-stocfor1 & 118   & 111   & 474      \\
-stocfor2 & 2158  & 2031  & 9492     \\
-stocfor3 & 16676 & 15695 & 74004    \\
-truss    & 1001  & 8806  & 36642    \\
-tuff     & 334   & 587   & 4523     \\
-vtp.base & 199   & 203   & 914      \\
-wood1p   & 245   & 2594  & 70216    \\
-woodw    & 1099  & 8405  & 37478    \\
-\bottomrule
-\end{tabular}
+% \begin{tabular}{llll}
+% \toprule
+% Nome     & Linhas  & Colunas  & NEN \\
+% \midrule
+% 25fv47   & 822   & 1571  & 11127    \\
+% 80bau3b  & 2263  & 9799  & 29063    \\
+% adlittle & 57    & 97    & 465      \\
+% afiro    & 28    & 32    & 88       \\
+% agg      & 489   & 163   & 2541     \\
+% agg2     & 517   & 302   & 4515     \\
+% agg3     & 517   & 302   & 4531     \\
+% bandm    & 306   & 472   & 2659     \\
+% beaconfd & 174   & 262   & 3476     \\
+% blend    & 75    & 83    & 521      \\
+% bnl1     & 644   & 1175  & 6129     \\
+% bnl2     & 2325  & 3489  & 16124    \\
+% boeing1  & 351   & 384   & 3865     \\
+% boeing2  & 167   & 143   & 1339     \\
+% bore3d   & 234   & 315   & 1525     \\
+% brandy   & 221   & 249   & 2150     \\
+% capri    & 272   & 353   & 1786     \\
+% cycle    & 1904  & 2857  & 21322    \\
+% czprob   & 930   & 3523  & 14173    \\
+% d2q06c   & 2172  & 5167  & 35674    \\
+% d6cube   & 416   & 6184  & 43888    \\
+% degen2   & 445   & 534   & 4449     \\
+% degen3   & 1504  & 1818  & 26230    \\
+% dfl001   & 6072  & 12230 & 41873    \\
+% e226     & 224   & 282   & 2767     \\
+% etamacro & 401   & 688   & 2489     \\
+% fffff800 & 525   & 854   & 6235     \\
+% finnis   & 498   & 614   & 2714     \\
+% fit1d    & 25    & 1026  & 14430    \\
+% fit1p    & 628   & 1677  & 10894    \\
+% fit2d    & 26    & 10500 & 138018   \\
+% fit2p    & 3001  & 13525 & 60784    \\
+% forplan  & 162   & 421   & 4916     \\
+% ganges   & 1310  & 1681  & 7021     \\
+% gfrd-pnc & 617   & 1092  & 3467     \\
+% greenbea & 2393  & 5405  & 31499    \\
+% greenbeb & 2393  & 5405  & 31499    \\
+% grow15   & 301   & 645   & 5665     \\
+% grow22   & 441   & 946   & 8318     \\
+% grow7    & 141   & 301   & 2633     \\
+% israel   & 175   & 142   & 2358     \\
+% kb2      & 44    & 41    & 291      \\
+% lotfi    & 154   & 308   & 1086     \\
+% maros    & 847   & 1443  & 10006    \\
+% maros-r7 & 3137  & 9408  & 151120   \\
+% modszk1  & 688   & 1620  & 4158     \\
+% nesm     & 663   & 2923  & 13988    \\
+% perold   & 626   & 1376  & 6026     \\
+% pilot    & 1442  & 3652  & 43220    \\
+% pilot.ja & 941   & 1988  & 14706    \\
+% pilot.we & 723   & 2789  & 9218     \\
+% pilot4   & 411   & 1000  & 5145     \\
+% pilot87  & 2031  & 4883  & 73804    \\
+% pilotnov & 976   & 2172  & 13129    \\
+% qap8     & 913   & 1632  & 8304     \\
+% qap12    & 3193  & 8856  & 44244    \\
+% qap15    & 6331  & 22275 & 110700   \\
+% recipe   & 92    & 180   & 752      \\
+% sc105    & 106   & 103   & 281      \\
+% sc205    & 206   & 203   & 552      \\
+% sc50a    & 51    & 48    & 131      \\
+% sc50b    & 51    & 48    & 119      \\
+% scagr25  & 472   & 500   & 2029     \\
+% scagr7   & 130   & 140   & 553      \\
+% scfxm1   & 331   & 457   & 2612     \\
+% scfxm2   & 661   & 914   & 5229     \\
+% scfxm3   & 991   & 1371  & 7846     \\
+% scorpion & 389   & 358   & 1708     \\
+% scrs8    & 491   & 1169  & 4029     \\
+% scsd1    & 78    & 760   & 3148     \\
+% scsd6    & 148   & 1350  & 5666     \\
+% scsd8    & 398   & 2750  & 11334    \\
+% sctap1   & 301   & 480   & 2052     \\
+% sctap2   & 1091  & 1880  & 8124     \\
+% sctap3   & 1481  & 2480  & 10734    \\
+% seba     & 516   & 1028  & 4874     \\
+% share1b  & 118   & 225   & 1182     \\
+% share2b  & 97    & 79    & 730      \\
+% shell    & 537   & 1775  & 4900     \\
+% ship04l  & 403   & 2118  & 8450     \\
+% ship04s  & 403   & 1458  & 5810     \\
+% ship08l  & 779   & 4283  & 17085    \\
+% ship08s  & 779   & 2387  & 9501     \\
+% ship12l  & 1152  & 5427  & 21597    \\
+% ship12s  & 1152  & 2763  & 10941    \\
+% sierra   & 1228  & 2036  & 9252     \\
+% stair    & 357   & 467   & 3857     \\
+% standata & 360   & 1075  & 3038     \\
+% standgub & 362   & 1184  & 3147     \\
+% standmps & 468   & 1075  & 3686     \\
+% stocfor1 & 118   & 111   & 474      \\
+% stocfor2 & 2158  & 2031  & 9492     \\
+% stocfor3 & 16676 & 15695 & 74004    \\
+% truss    & 1001  & 8806  & 36642    \\
+% tuff     & 334   & 587   & 4523     \\
+% vtp.base & 199   & 203   & 914      \\
+% wood1p   & 245   & 2594  & 70216    \\
+% woodw    & 1099  & 8405  & 37478    \\
+% \bottomrule
+% \end{tabular}
 
 \section{Resultados Numéricos}

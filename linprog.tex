@@ -47,14 +47,14 @@ complexos ou na solução relaxada de problemas de programação inteira ou mist
     
 Matematicamente, podemos escrever qualquer \ac{PL} na seguinte \emph{forma
 padrão}:
-\[
+\begin{equation} \label{eq:introPL-primal}
 	\begin{array}{lc}
 \displaystyle \min_{x} & c^Tx \\
 \text{sujeito a} &\begin{cases} Ax = b \\
 				 x \geq 0	
 				 \end{cases}
 \end{array}.
-\]
+\end{equation}
 em que $A\in \Real^{m\times n}$ e $c$, $x$ e $b$ têm dimensões compatíveis. A
 região $\Pset = \{x\in\Real^n | Ax=b \text{ e } x\geq 0\}$ é conhecida como
 região factível do problema e é um poliedro com pelo menos um vértice ou
@@ -94,7 +94,32 @@ já que
 Encontrar um \emph{vértice ótimo} de maneira  eficiente é o
 segredo dos bons métodos para resolver problemas de \ac{PL}.
 
+Associado a todo problema \ac{PL}, escrito na forma padrão, existe um outro \ac{PL}, chamado \emph{problema dual} dado por
+\begin{equation*}
+\begin{array}{lc}
+\displaystyle \max & b^Ty \\
+\text{sujeito a} &\begin{cases} A^Ty \leq c \\
+				 y \text{ livre}	
+				 \end{cases}\
+\end{array}
+\end{equation*}
+em que $A$, $b$ e $c$ são os mesmos do problema original, que neste caso, é chamado \emph{problema primal}.
+A variável $y\in\Real^{m}$ é chamada variável dual. A fim de que tenhamos restrições de igualdade na definição do problema dual, introduzimos  variáveis de folga duais representadas por $z\in\Real^{n}$, tais que $z\geq 0$, obtendo 
+\begin{equation}
+\begin{array}{lc}
+\displaystyle \max & b^Ty \\
+\text{sujeito a} &\begin{cases} A^Ty +z =  c \\
+				 z\geq 0, \quad y \text{ livre}	
+				 \end{cases}\
+\end{array}.
+\label{eq:introPL-dual}
+\end{equation}
+
+
+Os problemas primal e dual são comumente chamados par primal-dual e as relações existentes entre estes permitiram a criação ou refinamento de diversos métodos para a solução de \ac{PL}~\cite{Bazaraa:2009uu}. No Capítulo~\ref{chap:mpis} faremos uma explanação mais detalhada sobre esses dois problemas.
+
 \section{Método simplex}
+
 
 O Método Simplex foi apresentado por
 \textcite{Dantzig:Maximization-of-a-linear:1951y} em 1947 e foi desenvolvido ao
@@ -204,9 +229,9 @@ da complexidade computacional, esse método também é polinomial,  com
 $\mathcal{O}(n(1/\eps))$ iterações~\cite{Karmarkar:1984cp}.
  
   
-Ao contrário do método elipsoide, o método de Karmarkar tem um desempenho muito
+Ao contrário do método elipsoide, o método de \citeauthor{Karmarkar:1984cp} tem um desempenho muito
 melhor e compete com o simplex, sendo consideravelmente melhor  que este em
-problemas de grande porte. Uma variante do método de Karmarkar foi implementada
+problemas de grande porte. Uma variante do método de \citeauthor{Karmarkar:1984cp} foi implementada
 por~\textcite{Adler:1989fw}, e desde então a compreensão do funcionamento desses
 métodos aumentou consideravelmente, ao mesmo tempo em que variantes têm
 sido propostas, muitas delas se apresentando como alternativas computacionais
@@ -258,5 +283,85 @@ mesma estrutura de um \ac{PL}.
 
 
 
-\section{Problema Canalizado ESCREVER}
+\section{Formulação com variáveis canalizadas}
 
+Embora a formulação padrão do problema primal de \ac{PL} dada em \eqref{eq:introPL-primal} considera apenas que devamos ter $x$ não-negativo, em problemas práticos, nem sempre isso acontece. 
+
+Pode-se ter, por exemplo, alguma componente de $x$ -- ou todo o vetor -- irrestrita ou livre. Para resolver esse problema, considere que $x_{i}$ seja livre, para algum $i$. Cria-se as variáveis $x_{i}^{+},x_{i}^{-}\geq 0$ tais que $x_{i} = x_{i}^{+} -  x_{i}^{-}$. Nesse caso, substitui-se essa variáveis nas restrições do problema e troca-se uma variável livre por duas variáveis não-negativas. 
+
+Pode haver também algum $x_{i}$ com limitante inferior não nulo, digamos, $\ell\in\Real$. Isto significa que se está exigindo agora $\leq x_{i}\geq \ell$. Uma forma de  contornar esse problema e  criar a variável $\xtil_{i} = x_{i} - \ell$ e substituir $x_{i}$ por $\xtil +\ell $ nas restrições do problema. Tem-se, nesse caso, que $\xtil_{i} \geq 0$.
+
+
+Um caso não menos comum e importante é o da variável $x$ ser canalizada, isto é, possuir algum limitante superior. Queremos dizer com isso que para algum $i$, exista  $u_i>0$ tal que $0\leq x_{i} \leq u_{i}$. Para esse caso, uma saída possível é a seguinte. 
+
+Suponha que existam $p\leq n$ componentes de $x$ que sejam canalizadas. Definimos então a matriz de posto completo $E\in\Real^{p\times n}$, em que cada coluna e cada linha tem exatamente um elemento não nulo e igual a 1. Aqui, $E$  representa a transformação linear $E:\Real^{n}\To \Real^{p}$ que mapeia $x$ em sua parte canalizada $Ex$. Neste caso teremos $Ex \leq u$, em que $u\in\Real^{p}$ é o vetor das canalizações do problema.
+
+
+Com isso, o \ac{PL} é escrito como 
+\begin{equation*}
+	\begin{array}{lc}
+\displaystyle \min_{x} & c^Tx \\
+\text{sujeito a} &\begin{cases} Ax = b \\
+								Ex \leq u	\\				 
+				 x \geq 0	
+				 \end{cases}
+\end{array}.
+\end{equation*}
+Vamos fazer com a desigualdade desapareça das restrições do problema acima, definindo variáveis de folga primais, dadas pelo vetor $s\in\Real^{p}$, tais que $s\geq 0$ e $Ex +s =  u$. Assim, obtemos o \emph{problema primal canalizado}
+\begin{equation}
+\label{eq:introPL-primal-bounded}
+	\begin{array}{lc}
+\displaystyle \min_{x} & c^Tx \\
+\text{sujeito a} &\begin{cases} Ax = b \\
+								Ex +s =  u	\\				 
+				 (x,s) \geq 0	
+				 \end{cases}
+\end{array}.
+\end{equation}
+
+A esse problema, associamos o \emph{problema dual canalizado}
+\begin{equation}
+\label{eq:introPL-dual-bounded}
+\begin{array}{lc}
+\displaystyle \max_{(y,v)} & b^Ty + u^{T}v \\
+\text{sujeito a} &\begin{cases} A^Ty +z + E^Tv =  c \\
+								v + w = 0 \\ 
+				 (w,z)\geq 0, \quad y,v \text{ livres}	
+				 \end{cases}\
+\end{array}.
+\end{equation}
+É possível escrever tais problemas em uma forma matricial como 
+\begin{equation*}
+	\begin{array}{lc}
+\displaystyle \min_{x} & c^Tx \\
+\text{sujeito a} &\begin{cases} \bbm A & 0 \\ E & I_{p}\ebm \bbm x\\ s\ebm = \bbm b\\ u\ebm \\			 
+				 (x, s) \geq 0	
+				 \end{cases}
+\end{array}
+\quad \text{e} \quad \begin{array}{lc}
+\displaystyle \max_{y,v} & b^Ty + u^{T}v \\
+\text{sujeito a} &\begin{cases}  \bbm A^{T} & E^{T} \\ 0 & I_{p}\ebm \bbm y\\ v\ebm +\bbm z\\ w\ebm   = \bbm c\\ 0\ebm \\ 
+				 (w,z)\geq 0, \quad y,v \text{ livre}	
+				 \end{cases}
+\end{array}.
+\end{equation*}
+
+
+Sejam $\Atil = \bbm A & 0 \\ E & I_{p}\ebm$,  $\btil = \bbm b\\ u\ebm$, $\ctil = \bbm c\\ 0\ebm$, $\xtil = \bbm x\\ s\ebm$, $\ytil = \bbm y\\ v\ebm$ e $\ztil = \bbm z\\ w\ebm$. Essas definições transformam \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded} em
+\begin{equation} \label{eq:introPL-primal-dual-bounded-tilde}
+	\begin{array}{lc}
+\displaystyle \min_{x} & \ctil^T\xtil \\
+\text{sujeito a} &\begin{cases} \Atil\xtil = \btil \\
+				 \xtil \geq 0	
+				 \end{cases}
+\end{array} \quad \text{e} \quad \begin{array}{lc}
+\displaystyle \max & \btil^T\ytil \\
+\text{sujeito a} &\begin{cases} \Atil^T\ytil +\ztil =  \ctil \\
+				 \ztil\geq 0 \quad\ytil \text{ livre}	
+				 \end{cases}
+\end{array}.
+\end{equation}
+
+Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso porque, agora, é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. 
+
+Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded} e faremos comentários relativos a canalizações, quando oportunos, em particular quando tratarmos da implementação.
