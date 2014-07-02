@@ -61,7 +61,27 @@ No trabalho original de \textcite{Mehrotra:1992wr}, o menor valor possível para
 
 \subsection{Critério de Parada}
 
-Recompute Dual Variable
+
+O PCx tem implementado dois critérios de parada que podem ser escolhidos pelo usuário. Como na sua   documentação temos o critério dado em \eqref{eq:termination-criteria}.   Além disso, é possível trocar o critério de parada relacionado à complementaridade. Conforme explanamos na Seção~\ref{subsection:termination-criteria}, uma escolha possível seria a dada na equação \eqref{eq:termination-criteria-pcx}. Porém ao invés do teste dado pela Equação~\eqref{eq:termination-criteria-pcx-gap}, o PCx oferece a possibilidade de utilizar
+
+\[
+\dfrac{x^{T}z/n}{1 + \abs{c^Tx}}\leq
+	\tol,
+\]
+em que $\tol$ é a tolerância aceita. Essa escolha tem o inconveniente de tornar o numerador menor, já que o divide por $n$, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque, usar esse numerador, equivale a utilizar como tolerância para o critério dado em \eqref{eq:termination-criteria-pcx-gap} $n\cdot\tol$. 
+
+Fizemos uma pequena alteração ao critério de parada, que nos parece  contribuir para um melhor desempenho  no que diz respeito a verificação da otimalidade do ponto em questão. Para tanto reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já tem-se indicação de otimalidade e o programa saiu do \emph{loop} principal e é responsável por recalcular as variáveis duais relacionadas à  $x\geq0$, de modo à tentar eliminar algum erro de arredondamento.
+
+Descrevemos agora a rotina \verb|RecomputeDualVariables|. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz, é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. No entanto, note que  se para algum $i$, $t_{i}$
+
+ O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, faz-se $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, esteja na borda do politopo, quando ela deve estar. 
+
+
+
+
+O critério de parada   na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria}, porém com uma garantia a mais. Criamos a rotina \verb|RecomputeDualVariablesOpt| que em cada iteração $k$, calcula  com que $(\xk,\yk,\zk)$ passe pela 
+
+
 
 \subsection{Solução do subproblema de otimização \texorpdfstring{de $\nextphi$}{da função de mérito}}
 

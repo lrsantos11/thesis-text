@@ -45,7 +45,7 @@ diferente. O dual de \eqref{eq:primal} é
  \begin{equation}%(D) \quad
 	\begin{array}{lc}
 \displaystyle \max_{(y,z)} & b^Ty \\
-\text{sujeito a} &\begin{cases} A^Ty + z = b \\
+\text{sujeito a} &\begin{cases} A^Ty + z = c \\
 				 z \geq 0, \:y \text{ livre}	
 				 \end{cases}\
 \end{array}
@@ -1304,7 +1304,7 @@ Para uma  análise de várias estratégias de pontos iniciais em
 
   
 \subsection{Critério de Parada}
-
+\label{subsection:termination-criteria}
 Os \ac{MPI}, ao contrário do  Simplex, por exemplo, encontram uma solução apenas
 assintoticamente. Por conta do parâmetro de barreira $\tau$, um \ac{MPI} jamais encontra
 umaa solução exata do problema de \ac{PL}. Com isso, é necessário um critério de
