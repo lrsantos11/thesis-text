@@ -7,7 +7,7 @@
 \usepackage[english,brazilian]{babel}
 \usepackage{indentfirst}
 \usepackage[top=3cm,bottom=3cm,outer=2cm,inner=2cm]{geometry}
-\usepackage[backend=biber,sortcites=true,hyperref=true,maxbibnames=9,maxcitenames=4,sorting=nyt]{biblatex}
+\usepackage[backend=biber,sortcites=true,hyperref=true,maxbibnames=9,maxcitenames=3,sorting=nyt]{biblatex}
 \usepackage{csquotes}
 % FIXME Para compatibilidade de alguns pacotes com Koma-Script
 \usepackage{scrhack} 
@@ -38,11 +38,12 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: tabelas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \usepackage{multicol}
-% \usepackage{multirow}
-% \usepackage{array}
-\usepackage{booktabs}
+ \usepackage{multicol}
+ \usepackage{multirow}
+ \usepackage{array}
 
+\usepackage{booktabs}
+\usepackage{longtable}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: cores %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
@@ -108,12 +109,17 @@
  \usepackage{mathrsfs}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: fontes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes: pessoal %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \usepackage{enumerate} %Controle melhor do env enumerate
 \usepackage{acronym}
 \usepackage{lrsmath,lrsthm}
 \usepackage[output-decimal-marker={,}]{siunitx}
+\usepackage{chngcntr}
+\counterwithout{table}{chapter}
+\counterwithout{table}{section}
+
+
 
 %use as the last one to correct enviroments
  \usepackage[pagewise,mathlines]{lineno}

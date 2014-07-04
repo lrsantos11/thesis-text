@@ -16,7 +16,7 @@ Desde que o  \acrodef{MPI}{Métodos de Pontos Interiores} \acf{MPI} Primais-Duai
 Um outro caminho é percorrido por \textcite{Jarre:1999tl} que resolvem, em cada iteração, um subproblema que tenta melhorar os resíduos. Tal subproblema  é em si um problema de PL de dimensão bem  menor em relação ao problema original e cujas variáveis são o peso que cada componente da direção que utilizam deve ter. A solução desse subproblema é feita através do método Simplex. Para tais autores, o subproblema que resolvem pode ser entendido como uma forma de buscar o próximo iterando no subespaço gerado pelas direções que utilizam em seu método.
 
 
-Nesse mesmo sentido, \textcite{Mehrotra:2005do}, também obtém a direção de busca combinando direções corretoras e preditoras  através de um pequeno subproblema de \ac{PL}. Aqui, as múltiplas  direções corretoras são encontradas fazendo-se uso de informações geradas a partir de um  subespaço de Krylov apropriado.
+Nesse mesmo sentido, \textcite{Mehrotra:2005do}, também obtém a direção de busca combinando direções corretoras e preditoras  através de um pequeno subproblema de \ac{PL}. Aqui, as múltiplas  direções corretoras são encontradas fazendo uso de informações geradas a partir de um  subespaço de Krylov apropriado.
 
 
 
@@ -30,11 +30,20 @@ Nesta tese, mostraremos algumas alternativas de respostas para  essas e outras q
 
 Uma abordagem similar foi proposta primeiramente por \textcite{VillasBoas:2003tg}, em um contexto auto-dual. Já num contexto primal-dual \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, também fazem uso de uma função de mérito polinomial, porém definem uma trajetória central mais geral, que envolve também os resíduos lineares na sua definição.  Em particular, a abordagem desses autores é utilizada para resolver o subproblema que surge em nosso método.
 
-Além disso, objetivamos \emph{demonstrar} resultados de convergência do método proposto, utilizando as ferramentas de análise numérica para Métodos Preditores-Corretores do tipo Mehrotra infactíveis, apresentadas principalmente por \textcite{Zhang:2006ic} e trabalhos que são sequências desse e das ideias resumidas em \textcite[cap. 7]{Wright:Primal-dual-interior-point:1997h}. Dentre essas ferramentas, há a necessidade de estabelecer um ponto inicial adequado para que a convergência do método seja garantida. Em geral, conforme alerta \textcite[p. 112]{Wright:Primal-dual-interior-point:1997h}, esses autores utilizam pontos inicias que dependem da norma de uma solução ótima, valor que é desconhecido. As escolhas desses autores, na prática são ineficazes. 
+Além disso, temos o objetivo de \emph{demonstrar} resultados de convergência do método proposto, utilizando as ferramentas de análise numérica para Métodos Preditores-Corretores do tipo Mehrotra infactíveis, apresentadas principalmente por \textcite{Zhang:2006ic} e trabalhos que são sequências desse e das ideias resumidas em \textcite[cap. 7]{Wright:Primal-dual-interior-point:1997h}. Dentre essas ferramentas, há a necessidade de estabelecer um ponto inicial adequado para que a convergência do método seja garantida. 
+
+Em geral, conforme alerta \textcite[p. 112]{Wright:Primal-dual-interior-point:1997h}, esses autores utilizam pontos inicias que dependem da norma de uma solução ótima, valor que é desconhecido. As escolhas desses autores, na prática são ineficazes. 
 Daí, ao contrário deles, utilizamos um ponto inicial que tem bom desempenho na prática. Isso leva a um  limitante no resultado de complexidade um pouco pior  em relação aos encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj} -- embora ainda polinomial --, mas um desempenho computacional muito superior. 
 
+Com efeito, a melhor complexidade de ordem de iterações para métodos de pontos interiores preditores-corretores do tipo Mehrotra com ponto inicial infactível é dado por~\textcite{Zhang:1996it}, com ordem de iterações $\Oset(n^{\num{1.5}})$ e taxa de convergência Q-subquadrática. Outras complexidades, com ordem de iterações $\Oset(n^{\num{3}})$ foram dadas por \textcite{Zhang:2006ic,Wright:1996kj}. Nossa análise demonstrou que temos uma ordem de iterações um pouco maior, $\Oset(n^{\num{4}})$, porém ainda polinomial, e temos convergência Q-linear. 
 
-Em relação a experimentos computacionais, o objetivo é implementar o método proposto e testá-lo. Para os testes, utilizamos o conjunto de testes \texttt{Netlib}\footnote{Disponível em \url{www.netlib.org/lp/data}.}~\cite{Dongarra:1987jk,Gay:1985ts}. Também objetiva-se comparar nosso método com o PCx~\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de Mehrotra. 
+Alguns  comentários são importantes. Tanto quanto sabemos, os algoritmos de \textcite{Zhang:1996it,Zhang:2006ic,Wright:1996kj} não foram implementados. Além disso, \textcite{Gertz:2003ji} utilizam em sua implementação um ponto inicial que também tem alguma relação com o tamanho dos dados do problema, porém, não há qualquer análise de complexidade ou convergência nesse trabalho. Outro detalhe importante é que  grande parte das análises de convergência recentes~\cite{Gondzio:2011ta} supõe que o ponto inicial é factível. 
+
+Embora os resultados teóricos de nosso método  não superem os melhores resultados teóricos existentes, cabe ressaltar que no nosso caso, a análise feita acima é do algoritmo que foi de fato implementado, incluindo-se aí o tratamento do pontos infactíveis. Com isso, conseguimos um resultado teórico razoável de um algoritmo que tem seu funcionamento na prática demonstrado.
+
+
+
+Em relação a experimentos computacionais, o objetivo é implementar o método proposto e testá-lo. Para os testes, utilizamos o conjunto de testes \texttt{Netlib}\footnote{Disponível em \url{www.netlib.org/lp/data}.}~\cite{Dongarra:1987jk,Gay:1985ts}. Também objetivamos comparar nosso método com o PCx~\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de Mehrotra. 
 
 
 
@@ -42,17 +51,17 @@ Com o fim de alcançar  esses objetivos, esta monografia foi organizada com a se
 
 \begin{itemize}
 
-	\item nos Capítulos \ref{chap:linprog} e  \ref{chap:mpis} são apresentados o problema de programação linear, bem como o estado da arte no que diz respeito aos métodos de pontos interiores; 
-\item o Capítulo \ref{chap:merit-function} apresenta-se a ideia principal deste trabalho, que é o
-desenvolvimento de um polinômio de grau três como função de mérito  que sirva não só como medida
+	\item nos Capítulos \ref{chap:linprog} e  \ref{chap:mpis} apresentamos o problema de programação linear, bem como o estado da arte no que diz respeito aos métodos de pontos interiores; 
+\item no Capítulo \ref{chap:merit-function} apresentamos o
+desenvolvimento de um polinômio real de três variáveis e de grau total 6, como função de mérito  que sirva não só como medida
 de factibilidade e otimalidade de um ponto, mas que permita escolher, de forma
 otimizada, os parâmetros que determinam uma melhor direção em cada iteração
 de um método de pontos interiores primal-dual do tipo seguidor de caminhos; 
-\item no Capítulo \ref{chap:convergence} é feita a análise de convergência e de complexidade do método proposto; 
-\item no Capítulo \ref{chap:numerical} são relatados detalhes de nossa implementação, no que diz respeito ao conjunto de testes escolhido, ao ponto inicial, ao critério de parada que utilizamos em nosso algoritmo. Além disso, fazemos uma breve explanação de como se resolve o subproblema de otimização que surge em cada iteração, com base em \cite{VillasBoas2013:wn,VillasBoas:2003tg,VillasBoas:2012ur}. Por fim são relatados os resultados dos experimentos numéricos que foram realizados.
+\item no Capítulo \ref{chap:convergence} fizemos a análise de convergência e de complexidade do método proposto; 
+\item no Capítulo \ref{chap:numerical} relatamos detalhes de nossa implementação, no que diz respeito ao conjunto de testes escolhido, ao ponto inicial, ao critério de parada que utilizamos em nosso algoritmo. Além disso, fazemos uma breve explanação de como se resolve o subproblema de otimização que surge em cada iteração, com base em \cite{VillasBoas2013:wn,VillasBoas:2003tg,VillasBoas:2012ur}. Por fim relatamos os resultados dos experimentos numéricos que foram realizados.
 
 
 \end{itemize}
 
- De modo a  concluir esta tese, no último capítulo são feitas considerações finais e encaminhamentos para trabalhos futuros.
+ De modo a  concluir esta tese, no último capítulo fizemos considerações finais e encaminhamentos para trabalhos futuros.
 

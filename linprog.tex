@@ -116,7 +116,7 @@ A variável $y\in\Real^{m}$ é chamada variável dual. A fim de que tenhamos res
 \end{equation}
 
 
-Os problemas primal e dual são comumente chamados par primal-dual e as relações existentes entre estes permitiram a criação ou refinamento de diversos métodos para a solução de \ac{PL}~\cite{Bazaraa:2009uu}. No Capítulo~\ref{chap:mpis} faremos uma explanação mais detalhada sobre esses dois problemas.
+Os problemas primal e dual são comumente chamados par primal-dual e as relações existentes entre estes permitiram a criação ou refinamento de diversos métodos para a solução de \ac{PL}~\cite{Bazaraa:2009uu}. No Capítulo~\ref{chap:mpis} faremos uma explanação mais detalhada sobre esses dois problemas, já estudaremos métodos primais-duais.
 
 \section{Método simplex}
 
@@ -215,9 +215,9 @@ iteração estão no interior de uma região.
 
 Isto é feito criando-se uma família
 parametrizada de soluções que convergem assintoticamente para uma solução exata,
-isto é, trata-se de um método homotópico. Com efeito, um \ac{MPI} basicamente utiliza um método do tipo Newton nas condições de otimimalidade de Primeira Ordem, ou Condições KKT, do Problema de Programação Linear. Há, nos diferentes métodos, variação  do lado direito que se usa na solução da linearização das condições KKT que o Método de Newton utiliza, podendo gerar, nesse caso,  direções de Newton diferentes. Daí o nome \emph{Métodos} de Pontos Interiores. 
+isto é, temos de um método homotópico. Com efeito, um \ac{MPI} basicamente utiliza um método do tipo Newton nas condições de otimimalidade de Primeira Ordem, ou Condições KKT, do Problema de Programação Linear. Há, nos diferentes métodos, variação  do lado direito que se usa na solução da linearização das condições KKT que o Método de Newton utiliza, podendo gerar, nesse caso,  direções de Newton diferentes. Daí o nome \emph{Métodos} de Pontos Interiores. 
 
-Em resumo, usa-se uma abordagem não-linear para resolver um problema
+Em resumo,  uma abordagem não-linear é utilizada para resolver um problema
 linear, escapando então da  dificuldade que a dimensão do problema apresenta ao
 se lidar com as características combinatoriais  do \ac{PL}.
 
@@ -287,12 +287,12 @@ mesma estrutura de um \ac{PL}.
 
 Embora a formulação padrão do problema primal de \ac{PL} dada em \eqref{eq:introPL-primal} considera apenas que devamos ter $x$ não-negativo, em problemas práticos, nem sempre isso acontece. 
 
-Pode-se ter, por exemplo, alguma componente de $x$ -- ou todo o vetor -- irrestrita ou livre. Para resolver esse problema, considere que $x_{i}$ seja livre, para algum $i$. Cria-se as variáveis $x_{i}^{+},x_{i}^{-}\geq 0$ tais que $x_{i} = x_{i}^{+} -  x_{i}^{-}$. Nesse caso, substitui-se essa variáveis nas restrições do problema e troca-se uma variável livre por duas variáveis não-negativas. 
+Podemos ter, por exemplo, alguma componente de $x$ -- ou todo o vetor -- irrestrita ou livre. Para resolver esse problema, considere que $x_{i}$ seja livre, para algum $i$. As variáveis $x_{i}^{+},x_{i}^{-}\geq 0$ são criadas, tais que $x_{i} = x_{i}^{+} -  x_{i}^{-}$. Nesse caso, sessa variáveis substituídas são as restrições do problema e  uma variável livre é trocada por duas variáveis não-negativas. 
 
-Pode haver também algum $x_{i}$ com limitante inferior não nulo, digamos, $\ell\in\Real$. Isto significa que se está exigindo agora $\leq x_{i}\geq \ell$. Uma forma de  contornar esse problema e  criar a variável $\xtil_{i} = x_{i} - \ell$ e substituir $x_{i}$ por $\xtil +\ell $ nas restrições do problema. Tem-se, nesse caso, que $\xtil_{i} \geq 0$.
+Pode haver também algum $x_{i}$ com limitante inferior não nulo, digamos, $\ell\in\Real$. Isto significa que se está exigindo agora $ x_{i}\geq \ell$. Uma forma de  contornar esse problema é  criar a variável $\xtil_{i} = x_{i} - \ell$ e substituir $x_{i}$ por $\xtil +\ell $ nas restrições do problema. Temos, nesse caso, que $\xtil_{i} \geq 0$.
 
 
-Um caso não menos comum e importante é o da variável $x$ ser canalizada, isto é, possuir algum limitante superior. Queremos dizer com isso que para algum $i$, exista  $u_i>0$ tal que $0\leq x_{i} \leq u_{i}$. Para esse caso, uma saída possível é a seguinte. 
+Um caso não menos comum e bastante importante é o da variável $x$ ser canalizada, isto é, possuir algum limitante superior. Queremos dizer com isso que para algum $i$, existe  $u_i>0$ tal que $0\leq x_{i} \leq u_{i}$. Para esse caso, uma saída possível é a seguinte. 
 
 Suponha que existam $p\leq n$ componentes de $x$ que sejam canalizadas. Definimos então a matriz de posto completo $E\in\Real^{p\times n}$, em que cada coluna e cada linha tem exatamente um elemento não nulo e igual a 1. Aqui, $E$  representa a transformação linear $E:\Real^{n}\To \Real^{p}$ que mapeia $x$ em sua parte canalizada $Ex$. Neste caso teremos $Ex \leq u$, em que $u\in\Real^{p}$ é o vetor das canalizações do problema.
 
@@ -362,6 +362,6 @@ Sejam $\Atil = \bbm A & 0 \\ E & I_{p}\ebm$,  $\btil = \bbm b\\ u\ebm$, $\ctil =
 \end{array}.
 \end{equation}
 
-Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso porque, agora, é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. 
+Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso é feito porque, agora é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. 
 
-Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded} e faremos comentários relativos a canalizações, quando oportunos, em particular quando tratarmos da implementação.
+Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal} e \eqref{eq:introPL-dual} e faremos comentários relativos a canalizações, quando oportunos, em particular quando tratarmos da implementação.

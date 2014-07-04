@@ -8,13 +8,13 @@ first.''}}
 
 
 
-	\chapter{Método de Escolha Otimizada de Parâmetros em \ac{MPI}}
+	\chapter{Método de Escolha Otimizada de Parâmetros}
 \label{chap:merit-function}
 
 
-Este capítulo tem o objetivo de apresentar a principal contribuição deste trabalho, que é o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escreve-se a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada iteração do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   método de escolha otimizada de parâmetros. Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
+Este capítulo tem o objetivo de apresentar o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escrevemos a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros que são escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada iteração do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   método de escolha otimizada de parâmetros. Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
 
-\section{Um KKT escalado}
+% \section{Um KKT modificado}
 
 
  
@@ -70,25 +70,7 @@ r^0_D & =A^Ty^0 + z^0 - c, \\
 r^0_C  &=X^0Z^0 e > 0. 
 \end{align*}
  
-% No método proposto, precisa-se garantir que ambos $r^0_P$ e $r^0_D$ sejam
-% não-negativos e que seus componentes sejam comparáveis
-% -- os motivos para isso ficarão mais claros abaixo.
-% Para esse fim, sejam   $H_P$ e $H_D$ matrizes diagonais, tais que cada entrada de
-% suas diagonais é formada segundo as seguintes regras:
-% \[ (H_P)_i = \begin{cases} \xi_P,& \text{if } (r^0_P)_i \geq0\\
-% -\xi_P,& \text{if } (r^0_P)_i <0 \end{cases}, \] para $i=1,\ldots,m$, e \[
-% (H_D)_j = \begin{cases} \xi_D,& \text{if } (r^0_D)_j \geq 0\\
-% -\xi_D,& \text{if } (r^0_D)_j <0 \end{cases}, \] para $j=1,\ldots,n$,  em que 
-% 
-% 
-% 
-% \begin{align}
-% \xi_P &=
-% \frac{\sqrt{m}}{1+\norm{b}} \\
-% \xi_D &=
-% \frac{\sqrt{n}}{1+\norm{c}}
-% \end{align}
-% 
+
 
 No método proposto, vamos garantir que os resíduos primais e duais iniciais
 sejam  não-negativos -- veja Observação \ref{obs:Choice-of-merit-function}.
@@ -121,8 +103,8 @@ H_D(A^Ty + z -c) =0, \label{eq:ScaledKKT-fac-dual}\\
 XZe =0,  \label{eq:ScaledKKT-complementar}\\
 (x,z) \geq 0, \label{eq:ScaledKKT-nao-negativ} 
 \end{subnumcases}
-é o mesmo. De fato, note que apenas se está multiplicando cada linha do sistema
-\ac{KKT} original por um escalar. Além disso, garante-se que
+é o mesmo. De fato, note que apenas estamos multiplicando cada linha do sistema
+\ac{KKT} original por um escalar. Além disso, garantimos que
 \[H_P(r^0_P)\geq 0 \text{ e }H_D(r^0_C)\geq
 0.\]
 Tal era o objetivo principal dessas transformações.
@@ -130,7 +112,7 @@ Tal era o objetivo principal dessas transformações.
 A otimalidade do sistema \eqref{eq:KKT-choice} -- bem como de
 \eqref{eq:ScaledKKT}  -- é alcançada quando todos os resíduos são nulos, ou
 melhor dizendo, sempre que esses resíduos forem menores ou iguais a uma  
-tolerância pré-estabelecida. Assim propõe-se um método para resolver o sistema
+tolerância pré-estabelecida. Assim propomos um método para resolver o sistema
 \ac{KKT} escalado que resolva aproximadamente, em cada iteração, para
 $(x,y,z)\in\Qset^+$ e algum $\mu>0$, o sistema
 
@@ -143,8 +125,8 @@ XZe =\mu e,  \label{eq:Homotopy-complementar}\\
 
 
 \begin{obs}[Notação]
-De acordo com o contexto, considerando-se que $k$ é a iteração atual, pode-se abster-se de indicar a iteração de um vetor ou variável qualquer $t$, isto é, $t^k = t$. Neste caso,  utiliza-se do símbolo circunflexo  \^{} sobre um vetor ou variável $t$ qualquer  em questão para indicar seu valor na iteração $k+1$, isto é, $\hat{t} = t^{k+1}$. 
-% Assim $\rho^{k+1}$ será  $\hat{\rho}$ ou ainda $\hat{\rho}(\al,\mu,\sig)$ já que, como será possível ver a partir do Teorema \ref{thm:next=residual}, a escolha de $(\al,\mu,\sig)$ determinará o próximo resíduo. 
+De acordo com o contexto, considerando que $k$ é a iteração atual, podemos nos abster de indicar a iteração de um vetor ou variável qualquer $t$, isto é, $t^k = t$. Neste caso,  utilizamos do símbolo circunflexo  \^{} sobre um vetor ou variável $t$ qualquer  em questão para indicar seu valor na iteração $k+1$, isto é, $\hat{t} = t^{k+1}$. 
+
 
 \end{obs}
 
@@ -161,7 +143,7 @@ A^T(\dey)^k +(\dez)^k + r_D^k =  0, \label{eq:affine-scaling-system-dual}\\
 Z^k(\dex)^k + X^k(\dez)^k +  r_C^k = 0. \label{eq:affine-scaling-system-compl}
 \end{subnumcases}
 
-Deixando de utilizar o índice da iteração, para simplificar, pode-se encontrar, por meio  da equação \eqref{eq:affine-scaling-system-compl}, o valor de  $\dez$ como
+Deixando de utilizar o índice da iteração, para simplificar, podemos encontrar, por meio  da equação \eqref{eq:affine-scaling-system-compl}, o valor de  $\dez$ como
 \begin{equation}
 \label{eq:de_z}
 \dez = -X^{-1}(Z\dex + r_C).
@@ -169,7 +151,7 @@ Deixando de utilizar o índice da iteração, para simplificar, pode-se encontra
 
 
 Se  esta equação for usada e, além disso, $\dez$ for substituído na equação
-\eqref{eq:affine-scaling-system-dual}, obtém-se o  sistema
+\eqref{eq:affine-scaling-system-dual}, obtémos o  sistema
 \[
 \begin{cases}
 A\dex + r_P = 0  \\
@@ -203,7 +185,7 @@ t &=  X^{-1}r_C - r_D \\
    &= -(A^Ty - c).
 \end{align*}
 
-Usando a fórmula para   $\dex$, encontra-se $\dey$ e neste caso a equação
+Usando a fórmula para   $\dex$, encontramos $\dey$ e neste caso a equação
 \eqref{eq:affine-scaling-system-compl} torna-se $AD\left(A^T\dey - t\right) +
 r_P = 0$ e logo
 \begin{equation}
@@ -214,7 +196,7 @@ em que \begin{equation}
 \label{eq:define-B}
 B = (ADA^T)^{-1}
 \end{equation} e portanto $B^{-1}$ é sempre simétrica definida positiva, já ue $A$ tem posto completo.
-Consequentemente, para encontrar $\dew$ usa-se uma fatoração de 
+Consequentemente, para encontrar $\dew$ usamos uma fatoração de 
 Cholesky de $B^{-1}$ e uma retrosubstituição.
 %XXX Como traduzir o Backsolve?
 
@@ -242,7 +224,7 @@ $\Dew = \dew + \Decow$, em que  $\dew$ é a direção afim-escala e $\Decow$ é 
 \emph{ideal}.
 
 Procedendo com as substituições, na parte linear de \eqref{eq:ideal-system},
-tem-se
+temos
 \[ A(x+\Dex) - b = A(x+\dex + \Decox) - b = \underbrace{(Ax - b) + A\dex}_{=0
 \text{ por \eqref{eq:affine-scaling-system-primal}}} + A\Decox = A\Decox \] 
 e
@@ -255,7 +237,7 @@ A^T(y+\Dey) + (z+\Dez) - c &= A^T(y+\dey+\Decoy) + (z+\dez+\Decoz) - c \\
 \end{align*} 
 
 Por outro lado, para a parte da complementaridade de 
-\eqref{eq:ideal-system}, tem-se que
+\eqref{eq:ideal-system}, temos que
 \begin{align*}
 \hat{x}\hat{z} &= (x + \Dex)(z+\Dez) = xz + x\Dez + z\Dex + \Dex\Dez \\
                 &= \underbrace{xz + x\dez + z\dex}_{=0 \text{ por
@@ -265,7 +247,7 @@ Por outro lado, para a parte da complementaridade de
                 &=         x\Dez^c  +z\Dex^c + \Dex\Dez.     
 \end{align*}
   
-Usando tais simplificações, obtém-se o seguinte sistema não linear
+Usando tais simplificações, obtemos o seguinte sistema não linear
 \begin{equation}\begin{cases}
 A\Dex^c =  0\\
 A^T\Dey^c +\Dez^c =  0\\
@@ -280,7 +262,7 @@ trabalhos de \textcite{Mehrotra:1992wr,Gondzio:1996uw}.
 
 A proposta deste trabalho é utilizar uma  forma de generalização das correções
 de ordem superior usadas por esses autores.
-Essa generalização será feita supondo-se que para algum escalar
+Essa generalização será feita supondo que para algum escalar
 $\sig$ positivo e limitado a aproximação
 \begin{equation}
 \label{eq:aproximacao-direcao}
@@ -292,7 +274,7 @@ seja aceitável. Estamos aqui fazendo um abuso de notação, ao utilizar o símb
 
 Em particular note
 que se  $\sig = 1$ e $\mu = \tau_{\text{af}}^3/\tau$ -- em que $\tau_{\text{af}}$ é dado
-na equação \eqref{eq:tau-affine} e $\tau=x^Tz/n$ -- tem-se o método de
+na equação \eqref{eq:tau-affine} e $\tau=x^Tz/n$ -- temos o método de
 \textcite{Mehrotra:1992wr}. Por outro lado, para \textcite{Gondzio:1996uw}, $\mu$ é
 escolhido como no método de Mehrotra e $\DeX\Dez$ é várias vezes aproximado por
 direções que projetem, componente a componente, a complementaridade na
@@ -314,7 +296,7 @@ Alguns autores
 combinam direções de correção utilizando pesos para essas direções.
  \textcite{Colombo:2008ia} generalizam e estendem o trabalho de \textcite{Gondzio:1996uw},
 fazendo com que a combinação das múltiplas correções   tenha um peso, que é
-escolhido fazendo-se uma busca linear. Já \textcite{Jarre:1999tl}  propõem um subproblema
+escolhido fazendo uma busca linear. Já \textcite{Jarre:1999tl}  propõem um subproblema
 linear que é resolvido a cada iteração e cuja solução determina os pesos que as direções de 
 correções de ordem superior terão na direção final. 
 
@@ -329,7 +311,7 @@ Uma das principais contribuições do nosso trabalho, através da extensão das 
 de \textcite{VillasBoas:2003tg}, é a escolha do valor de $\mu$ -- que aqui faz as
 vezes de parâmetro que determina a trajetória central -- e de $\sig$ -- que vai pesar a contribuição da correção --  sendo feita de maneira adiada, e
 por isso tais parâmetros, bem como o tamanho do passo $\al$, estão sendo
-tratados como \emph{variáveis}. Para a escolha desses parâmetros, far-se-á uso de uma
+tratados como \emph{variáveis}. Para a escolha desses parâmetros, farmos uso de uma
 função de mérito, a qual será construída a seguir.
  
 Primeiramente, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
@@ -342,7 +324,7 @@ X\Decoz + Z\Decox +  = \mu e - \sig\deX\dez
 \end{cases}.
 \end{equation}
 Expressando tal sistema  na  forma
-matricial tem-se
+matricial temos
 \begin{equation}
 \label{eq:corrector-linear-matrix}
 \bbm A & 0 & 0 \\
@@ -376,14 +358,14 @@ encontrar a direção corretora $\Decow$ como
 resolvendo então dois sistemas lineares similares ao utilizado na direção afim (vide  Seção 
 \ref{sec:affine-scaling-directions}). 
 
-Com efeito, encontra-se 
+Com efeito, encontramos 
 $\Dew^\mu$ e $\Dew^\sig$  usando a
 mesma abordagem da referida seção, i.e., resolvendo
 os sistemas $\nabla F(w)\Dew^\mu = (0,0,e)$ e $\nabla F(w)\Dew^\sig = (0,0,-
 \deX\dez)$.
 
 
-Explicitamente, tem-se 
+Explicitamente, temos
 \begin{equation}
 \label{eq:De_C} 
 \begin{aligned}
@@ -405,7 +387,7 @@ Desta forma, o maior esforço computacional por iteração do método proposto c
 em uma fatoração de Cholesky da matriz $B^{-1}$, seguido de três retrosubstituições.
  
  
-Define-se o próximo ponto, para cada uma das variáveis, como sendo \[\hat{w} = w
+Definimos o próximo ponto, para cada uma das variáveis, como sendo \[\hat{w} = w
 + \al(\dew + \Decow),\] 
 ou ainda, expandindo para cada variável bem como
 separando as direções, na forma
@@ -505,7 +487,7 @@ e
 O Teorema \ref{thm:next=residual} é consequência direta da aplicação
 dos Lemas \ref{lemma:linear-residual} e \ref{lemma:nonlinear-residual}, que
 consideram a parte linear e não linear de  $\hat{\rho}$ de forma separada. Esses lemas
-e suas demonstrações encontram-se na sequência. %no Apêndice
+e suas demonstrações encontramos na sequência. %no Apêndice
 % \ref{sec:tech-resultas}. 
  
 \begin{lema}\label{lemma:linear-residual}
@@ -578,7 +560,7 @@ em que os vetores $L_{i,j}$, $i,j \in \{0,1,2\}$ são definidos por
 
 \begin{proof} 
 Para encontrar o resíduo da parte complementar para o próximo iterado,
-considere que pode-se escrever
+considere que podemos escrever
  $\hat{\rho}_C  =
 \hat{x}\hat{z}$. Então
 \begin{align}
@@ -632,7 +614,7 @@ Basta agora somar  \eqref{eq:next-residual-complmentar-3b}  e
  \eqref{eq:next-residual-complementar-2a}. Definindo os vetores
 $\La(\mu,\sig)$ como em \eqref{eq:Lambda-mu-sigma} e $L_{i,j}$ como em
 \eqref{eq:defining-Lij} e substituindo onde for necessário, finalmente
-encontra-se a equação \eqref{eq:next-residual-complementar} levando em conta que $\rho_C = xz$.
+encontramos a equação \eqref{eq:next-residual-complementar} levando em conta que $\rho_C = xz$.
 \end{proof} 
 
 
@@ -679,7 +661,7 @@ reduzidas. Para isso, este autor define sua função de mérito como a soma do
 Nada obstante, essa função é utilizada apenas de maneira teórica, para
 demonstrar a convergência do método.
 
-Do ponto de vista prático, o  \texttt{PCx} \cite{Czyzyk:1999hk} utiliza-se de
+Do ponto de vista prático, o  \texttt{PCx} \cite{Czyzyk:1999hk} utilizamos 
 uma função de mérito para detectar se o problema é infactível ou se a solução é desconhecida
 ou sub-ótima. Nesse caso, a função é dada por 
 \[
@@ -712,7 +694,7 @@ $(x,y,z)$.
 \label{obs:Choice-of-merit-function}
 A Definição \ref{def:merit-function} é uma das possíveis maneiras de medir quão
 perto da solução está um ponto $(x,y,z)$. Em particular,  esta escolha possui algumas
-propriedades que serão exploradas para escolher-se a tripla $(\al,\mu,\sig)$, a
+propriedades que serão exploradas para escolhermos a tripla $(\al,\mu,\sig)$, a
 saber:
 
 \begin{enumerate}[(i)] 
@@ -729,7 +711,7 @@ Tal escolha permite transformar a função de mérito em um polinômio nas vari�
 
 
 
-\item \label{it:obs-Choice-merit-rho-C} Pode-se rescrever o
+\item \label{it:obs-Choice-merit-rho-C} Podemos rescrever o
 \emph{gap} de complementaridade como
  \[x^Tz = \sum_{i=1}^{n}x_iz_i = \sum_{i=1}^{n}(\rho_C)_i;\]
 
@@ -757,11 +739,11 @@ Por conta dos itens \eqref{it:obs-Choice-merit-rho-l} e \eqref{it:obs-Choice-mer
 \frac{1}{n}\sum_{i=1}^{n}(\rho_C)_i.\label{eq:merit-function-rho}
 \end{align}
 
-Para fins de notação, define-se o \emph{operador média} para qualquer vetor
+Para fins de notação, definemos o \emph{operador média} para qualquer vetor
 $v\in\Real^p$ como \[\dbvec{v} = \frac{1}{p}\sum_{i=1}^p v_i.\] Este operador
 encontra a média aritmética das componentes do vetor em questão. 
 
-Com esta notação, pode-se representar a função de mérito
+Com esta notação, podemos representar a função de mérito
 \eqref{eq:merit-function-rho} como
 \begin{equation}\label{eq:merit-function-as-sum-bar}
 \varphi(x,y,z)  = \dbvec{\rho_L}+ 
@@ -794,7 +776,7 @@ em que
  
   \end{teo}
 
-\begin{proof}  Por conta da Equação \eqref{eq:next-residual-all}, sabe-se a expressão do
+\begin{proof}  Por conta da Equação \eqref{eq:next-residual-all}, sabemos a expressão do
 próximo resíduo, a depender de uma escolha de $(\al,\mu,\sig)$. Neste caso, 
 a função de mérito preditiva será
 \begin{equation}
@@ -824,7 +806,7 @@ o que finaliza a demonstração
 \end{proof}
 
 
-Consideramos que a função de mérito para o próximo ponto, $\nextphi(\al,\mu,\sig) $ bem caracteriza todas propriedades da Observação \ref{obs:Choice-of-merit-function}. Com isso, alcança-se o objetivo de encontrar uma função de mérito que tenha boas propriedades matemáticas -- um polinômio de grau máximo 2 em cada uma das variáveis $(\al,\mu,\sig)$ --  e que ao mesmo tempo dê uma medida adequada da qualidade solução.
+Consideramos que a função de mérito para o próximo ponto, $\nextphi(\al,\mu,\sig) $ bem caracteriza todas propriedades da Observação \ref{obs:Choice-of-merit-function}. Com isso, alcançamos o objetivo de encontrar uma função de mérito que tenha boas propriedades matemáticas -- um polinômio de grau máximo 2 em cada uma das variáveis $(\al,\mu,\sig)$ --  e que ao mesmo tempo dê uma medida adequada da qualidade solução.
 
 
 \begin{obs}\label{obs:L_02-L20}
@@ -835,14 +817,6 @@ Consideramos que a função de mérito para o próximo ponto, $\nextphi(\al,\mu,
 Com efeito, pelas equações \eqref{eq:corrector-linear-matrix} e \eqref{eq:corrector-linear-matrix-rhs},
  tanto $\Dex^\mu$ e $\Dez^\mu$ quanto $\Dex^\sig$ e $\Dez^\sig$ são vetores ortogonais. 
 
- %FIXME: Devo fazer o que com essa parte? Posso comentar depois.
-% \textcolor{red}{ Nada obstante, na prática ter-se-á $\dbvec{L_{2,0}}  \geq 
-% \mathtt{tol}$ e $\dbvec{L_{0,2}}  \geq  \mathtt{tol}$, já que só é possível
-% resolver os sistemas
-% \eqref{eq:corrector-linear-matrix} através de aritmética de ponto
-% flutuante\cite{Golub:1996wp}. Com isso, por enquanto, tais escalares serão
-% considerados não nulos.}
-% \textcolor{blue}{Posso falar disso depois, na parte de implementação? }
 
 \end{obs}
 
@@ -859,7 +833,7 @@ a_{2,0,0} &=  \dbvec{L_{0,0}} & a_{2,0,2} &= \dbvec{L_{0,2}}=0\\
 \end{aligned}\right.	
 \]
 e adotando a convenção de que se o coeficiente  $a_{\ell,p,s}$ não está definido
-acima, então será nulo, pode-se escrever $\nextphi$ como
+acima, então será nulo, podemos escrever $\nextphi$ como
 \[
 \nextphi(\al,\mu,\sig) = \sum_{\ell= 0}^2\sum_{p=0}^2 
 \sum_{s=0}^2a_{\ell,p,s}\al^\ell\mu^p\sig^s,
@@ -914,9 +888,9 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para um polinômio
  
  
  \section{Vizinhança como restrições polinomiais}
- Na Seção \ref{subsec:neighbouhoods}, mostrou-se que bons \acl{MPI} baseiam-se na
+ Na Seção \ref{subsec:neighbouhoods}, mostramos que bons \acl{MPI} baseiam-se na
   utilização de vizinhanças que fazem com que os iterados estejam a distâncias
-  razoáveis da trajetória central. Nesta seção mostra-se  que, se um
+  razoáveis da trajetória central. Nesta seção mostraremos  que, se um
   ponto pertence a um conjunto viável  gerado por funções polinomiais de terceiro grau 
   nas variáveis $(\al,\mu,\sig)$, construídas a
   partir da vizinhança  $\Nset_{-\infty}$, então esse ponto  também pertencerá
@@ -927,39 +901,7 @@ argumento do mínimo global $(\al^*,\mu^*,\sig^*)$ para um polinômio
   ponto tenha as boas propriedades  da  vizinhança $\Nset_{-\infty}$ possui.
   
   
- % FIXME Reorganizar esta seção com vistas no capítulo da convergência.
 
-
-
-% Como visto no capítulo anterior, \textcite{Colombo:2008ia}  propuseram  a
-% vizinhança simétrica $\Nset_s(\ga)$ dada na Equação \eqref{eq:symmetric-neig} --
-% baseada na vizinhança $\Nset_{-\infty}(\ga)$ --  com objetivo de melhorar a
-% \emph{centralidade} de um ponto, i.e., como o espalhamento dos produtos
-% complementares $x_iz_i$, para $i=1,\ldots,n$. Estes autores entendem que tal
-% vizinhança é a pedra angular através da qual suas implementações obtém boas
-% performances, já que tais condições impedem que os pares da complementaridade
-% torne-se muito grandes ou muito pequenos antes do tempo adequado.
-
-
-% Como este trabalho  baseia-se em pontos infactíveis mas ao mesmo tempo
-% pretende utilizar as boas propriedades da vizinhança  $\Nset_s(\ga)$,
-% é necessário estendê-la. No Capítulo \ref{chap:mpis}, página \pageref{eq:infeasible-infty-neig}
-% mostrou-se que \textcite{Kojima:1993fe}, assim como 
-% \textcite[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
-% método infactível a vizinhança $\Nset_{-\infty}(\ga,\be)$.
-
-
-% Assim, usando a Definição \ref{def:residual-vector}, define-se  a vizinhança
-% simétrica infactível $\Nset_s(\ga,\be)$, para o sistema KKT escalado
-% \eqref{eq:ScaledKKT}, como 
-% \begin{equation}
-% \label{eq:infeasible-symmetric-neig}
-%  \Nset_{s}(\ga,\be) =
-%  \left\{(x,y,z) \in \Qset^+:\frac{\norm{\rho_L}}{\norm{\rho^0_L}} \leq
-% \beta\frac{\tau}{\tau_0}, \ga\tau\leq x_iz_i \leq
-% \frac{1}{\ga}\tau,\forall i =1,\ldots,n  \right\},
-% \end{equation}
-% em que $\ga\in(0,1)$, $\tau=x^Tz/n$ e $\be\geq1$.
 
 
 
@@ -1036,9 +978,9 @@ Caso $\rho_L^0 = 0$, então encontramos um ponto inicial factível e o Algoritmo
 
 
 No Capítulo \ref{chap:mpis}, Equação~\eqref{eq:infeasible-infty-neig},
-mostrou-se que \textcite{Kojima:1993fe}, assim como 
+mostramos que \textcite{Kojima:1993fe}, assim como 
 \textcite[pg.~110]{Wright:Primal-dual-interior-point:1997h}, utilizaram em seu
-método infactível a vizinhança de passo largo infactível $\Nset_{-\infty}(\ga,\be)$. Nesta definição, pode-se fazer as seguintes ilações:
+método infactível a vizinhança de passo largo infactível $\Nset_{-\infty}(\ga,\be)$. Com essa definição, podemos fazer as seguintes ilações:
 \begin{itemize}
   \item $x_iz_i$  é não só o par de complementaridade, mas também o resíduo
   atual do sistema KKT na parte da complementaridade -- vide  Equação
@@ -1203,7 +1145,7 @@ Resumidamente, o subproblema de otimização global pode ser escrito como
 \end{equation}
 em que   $u\in\Real^3$ é um vetor de limitantes superiores para  $(\al,\mu,\sig)$. Para
 $\al$, $u_1<1$, pois  não queremos que o próximo ponto saia do interior do ortante positivo. Com efeito, também não queremos $\al=0$ e por isso mesmo,  durante a
-demonstração de convergência dar-se-á garantia de que é possível reduzir a
+demonstração de convergência daremos garantia de que é possível reduzir a
 função de mérito usando $\al>0$. Com efeito, o teste da razão é sempre utilizado em cada iteração para garantir isso.
 Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $u_{2}$ e $u_{3}$ são escalares positivos que podem ou não ser diferente para esses dois parâmetros.
 

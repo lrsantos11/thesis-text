@@ -75,14 +75,14 @@ Seja a função auxiliar  dada por
 \right) \right]}{\nuk \dbvec{\rho_L^{0}} +
 \rhoCkb }.
 \end{equation}
-Usando tal definição, deriva-se a seguinte relação entre a função de mérito atual  $\varphi$  e a da próxima iteração  $\nextphi$: 
+Usando tal definição, derivamos a seguinte relação entre a função de mérito atual  $\varphi$  e a da próxima iteração  $\nextphi$: 
 \begin{equation}
 	\label{eq:relation-phi-next-phi}
 	 			{\nextphi} = (1- \theta(\al))\varphi.
 \end{equation}
 
 
-Como é necessário garantir que  $\nextphi  $  seja não negativa, deve-se escolher um tamanho de passo  $\al_k$, em cada iteração $k$, tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir um escalar $\theta>0$, tal que $\theta = \liminf (\theta_k)$, isto é, se a sequência $\{\theta_k\}$ for limitada inferiormente por um valor positivo,	 então para $k$ suficientemente grande
+Como é necessário garantir que  $\nextphi  $  seja não negativa, devemos escolher um tamanho de passo  $\al_k$, em cada iteração $k$, tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir um escalar $\theta>0$, tal que $\theta = \liminf (\theta_k)$, isto é, se a sequência $\{\theta_k\}$ for limitada inferiormente por um valor positivo,	 então para $k$ suficientemente grande
 \[
 \frac{{\varphi_{k+1}}}{\varphi_{k}} < (1- \theta) < 1.
 \]
@@ -91,7 +91,7 @@ e logo a sequência $\{\varphi_k\}$, gerada pelo Algoritmo \ref{alg:optimized-ch
 
 
 
-Como vimos, para garantirmos a convergência dos pontos gerados pelo Algoritmo para uma solução ótima $(\xstar,\ystar,\zstar)$ do problema de \ac{PL}, além de ser  crucial que exista $\hat{\al}>0$  tal que,  para toda iteração $k$, tenha-se  $\al_k\in(0,\hat{\al}]$, de modo que a equação~\eqref{eq:relation-phi-next-phi} seja válida, é preciso que todo   ponto  $(\xk ,\yk,\zk)$ pertença à vizinhança $\Nset_{-\infty}(\gamma,\beta)$.
+Como vimos, de modo a garantir a convergência dos pontos gerados pelo Algoritmo para uma solução ótima $(\xstar,\ystar,\zstar)$ do problema de \ac{PL}, além de ser  crucial que exista $\hat{\al}>0$  tal que,  para toda iteração $k$, exista  $\al_k\in(0,\hat{\al}]$, de modo que a equação~\eqref{eq:relation-phi-next-phi} seja válida, é preciso que todo   ponto  $(\xk ,\yk,\zk)$ pertença à vizinhança $\Nset_{-\infty}(\gamma,\beta)$.
 
 Para tanto, sejam  
 \begin{equation}
@@ -138,7 +138,7 @@ Em seguida, fazemos a demonstração da convergência do Algoritmo proposto. A a
 
 A fim de demonstrarmos a convergência e a complexidade do Algoritmo proposto, na presente seção provaremos alguns lemas técnicos que serão utilizados para estabelecer nossos principais resultados de convergência. 
 
-Primeiramente, faz-se necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
+Primeiramente, é necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequados, para construir a vizinhança $\Nset_{-\infty}(\ga,\be)$. Para o primeiro parâmetro, várias escolhas são possíveis como, por exemplo, a de 
 \textcite{Colombo:2008ia} que utilizam $\ga = 1/10$. Vamos escolher $\ga$ tal que  
 \[
 \gamma \leq  \min\left\{ \frac{\displaystyle \min_{i}(\xzero_{i} \zzero_{i} )}{(\xzero )^T\zzero /n}, \frac{1}{10}\right\},
@@ -187,7 +187,7 @@ Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por 
 	\label{eq:max-norm-data}
  	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \}.
 \end{equation}
-$\bdxzstar$ é o maior valor absoluto de todos os dados de entrada do problema (\ref{eq:primal}-\ref{eq:dual}). Podemos supor sem perda de generalidade que $\bdxzstar \geq  1$,  bastando para isso fazer um escalamento trivial. Entretanto, na pratica usualmente são feitos escalamentos mais sofisticados, como o de \textcite{Curtis:1972cp}. Em nossa implementação, mantivemos o escalamento de \citeauthor{Curtis:1972cp}, que é  usado no PCx.
+$\bdxzstar$ é o maior valor absoluto de todos os dados de entrada do problema (\ref{eq:primal}-\ref{eq:dual}). Podemos supor sem perda de generalidade que $\bdxzstar \geq  1$,  bastando para isso fazer um escalonamento trivial. Entretanto, na pratica usualmente são feitos escalonamento mais sofisticados, como o de \textcite{Curtis:1972cp}. Em nossa implementação, mantivemos o escalonamento de \citeauthor{Curtis:1972cp}, que é  usado no PCx.
 
 Essa constante será utilizada nas demonstrações abaixo, em particular a partir da Condição \ref{cond:xzzero-xzstar}, a qual caracteriza uma relação existente entre  o ponto inicial e uma solução ótima do \ac{PL} que estamos resolvendo. 
 
@@ -297,7 +297,7 @@ Logo temos que
 	  & \textcolor{white}{=} +(\xk)^{T}\zk - \nuk  ((\xk)^{T}\zzero + (\xzero)^{T}\zk) - (1-\nuk ) ((\xk)^{T}\zstar + (\xstar)^{T}\zk).\label{eq:boundxz1}
 \end{align}
 
-Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\geq 0$, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nuk \in(0,1)$,  pode-se reorganizar  a equação \eqref{eq:boundxz1} como
+Como  $(\xk,\zk)>0$ e $(\xstar,\zstar)\geq 0$, vale $((\xk)^{T}\zstar + (\xstar)^{T}\zk) \geq 0$. Além disso, $(\xstar,\ystar,\zstar)$ é uma solução ótima, e por isso $(\xstar)^{T}\zstar = 0$. Usando essas observações e levando em conta que $\nuk \in(0,1)$,  podemos reorganizar  a equação \eqref{eq:boundxz1} como
 \begin{equation}
 	\label{eq:xTzero+xzeroTz}
 	  \nuk  ((\xk)^{T}\zzero + (\xzero)^{T}z) \leq 
@@ -436,7 +436,7 @@ Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{e
 		 \Dk\left( \dekx  +  \nuk (\xzero - \xstar)\right)+ \Dik \left(  \dekz   +  \nuk (\zzero - \zstar)\right) = \\ -(\xk\zk)^{1/2} + \nuk  \Dk(\xzero - \xstar) + \nuk  \Dik(\zzero - \zstar).
 		\end{multline}
 	 
-	 Note que, como vale  \eqref{eq:DxDzaff1}, pode-se utilizar o Teorema de Pitágoras para norma-2 de vetores e logo, tomando a norma-2 ao quadrado do lado esquerdo de \eqref{eq:DxDzaff2} obtemos
+	 Note que, como vale  \eqref{eq:DxDzaff1}, utilizando o Teorema de Pitágoras para norma-2 de vetores e logo, tomando a norma-2 ao quadrado do lado esquerdo de \eqref{eq:DxDzaff2} obtemos
 	\begin{multline*}
 			 	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2} =\\
 	 	 	 	 	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)}^{2}+ \norm{\Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2}.
@@ -605,7 +605,7 @@ Observe que $\ga\in(0,1)$ e logo $t > 1$.  Daí, e $\eta\in[0,1]$ e   se \eqref{
 \[
 \nextsig > \dfrac{\sqrt{\ga} - \eta}{t}
 \]
-e por isso garante-se que 
+e por isso garantimos que 
 $
 % \label{eq:omega2}
 	\dfrac{\left(\eta +{\nextsig} t \right)^{2}}{\ga} >1,
@@ -713,7 +713,7 @@ Sejam as constantes
 
 
 
-Usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$, e as definições da Equação~\eqref{eq:defin-zeta-i+chi-i+xi-i} reescreve-se  $g_C^i(\al) $ como
+Usando o fato de que o ponto atual pertence à vizinhança $\Nset_{-\infty}(\gamma,\beta)$, e as definições da Equação~\eqref{eq:defin-zeta-i+chi-i+xi-i} rescrevemos  $g_C^i(\al) $ como
 \[
 \begin{aligned}
 	g_C^i (\al) & = \underbrace{(1-\al)((\rho_C^k )_i - \ga\rhoCkb )}_{\geq 0}  + (1-\ga)\eta\rhoCkb  \al+  (\zeta_i + 				\chi_i + \xi_i)\al^2  \\
@@ -752,7 +752,7 @@ Para $\abs{\chi_{i}}$, considere que   $\sig = \nextsig=0$, que vale as definiç
 	\abs{\chi_i } = \abs{\eta\rhoCkb  \left( ({L_{1,0}^{k}})_i - \ga\dbvec{L_{1,0}^{k}} \right)}  \leq 2 \norm{ \dekx \Dekcoz + \Dekcox \dekz }_1. %  \leq \omega_{3}n^{3}\rhoCkb .
 \end{equation}
 
-Finalmente para o limitante de $\abs{\xi_{i}}$, e utilizarmos  a equação \eqref{eq:Corrector-spllited}, novamente com as escolhas $\nextmu $ e $\nextsig$ acima, temos
+Finalmente para o limitante de $\abs{\xi_{i}}$, se utilizarmos  a equação \eqref{eq:Corrector-spllited}, novamente com as escolhas $\nextmu $ e $\nextsig$ acima, temos
 \[
 	\Dekcox\Dekcoz = (\eta\rhoCkb \Dex^\mu)(\eta\rhoCkb \Dez^\mu) = (\eta\rhoCkb )^2(L_{2,0}^{k}).
 \]
@@ -889,7 +889,7 @@ A sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-o
 
 \begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$, com $\de_{1}$ dado em \eqref{eq:delta1}. 
 
-Precisamos  primeiro mostrar que $\theta(\nextal)= \Oset(1/n^{4})$. Para isso, considere que pelas definições dadas em dadas em~\eqref{eq:defining-Lij} em conjunto com  as Equações  \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} e ainda  os Lema~\ref{lemma:boundDxDzaff-c} e \ref{lemma:boundDxDzaff} deriva-se 
+Precisamos  primeiro mostrar que $\theta(\nextal)= \Oset(1/n^{4})$. Para isso, considere que pelas definições dadas em dadas em~\eqref{eq:defining-Lij} em conjunto com  as Equações  \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} e ainda  os Lema~\ref{lemma:boundDxDzaff-c} e \ref{lemma:boundDxDzaff} derivamos 
 \[
 - \dbvec{L_{0,0}^{k}} \geq - \dfrac{1}{n} \norm{ \dekx  \dekz }_1 \geq - \dfrac{(1 + 2\bdxzstar^{4})^{2} }{\ga} n\rhoCkb
 \]
@@ -1006,7 +1006,7 @@ o que termina a demonstração.
 O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}.
 
 \begin{corol}
-Suponha que escolha-se  $\tol = \num{e-8}$  e $\varepsilon$   tal que 
+Suponha que escolhamos  $\tol = \num{e-8}$  e $\varepsilon$   tal que 
 \begin{equation}
 	\label{eq:choosing-eps}
 		\varepsilon < \min\left\{  \frac{\tol(1+\norm{b})}{m+n}, \frac{\tol(1+\norm{c})}{m+n},\frac{\tol}{n}\right\}.
@@ -1041,67 +1041,6 @@ Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que
 \dfrac{(x^{k})^{T}z^{k}}{1+ |c^{T}x^{k}|} <   \frac{n\cdot  \eps}{1+ |c^{T}x^{k}|} \leq n \cdot \eps < n \frac{\tol}{n} = \tol. \qedhere
 \]
  \end{proof}
-
-%   \begin{algorithm}[htb]
-%  \onehalfspacing
-%  \caption{Método de Escolha Adiada de Parâmetros Simplificado.}
-%  \label{alg:optimized-choice-of-parameters} 
-% \begin{algorithmic}[1]
-% \Procedure{ResolveLP}{$A,b,c$}
-% \State $(\xzero ,\yzero,\zzero ) \gets$ \Call{PontoInicial}{$A,b,c$}.
-% \Comment{Assegure que  $(\xzero ,\zzero )>0$ e que $\eta\in(0,1)$}
-% 	\For {$k=1,2,\ldots$}
-% 		\State Encontre		$( \dekx,  \deky  ,  \dekz  )$ resolvendo
-% 				\begin{equation}
-% 				\label{eq:predictor-linear-matrix-simplified}
-% 				\bbm A & 0 & 0 \\
-% 				0 & A^T & I\\
-% 				Z^k & 0 & X^k \ebm
-% 				\bbm \dekx  \\ \deky  \\ \dekz
-% 				\ebm = 
-% 				\bbm -r_P^k  \\ -r_D^k \\ -r_C^k
-% 				\ebm.
-% 			\end{equation}
-% 		\State 	Faça $\nextmu=\eta{(x^k)^Tz^k}/{n}$ e  $\nextsig=0$, e resolva 
-% 		% \[((\Decox)^{k},(\Decoy)^{k},(\Decoz)^{k}) = \bar{\mu}((\Dex^{\mu})^{k},(\Dey^{\mu})^{k},(\Dez^{\mu})^{k})\]
-% 		% resolvendo
-% 			\begin{equation}
-% 				\label{eq:corrector-linear-matrix-simplified}
-% 				\bbm A & 0 & 0 \\
-% 				0 & A^T & I\\
-% 				\Zk & 0 & \Xk \ebm
-% 				\bbm (\Decox)^{k} \\ (\Decoy)^{k} \\ (\Decoz)^{k}
-% 				\ebm = 
-% 				\bbm 0  \\ 0 \\  \nextmu e %- \bar{\sig}\deX \dekz 
-% 				\ebm.
-% 			\end{equation}
-% 		\State Encontre $\al^*$ resolvendo o subproblema de
-% 		otimização global 	\eqref{eq:pop-subproblem}.		
-% 		\State Escolha $\al_k = \min\{\al^*,\tilde{\al}_k\}$ com $\tilde{\al}_k$ dado por $\eqref{eq:ratio-test}$ e faça
-% 		\[
-% 		\begin{aligned}	
-% 		& x^{k+1} = x^{k} + \al_k( \dekx + (\Decox)^{k} )
-% 		\\
-% 		& y^{k+1} = y^{k} + \al_k(  \deky   + (\Decoy)^{k} )
-% 		\\
-% 		& z^{k+1} = z^{k} + \al_k(  \dekz   + (\Decoz)^{k} )
-% 		 \end{aligned}. 
-% 		\]		
-% 	\EndFor
-% \EndProcedure
-% \end{algorithmic}
-% \end{algorithm}
-
-
-
-A melhor complexidade para métodos de pontos interiores preditores-corretores do tipo Mehrotra com ponto inicial infactível é dado por \textcite{Zhang:1996it}, com ordem de iterações $\Oset(n^{\num{1.5}})$ e taxa de convergência Q-subquadrática. Nossa análise demonstrou que temos uma ordem de iterações um pouco maior, $\Oset(n^{\num{4}})$, porém polinomial, e convergência Q-linear. 
-
-Dois comentários são importantes. Quanto tanto sabemos, os algoritmos 
-
-%COmplexidade depende da função de mérito. gap relativo vs gap. 
-
-% EXPLICAR COMO É QUE O WRIGHT IMPLEMENTA O QOOP. QUE A DEMONSTRAÇÃO DO GONDZIO É FEITA PRA PONTO FACTÍVEL.
-
 
 No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (EOP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns detalhes dos experimentos numéricos feitos com este método.
 
