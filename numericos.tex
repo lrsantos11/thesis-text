@@ -94,57 +94,6 @@ O critério de parada usado  na implementação em PCx-r e PCx-EOP é o dado na 
 
 
 
-\subsection{Solução do subproblema de otimização \texorpdfstring{de $\nextphi$}{da função de mérito}}
-
-Em cada iteração de nosso método, precisamos resolver o problema dado em \eqref{eq:pop-subproblem}, isto é, 
-\begin{equation}
-	\label{eq:pop-subproblem-1}
-	\begin{array}{lc}
-\displaystyle \min_{(\al,\mu,\sig)} & \hat\varphi(\al,\mu,\sig) \\
-\text{s. a.} &\begin{cases} g_C^i(\al,\mu,\sig) \geq 0 \quad \forall i = 1,\ldots,n \\
-				g_L(\al,\mu,\sig)   \geq 0 	\\
-				 0\leq (\al,\mu,\sig) \leq u,
-				 	
-				 \end{cases}.
-\end{array}
-\end{equation}
-em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau máximo 3 nas variáveis $(\al,\mu,\sig)$. Este é um chamado Problema de Otimização de Polinômios (POP) e é considerado um problema não linear  difícil de ser resolvido~\cite{Laurent:2010kp}, em particular pela quantidade de restrições do problema, que é  $(m+n+1)$. 
-
-Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SaparsePOP~\cite{Waki:2008ie}, os quais baseiam-se na transformação de um POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas. 
-
-
-O subproblema foi resolvido utilizando da implementação desenvolvida por \textcite{VillasBoas:2012ur,VillasBoas2013:wn}. A estratégia usada por esses autores para resolver um subproblema similar, é a seguinte.
-
-Considere primeiro $\Omega = \{(\al,\mu,\sig): g_C^i(\al,\mu,\sig) \geq, \forall i = 1,\ldots,n,\: g_L(\al,\mu,\sig)   \geq 0,\:		 0\leq (\al,\mu,\sig) \leq u\}$ e considere o problema alternativo
-\begin{equation}
-		\label{eq:pop-subproblem-2}
-	\begin{array}{c}
-\displaystyle \min_{\mu} \min_{\sig} \min_{\al}  \nextphi(\al,\mu,\sig) \\
-\qquad\qquad\qquad\quad \text{s. a. }  (\al,\mu,\sig) \in \Omega
-\end{array},
-\end{equation}
-ou mais convenientemente 
-\[
-\displaystyle \min_{\mu}\Psi(\mu)
-\]
-em que  $\displaystyle \Psi = \min_{\sig}\Phi(\mu,\sig)$ e 
-\[
-\Phi(\mu,\sig) = 
-	\begin{array}{l}
-\displaystyle \min_{\al}  \nextphi(\al,\mu,\sig) \\
-\text{s. a.}  (\al,\mu,\sig) \in\Omega
-\end{array}.
-\]
-  
-Primeiramente, vamos considerar qual relação existente entre os mínimos de \eqref{eq:pop-subproblem-1} e de \eqref{eq:pop-subproblem-2}. Sejam $(\al^*,\mu^*,\sig^*)$ uma solução global de  primeiro e $(\bar{\al}, \bar{\mu},\bar{\sig})$ uma solução global de segundo. Então por definição
-$ \nextphi(\al^*,\mu^*,\sig^*) \leq \nextphi (\bar{\al},\bar{\mu},\bar{\sig}).$
-Por outro lado 
-\[
-\nextphi(\baral,\barmu,\barsig) = \min_{\al}\min_{\sig}\Phi(\barmu,\barsig) \leq \Phi(\mu^{*},\sig^{*}) \leq \nextphi(\al^*,\mu^*,\sig^*).
-\]
-Assim, os dois problemas tem o mesmo mínimo. A segunda formulação, entretanto, permite encontrar aproximações numéricas do mínimo que fazendo o uso de \emph{splines} cúbicas. 
-
-
 
 % \begin{itemize}
 % \item Descrever a heurística utilizada para resolver o subproblema de otimização
@@ -204,103 +153,101 @@ Além disso, tal gama de problemas é a Netlib mais natural, originária de prob
 \midrule  
 \multicolumn{6}{r}{\scriptsize Continua na próxima página.}
 \endfoot
-
-
-25fv47       & 788       & 1843      & 0           & 33809    & \num{1,0763E-01} \\
-80bau3b      & 2140      & 11066     & 2968        & 41367    & \num{1,7598E-02} \\
-adlittle     & 55        & 137       & 0           & 404      & \num{2,4893E-01} \\
-afiro        & 27        & 51        & 0           & 107      & \num{2,5652E-01} \\
-agg          & 390       & 477       & 0           & 12297    & \num{1,5913E-01} \\
-agg2         & 514       & 750       & 0           & 21482    & \num{1,6068E-01} \\
-agg3         & 514       & 750       & 0           & 21482    & \num{1,6068E-01} \\
-bandm        & 240       & 395       & 0           & 3936     & \num{1,3250E-01} \\
-beaconfd     & 86        & 171       & 0           & 820      & \num{2,1011E-01} \\
-blend        & 71        & 111       & 0           & 913      & \num{3,4815E-01} \\
-bnl1         & 610       & 1491      & 0           & 12089    & \num{6,3338E-02} \\
-bnl2         & 1964      & 4008      & 0           & 81275    & \num{4,1632E-02} \\
-boeing1      & 331       & 697       & 243         & 5725     & \num{1,0149E-01} \\
-boeing2      & 126       & 265       & 73          & 2029     & \num{2,4767E-01} \\
-bore3d       & 81        & 138       & 7           & 1034     & \num{3,0285E-01} \\
-brandy       & 133       & 238       & 0           & 2755     & \num{3,0397E-01} \\
-capri        & 241       & 436       & 131         & 3962     & \num{1,3228E-01} \\
-cycle        & 1420      & 2773      & 77          & 56102    & \num{5,4941E-02} \\
-czprob       & 671       & 2779      & 0           & 3520     & \num{1,4146E-02} \\
-d2q06c       & 2132      & 5728      & 0           & 137349   & \num{5,9965E-02} \\
-d6cube       & 403       & 5443      & 0           & 54840    & \num{6,7285E-01} \\
-degen2       & 444       & 757       & 0           & 16319    & \num{1,6331E-01} \\
-degen3       & 1503      & 2604      & 0           & 120906   & \num{1,0638E-01} \\
-dfl001       & 5984      & 12143     & 13          & 1638085  & \num{9,1325E-02} \\
-e226         & 198       & 429       & 0           & 3229     & \num{1,5968E-01} \\
-etamacro     & 334       & 669       & 131         & 10843    & \num{1,9140E-01} \\
-fffff800     & 322       & 826       & 0           & 9573     & \num{1,8155E-01} \\
-finnis       & 438       & 935       & 33          & 4984     & \num{4,9676E-02} \\
-fit1d        & 24        & 1049      & 1026        & 296      & \num{9,8611E-01} \\
-fit1p        & 627       & 1677      & 399         & 627      & \num{1,5950E-03} \\
-fit2d        & 25        & 10524     & 10500       & 324      & \num{9,9680E-01} \\
-fit2p        & 3000      & 13525     & 7500        & 3000     & \num{3,3300E-04} \\
-forplan      & 121       & 447       & 22          & 3304     & \num{4,4307E-01} \\
-ganges       & 1113      & 1510      & 397         & 29677    & \num{4,7015E-02} \\
-gfrd-pnc     & 590       & 1134      & 258         & 2112     & \num{1,0440E-02} \\
-greenbea     & 1933      & 4164      & 264         & 49055    & \num{2,5740E-02} \\
-greenbeb     & 1932      & 4154      & 268         & 47783    & \num{2,5085E-02} \\
-grow7        & 140       & 301       & 280         & 2730     & \num{2,7143E-01} \\
-grow15       & 300       & 645       & 600         & 6090     & \num{1,3200E-01} \\
-grow22       & 440       & 946       & 880         & 9058     & \num{9,1302E-02} \\
-israel       & 174       & 316       & 0           & 11488    & \num{7,5314E-01} \\
-kb2          & 43        & 68        & 9           & 503      & \num{5,2082E-01} \\
-lotfi        & 133       & 346       & 0           & 1369     & \num{1,4727E-01} \\
-maros-r7     & 2152      & 7440      & 0           & 534188   & \num{2,3023E-01} \\
-maros        & 655       & 1437      & 0           & 13454    & \num{6,1192E-02} \\
-modszk1      & 665       & 1599      & 0           & 10550    & \num{4,6210E-02} \\
-nesm         & 654       & 2922      & 1596        & 21776    & \num{1,0030E-01} \\
-perold       & 593       & 1374      & 259         & 21782    & \num{1,2220E-01} \\
-pilot.ja     & 810       & 1804      & 331         & 47924    & \num{1,4485E-01} \\
-pilot.we     & 701       & 2814      & 287         & 15605    & \num{6,2086E-02} \\
-pilot        & 1368      & 4543      & 1040        & 200812   & \num{2,1388E-01} \\
-pilot4       & 396       & 1022      & 247         & 14279    & \num{1,7959E-01} \\
-pilot87      & 1971      & 6373      & 1578        & 425654   & \num{2,1863E-01} \\
-pilotnov     & 848       & 2117      & 332         & 46353    & \num{1,2774E-01} \\
-recipe       & 64        & 123       & 56          & 277      & \num{1,1963E-01} \\
-sc50a        & 49        & 77        & 0           & 242      & \num{1,8118E-01} \\
-sc50b        & 48        & 76        & 0           & 231      & \num{1,7969E-01} \\
-sc105        & 104       & 162       & 0           & 569      & \num{9,5599E-02} \\
-sc205        & 203       & 315       & 0           & 1156     & \num{5,1178E-02} \\
-scagr7       & 127       & 183       & 0           & 730      & \num{8,2646E-02} \\
-scagr25      & 469       & 669       & 0           & 2944     & \num{2,4636E-02} \\
-scfxm1       & 305       & 568       & 0           & 4430     & \num{9,1965E-02} \\
-scfxm2       & 610       & 1136      & 0           & 9284     & \num{4,8261E-02} \\
-scfxm3       & 915       & 1704      & 0           & 14138    & \num{3,2681E-02} \\
-scorpion     & 340       & 412       & 0           & 2275     & \num{3,6419E-02} \\
-scrs8        & 421       & 1199      & 0           & 4477     & \num{4,8143E-02} \\
-scsd1        & 77        & 760       & 0           & 1392     & \num{4,5657E-01} \\
-scsd6        & 147       & 1350      & 0           & 2545     & \num{2,2875E-01} \\
-scsd8        & 397       & 2750      & 0           & 5879     & \num{7,2083E-02} \\
-sctap1       & 284       & 644       & 0           & 2435     & \num{5,6859E-02} \\
-sctap2       & 1033      & 2443      & 0           & 11736    & \num{2,1028E-02} \\
-sctap3       & 1408      & 3268      & 0           & 16100    & \num{1,5532E-02} \\
-seba         & 448       & 901       & 447         & 53711    & \num{5,3299E-01} \\
-share1b      & 112       & 248       & 0           & 1417     & \num{2,1700E-01} \\
-share2b      & 96        & 162       & 0           & 1041     & \num{2,1550E-01} \\
-shell        & 487       & 1451      & 117         & 3983     & \num{3,1534E-02} \\
-ship04l      & 292       & 1905      & 0           & 2641     & \num{5,8524E-02} \\
-ship04s      & 216       & 1281      & 0           & 1778     & \num{7,1588E-02} \\
-ship08l      & 470       & 3121      & 0           & 4442     & \num{3,8090E-02} \\
-ship08s      & 276       & 1604      & 0           & 2295     & \num{5,6632E-02} \\
-ship12l      & 610       & 4171      & 0           & 5506     & \num{2,7955E-02} \\
-ship12s      & 340       & 1943      & 0           & 2507     & \num{4,0433E-02} \\
-sierra       & 1212      & 2705      & 2016        & 12862    & \num{1,6687E-02} \\
-stair        & 356       & 532       & 6           & 14682    & \num{2,2889E-01} \\
-standata     & 314       & 796       & 96          & 2395     & \num{4,5397E-02} \\
-standgub     & 314       & 796       & 96          & 2395     & \num{4,5397E-02} \\
-standmps     & 422       & 1192      & 96          & 3957     & \num{4,2070E-02} \\
-stocfor1     & 102       & 150       & 0           & 805      & \num{1,4494E-01} \\
-stocfor2     & 1980      & 2868      & 0           & 22841    & \num{1,1147E-02} \\
-stocfor3     & 15362     & 22228     & 0           & 177936   & \num{1,4430E-03} \\
-truss        & 1000      & 8806      & 0           & 53509    & \num{1,0602E-01} \\
-tuff         & 257       & 567       & 25          & 7051     & \num{2,0962E-01} \\
-vtp.base     & 72        & 111       & 32          & 505      & \num{1,8094E-01} \\
-wood1p       & 171       & 1718      & 0           & 11645    & \num{7,9064E-01} \\
-woodw        & 708       & 5364      & 0           & 30027    & \num{1,1839E-01} \\
+25fv47       		& 788       & 1843      & 0           & 33809    & \num{1,0763E-01} \\
+80bau3b      		& 2140      & 11066     & 2968        & 41367    & \num{1,7598E-02} \\
+adlittle     		& 55        & 137       & 0           & 404      & \num{2,4893E-01} \\
+afiro        		& 27        & 51        & 0           & 107      & \num{2,5652E-01} \\
+agg          		& 390       & 477       & 0           & 12297    & \num{1,5913E-01} \\
+agg2         		& 514       & 750       & 0           & 21482    & \num{1,6068E-01} \\
+agg3         		& 514       & 750       & 0           & 21482    & \num{1,6068E-01} \\
+bandm        		& 240       & 395       & 0           & 3936     & \num{1,3250E-01} \\
+beaconfd     		& 86        & 171       & 0           & 820      & \num{2,1011E-01} \\
+blend        		& 71        & 111       & 0           & 913      & \num{3,4815E-01} \\
+bnl1         		& 610       & 1491      & 0           & 12089    & \num{6,3338E-02} \\
+bnl2         		& 1964      & 4008      & 0           & 81275    & \num{4,1632E-02} \\
+boeing1      		& 331       & 697       & 243         & 5725     & \num{1,0149E-01} \\
+boeing2      		& 126       & 265       & 73          & 2029     & \num{2,4767E-01} \\
+bore3d       		& 81        & 138       & 7           & 1034     & \num{3,0285E-01} \\
+brandy       		& 133       & 238       & 0           & 2755     & \num{3,0397E-01} \\
+capri        		& 241       & 436       & 131         & 3962     & \num{1,3228E-01} \\
+cycle        		& 1420      & 2773      & 77          & 56102    & \num{5,4941E-02} \\
+czprob       		& 671       & 2779      & 0           & 3520     & \num{1,4146E-02} \\
+d2q06c       		& 2132      & 5728      & 0           & 137349   & \num{5,9965E-02} \\
+d6cube       		& 403       & 5443      & 0           & 54840    & \num{6,7285E-01} \\
+degen2       		& 444       & 757       & 0           & 16319    & \num{1,6331E-01} \\
+degen3       		& 1503      & 2604      & 0           & 120906   & \num{1,0638E-01} \\
+dfl001       		& 5984      & 12143     & 13          & 1638085  & \num{9,1325E-02} \\
+e226         		& 198       & 429       & 0           & 3229     & \num{1,5968E-01} \\
+etamacro     		& 334       & 669       & 131         & 10843    & \num{1,9140E-01} \\
+fffff800     		& 322       & 826       & 0           & 9573     & \num{1,8155E-01} \\
+finnis       		& 438       & 935       & 33          & 4984     & \num{4,9676E-02} \\
+fit1d        		& 24        & 1049      & 1026        & 296      & \num{9,8611E-01} \\
+fit1p        		& 627       & 1677      & 399         & 627      & \num{1,5950E-03} \\
+fit2d        		& 25        & 10524     & 10500       & 324      & \num{9,9680E-01} \\
+fit2p        		& 3000      & 13525     & 7500        & 3000     & \num{3,3300E-04} \\
+forplan      		& 121       & 447       & 22          & 3304     & \num{4,4307E-01} \\
+ganges       		& 1113      & 1510      & 397         & 29677    & \num{4,7015E-02} \\
+gfrd-pnc     		& 590       & 1134      & 258         & 2112     & \num{1,0440E-02} \\
+greenbea     		& 1933      & 4164      & 264         & 49055    & \num{2,5740E-02} \\
+greenbeb     		& 1932      & 4154      & 268         & 47783    & \num{2,5085E-02} \\
+grow7        		& 140       & 301       & 280         & 2730     & \num{2,7143E-01} \\
+grow15       		& 300       & 645       & 600         & 6090     & \num{1,3200E-01} \\
+grow22       		& 440       & 946       & 880         & 9058     & \num{9,1302E-02} \\
+israel       		& 174       & 316       & 0           & 11488    & \num{7,5314E-01} \\
+kb2          		& 43        & 68        & 9           & 503      & \num{5,2082E-01} \\
+lotfi        		& 133       & 346       & 0           & 1369     & \num{1,4727E-01} \\
+maros-r7     		& 2152      & 7440      & 0           & 534188   & \num{2,3023E-01} \\
+maros        		& 655       & 1437      & 0           & 13454    & \num{6,1192E-02} \\
+modszk1      		& 665       & 1599      & 0           & 10550    & \num{4,6210E-02} \\
+nesm         		& 654       & 2922      & 1596        & 21776    & \num{1,0030E-01} \\
+perold       		& 593       & 1374      & 259         & 21782    & \num{1,2220E-01} \\
+pilot.ja     		& 810       & 1804      & 331         & 47924    & \num{1,4485E-01} \\
+pilot.we     		& 701       & 2814      & 287         & 15605    & \num{6,2086E-02} \\
+pilot        		& 1368      & 4543      & 1040        & 200812   & \num{2,1388E-01} \\
+pilot4       		& 396       & 1022      & 247         & 14279    & \num{1,7959E-01} \\
+pilot87      		& 1971      & 6373      & 1578        & 425654   & \num{2,1863E-01} \\
+pilotnov     		& 848       & 2117      & 332         & 46353    & \num{1,2774E-01} \\
+recipe       		& 64        & 123       & 56          & 277      & \num{1,1963E-01} \\
+sc50a        		& 49        & 77        & 0           & 242      & \num{1,8118E-01} \\
+sc50b        		& 48        & 76        & 0           & 231      & \num{1,7969E-01} \\
+sc105        		& 104       & 162       & 0           & 569      & \num{9,5599E-02} \\
+sc205        		& 203       & 315       & 0           & 1156     & \num{5,1178E-02} \\
+scagr7       		& 127       & 183       & 0           & 730      & \num{8,2646E-02} \\
+scagr25      		& 469       & 669       & 0           & 2944     & \num{2,4636E-02} \\
+scfxm1       		& 305       & 568       & 0           & 4430     & \num{9,1965E-02} \\
+scfxm2       		& 610       & 1136      & 0           & 9284     & \num{4,8261E-02} \\
+scfxm3       		& 915       & 1704      & 0           & 14138    & \num{3,2681E-02} \\
+scorpion     		& 340       & 412       & 0           & 2275     & \num{3,6419E-02} \\
+scrs8        		& 421       & 1199      & 0           & 4477     & \num{4,8143E-02} \\
+scsd1        		& 77        & 760       & 0           & 1392     & \num{4,5657E-01} \\
+scsd6        		& 147       & 1350      & 0           & 2545     & \num{2,2875E-01} \\
+scsd8        		& 397       & 2750      & 0           & 5879     & \num{7,2083E-02} \\
+sctap1       		& 284       & 644       & 0           & 2435     & \num{5,6859E-02} \\
+sctap2       		& 1033      & 2443      & 0           & 11736    & \num{2,1028E-02} \\
+sctap3       		& 1408      & 3268      & 0           & 16100    & \num{1,5532E-02} \\
+seba         		& 448       & 901       & 447         & 53711    & \num{5,3299E-01} \\
+share1b      		& 112       & 248       & 0           & 1417     & \num{2,1700E-01} \\
+share2b      		& 96        & 162       & 0           & 1041     & \num{2,1550E-01} \\
+shell        		& 487       & 1451      & 117         & 3983     & \num{3,1534E-02} \\
+ship04l      		& 292       & 1905      & 0           & 2641     & \num{5,8524E-02} \\
+ship04s      		& 216       & 1281      & 0           & 1778     & \num{7,1588E-02} \\
+ship08l      		& 470       & 3121      & 0           & 4442     & \num{3,8090E-02} \\
+ship08s      		& 276       & 1604      & 0           & 2295     & \num{5,6632E-02} \\
+ship12l      		& 610       & 4171      & 0           & 5506     & \num{2,7955E-02} \\
+ship12s      		& 340       & 1943      & 0           & 2507     & \num{4,0433E-02} \\
+sierra       		& 1212      & 2705      & 2016        & 12862    & \num{1,6687E-02} \\
+stair        		& 356       & 532       & 6           & 14682    & \num{2,2889E-01} \\
+standata     		& 314       & 796       & 96          & 2395     & \num{4,5397E-02} \\
+standgub     		& 314       & 796       & 96          & 2395     & \num{4,5397E-02} \\
+standmps     		& 422       & 1192      & 96          & 3957     & \num{4,2070E-02} \\
+stocfor1     		& 102       & 150       & 0           & 805      & \num{1,4494E-01} \\
+stocfor2     		& 1980      & 2868      & 0           & 22841    & \num{1,1147E-02} \\
+stocfor3     		& 15362     & 22228     & 0           & 177936   & \num{1,4430E-03} \\
+truss        		& 1000      & 8806      & 0           & 53509    & \num{1,0602E-01} \\
+tuff         		& 257       & 567       & 25          & 7051     & \num{2,0962E-01} \\
+vtp.base     		& 72        & 111       & 32          & 505      & \num{1,8094E-01} \\
+wood1p       		& 171       & 1718      & 0           & 11645    & \num{7,9064E-01} \\
+woodw        		& 708       & 5364      & 0           & 30027    & \num{1,1839E-01} \\
 kennington-cre-a    & 2994      & 6692      & 0           & 33212    & \num{7,0760E-03} \\
 kennington-cre-b    & 5336      & 36382     & 0           & 248629   & \num{1,7277E-02} \\
 kennington-cre-c    & 2375      & 5412      & 0           & 28528    & \num{9,6940E-03} \\
@@ -313,11 +260,73 @@ kennington-osa-30   & 4313      & 104337    & 0           & 115081   & \num{1,21
 kennington-pds-02   & 2609      & 7339      & 1914        & 44301    & \num{1,2633E-02} \\
 kennington-pds-06   & 9156      & 28472     & 8448        & 589339   & \num{1,3951E-02} \\
 kennington-pds-10   & 15648     & 48780     & 15125       & 1687660  & \num{1,3721E-02} \\
-qap8      & 912       & 1632      & 0           & 193944   & \num{4,6526E-01} \\
+qap8      			& 912       & 1632      & 0           & 193944   & \num{4,6526E-01} \\
 % \bottomrule
 \end{longtable}
 }
 
 
 
+
+\subsection{Solução do subproblema de otimização \texorpdfstring{de $\nextphi$}{da função de mérito}}
+
+Em cada iteração de nosso método, precisamos resolver o problema dado em \eqref{eq:pop-subproblem}, isto é, 
+\begin{equation}
+	\label{eq:pop-subproblem-1}
+	\begin{array}{lc}
+\displaystyle \min_{(\al,\mu,\sig)} & \hat\varphi(\al,\mu,\sig) \\
+\text{s. a.} &\begin{cases} g_C^i(\al,\mu,\sig) \geq 0 \quad \forall i = 1,\ldots,n \\
+				g_L(\al,\mu,\sig)   \geq 0 	\\
+				 0\leq (\al,\mu,\sig) \leq u,
+				 	
+				 \end{cases}.
+\end{array}
+\end{equation}
+em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau máximo 3 nas variáveis $(\al,\mu,\sig)$. Este é um chamado Problema de Otimização de Polinômios (POP) e é considerado um problema não linear  difícil de ser resolvido~\cite{Laurent:2010kp}, em particular pela quantidade de restrições do problema, que é  $(m+n+1)$. 
+
+Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SaparsePOP~\cite{Waki:2008ie}, os quais baseiam-se na transformação de um POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas. 
+
+
+O subproblema foi resolvido utilizando da implementação desenvolvida por \textcite{VillasBoas:2012ur,VillasBoas2013:wn}. A estratégia usada por esses autores para resolver um subproblema similar, é a seguinte.
+
+Seja
+\[\Omega = \{(\al,\mu,\sig): g_C^i(\al,\mu,\sig) \geq, \forall i = 1,\ldots,n,\: g_L(\al,\mu,\sig)   \geq 0,\:		 0\leq (\al,\mu,\sig) \leq u\}\]
+e considere o problema alternativo
+\begin{equation}
+		\label{eq:pop-subproblem-2}
+\displaystyle  \min_{\mu}\left\{  \min_{\sig} \left\{ \min_{\al} \left\{ \nextphi(\al,\mu,\sig):    (\al,\mu,\sig) \in \Omega  \right\} \right\}\right\} \\
+\end{equation}
+ou mais convenientemente 
+\[
+\displaystyle \min_{\mu}\Psi(\mu)
+\]
+em que  $\displaystyle \Psi = \min_{\sig}\Phi(\mu,\sig)$ e 
+\[
+\Phi(\mu,\sig) = \left\{
+	\begin{array}{l}
+\displaystyle \min_{\al}  \nextphi(\al,\mu,\sig) \\
+\text{s. a. }\:  (\al,\mu,\sig) \in\Omega
+\end{array}\right..
+\]
+  
+Primeiramente, vamos verificar a relação existente entre os mínimos de \eqref{eq:pop-subproblem-1} e de \eqref{eq:pop-subproblem-2}. Sejam $(\al^*,\mu^*,\sig^*)$ uma solução global do  primeiro probelma e $(\bar{\al}, \bar{\mu},\bar{\sig})$ uma solução global de segundo. Então por definição
+$ \nextphi(\al^*,\mu^*,\sig^*) \leq \nextphi (\bar{\al},\bar{\mu},\bar{\sig}).$
+Por outro lado 
+\[
+\nextphi(\baral,\barmu,\barsig) = \min_{\al}\min_{\sig}\Phi(\barmu,\barsig) \leq \Phi(\mu^{*},\sig^{*}) \leq \nextphi(\al^*,\mu^*,\sig^*).
+\]
+Assim, os dois problemas tem o mesmo mínimo. A segunda formulação, entretanto, permite encontrar aproximações numéricas do mínimo de maneira mais fácil. 
+
+Usando essa partição do problema, um gráfico típico de $\Psi(\mu,\sig)$ é dado na Figura \ref{fig:bnl1-Phi}, tomada na iteração \num{4} do problema \texttt{bnl1}. O aspecto desse gráfico -- , com um \emph{zoom} conveniente perto do mínimo --  acaba se repetindo  em todos os problema da Netlib-108 que estudamos, o que sugere que $\Phi$ tenha derivadas contínuas por partes próximo ao mínimo.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.5\textwidth]{figuras/bnl1-phi}
+  	\caption{\label{fig:bnl1-Phi} Gráfico de $\Phi(\mu,\sig)$ para $\al$ fixo de \texttt{bnl1}.}
+  \end{figure}
+
+
+
+
 \section{Resultados Numéricos}
+
