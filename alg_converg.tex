@@ -24,7 +24,7 @@ Daí, da mesma forma que esses autores, discutiremos aqui tanto polinomialidade 
 
  Para tanto,  fixaremos os parâmetros $(\mu,\sig)$. O motivo de fazermos isso é facilitarmos as contas. Neste sentido escolheremos estrategicamente  para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
-em que $\eta\in (\eta_{\min},\eta_{\max} )$, enquanto o parâmetro $\sig$ será fixado como $\nextsig =0 $. Em alguns momentos, utilizaremos apenas $\nextsig$ ao invés de $0$ pois derivaremos desigualdades importantes que vão valer para qualquer valor de $\eta$ e $\sig$. Essas escolhas  fazem com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}. Os valores dos limitantes de $\eta$ para  estes $\nextmu$  e $\nextsig$ fixados são determinado no Lema~\ref{lemma:next-phi-delta-n4}.
+em que $\eta\in (\eta_{\min},\eta_{\max} )$, enquanto o parâmetro $\sig$ será fixado como $\nextsig =0 $. Em alguns momentos, utilizaremos apenas $\nextsig$ ao invés de $0$ pois derivaremos desigualdades importantes que vão valer para qualquer valor de $\eta$ e $\sig$. Essas escolhas  fazem com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}. Os valores dos limitantes de $\eta$ para  estes $\nextmu$  e $\nextsig$ fixados são determinado no Teorema~\ref{teo:next-phi-delta-n4}.
 
 
  A fixação desses dois parâmetros permite as demonstrações que seguem e a consequente prova da convergência do método de maneira mais fácil. No entanto, na prática, o método  tem desempenho melhor, já que se busca, em cada iteração $k$,
@@ -83,9 +83,9 @@ Usando tal definição, derivamos a seguinte relação entre a função de méri
 
 
 Como é necessário garantir que  $\nextphi  $  seja não negativa, devemos escolher um tamanho de passo  $\al_k$, em cada iteração $k$, tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir um escalar $\theta>0$, tal que $\theta = \liminf (\theta_k)$, isto é, se a sequência $\{\theta_k\}$ for limitada inferiormente por um valor positivo,	 então para $k$ suficientemente grande
-\[
+\begin{equation}\label{eq:nextphi-philessthan1}
 \frac{{\varphi_{k+1}}}{\varphi_{k}} < (1- \theta) < 1.
-\]
+\end{equation}
 e logo a sequência $\{\varphi_k\}$, gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, converge para zero Q-linearmente~\cite{Ortega:2000vd}.
 
 
@@ -727,14 +727,18 @@ em que $h^i$ é uma quadrática côncava em função de $\al$ com uma raiz nula 
 
 Vamos agora obter limitantes para $\abs{\zeta_i}$, $ \abs{\chi_i}$ e para  $\abs{\xi_i}$.
 
-Considere primeiramente que nas substituições que seguem, as definições dos vetores $L_{\ell,j}^{k}$ dadas em~\eqref{eq:defining-Lij} fazem com que sejma válidas $\abs{({L_{\ell,j}^{k}})_{i}} \leq \norm{L_{\ell,j}^{k}}_{1}$ e $\abs{\dbvec{L_{\ell,j}^{k}}} \leq \dfrac{1}{n}\norm{L_{\ell,j}^{k}}_{1}$.
+Considere primeiramente que nas substituições que seguem, as definições dos vetores $L_{\ell,j}^{k}$ dadas em~\eqref{eq:defining-Lij} fazem com que sejam válidas 
+\begin{equation}
+	\label{eq:normLij}
+\abs{({L_{\ell,j}^{k}})_{i}} \leq \norm{L_{\ell,j}^{k}}_{1} \text{ e } \abs{\dbvec{L_{\ell,j}^{k}}} \leq \dfrac{1}{n}\norm{L_{\ell,j}^{k}}_{1}.
+\end{equation}
 
 Mais que isso, já que $\ga/n < 1$, obtemos
 \begin{equation}\label{eq:absLij}
  	\abs{({L_{\ell,j}^{k}})_{i} - \ga\dbvec{L_{\ell,j}^{k}}} \leq  	\abs{({L_{\ell,j}^{k}})_{i}} + \abs{\ga\dbvec{L_{\ell,j}^{k}}} \leq  \norm{L_{\ell,j}^{k}}_{1}+ \frac{\ga}{n}\norm{L_{\ell,j}^{k}}_{1} \leq 2 \norm{L_{\ell,j}^{k}}_{1}.
  \end{equation} 
 
-Para o limitante de $\abs{\zeta_{i}}$ note que por conta de \eqref{eq:defin-zeta-i+chi-i+xi-i} e também pela mostrado em  \eqref{eq:absLij} segue que 
+Para o limitante de $\abs{\zeta_{i}}$ note que por conta de \eqref{eq:defin-zeta-i+chi-i+xi-i} e também pela desigualdade dada em \eqref{eq:absLij}, segue que 
 \begin{equation}
 \abs{\zeta_i}    \leq 2\norm{L_{0,0}^{k}}_1 \label{eq:bound-zeta-i} \leq 2\norm{ \dekx  \dekz }_1.   % \leq 2\omega_1^{2} n^{2}\rhoCkb . 
 \end{equation}
@@ -851,7 +855,7 @@ Note que  $\nextal_L\in(0,1]$ -- definido em \eqref{eq:al-C+al-L} -- é o maior 
 \nextal_L \geq \frac{\eta\rhoCkb  }{\abs{\dbvec{L_{0,0}^{k}}} + \abs{\eta\rhoCkb \,  \dbvec{L_{1,0}^{k}}}}.
 \end{equation}
 
-Novamente, como na demonstração do Lema \ref{lemma:alC_delta-1}, usaremos \eqref{eq:absLij} por isso
+Novamente, como na demonstração do Lema \ref{lemma:alC_delta-1}, usaremos \eqref{eq:normLij} por isso
 \begin{equation}
 \abs{\dbvec{L_{0,0}^{k}}}  = \frac{1}{n}\norm{L_{0,0}^{k}}_{1}  \leq \dfrac{1}{n} \norm{ \dekx  \dekz }_1 .  \label{eq:bound-zeta}
 \end{equation}
@@ -875,9 +879,9 @@ Os Lema~\ref{lemma:boundDxDzaff-c} e  \ref{lemma:boundDxDzaff} em conjunto com  
 em que $\de_{2}$ é exatamente o dado na Equação \eqref{eq:delta2}
 \end{proof}
  
-Agora podemos enunciar e demonstrar  Teorema que mostra que a sequência $\left\{ \varphi_{k}\right\}$ gerada pelo nosso Algoritmo tem taxa de convergência Q-linear. 
+Agora podemos enunciar e demonstrar  Teorema que mostra que a sequência $\left\{ \varphi_{k}\right\}$ gerada pelo nosso Algoritmo é convergente. 
 
-\begin{teo}[Taxa de Convergência do Algoritmo  \ref{alg:optimized-choice-of-parameters}]\label{lemma:next-phi-delta-n4}
+\begin{teo}[Taxa de Convergência do Algoritmo  \ref{alg:optimized-choice-of-parameters}]\label{teo:next-phi-delta-n4}
 A sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-of-parameters} é tal que
 \begin{equation}
 		\label{eq:varphi-delta-n4}
@@ -889,51 +893,52 @@ A sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-o
 
 \begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$, com $\de_{1}$ dado em \eqref{eq:delta1}. 
 
-Precisamos  primeiro mostrar que $\theta(\nextal)= \Oset(1/n^{4})$. Para isso, considere que pelas definições dadas em dadas em~\eqref{eq:defining-Lij} em conjunto com  as Equações  \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} e ainda  os Lema~\ref{lemma:boundDxDzaff-c} e \ref{lemma:boundDxDzaff} derivamos 
+Precisamos  primeiro mostrar que para a função $\theta$ dada em \eqref{eq:theta},  $\theta(\nextal)= \Oset(1/n^{4})$. Para isso, sejam $t = (1+2\bdxzstar^{4})$ e $t_1 = \dfrac{t}{\ga}$.  
+
+Considere agora que pelas definições  dadas em~\eqref{eq:defining-Lij} em conjunto com  as Equações  \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} e ainda  os Lema~\ref{lemma:boundDxDzaff-c} e \ref{lemma:boundDxDzaff} derivamos 
 \[
-- \dbvec{L_{0,0}^{k}} \geq - \dfrac{1}{n} \norm{ \dekx  \dekz }_1 \geq - \dfrac{(1 + 2\bdxzstar^{4})^{2} }{\ga} n\rhoCkb
+- \dbvec{L_{0,0}^{k}} \geq - \dfrac{1}{n} \norm{ \dekx  \dekz }_1 \geq - \dfrac{(1 + 2\bdxzstar^{4})^{2} }{\ga} n\rhoCkb \geq -\ga t_{1}^{2}n\rhoCkb
 \]
 e 
 \[
-- \eta\rhoCkb  \dbvec{L_{1,0}^{k}} \geq - \dfrac{1}{n} \norm{ \dekx \Dekcoz + \Dekcox \dekz }_1 \geq - \dfrac{2(1+2\bdxzstar^{4})\eta }{\ga}\: n^{2}\rhoCkb.
+- \eta\rhoCkb\,  \dbvec{L_{1,0}^{k}} \geq - \dfrac{1}{n} \norm{ \dekx \Dekcoz + \Dekcox \dekz }_1 \geq - \dfrac{2(1+2\bdxzstar^{4})\eta }{\ga}\: n^{2}\rhoCkb\geq - 2\eta t_{1} n^{2}\rhoCkb.
 \]
 
 
 
-Seja $t = (1+2\bdxzstar^{4})$ e $t_1 = \dfrac{t}{\ga}$. 
-Daí, considerando que $\dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\leq 1$ temos que
+
+Daí, como $-\dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\geq - 1$, temos que
 
 
-\[
-	\begin{aligned}
+
+	\begin{align}
 		\theta(\nextal)% & =  \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ \nuk \dbvec{\rho_L}_0\nextal + (1- \eta)\rhoCkb \nextal - \nextal^{2}\left(\dbvec{L_{0,0}^{k}} + \eta\rhoCkb  \dbvec{L_{1,0}^{k}} \right) \right] \\
-						& = \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ (\nuk \dbvec{\rho_L}_0 + \rhoCkb )\nextal -  \eta\rhoCkb \nextal - \nextal^{2}\left(\dbvec{L_{0,0}^{k}} + \eta\rhoCkb \, \dbvec{L_{1,0}^{k}} \right) \right] \\
-						& \geq \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ (\nuk \dbvec{\rho_L}_0 + \rhoCkb )\nextal -  \eta\rhoCkb \nextal - \nextal^{2}t_{1}\left(\ga t_{1}^{2} n\rhoCkb  + 2\eta t_1 n^{2}\rhoCkb  \right) \right]\\
+						& = \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ (\nuk \dbvec{\rho_L}_0 + \rhoCkb )\nextal -  \eta\rhoCkb \nextal - \nextal^{2}\left(\dbvec{L_{0,0}^{k}} + \eta\rhoCkb \, \dbvec{L_{1,0}^{k}} \right) \right] \notag\\
+						& \geq \dfrac{1}{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\left[ (\nuk \dbvec{\rho_L}_0 + \rhoCkb )\nextal -  \eta\rhoCkb \nextal - \nextal^{2}\left(\ga t_{1}^{2} n\rhoCkb  + 2\eta t_1 n^{2}\rhoCkb  \right) \right]\notag\\
 						%
-						& \geq \nextal - \dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb } \left[   \eta\nextal + \nextal^{2} t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]\\
-						& \geq \nextal \left[ 1 -  \eta - \nextal t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right] \\
-						& \geq \frac{\delta_{1}}{n^{4}} \left[ 1 -  \eta - \frac{\delta_{1}}{n^{4}}t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right] \\
+						& \geq \nextal - \dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb } \left[   \eta\nextal + \nextal^{2} t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]\notag\\
+						& \geq \nextal \left[ 1 -  \eta - \nextal t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]. \notag
+	\end{align}
+Substituindo $\nextal$ por $\delta_{1}/n^{4}$ segue que  	
+	\begin{align}
+			\theta(\nextal)			& \geq \frac{\delta_{1}}{n^{4}} \left[ 1 -  \eta - \frac{\delta_{1}}{n^{4}}t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]\notag \\
 						& \geq 	 \left[ (1 -  \eta)\delta_{1} - \delta_{1}^{2}t_{1}\left(\ga t_1  + 2\eta    \right) \right] \frac{1}{n^{4}}	
-						 = \frac{\nextdel}{n^{4}},		
-		\end{aligned}
-	\]
+						 = \frac{\nextdel}{n^{4}},\label{eq:theta-nextalpha}		
+		\end{align}
 	com 	\begin{equation}
 		\label{eq:nextdelta}
 		\nextdel = 
 	(1 -  \eta)\delta_{1} - \delta_{1}^{2}t_{1}\left(\ga t_{1}  + 2\eta    \right) = (1 -  \eta)\delta_{1} - \dfrac{\delta_{1}^{2}}{\ga}\left((1+2\bdxzstar^{4})^{2}  + 2\eta(1+2\bdxzstar^{4})    \right).
 	\end{equation} 
 	
-	 A demonstração será finalizada ao verificarmos que $0<\nextdel<1$.
-
-Agora, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substituindo na última igualdade, encontramos o valor de $\nextdel$ a depender de $\ga$ e $\eta$,  ou seja, 
-	\begin{equation}
-		\label{eq:nextdel-full}
+	 Precisamos verificar que $0<\nextdel<1$.
+Com efeito, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substituindo em \eqref{eq:nextdelta}, encontramos o valor de $\nextdel$ a depender de $\ga$ e $\eta$,  ou seja, 
+	\begin{equation*}
 		\nextdel = (2\ga\eta)\frac{\left(4 t^2 +(8t - 6t^2   -2t^2\ga) \eta - ( 1 - 4t    - 4t   \ga) ) \eta^2 - \eta^3\right)}{(4t^2 + 8t\eta + \eta^{2})^{2}}.
-	\end{equation}
+	\end{equation*}
 
-	Para o primeiro termo de \eqref{eq:nextdel-full}, temos que $0 < (2\ga\eta) <1$.
-
-	Quanto ao segundo termo, note que o denominador é  sempre maior que o numerador, para qualquer  valor de $\ga$ e $\eta$. Basta mostrar que  o numerador deste segundo termo acima é positivo. Com efeito, tal numerador é o polinômio 
+	Para o primeiro termo do lado direito da igualdade acima, temos que $0 < (2\ga\eta) <1$.
+	Quanto ao segundo termo, note que o denominador é  sempre maior que o numerador, para qualquer  valor de $\ga$ e $\eta$. Basta mostrar que  o numerador deste segundo termo  é positivo. Com efeito, tal numerador é o polinômio 
 	\[
 		p(\eta,\ga) =  4 t^2 + ( 8t - 6t^2 + 2t^2\ga) \eta + (1 - 4t - 4t   \ga) ) \eta^2 - \eta^3. 
 	\]
@@ -944,18 +949,20 @@ Agora, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substitui
 
 	Seja $\eta_{1}$ a menor dessas raízes. Nesse caso, por continuidade de $p$, para qualquer $\eta  < \eta_{1}$ e $\ga$ escolhido como acima, temos que  $p(\eta,\ga) >0$. 
 
-	Com isso, concluímos que,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, vale  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$, o que completa a demonstração.
-% \textcolor{red}{Como terminar? $\nextdel$ precisa ser menor que 1? Maior que 0? O que mais? Já sei que $\eta > \sqrt{\ga}$, para essa escolha de $\mu$ e $\sigma$.}
-\end{proof}
+	Com isso, concluímos que,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, vale  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$.
+
+	Para finalizar, usando \eqref{eq:theta-nextalpha} e por conta da relação existente entre $\varphi_{k+1}$ e $\varphi_{k}$ dada em   \eqref{eq:relation-phi-next-phi} obtemos, para esse $\nextal$
+	\[
+	\varphi_{k+1}= \left(1 - \theta(\nextal)\right)\varphi_{k} \leq 
+	\left(1 - \frac{\hat{\delta}}{n^{4}}\right)\varphi_{k},
+	\]
+como queríamos demonstrar.
+	\end{proof}
 
 
 
-
-
-
-
-
-Finalmente podemos enunciar e provar o Teorema de complexidade. 
+O Teorema \ref{teo:next-phi-delta-n4} significa que a relação \eqref{eq:nextphi-philessthan1}
+é válida, portanto, a taxa de convergência da sequência $\{\varphi_{k}\}$ é  Q-linear. Usando esse fato, podemos agora enunciar e provar o Teorema de complexidade do número de iterações. 
 
 
 \begin{teo}[Complexidade do Algoritmo \ref{alg:optimized-choice-of-parameters}]
@@ -970,7 +977,7 @@ Finalmente podemos enunciar e provar o Teorema de complexidade.
 	 
 \end{teo}
 
-\begin{proof} Para mostrarmos a complexidade polinomial do algoritmo, aplicamos o logaritmo natural em ambos os lados da inequação \eqref{eq:varphi-delta-n4} dada no Lema \ref{lemma:next-phi-delta-n4}, obtendo
+\begin{proof} Para mostrarmos a complexidade polinomial do algoritmo, aplicamos o logaritmo natural em ambos os lados da inequação \eqref{eq:varphi-delta-n4} dada no Teorema~\ref{teo:next-phi-delta-n4}, obtendo
 	\[
 	\ln\varphi_{k+1}\leq \ln \left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln\varphi_{k},
 	\]
@@ -1003,7 +1010,7 @@ o que termina a demonstração.
 
 
 
-O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}.
+O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}, já que tal sequência estará limitada superiormente pela sequência $\{\varphi_{k}\}$, que é Q-linear, como vimos no Teorema~\ref{teo:next-phi-delta-n4}.
 
 \begin{corol}
 Suponha que escolhamos  $\tol = \num{e-8}$  e $\varepsilon$   tal que 
