@@ -8,7 +8,7 @@
 
 
 
-\chapter{Convergência  Polinomial do Método de Escolha Otimizada de Parâmetros}
+\chapter{Convergência  polinomial do método de Escolha Otimizada de Parâmetros}
 
 
 \label{chap:convergence}
@@ -669,7 +669,7 @@ Para finalizar, temos que
 \]
 \end{proof}
 
-\section{Complexidade e  Convergência}
+\section{Prova de complexidade e  convergência}
 
 A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters} esteja bem definido é necessário que exista em cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ como $\nextmu = \eta\rhoCkb$ e  agora que faremos $\sig$ como $\nextsig=0$, basta encontrar um  tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
 $\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. É o que os próximos resultados garantem. Observe que, por conta de \eqref{eq:sig-eta-relation}, como $\nextsig =0$, garantiremos que $\eta>\sqrt{\ga}$. Isso dará o primeiro limitante para $\eta$.
@@ -919,7 +919,7 @@ Daí, como $-\dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb }\geq - 1$, temos 
 						& \geq \nextal - \dfrac{\rhoCkb }{\nuk \dbvec{\rho_L}_0 + \rhoCkb } \left[   \eta\nextal + \nextal^{2} t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]\notag\\
 						& \geq \nextal \left[ 1 -  \eta - \nextal t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]. \notag
 	\end{align}
-Substituindo $\nextal$ por $\delta_{1}/n^{4}$ segue que  	
+Substituindo $\nextal$ por $\delta_{1}/n^{4}$ na desigualdade acima, segue que  	
 	\begin{align}
 			\theta(\nextal)			& \geq \frac{\delta_{1}}{n^{4}} \left[ 1 -  \eta - \frac{\delta_{1}}{n^{4}}t_{1}\left(\ga t_1 n + 2\eta  n^{2}  \right) \right]\notag \\
 						& \geq 	 \left[ (1 -  \eta)\delta_{1} - \delta_{1}^{2}t_{1}\left(\ga t_1  + 2\eta    \right) \right] \frac{1}{n^{4}}	
@@ -932,7 +932,7 @@ Substituindo $\nextal$ por $\delta_{1}/n^{4}$ segue que
 	\end{equation} 
 	
 	 Precisamos verificar que $0<\nextdel<1$.
-Com efeito, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e substituindo em \eqref{eq:nextdelta}, encontramos o valor de $\nextdel$ a depender de $\ga$ e $\eta$,  ou seja, 
+Com efeito, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e de $t$ dada acima, e substituindo em \eqref{eq:nextdelta}, encontramos o valor de $\nextdel$ a depender de $\ga$ e $\eta$,  ou seja, 
 	\begin{equation*}
 		\nextdel = (2\ga\eta)\frac{\left(4 t^2 +(8t - 6t^2   -2t^2\ga) \eta - ( 1 - 4t    - 4t   \ga) ) \eta^2 - \eta^3\right)}{(4t^2 + 8t\eta + \eta^{2})^{2}}.
 	\end{equation*}

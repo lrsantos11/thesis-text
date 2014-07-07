@@ -161,10 +161,15 @@ de~\textcite{Shamir:1987th}.
 \section{Método elipsoide}
 
 Enquanto na prática o método Simplex continuava como o método mais robusto e
-eficiente, a busca por um método que tivesse complexidade polinomial\footnote{Neste trabalho, quando mencionarmos \emph{complexidade}, o faremos no sentido de um limitante para o número de iterações apenas, descartando aqui o esforço gasto para calcular cada iteração.} no pior
+eficiente, a busca por um método que tivesse complexidade polinomial no pior
 caso foi satisfeita por \textcite{Khachiyan:A-polynomial-algorithm:1979y} através
-de seu  \emph{Método Elipsoide}.
-Este método, ao contrário do método simplex,  não se baseia em caminhar pelos
+de seu  \emph{Método Elipsoide}. Antes de continuarmos, vale a penas fazermos uma observação sobre o sentido que daremos a complexidade.
+
+\begin{obs}
+Neste trabalho, quando mencionarmos \emph{complexidade}, o faremos no sentido de um limitante para o número de iterações apenas, descartando aqui o esforço gasto para calcular cada iteração.
+\end{obs}
+
+O  método elipsoide, ao contrário do método simplex,  não se baseia em caminhar pelos
 vértices da região factível mas em diminuir o volume de um elipsoide que
 contenha um potencial ponto de solução através de um conjunto de desigualdades
 lineares estritas.

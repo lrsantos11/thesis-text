@@ -1,6 +1,13 @@
 %!TEX root = tese.tex
-\chapter{Experimentos Numéricos}
+\setchapterpreamble[u]{% 
+\dictum[Mahatma Gandhi]{``An ounce of practice is worth more than tons of preaching.''}
+}
+
+
+\chapter{Experimentos numéricos}
 \label{chap:numerical}
+
+
 
 Neste capítulo descrevemos alguns detalhes de implementação que utilizamos em nossos experimento numéricos, bem os resultados de nosso algoritmo, comparando-o com o  PCx~\cite{Czyzyk:1999hk}.
 
@@ -17,96 +24,6 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \textt
 
 
 Além disso, para todos os códigos foram usadas as mesmas opções de compilação e o mesmo computador. Com essa estratégia, diferenças nos tempos de CPU ou no número de iterações podem ser atribuídas apenas à implementação de cada algoritmo.
-\subsection{Ponto Inicial}
-
-O ponto inicial dado por \textcite{Mehrotra:1992wr}, foi genericamente descrito na seção \ref{subsec:initial-point}. Ali, mostramos que tal estratégia encontra o ponto $(\xtil,\ytil,\ztil)$, que é solução de norma mínima que satisfaz as restrições primais e
-duais. Tal terna de pontos é encontrada através de
-\begin{equation}
-	\label{eq:intial-point-LSquare}
-	\xtil = A^T(AA^T)^{-1}b, \quad \ytil = (AA^T)^{-1}Ac\quad \text{ e }
-\quad \ztil = c - A^T\ytil.
-\end{equation}
-
-Além disso, o ponto é transladado para o ortante positivo 
-através do uso de constantes  $\vartheta_x>0$ e $\vartheta_ z>0$ tais que  
-\begin{equation}
-	\label{eq:intial-point-generated}
-(x^0,y^0,z^0) = (\xtil+ \vartheta_x e,\ytil,\ztil+\vartheta_z e)
-\end{equation}
-garantindo que $(x^0,z^0)>0$.
-
-
- A rotina \verb|InitialPoint| do PCx é responsável por gerar o ponto inicial, e portanto calcular  $\vartheta_x$ e $\vartheta_ z$. A implementação feita no PCx possui  pequenas alterações em relação ao proposto por \citeauthor{Mehrotra:1992wr}, porém que não  estão documentadas no Manual de Utilização do PCx~\cite{Czyzyk:1998vw}. Por isso, para fins de clareza, documentaremos como o ponto inicial é de fato encontrado, deixando o mérito de tal estratégia para os autores citados.
-
-  Além disso, tal ponto inicial é utilizado em ambos PCx-r e PCx-EOP e a análise de convergência e complexidade relatada no Capítulo~\ref{chap:convergence}, em particular a Condição~\ref{cond:xzzero-xzstar}, continuam válidas ao utilizá-lo para iniciar nosso algoritmo.
-
-O que a rotina  \verb|InitialPoint| faz é primeiramente encontrar  $(\xtil,\ytil,\ztil)$ conforme a Equação~\eqref{eq:intial-point-LSquare}. As constantes são calculadas
-\begin{equation}
-	\label{eq:initial-point-tilde-var}
-\tilde{\vartheta_x} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\xtil_{i}\},\num{e-2}\} \quad \text{ e }\quad  \tilde{\vartheta_z} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\ztil_{i}\},\num{e-2}\}.
-\end{equation}
-Só então é que se obtém as translações dadas por 
-
-\begin{equation}
-	\label{eq:initial-point-var-x}
-\vartheta_{x} = \tilde{\vartheta_x} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\ztil+\tilde{\vartheta_z} e}_{1}} 
-\end{equation}
-e
-\begin{equation}
-	\label{eq:initial-point-var-z}
-\vartheta_{z} = \tilde{\vartheta_z} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\xtil+\tilde{\vartheta_x} e}_{1}} 
-\end{equation}
-a fim de finalmente produzir o ponto inicial como em \eqref{eq:intial-point-generated}.
-
-No trabalho original de \textcite{Mehrotra:1992wr}, o menor valor possível para  $\tilde{\vartheta_x}$ e $\tilde{\vartheta_z}$ dados pela Equação~\eqref{eq:initial-point-tilde-var} é $\num{0}$, ao invés de \num{e-2}, 	que é o valor utilizado pelo PCx original. Em nossos testes, tanto com PCx-r quanto com PCx-EOP, utilizamos \num{e-1}. 
-
-
-\subsection{Critério de Parada}
-
-
-O PCx tem implementado dois critérios de parada que podem ser escolhidos pelo usuário. Sua   documentação~\cite{Czyzyk:1998vw} declara que é utilizado o critério dado em \eqref{eq:termination-criteria}.   Além disso, é possível trocar o critério de parada relacionado à complementaridade, dentro do código. Conforme explanamos na Seção~\ref{subsection:termination-criteria}, uma escolha possível seria a dada na equação \eqref{eq:termination-criteria-pcx}. Porém ao invés do teste dado pela Equação~\eqref{eq:termination-criteria-pcx-gap} -- ou por \eqref{eq:termination-criteria-gap} o que seria razoável --, a implementação do PCx usa
-
-\[
-\dfrac{x^{T}z/n}{1 + \abs{c^Tx}}\leq
-	\tol,
-\]
-em que $\tol$ é a tolerância aceita. Essa escolha tem um viés dimensional, já que o divide por $n$ o \emph{gap}, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque, usar esse teste equivale a utilizar como tolerância para o critério dado em \eqref{eq:termination-criteria-pcx-gap} $n\cdot\tol$. 
-
-
-Fizemos uma pequena alteração no código, no momento em que testamos o critério de parada, que nos parece  contribuir para um melhor desempenho, pelo menos  no que diz respeito a verificação da otimalidade do ponto em questão. Para tanto, reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já há a indicação de otimalidade e o programa saiu do \emph{loop} principal.
-
-Descrevemos agora a rotina \verb|RecomputeDualVariables|. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz, é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. 
-
- O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, o programa assinala $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, tenha o valor calculado pela definição do problema dual, e não pelo algoritmo. O teste para verificar se $t_{i}$ é negativo serve para detectar possíveis valores inconvenientes, já que $\zstar\geq 0$.
-
- Pois bem, a alteração que fizemos utiliza os princípios da rotina   \verb|RecomputeDualVariables| \emph{em toda iteração} $k$. Neste caso, o que fazemos é encontrar $t= c - A^T\yk$. Testamos então se para algum  $i$ ocorre $t_{i}<0$ e em caso afirmativo assinalamos $t_{i}\leftarrow 0$. Com isso, consideramos a terna $(\xk,\yk,t)$ com a qual realizamos os testes de otimalidade dados por
- \eqref{eq:termination-criteria-pcx}, porém com as seguintes modificações: o critério \eqref{eq:termination-criteria-pcx-dual} é transformado em
-\[\dfrac{\norm{t}}{1 + \norm{c}} \leq \tol,\]	
-e o critério  \eqref{eq:termination-criteria-pcx-gap} é transformado em 
-\[
-	\dfrac{(\xk)^{T}t}{1 + \abs{c^Tt}}\leq\tol.
-\]
-Se esses testes são satisfeitos, então assinalamos otimalidade no algoritmo e saímos do \emph{loop} principal. 
-Isso é feito porque,  como $t$ não é mais interior, $(\xk)^{T}t$ tem possivelmente valor menor que $(\xk)^{T}\zk$. Essa estratégia diz que $(\xk,\yk,t)$ pode ser um ponto melhor que $(\xk,\yk,\zk)$.  Caso não seja satisfeito, continuamos a execução do programa com o ponto atual sendo $(\xk,\yk,\zk)$. Em ambos os casos $t$ é descartado e o ponto utilizado é sempre $(\xk,\yk,\zk)$. Considere que se tivermos otimalidade, \verb|RecomputeDualVariables| será chamada -- pois estamos fora do \emph{loop} e o programa assinala $(\xk,\yk,\zk)\leftarrow (\xk,\yk,t)$. 
-
-
-O critério de parada usado  na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria-pcx}, porém com  a alteração relatada acima. 
-
-
-
-
-% \begin{itemize}
-% \item Descrever a heurística utilizada para resolver o subproblema de otimização
-% global de polinômios. Artigo escrito em conjunto com os orientadores está sendo
-% finalizado para submissão em que tal subproblema também aparece, porém num
-% método similar. Tal trabalho contempla também uma biblioteca para resolver o
-% subproblema de otimização de polinômios.
-% \begin{itemize}
-%   \item Este método similar, já em fase final de implementação,
-%   demonstra-se competitivo com o \texttt{PCx} nos testes preliminares
-%  \end{itemize}
-% \end{itemize}
-
 
 
 \subsection{Conjunto de testes}
@@ -122,7 +39,7 @@ Alguns comentários sobre a escolha de Netlib-108 cabem aqui. Primeiramente, os 
 Além disso, tal gama de problemas é a Netlib mais natural, originária de problemas reais e consensual entre os usuários de \ac{PL}. Com efeito, tais problemas ou pelo menos parte deles, foram testados por \textcite{Mehrotra:1992wr,Colombo:2008ia,Mehrotra:2005do,Jarre:1999tl,Gondzio:1996uw} entre outros pesquisadores com trabalhos importantes da área e estão inclusive na documentação do PCx~\cite{Czyzyk:1998vw,Czyzyk:1999hk}, com a finalidade de demonstrar os testes de seu desempenho. Nesse sentido e assim como esses autores, pensamos que tal conjunto é capaz permitir testes adequados de nosso método. 
 
 
-{\small \onehalfspacing
+{\footnotesize \onehalfspacing
 
 
 % \tabletail{\midrule  
@@ -274,9 +191,105 @@ qap8                & 912       & 1632      & 0           & 193944   & 4,6526E-0
 }
 
 
+\subsection{Ponto Inicial}
+
+O ponto inicial dado por \textcite{Mehrotra:1992wr}, foi genericamente descrito na seção \ref{subsec:initial-point}. Ali, mostramos que tal estratégia encontra o ponto $(\xtil,\ytil,\ztil)$, que é solução de norma mínima que satisfaz as restrições primais e
+duais. Tal terna de pontos é encontrada através de
+\begin{equation}
+	\label{eq:intial-point-LSquare}
+	\xtil = A^T(AA^T)^{-1}b, \quad \ytil = (AA^T)^{-1}Ac\quad \text{ e }
+\quad \ztil = c - A^T\ytil.
+\end{equation}
+
+Além disso, o ponto é transladado para o ortante positivo 
+através do uso de constantes  $\vartheta_x>0$ e $\vartheta_ z>0$ tais que  
+\begin{equation}
+	\label{eq:intial-point-generated}
+(x^0,y^0,z^0) = (\xtil+ \vartheta_x e,\ytil,\ztil+\vartheta_z e)
+\end{equation}
+garantindo que $(x^0,z^0)>0$.
 
 
-\subsection{Solução do subproblema de otimização \texorpdfstring{de $\nextphi$}{da função de mérito}}
+ A rotina \verb|InitialPoint| do PCx é responsável por gerar o ponto inicial, e portanto calcular  $\vartheta_x$ e $\vartheta_ z$. A implementação feita no PCx possui  pequenas alterações em relação ao proposto por \citeauthor{Mehrotra:1992wr}, porém que não  estão documentadas no Manual de Utilização do PCx~\cite{Czyzyk:1998vw}. Por isso, para fins de clareza, documentaremos como o ponto inicial é de fato encontrado, deixando o mérito de tal estratégia para os autores citados.
+
+  Além disso, tal ponto inicial é utilizado em ambos PCx-r e PCx-EOP e a análise de convergência e complexidade relatada no Capítulo~\ref{chap:convergence}, em particular a Condição~\ref{cond:xzzero-xzstar}, continuam válidas ao utilizá-lo para iniciar nosso algoritmo.
+
+O que a rotina  \verb|InitialPoint| faz é primeiramente encontrar  $(\xtil,\ytil,\ztil)$ conforme a Equação~\eqref{eq:intial-point-LSquare}. As constantes são calculadas
+\begin{equation}
+	\label{eq:initial-point-tilde-var}
+\tilde{\vartheta_x} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\xtil_{i}\},\num{e-2}\} \quad \text{ e }\quad  \tilde{\vartheta_z} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\ztil_{i}\},\num{e-2}\}.
+\end{equation}
+Só então é que se obtém as translações dadas por 
+
+\begin{equation}
+	\label{eq:initial-point-var-x}
+\vartheta_{x} = \tilde{\vartheta_x} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\ztil+\tilde{\vartheta_z} e}_{1}} 
+\end{equation}
+e
+\begin{equation}
+	\label{eq:initial-point-var-z}
+\vartheta_{z} = \tilde{\vartheta_z} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\xtil+\tilde{\vartheta_x} e}_{1}} 
+\end{equation}
+a fim de finalmente produzir o ponto inicial como em \eqref{eq:intial-point-generated}.
+
+No trabalho original de \textcite{Mehrotra:1992wr}, o menor valor possível para  $\tilde{\vartheta_x}$ e $\tilde{\vartheta_z}$ dados pela Equação~\eqref{eq:initial-point-tilde-var} é $\num{0}$, ao invés de \num{e-2}, 	que é o valor utilizado pelo PCx original. Em nossos testes, tanto com PCx-r quanto com PCx-EOP, utilizamos \num{e-1}. 
+
+
+\subsection{Critério de Parada}
+
+
+O PCx tem implementado dois critérios de parada que podem ser escolhidos pelo usuário. Sua   documentação~\cite{Czyzyk:1998vw} declara que é utilizado o critério dado em \eqref{eq:termination-criteria}.   Além disso, é possível trocar o critério de parada relacionado à complementaridade, dentro do código. Conforme explanamos na Seção~\ref{subsection:termination-criteria}, uma escolha possível seria a dada na equação \eqref{eq:termination-criteria-pcx}. Porém ao invés do teste dado pela Equação~\eqref{eq:termination-criteria-pcx-gap} -- ou por \eqref{eq:termination-criteria-gap} o que seria razoável --, a implementação do PCx usa
+
+\[
+\dfrac{x^{T}z/n}{1 + \abs{c^Tx}}\leq
+	\tol,
+\]
+em que $\tol$ é a tolerância aceita. Essa escolha tem um viés dimensional, já que divide por $n$ o \emph{gap} de complementaridade, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque, usar esse teste equivale a utilizar como tolerância para o critério dado em \eqref{eq:termination-criteria-pcx-gap} $n\cdot\tol$. 
+
+
+Fizemos duas  alterações no código, no momento em que testamos o critério de parada, que nos parece  contribuir para um melhor desempenho, pelo menos  no que diz respeito a verificação da otimalidade do ponto em questão. 
+
+Primeiramente,  reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já há a indicação de otimalidade e o programa saiu do \emph{loop} principal. Passamos a descrever  a rotina em questão. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz, é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. 
+
+ O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, o programa assinala $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, tenha o valor calculado pela definição do problema dual, e não pelo algoritmo. O teste para verificar se $t_{i}$ é negativo serve para detectar possíveis valores inconvenientes, já que $\zstar\geq 0$.
+
+ Pois bem, a alteração que fizemos utiliza os princípios da rotina   \verb|RecomputeDualVariables| \emph{em toda iteração} $k$. Neste caso, o que fazemos é encontrar $t= c - A^T\yk$. Testamos então se para algum  $i$ ocorre $t_{i}<0$ e em caso afirmativo assinalamos $t_{i}\leftarrow 0$. Com isso, consideramos a terna $(\xk,\yk,t)$ com a qual realizamos os testes de otimalidade dados por
+ \eqref{eq:termination-criteria-pcx}, porém com as seguintes modificações: o critério \eqref{eq:termination-criteria-pcx-dual} é transformado em
+\[\dfrac{\norm{t}}{1 + \norm{c}} \leq \tol,\]	
+e o critério  \eqref{eq:termination-criteria-pcx-gap} é transformado em 
+\[
+	\dfrac{(\xk)^{T}t}{1 + \abs{c^Tt}}\leq\tol.
+\]
+Se esses testes são satisfeitos, então assinalamos otimalidade no algoritmo e saímos do \emph{loop} principal. 
+Isso é feito porque,  como $t$ não é mais interior, $(\xk)^{T}t$ tem possivelmente valor menor que $(\xk)^{T}\zk$. Essa estratégia diz que $(\xk,\yk,t)$ pode ser um ponto melhor que $(\xk,\yk,\zk)$.  Caso não seja satisfeito, continuamos a execução do programa com o ponto atual sendo $(\xk,\yk,\zk)$. Em ambos os casos $t$ é descartado e o ponto utilizado é sempre $(\xk,\yk,\zk)$. Considere que se tivermos otimalidade, \verb|RecomputeDualVariables| será chamada -- pois estamos fora do \emph{loop} e o programa assinala $(\xk,\yk,\zk)\leftarrow (\xk,\yk,t)$. 
+
+Uma outra alteração  que fizemos no teste de parada tem relação com o escalonamento dos dados. No manual do PCx~\cite[p. 20]{Czyzyk:1998vw},  os problemas \texttt{brandy}, \texttt{ganges}, \texttt{grow15}, \texttt{grow22}, \texttt{perold}, \texttt{pilot.ja}, \texttt{pilot}, \texttt{pilot4}, \texttt{pilot87}, \texttt{pilotnov} e \texttt{scfxm1}, estão indicados como problemas para os quais houve convergência. No entanto, o resíduo relativo de infactibilidade primal-dual é maior que \num{e-8}. Isso significa que o PCx parou antes do que deveria. De fato, descobrimos que  o teste de parada, que é feito com os dados escalonados, era válido, porém, ao desescalonar, o critério já não era mais satisfeito. Além disso, obviamente o PCx faz o relatório de saída com os dados desescalonados. 
+
+A fim de evitar isso, usamos a rotina \verb|ComputeUnscaledInfeasibilities| que testa a infactibilidade relativa dos dados desescalonados. Essa rotina tem como entrada, cópia dos ponteiros da solução atual do PCx e logo não estamos modificando tal solução. O teste de infactibilidade primal-dual é feito então com os dados desescalonados, através da mesma rotina do PCx que  faz o desescalonamento no final do algoritmo. Se para os dados desescalonados o critério for satisfeito, então indicamos otimalidade, caso contrário, continuamos a execução do algoritmo, com os dados escalonados. 
+
+
+O critério de parada usado  na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria-pcx}, porém com  as alterações relatadas acima. Note que PCx não convergia para \texttt{greenbeb} e \texttt{wood1p}, porém, com essas alterações, PCx-r converge para ambos os problemas. 
+
+
+
+
+% \begin{itemize}
+% \item Descrever a heurística utilizada para resolver o subproblema de otimização
+% global de polinômios. Artigo escrito em conjunto com os orientadores está sendo
+% finalizado para submissão em que tal subproblema também aparece, porém num
+% método similar. Tal trabalho contempla também uma biblioteca para resolver o
+% subproblema de otimização de polinômios.
+% \begin{itemize}
+%   \item Este método similar, já em fase final de implementação,
+%   demonstra-se competitivo com o \texttt{PCx} nos testes preliminares
+%  \end{itemize}
+% \end{itemize}
+
+
+
+
+
+\subsection{Solução do subproblema de otimização}
 
 Em cada iteração de nosso método, precisamos resolver o problema dado em \eqref{eq:pop-subproblem}, isto é, 
 \begin{equation}
@@ -355,10 +368,11 @@ A Tabela \ref{tab:testes-PCx-r-EOP}, mostra o número total de iterações, o te
 
 
 
-Os resultados mostram que PCx-EOP resolveu o problema em tempo de CPU e número de iterações comparável ao do PCx-r, com tempos totais de \SI{115.171}{s} para o PCx-r e \SI{156,291}{s} para o PCx-EOP. 
+Os resultados mostram que PCx-EOP resolveu o problema em tempo de CPU e número de iterações comparável ao do PCx-r, com tempos totais de \SI{115.171}{s} para o PCx-r e \SI{156,291}{s} para o PCx-EOP. Ressalte-se que PCx-r é um algoritmo muito mais maduro  e mesmo assim, PCx-EOP foi competitivo.
  
+ PCx-r não resolveu \num{3} problemas: \texttt{brandy}, \texttt{greenbea} e \texttt{scfxm2}, enquanto PCx-EOP não resolveu \num{5}:  \texttt{bnl1}, \texttt{fit1p}, \texttt{fit2p}, \texttt{greenbea}, \texttt{pilot4}. Apenas \texttt{grenebea} não foi resolvido pelos dois algoritmos. 
 
-Os perfis de desempenho de \textcite{Dolan:2002du} para tempo de CPU e número de iterações  mostram que PCx-EOP tem robustez comparável ao PCx-r. Seus resultados encontram-se nas Figuras \ref{fig:perproftime} e \ref{fig:perprofiter}.
+A fim de ilustrar como a robustez de PCx-EOP é comparável à de PCx-r, os perfis de desempenho de \textcite{Dolan:2002du} para tempo de CPU e número de iterações foram gerados. Tais perfis podem ser encontrados nas Figuras \ref{fig:perproftime} e \ref{fig:perprofiter}. Com efeito, conforme acima, PCx-EOP resolve 96\% de Netlib-108.
 
 
 \begin{figure}[htbp]
@@ -373,7 +387,7 @@ Os perfis de desempenho de \textcite{Dolan:2002du} para tempo de CPU e número d
   	\caption{\label{fig:perprofiter}  Perfil de desempenho de PCx-r e PCx-EOP em relação ao número de iterações.}
   \end{figure}
 
-{\small \onehalfspacing
+{\footnotesize \onehalfspacing
 
 \begin{longtable}{>{\ttfamily}l
 c%S[table-number-alignment = right]

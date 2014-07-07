@@ -1,18 +1,32 @@
 %!TEX root = tese.tex
-\addchap{Considerações Finais}
+\addchap{Considerações finais}
 \label{chap:final_remarks}
 
 
 
 
 
-Neste trabalho 
+
+Neste trabalho procuramos responder a algumas das questões atuais em Métodos de Pontos Interiores primais duais, tais como a utilização de vários tipos de direções e o modo como se deve combiná-las. Neste sentido, a propomos e implementamos  um Método de Pontos Interiores preditor-corretor com pontos infactíves para \ac{PL}, do tipo seguidor de caminho, fazendo  uso de polinômios reais nas variáveis $(\al,\mu,\sig)$, em que $\al$ é o tamanho do passo, $\mu$ é o parâmetro que define a trajetória central, e $\sig$ modela o peso que uma direção corretora deve ter. O método proposto foi denominado Método de Escolha Otimizada de Parâmetros (MEOP) já que os  parâmetros $(\al,\mu,\sig)$ fora tratados como variáveis e foram encontrados  através da solução de um subproblema que \emph{minimiza} uma função de mérito polinomial de grau total máximo 6 nessas três variáveis e que está sujeita a restrições que impõe que o próximo iterando esteja dentro de uma vizinhança da trajetória central. 
 
 
 
-\addsec{Perspectivas Futuras}
+Além disso, demonstramos resultados de convergência e complexidade do MEOP. Para tanto, estabelecemos a  Condição~\ref{cond:xzzero-xzstar}, a qual leva em conta o tamanho dos dados do problema a  ser  resolvido, e a distância entre o ponto inicial e uma solução ótima.  O ponto inicial foi escolhido  conforme a heurística de \textcite{Mehrotra:1992wr} e todo conjunto de testes que utilizamos obedece essa condição.  Essa escolha leva a um   resultado de complexidade um pouco pior  em relação aos resultados encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj} -- embora ainda polinomial.
 
 
+De fato, a melhor complexidade de ordem de iterações para métodos de pontos interiores preditores-corretores do tipo Mehrotra com ponto inicial infactível é dado por~\textcite{Zhang:1996it}, com ordem de iterações $\Oset(n^{\num{1.5}})$ e taxa de convergência Q-subquadrática. Outras complexidades, com ordem de iterações $\Oset(n^{\num{3}})$ foram dadas por \textcite{Zhang:2006ic,Wright:1996kj}. Nossa análise demonstrou que temos uma ordem de iterações um pouco maior, $\Oset(n^{\num{4}})$, mas ainda polinomial, e temos convergência Q-linear. 
+
+Alguns  comentários são importantes. Tanto quanto sabemos, os algoritmos de \textcite{Zhang:1996it,Zhang:2006ic,Wright:1996kj} não foram implementados. Além disso, \textcite{Gertz:2003ji} utilizam em sua implementação um ponto inicial que também tem alguma relação com o tamanho dos dados do problema, porém, não há qualquer análise de complexidade ou convergência nesse trabalho. Outro detalhe importante é que  grande parte das análises de convergência recentes~\cite{Gondzio:2011ta} supõe que o ponto inicial é factível. 
+
+Embora os resultados teóricos de nosso método  não superem os melhores resultados teóricos existentes, cabe ressaltar que no nosso caso, a análise feita acima é do algoritmo que foi de fato implementado, incluindo-se aí o tratamento do pontos infactíveis. Com isso, conseguimos um resultado teórico considerável de um algoritmo que tem seu funcionamento na prática demonstrado.
+
+
+
+Foram feitos então experimentos computacionais com o MEOP.  Para os testes, utilizamos o conjunto de testes Netlib-108, escolhido entre os problemas do respostório Netlib. Comparamos nosso método com o PCx~\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de Mehrotra. De fato, relatamos também as modificações que fizemos na escolha do ponto inicial e no critério de parada do PCx, de modo a melhorar seu desempenho. Essas modificações foram utilizadas tanto na nossa implementação, a qual chamamos PCx-EOP quanto a de referência, que denominamos PCx-r. Os testes mostraram que nosso algoritmo é competitivo e robusto, quando comparado com uma implementação já bem testada e madura, como o PCx. 
+
+
+
+\addsec{Perpectivas futuras}
 
 
 
