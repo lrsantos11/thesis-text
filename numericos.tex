@@ -4,39 +4,26 @@
 }
 
 
-\chapter{Experimentos numéricos}
+\chapter{Resultados numéricos}
 \label{chap:numerical}
 
 
 
-Neste capítulo descrevemos alguns detalhes de implementação que utilizamos em nossos experimento numéricos, bem os resultados de nosso algoritmo, comparando-o com o  PCx~\cite{Czyzyk:1999hk}.
+No presente capítulo descrevemos o conjunto de testes e relatamos os resultados de nosso método, comparando-o com o  PCx~\cite{Czyzyk:1999hk}.
 
 
 
-\section{Detalhes de Implementação}
+% \section{Conjunto de testes}
 
-O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++}, utilizando como base a implementação PCx~\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \textcite{Mehrotra:1992wr}. O PCx pode ser configurado para executar correções de ordem superior de \textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além de  refinamento da solução por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência como PCx-r.
-
-  Chamaremos nossa implementação de PCx-EOP. Com efeito, a chamada de PCx-EOP coincide com a da implementação de referência e há a introdução do código de nosso algoritmo dentro do \emph{loop} principal de PCx-r,  retornando em seguida para a rotina principal e dando prosseguimento a sua execução usual. Isso foi feito, para fazermos uma comparação justa entre nossos resultados e os que o PCx-r produz. 
-
-  Assim, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalonamento, incluindo escalonamento de~\textcite{Curtis:1972cp}, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de ponto inicial, de critério de parada e saída de dados,   bem como todas as rotinas de álgebra linear -- incluindo a estratégia  de \textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky  e refinamento por gradientes conjugados. Além disso, para problemas canalizados, a estrutura de dados do PCx é feita de forma a fazer o papel da matriz $E$ e das transformações usadas em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded}, tal que os problemas canalizados tenham sua resolução executada com  as mesmas funcionalidades dos problemas não canalizados. 
-
-
-
-Além disso, para todos os códigos foram usadas as mesmas opções de compilação e o mesmo computador. Com essa estratégia, diferenças nos tempos de CPU ou no número de iterações podem ser atribuídas apenas à implementação de cada algoritmo.
-
-
-\subsection{Conjunto de testes}
-
-O conjunto de testes que vamos utilizar foi retirado da Netlib\footnote{Disponíveis em \url{http://www.netlib.org}.}~\cite{Dongarra:1987jk}. Escolhemos primeiramente os \num{95} problemas de programação linear factíveis que estão no diretório \verb|/lp/data/| de tal repositório.  Além disso, do mesmo repositório escolhemos \num{12} dos \num{16} problemas Kennington~\cite{Kennington:1990vo} que se encontram em \verb|/lp/data/kennington/|. Para finalizar, escolhemos 1 problema -- \texttt{qap-8} -- dos \num{3} do conjunto  QAP, que estão disponíves no diretório \verb|/lp/generators/qap|. Os problemas QAP são  construído via um gerador  e  aparecem a partir da linearização de um problema  de designação quadrática. No total então, temos 108 problemas e por isso, tal conjunto de testes é chamado aqui de Netlib-108. 
+O conjunto de testes que vamos utilizar foi retirado da \Netlib\footnote{Disponíveis em \url{http://www.netlib.org}.}~\cite{Dongarra:1987jk}. Escolhemos primeiramente os \num{95} problemas de programação linear factíveis que estão no diretório \verb|/lp/data/| de tal repositório.  Além disso, do mesmo repositório escolhemos \num{12} dos \num{16} problemas Kennington~\cite{Kennington:1990vo} que se encontram em \verb|/lp/data/kennington/|. Para finalizar, escolhemos 1 problema -- \texttt{qap-8} -- dos \num{3} do conjunto  QAP, que estão disponíves no diretório \verb|/lp/generators/qap|. Os problemas QAP são  construído via um gerador  e  aparecem a partir da linearização de um problema  de designação quadrática. No total então, temos 108 problemas e por isso, tal conjunto de testes é chamado aqui de \Netlib-108. 
 
 
 A Tabela~\ref{tab:netlib108} mostra os \num{108} problemas com seus nomes na primeira coluna. As colunas 2 a 4 mostram o número de linhas, colunas e de canalizações de cada problema, após as rotinas de pré-processamento feitas pelo PCx. Indicamos que um problema  não é canalizado por colocar o número \num{0} na coluna correspondente. A coluna 4 tem o número de elementos não-nulos (NEM) da matriz $A$ das restrições e a última coluna apresenta a densidade da matriz resultante da decomposição de de Cholesky que é para resolução de cada problema.
 
 
-Alguns comentários sobre a escolha de Netlib-108 cabem aqui. Primeiramente, os \num{4} problemas  Kennington -- \texttt{kennington-ken-13}, \texttt{kennington-ken-18}, \texttt{ken\-ning\-ton-osa-60} e \texttt{ken\-ning\-ton-pds-20} --  e os \num{2} QAP -- \texttt{qap12} e \texttt{qap15} --  que foram deixados de fora dos testes, o foram pois suas estruturas e tamanhos não fazem sentido numa implementação que resolve as equações normais que aparecem em \ac{MPI} via fatoração de Cholesky. 
+Alguns comentários sobre a escolha de \Netlib-108 cabem aqui. Primeiramente, os \num{4} problemas  Kennington -- \texttt{kennington-ken-13}, \texttt{kennington-ken-18}, \texttt{ken\-ning\-ton-osa-60} e \texttt{ken\-ning\-ton-pds-20} --  e os \num{2} QAP -- \texttt{qap12} e \texttt{qap15} --  que foram deixados de fora dos testes, o foram pois suas estruturas e tamanhos não fazem sentido numa implementação que resolve as equações normais que aparecem em \ac{MPI} via fatoração de Cholesky. 
 
-Além disso, tal gama de problemas é a Netlib mais natural, originária de problemas reais e consensual entre os usuários de \ac{PL}. Com efeito, tais problemas ou pelo menos parte deles, foram testados por \textcite{Mehrotra:1992wr,Colombo:2008ia,Mehrotra:2005do,Jarre:1999tl,Gondzio:1996uw} entre outros pesquisadores com trabalhos importantes da área e estão inclusive na documentação do PCx~\cite{Czyzyk:1998vw,Czyzyk:1999hk}, com a finalidade de demonstrar os testes de seu desempenho. Nesse sentido e assim como esses autores, pensamos que tal conjunto é capaz permitir testes adequados de nosso método. 
+Além disso, tal gama de problemas é a \Netlib\ mais natural, originária de problemas reais e consensual entre os usuários de \ac{PL}. Com efeito, tais problemas ou pelo menos parte deles, foram testados por \textcite{Mehrotra:1992wr,Colombo:2008ia,Mehrotra:2005do,Jarre:1999tl,Gondzio:1996uw} entre outros pesquisadores com trabalhos importantes da área e estão inclusive na documentação do PCx~\cite{Czyzyk:1998vw,Czyzyk:1999hk}, com a finalidade de demonstrar os testes de seu desempenho. Nesse sentido e assim como esses autores, pensamos que tal conjunto é capaz permitir testes adequados de nosso método. 
 
 
 {\footnotesize \onehalfspacing
@@ -56,14 +43,14 @@ table-format = 2.5,
 table-omit-exponent,
 table-number-alignment = center-decimal-marker]}
 
-\caption{\normalfont Conjunto de testes Netlib-108.\label{tab:netlib108}} \\
+\caption{\normalfont Conjunto de testes \Netlib-108.\label{tab:netlib108}} \\
 \toprule
  {\normalfont \bfseries Problema}                  & {\normalfont \bfseries Linhas} & {\normalfont \bfseries Colunas} & {\normalfont \bfseries Canalizações} & {\normalfont \bfseries NEN} & {\normalfont \bfseries Densidade ($\times$\num{e-1})}    \\
 \otoprule
 \endfirsthead
 
 
-\caption[]{\normalfont Conjunto de testes Netlib-108 (continuação).} \\
+\caption[]{\normalfont Conjunto de testes \Netlib-108 (continuação).} \\
 
 \toprule
  {\normalfont \bfseries Problema}                  & {\normalfont \bfseries Linhas} & {\normalfont \bfseries Colunas} & {\normalfont \bfseries Canalizações} & {\normalfont \bfseries NEN} & {\normalfont \bfseries Densidade ($\times$\num{e-1}) }    \\
@@ -191,175 +178,9 @@ qap8                & 912       & 1632      & 0           & 193944   & 4,6526E-0
 }
 
 
-\subsection{Ponto Inicial}
-
-O ponto inicial dado por \textcite{Mehrotra:1992wr}, foi genericamente descrito na seção \ref{subsec:initial-point}. Ali, mostramos que tal estratégia encontra o ponto $(\xtil,\ytil,\ztil)$, que é solução de norma mínima que satisfaz as restrições primais e
-duais. Tal terna de pontos é encontrada através de
-\begin{equation}
-	\label{eq:intial-point-LSquare}
-	\xtil = A^T(AA^T)^{-1}b, \quad \ytil = (AA^T)^{-1}Ac\quad \text{ e }
-\quad \ztil = c - A^T\ytil.
-\end{equation}
-
-Além disso, o ponto é transladado para o ortante positivo 
-através do uso de constantes  $\vartheta_x>0$ e $\vartheta_ z>0$ tais que  
-\begin{equation}
-	\label{eq:intial-point-generated}
-(x^0,y^0,z^0) = (\xtil+ \vartheta_x e,\ytil,\ztil+\vartheta_z e)
-\end{equation}
-garantindo que $(x^0,z^0)>0$.
 
 
- A rotina \verb|InitialPoint| do PCx é responsável por gerar o ponto inicial, e portanto calcular  $\vartheta_x$ e $\vartheta_ z$. A implementação feita no PCx possui  pequenas alterações em relação ao proposto por \citeauthor{Mehrotra:1992wr}, porém que não  estão documentadas no Manual de Utilização do PCx~\cite{Czyzyk:1998vw}. Por isso, para fins de clareza, documentaremos como o ponto inicial é de fato encontrado, deixando o mérito de tal estratégia para os autores citados.
-
-  Além disso, tal ponto inicial é utilizado em ambos PCx-r e PCx-EOP e a análise de convergência e complexidade relatada no Capítulo~\ref{chap:convergence}, em particular a Condição~\ref{cond:xzzero-xzstar}, continuam válidas ao utilizá-lo para iniciar nosso algoritmo.
-
-O que a rotina  \verb|InitialPoint| faz é primeiramente encontrar  $(\xtil,\ytil,\ztil)$ conforme a Equação~\eqref{eq:intial-point-LSquare}. As constantes são calculadas
-\begin{equation}
-	\label{eq:initial-point-tilde-var}
-\tilde{\vartheta_x} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\xtil_{i}\},\num{e-2}\} \quad \text{ e }\quad  \tilde{\vartheta_z} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\ztil_{i}\},\num{e-2}\}.
-\end{equation}
-Só então é que se obtém as translações dadas por 
-
-\begin{equation}
-	\label{eq:initial-point-var-x}
-\vartheta_{x} = \tilde{\vartheta_x} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\ztil+\tilde{\vartheta_z} e}_{1}} 
-\end{equation}
-e
-\begin{equation}
-	\label{eq:initial-point-var-z}
-\vartheta_{z} = \tilde{\vartheta_z} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\xtil+\tilde{\vartheta_x} e}_{1}} 
-\end{equation}
-a fim de finalmente produzir o ponto inicial como em \eqref{eq:intial-point-generated}.
-
-No trabalho original de \textcite{Mehrotra:1992wr}, o menor valor possível para  $\tilde{\vartheta_x}$ e $\tilde{\vartheta_z}$ dados pela Equação~\eqref{eq:initial-point-tilde-var} é $\num{0}$, ao invés de \num{e-2}, 	que é o valor utilizado pelo PCx original. Em nossos testes, tanto com PCx-r quanto com PCx-EOP, utilizamos \num{e-1}. 
-
-
-\subsection{Critério de Parada}
-
-
-O PCx tem implementado dois critérios de parada que podem ser escolhidos pelo usuário. Sua   documentação~\cite{Czyzyk:1998vw} declara que é utilizado o critério dado em \eqref{eq:termination-criteria}.   Além disso, é possível trocar o critério de parada relacionado à complementaridade, dentro do código. Conforme explanamos na Seção~\ref{subsection:termination-criteria}, uma escolha possível seria a dada na equação \eqref{eq:termination-criteria-pcx}. Porém ao invés do teste dado pela Equação~\eqref{eq:termination-criteria-pcx-gap} -- ou por \eqref{eq:termination-criteria-gap} o que seria razoável --, a implementação do PCx usa
-
-\[
-\dfrac{x^{T}z/n}{1 + \abs{c^Tx}}\leq
-	\tol,
-\]
-em que $\tol$ é a tolerância aceita. Essa escolha tem um viés dimensional, já que divide por $n$ o \emph{gap} de complementaridade, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque, usar esse teste equivale a utilizar como tolerância para o critério dado em \eqref{eq:termination-criteria-pcx-gap} $n\cdot\tol$. 
-
-
-Fizemos duas  alterações no código, no momento em que testamos o critério de parada, que nos parece  contribuir para um melhor desempenho, pelo menos  no que diz respeito a verificação da otimalidade do ponto em questão. 
-
-Primeiramente,  reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já há a indicação de otimalidade e o programa saiu do \emph{loop} principal. Passamos a descrever  a rotina em questão. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz, é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. 
-
- O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, o programa assinala $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, tenha o valor calculado pela definição do problema dual, e não pelo algoritmo. O teste para verificar se $t_{i}$ é negativo serve para detectar possíveis valores inconvenientes, já que $\zstar\geq 0$.
-
- Pois bem, a alteração que fizemos utiliza os princípios da rotina   \verb|RecomputeDualVariables| \emph{em toda iteração} $k$. Neste caso, o que fazemos é encontrar $t= c - A^T\yk$. Testamos então se para algum  $i$ ocorre $t_{i}<0$ e em caso afirmativo assinalamos $t_{i}\leftarrow 0$. Com isso, consideramos a terna $(\xk,\yk,t)$ com a qual realizamos os testes de otimalidade dados por
- \eqref{eq:termination-criteria-pcx}, porém com as seguintes modificações: o critério \eqref{eq:termination-criteria-pcx-dual} é transformado em
-\[\dfrac{\norm{t}}{1 + \norm{c}} \leq \tol,\]	
-e o critério  \eqref{eq:termination-criteria-pcx-gap} é transformado em 
-\[
-	\dfrac{(\xk)^{T}t}{1 + \abs{c^Tt}}\leq\tol.
-\]
-Se esses testes são satisfeitos, então assinalamos otimalidade no algoritmo e saímos do \emph{loop} principal. 
-Isso é feito porque,  como $t$ não é mais interior, $(\xk)^{T}t$ tem possivelmente valor menor que $(\xk)^{T}\zk$. Essa estratégia diz que $(\xk,\yk,t)$ pode ser um ponto melhor que $(\xk,\yk,\zk)$.  Caso não seja satisfeito, continuamos a execução do programa com o ponto atual sendo $(\xk,\yk,\zk)$. Em ambos os casos $t$ é descartado e o ponto utilizado é sempre $(\xk,\yk,\zk)$. Considere que se tivermos otimalidade, \verb|RecomputeDualVariables| será chamada -- pois estamos fora do \emph{loop} e o programa assinala $(\xk,\yk,\zk)\leftarrow (\xk,\yk,t)$. 
-
-Uma outra alteração  que fizemos no teste de parada tem relação com o escalonamento dos dados. No manual do PCx~\cite[p. 20]{Czyzyk:1998vw},  os problemas \texttt{brandy}, \texttt{ganges}, \texttt{grow15}, \texttt{grow22}, \texttt{perold}, \texttt{pilot.ja}, \texttt{pilot}, \texttt{pilot4}, \texttt{pilot87}, \texttt{pilotnov} e \texttt{scfxm1}, estão indicados como problemas para os quais houve convergência. No entanto, o resíduo relativo de infactibilidade primal-dual é maior que \num{e-8}. Isso significa que o PCx parou antes do que deveria. De fato, descobrimos que  o teste de parada, que é feito com os dados escalonados, era válido, porém, ao desescalonar, o critério já não era mais satisfeito. Além disso, obviamente o PCx faz o relatório de saída com os dados desescalonados. 
-
-A fim de evitar isso, usamos a rotina \verb|ComputeUnscaledInfeasibilities| que testa a infactibilidade relativa dos dados desescalonados. Essa rotina tem como entrada, cópia dos ponteiros da solução atual do PCx e logo não estamos modificando tal solução. O teste de infactibilidade primal-dual é feito então com os dados desescalonados, através da mesma rotina do PCx que  faz o desescalonamento no final do algoritmo. Se para os dados desescalonados o critério for satisfeito, então indicamos otimalidade, caso contrário, continuamos a execução do algoritmo, com os dados escalonados. 
-
-
-O critério de parada usado  na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria-pcx}, porém com  as alterações relatadas acima. Note que PCx não convergia para \texttt{greenbeb} e \texttt{wood1p}, porém, com essas alterações, PCx-r converge para ambos os problemas. 
-
-
-
-
-% \begin{itemize}
-% \item Descrever a heurística utilizada para resolver o subproblema de otimização
-% global de polinômios. Artigo escrito em conjunto com os orientadores está sendo
-% finalizado para submissão em que tal subproblema também aparece, porém num
-% método similar. Tal trabalho contempla também uma biblioteca para resolver o
-% subproblema de otimização de polinômios.
-% \begin{itemize}
-%   \item Este método similar, já em fase final de implementação,
-%   demonstra-se competitivo com o \texttt{PCx} nos testes preliminares
-%  \end{itemize}
-% \end{itemize}
-
-
-
-
-
-\subsection{Solução do subproblema de otimização}
-
-Em cada iteração de nosso método, precisamos resolver o problema dado em \eqref{eq:pop-subproblem}, isto é, 
-\begin{equation}
-	\label{eq:pop-subproblem-1}
-	\begin{array}{lc}
-\displaystyle \min_{(\al,\mu,\sig)} & \hat\varphi(\al,\mu,\sig) \\
-\text{s. a.} &\begin{cases} g_C^i(\al,\mu,\sig) \geq 0 \quad \forall i = 1,\ldots,n \\
-				g_L(\al,\mu,\sig)   \geq 0 	\\
-				 0\leq (\al,\mu,\sig) \leq u,
-				 	
-				 \end{cases}.
-\end{array}
-\end{equation}
-em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau total 6 nas variáveis $(\al,\mu,\sig)$. Este é um chamado Problema de Otimização de Polinômios (POP) e é considerado um problema não linear  difícil de ser resolvido~\cite{Laurent:2010kp}.
-
-Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SaparsePOP~\cite{Waki:2008ie}, os quais baseiam-se na transformação do POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas, em particular pela quantidade de restrições do problema, que é  $n+1$.  
-
-
-O subproblema foi resolvido utilizando da implementação de \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, especialmente desenvolvida para resolver um problema com as mesmas características que o nosso.  Tal estratégia é brevemente resumida a seguir, adaptada à nossa notação.
-
-Seja
-\[\Omega = \left\{(\al,\mu,\sig): g_C^i(\al,\mu,\sig) \geq0, \forall i = 1,\ldots,n,\: g_L(\al,\mu,\sig)   \geq 0,\:		 0\leq (\al,\mu,\sig) \leq u\right\}\]
-o conjunto factível de~\eqref{eq:pop-subproblem-1}. Note que pelas demonstrações que fizemos no Capítulo \ref{chap:convergence}, $\Omega$ é não-vazio. Considere então o problema alternativo
-\begin{equation}
-		\label{eq:pop-subproblem-2}
-\displaystyle  \min_{\mu}\left\{  \min_{\sig} \left\{ \min_{\al} \left\{ \nextphi(\al,\mu,\sig):    (\al,\mu,\sig) \in \Omega  \right\} \right\}\right\}, \\
-\end{equation}
-ou mais convenientemente 
-\[
-\displaystyle \min_{\mu}\Psi(\mu),
-\]
-em que  $\displaystyle \Psi = \min_{\sig}\Phi(\mu,\sig)$ e 
-\[
-\Phi(\mu,\sig) = \left\{
-	\begin{array}{l}
-\displaystyle \min_{\al}  \nextphi(\al,\mu,\sig) \\
-\text{s. a. }\:  (\al,\mu,\sig) \in\Omega
-\end{array}\right..
-\]
-  
-Primeiramente, vamos verificar a relação existente entre os mínimos de \eqref{eq:pop-subproblem-1} e de \eqref{eq:pop-subproblem-2}. Sejam $(\al^*,\mu^*,\sig^*)$ uma solução global do  primeiro problema e $(\bar{\al}, \bar{\mu},\bar{\sig})$ uma solução global de segundo. Então por definição
-$ \nextphi(\al^*,\mu^*,\sig^*) \leq \nextphi (\bar{\al},\bar{\mu},\bar{\sig}).$
-Por outro lado 
-\[
-\nextphi(\baral,\barmu,\barsig) = \min_{\al}\{ \min_{\sig}\Phi(\barmu,\barsig)\} \leq \Phi(\mu^{*},\sig^{*}) \leq \nextphi(\al^*,\mu^*,\sig^*).
-\]
-Assim, os dois problemas tem o mesmo mínimo. A segunda formulação, entretanto, permite encontrar aproximações numéricas do minimizador de $\nextphi$ de maneira mais fácil. 
-
-Para esse problema alternativo, um gráfico típico de $\Phi(\mu,\sig)$ é dado na Figura \ref{fig:bnl1-Phi}, tomada na iteração \num{4} do problema \texttt{bnl1}. O aspecto desse gráfico -- , com um \emph{zoom} conveniente perto do mínimo --  acaba se repetindo  em todos os problema da Netlib-108 que estudamos, o que sugere que $\Phi$ tenha derivadas contínuas por partes próximo ao mínimo.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.5\textwidth]{figuras/bnl1-phi}
-  	\caption{\label{fig:bnl1-Phi} Gráfico de $\Phi(\mu,\sig)$ para $\al$ fixo de \texttt{bnl1}.}
-  \end{figure}
-
- Uma característica interessante é desse problema alternativo é que em quase todos os problemas e iterações, a restrição de $\Omega$ que estava ativa ao final da resolução do subproblema é exatamente aquela relacionada ao índice de bloqueio indicado pelo teste da razão.
-
-Primeiramente considere  um malha construída para o intervalo $[0,u_{\mu}]$ no qual  $\mu$ está definido. Usando o fato de que o índice de bloqueio do teste da razão tem relação com a restrição ativa, uma partição $\mathcal{P} = 0<\sig_{1}<\sig_{2}<\cdots<u_{\sig}$ do intervalo $[0,u_{\sig}]$, para  a  qual $\sig$ está definido é construída, tal que se $\barsig\in I_{j} = [\sig_{j},\sig_{j+1}]$, então existe um índice $t$ tal para este $\barsig$, todo o teste da razão para as componentes não negativas das variáveis $(x,z)$ podem ser substituídas por um único teste da razão, usando o índice $t$. Dessa forma, para cada subintervalo $I_{j} = [\sig_{j},\sig_{j+1}]$ define-se o teste da razão principal. 
-
-Esse índice $t$ permite escolhamos a restrição $g_{C}^{t}(\al,\sig)\geq0$, a qual é mais restritiva que o teste da razão,   sendo  então declaradas como \emph{restrição principal}  de $I_{j}$. De fato, a partição $\mathcal{P}$ agora é reconstruída tal que cada ponto na fronteira do subintervalo está associado com a interseção de restrições principais, gerando então uma região de relevância.
-
-Essa estratégia leva a descartar restrições que são irrelevantes, reduzindo o número das que precisam ser utilizadas de fato, na solução do subproblema.  Para cada intervalo $I_{j}$, determina-se um tamanho de passo máximo $\al^{\max}_{j}$ e o mínimo de $\nextphi$ em cada intervalo. Isso é feito 	de maneira analítica, usando condições de primeira ordem. Finalmente, o menor dos $\nextphi$ encontrados para cada intervalo é declarado como ótimo.
-
-Na prática, esse método funciona porque o tamanho da partição é muito menor ao tamanho dos problemas -- para todo Netlib-108 para todas as iterações a partição tem em média tamanho \num{3.7} com desvio padrão \num{2.9} e máximo \num{39}. De fato, o tempo  de CPU gasto na solução do subproblema  para toda Netlib-108 foi \num{1,37}\% do tempo total. Um detalhe é que em grande parte dos casos, o melhor resultado de $\nextphi$ foi encontrado com $\mu=0$.
-
-
-
-
-\section{Resultados Numéricos}
+% \section{Resultados Numéricos}
 
 Os testes computacionais foram rodados em um computador Intel i7 930 2.8GHz com \num{12}GB de memória RAM em sistema operacional Windows 7 \num{64}bits e compilados utilizando Microsoft Visual Studio \texttt{C++} 2010 com compilador Intel \texttt{C++} Compiler  XE 13.0.
 
@@ -368,26 +189,23 @@ A Tabela \ref{tab:testes-PCx-r-EOP}, mostra o número total de iterações, o te
 
 
 
-Os resultados mostram que PCx-EOP resolveu o problema em tempo de CPU e número de iterações comparável ao do PCx-r, com tempos totais de \SI{115.171}{s} para o PCx-r e \SI{156,291}{s} para o PCx-EOP. Ressalte-se que PCx-r é um algoritmo muito mais maduro  e mesmo assim, PCx-EOP foi competitivo.
- 
- PCx-r não resolveu \num{3} problemas: \texttt{brandy}, \texttt{greenbea} e \texttt{scfxm2}, enquanto PCx-EOP não resolveu \num{5}:  \texttt{bnl1}, \texttt{fit1p}, \texttt{fit2p}, \texttt{greenbea}, \texttt{pilot4}. Apenas \texttt{grenebea} não foi resolvido pelos dois algoritmos. 
 
-A fim de ilustrar como a robustez de PCx-EOP é comparável à de PCx-r, os perfis de desempenho de \textcite{Dolan:2002du} para tempo de CPU e número de iterações foram gerados. Tais perfis podem ser encontrados nas Figuras \ref{fig:perproftime} e \ref{fig:perprofiter}. Com efeito, conforme acima, PCx-EOP resolve 96\% de Netlib-108.
+% A fim de ilustrar como a robustez de PCx-EOP é comparável à de PCx-r, os perfis de desempenho de \textcite{Dolan:2002du} para tempo de CPU e número de iterações foram gerados. Tais perfis podem ser encontrados nas Figuras \ref{fig:perproftime} e \ref{fig:perprofiter}. Com efeito, conforme acima, PCx-EOP resolve 96\% de \Netlib-108.
 
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=.7\textwidth]{figuras/time}
-  	\caption{\label{fig:perproftime} Perfil de desempenho de PCx-r e PCx-EOP em relação ao tempo de CPU.}
-  \end{figure}
+% \begin{figure}[htbp]
+% \centering
+% \includegraphics[width=.7\textwidth]{figuras/time}
+%   	\caption{\label{fig:perproftime} Perfil de desempenho de PCx-r e PCx-EOP em relação ao tempo de CPU.}
+%   \end{figure}
 
-  \begin{figure}[htbp]
-\centering
-\includegraphics[width=.7\textwidth]{figuras/iter}
-  	\caption{\label{fig:perprofiter}  Perfil de desempenho de PCx-r e PCx-EOP em relação ao número de iterações.}
-  \end{figure}
+%   \begin{figure}[htbp]
+% \centering
+% \includegraphics[width=.7\textwidth]{figuras/iter}
+%   	\caption{\label{fig:perprofiter}  Perfil de desempenho de PCx-r e PCx-EOP em relação ao número de iterações.}
+%   \end{figure}
 
-{\footnotesize \onehalfspacing
+{\small \onehalfspacing
 
 \begin{longtable}{>{\ttfamily}l
 c%S[table-number-alignment = right]
@@ -532,6 +350,14 @@ kennington-pds-02   & 24 & 0,301  & 0 & 28 &  0,648  & 0  \\
 kennington-pds-06   & 32 & 5,592  & 0 & 39 &  7,198  & 0  \\
 kennington-pds-10   & 40 & 31,566 & 0 & 46 &  35,754 & 0  \\
 qap8                & 7  & 0,435  & 0 & 8  &  0,476  & 0  \\
-
+\otoprule
+{\normalfont \bfseries Somatórios} & 2115  & 115,17 &  -- & 2836 & 156,29 & --
 \end{longtable}
 }
+ 
+ Note que o PCx-r não resolveu \num{3} problemas: \texttt{brandy}, \texttt{greenbea} e \texttt{scfxm2}, enquanto PCx-EOP não resolveu \num{5}:  \texttt{bnl1}, \texttt{fit1p}, \texttt{fit2p}, \texttt{greenbea}, \texttt{pilot4}. Apenas \texttt{grenebea} não foi resolvido pelas duas implementações. 
+
+Os resultados mostram que PCx-EOP resolveu o conjunto de 108 problemas em tempo de CPU  de 2min 36s e o PCx-r resolveu o mesmo conjunto em 1min 55s, com número de iterações comparável. Isso significa que os tempos de CPU tem a mesma ordem de grandeza, para ambas as implementações.
+Esse era o parâmetro mais importante para nós, já que em nossa opinião é o tempo de CPU que valida nossa abordagem, como prova de conceito. 
+
+

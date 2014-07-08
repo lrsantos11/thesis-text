@@ -11,7 +11,9 @@ Neste trabalho procuramos responder a algumas das questões atuais em Métodos d
 
 
 
-Além disso, demonstramos resultados de convergência e complexidade do MEOP. Para tanto, estabelecemos a  Condição~\ref{cond:xzzero-xzstar}, a qual leva em conta o tamanho dos dados do problema a  ser  resolvido, e a distância entre o ponto inicial e uma solução ótima.  O ponto inicial foi escolhido  conforme a heurística de \textcite{Mehrotra:1992wr} e todo conjunto de testes que utilizamos obedece essa condição.  Essa escolha leva a um   resultado de complexidade um pouco pior  em relação aos resultados encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj} -- embora ainda polinomial.
+Além disso, demonstramos resultados de convergência e complexidade do MEOP. Para tanto, estabelecemos a  Condição~\ref{cond:xzzero-xzstar}, a qual leva em conta o tamanho dos dados do problema a  ser  resolvido, e a distância entre o ponto inicial e uma solução ótima. A importância dessa condição é que surgiu a partir da análise teórica do MEOP, porém com implicações práticas.  Ademais, essa condição vale também para outros métodos de pontos interiores infactíveis, em particular daqueles que necessitam em suas análises de limitantes para $\left\{\norm{(\xk,\zk)}\right\}$.
+
+O ponto inicial foi escolhido  conforme a heurística de \textcite{Mehrotra:1992wr} e todo conjunto de testes que utilizamos obedece Condição~\ref{cond:xzzero-xzstar}.  Essa escolha leva a um   resultado de complexidade um pouco pior  em relação aos resultados encontrados por outros autores~\cite{Zhang:1995fu,Zhang:2006ic,Wright:1993je,Wright:1996kj} -- embora ainda polinomial.
 
 
 De fato, a melhor complexidade de ordem de iterações para métodos de pontos interiores preditores-corretores do tipo Mehrotra com ponto inicial infactível é dado por~\textcite{Zhang:1996it}, com ordem de iterações $\Oset(n^{\num{1.5}})$ e taxa de convergência Q-subquadrática. Outras complexidades, com ordem de iterações $\Oset(n^{\num{3}})$ foram dadas por \textcite{Zhang:2006ic,Wright:1996kj}. Nossa análise demonstrou que temos uma ordem de iterações um pouco maior, $\Oset(n^{\num{4}})$, mas ainda polinomial, e temos convergência Q-linear. 
@@ -22,26 +24,25 @@ Embora os resultados teóricos de nosso método  não superem os melhores result
 
 
 
-Foram feitos então experimentos computacionais com o MEOP.  Para os testes, utilizamos o conjunto de testes Netlib-108, escolhido entre os problemas do respostório Netlib. Comparamos nosso método com o PCx~\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de Mehrotra. De fato, relatamos também as modificações que fizemos na escolha do ponto inicial e no critério de parada do PCx, de modo a melhorar seu desempenho. Essas modificações foram utilizadas tanto na nossa implementação, a qual chamamos PCx-EOP quanto a de referência, que denominamos PCx-r. Os testes mostraram que nosso algoritmo é competitivo e robusto, quando comparado com uma implementação já bem testada e madura, como o PCx. 
+Foram feitos então experimentos computacionais com o MEOP.  Para os testes, utilizamos o conjunto de testes \Netlib-108, escolhido entre os problemas do respostório \Netlib. Comparamos nosso método com o PCx~\cite{Czyzyk:1999hk}, uma implementação do método preditor-corretor de Mehrotra. De fato, relatamos também as modificações que fizemos na escolha do ponto inicial e no critério de parada do PCx, de modo a melhorar seu desempenho. Essas modificações foram utilizadas tanto na nossa implementação, a qual chamamos PCx-EOP quanto a de referência, que denominamos PCx-r. Os testes mostraram que nosso algoritmo é competitivo e robusto, quando comparado com uma implementação já bem testada e madura, como o PCx. 
 
 
 
-\addsec{Perpectivas futuras}
+\minisec{Perpectivas futuras}
+
+
+O desenvolvimento do Método de Escolha Otimizada de Parâmetros trouxe algumas questões que 
+não foram  abordadas nessa tese. Algumas dessas questões podem servir como guia para futuras pesquisas.
+
+Uma ideia interessante é concernente às matrizes $H_P$ e $H_D$  -- veja Equação
+\eqref{eq:defining_matrices_H}. Tais matrizes podem ser adaptadas, não só garantido a
+não-negatividade dos resíduos primais e duais, mas de certa maneira servirem de  fator de escalonamento do sistema. Assim, poderíamos inclusive incluir um escalonamento da parte da complementaridade de KKT e verificar como tal escalonamento impactaria no despenho do MEOP.
+
+
+Quanto à análise do método, a fim de atacar o problema escolhemos um valor para $\mu\neq 0$ e para $\sig = 0$, de modo a garantir que o conjunto $\Omega$ das restrições do subproblema resolvido em cada iteração fosse não-vazio.  No entanto, quando da solução, em grande parte das iterações o método utilizado encontrou ótimo para $\mu=0$ e $\sig\neq 0$. Embora a demonstração continue válida, a utilização de outros valores para $\mu$ e $\sig$ pode fazer com que a complexidade seja melhorada. Além disso, outro caminho na análise seria tentar verificar se é possível demonstrar convergências de ordem menor, como quadrática ou subquadrática. 
+
+Uma investigação  que pretendemos fazer é quanto à Condição~\ref{cond:xzzero-xzstar}. Essa condição permite que estudemos relações entre o ponto inicial, a solução ótima e o tamanho dos dados. Embora tenhamos escolhido o ponto inicial de Mehrotra, outro ponto inicial que satisfaça essa Condição tem garantia de convergência do MEOP. Ademais, conforme dissemos, poderemos utilizar essa condição em outras análises de convergência e portanto. Daí testes podem surgir com outros pontos iniciais no PCx-EOP ou em outras implementações de pontos interiores.
 
 
 
-
-% \begin{itemize}
- 
-    
-
-
-% \item As matrizes $H_P$ e $H_D$ (veja Equação
-% \eqref{eq:defining_matrices_H}) podem ser adaptadas, não só garantido a
-% não-negatividade dos resíduos primais e duais, mas como fator de escala.
-% Esse escalonamento pode ser feito tal que se
-% $\varphi_k<\eps$, para algum $k$, então o critério de parada do 
-% \texttt{PCx} (veja Equação \eqref{eq:termination-criteria-pcx}) também será
-% satisfeito.
-% \end{itemize}
 

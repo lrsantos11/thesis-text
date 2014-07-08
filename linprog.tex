@@ -161,7 +161,7 @@ de~\textcite{Shamir:1987th}.
 \section{Método elipsoide}
 
 Enquanto na prática o método Simplex continuava como o método mais robusto e
-eficiente, a busca por um método que tivesse complexidade polinomial no pior
+eficiente, a busca por um método que tivesse \emph{complexidade polinomial} no pior
 caso foi satisfeita por \textcite{Khachiyan:A-polynomial-algorithm:1979y} através
 de seu  \emph{Método Elipsoide}. Antes de continuarmos, vale a penas fazermos uma observação sobre o sentido que daremos a complexidade.
 
@@ -267,28 +267,10 @@ eficiente~\cite{Nemhauser:Integer-and-combinatorial:1988s}, também é comprovad
 
   
 
-Embora esta tese trate de \ac{MPI} para problemas de \ac{PL}, tais
-métodos também podem ser utilizados para resolver problemas não-lineares
-de certos tipos.
-Em particular, problemas de \acrodef{QP}{Programação Quadrática} \ac{QP} convexa
-são usualmente resolvidos com \ac{MPI}, principalmente
-quando são de grande porte. Com efeito, um \ac{QP} convexo pode ser  escrito como
-\begin{equation*}
-	\begin{array}{lc}
-\displaystyle \min_{x} & x^TQx + c^Tx \\
-\text{sujeito a} &\begin{cases} Ax = b \\
-				 x \geq 0	
-				 \end{cases}
-\end{array},
-\label{eq:QP}
-\end{equation*}
-em que $Q\in\Real^{n\times n}$ é simétrica semi-definida positiva, $A\in \Real^{m\times
-n}$ e $c$, $x$ e $b$ têm dimensão compatível. Com exceção da matriz $Q$, temos a
-mesma estrutura de um \ac{PL}.
 
 
 
-\section{Formulação com variáveis canalizadas}
+\section{Formulação com variáveis canalizadas e extensões}
 
 Embora a formulação padrão do problema primal de \ac{PL} dada em \eqref{eq:introPL-primal} considera apenas que devamos ter $x$ não-negativo, em problemas práticos, nem sempre isso acontece. 
 
@@ -335,6 +317,8 @@ A esse problema, associamos o \emph{problema dual canalizado}
 				 \end{cases}\
 \end{array}.
 \end{equation}
+
+
 É possível escrever tais problemas em uma forma matricial como 
 \begin{equation*}
 	\begin{array}{lc}
@@ -370,3 +354,27 @@ Sejam $\Atil = \bbm A & 0 \\ E & I_{p}\ebm$,  $\btil = \bbm b\\ u\ebm$, $\ctil =
 Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso é feito porque, agora é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. 
 
 Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal} e \eqref{eq:introPL-dual} e faremos comentários relativos a canalizações, quando oportunos, em particular quando tratarmos da implementação.
+
+
+Conforme dissemos, a presente tese trata de \ac{MPI} para problemas de \ac{PL}, no entretanto tais
+métodos também podem ser estendidos com o objetivo de resolver problemas não-lineares
+de certos tipos, em geral quando a função objetivo é não linear, porém convexa, mas as restrições são lineares e há a exigência da não negatividade das variáveis. 
+
+Em particular, problemas de \acrodef{QP}{Programação Quadrática} \ac{QP} convexa
+são usualmente resolvidos com \ac{MPI}, principalmente
+quando são de grande porte e é possível especializar o método~\cite{Gondzio:2010bh}. Com efeito, um \ac{QP} convexo pode ser  escrito como
+\begin{equation*}
+	\begin{array}{lc}
+\displaystyle \min_{x} & x^TQx + c^Tx \\
+\text{sujeito a} &\begin{cases} Ax = b \\
+				 x \geq 0	
+				 \end{cases}
+\end{array},
+\label{eq:QP}
+\end{equation*}
+em que $Q\in\Real^{n\times n}$ é simétrica semi-definida positiva, $A\in \Real^{m\times
+n}$ e $c$, $x$ e $b$ têm dimensão compatível. Com exceção da matriz $Q$, temos a
+mesma estrutura de um \ac{PL}.
+
+
+Neste capítulo fizemos uma breve introdução à \acf{PL}. No próximo capítulo mencionaremos restultados importantes de PL bem como faremos uma revisão dos Métodos de Pontos Interiores  para \ac{PL}.

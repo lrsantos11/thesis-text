@@ -1,24 +1,25 @@
 % FIXME Ao final, deixe descomentada a linha correspondente ao numero de paginas
 % que a sua defesa possui.
 % Para menos de 100 paginas.
-\documentclass[%
-				12pt, 
-				a4paper, 
-				oneside, 
-				bibliography=totoc,
-                chapterprefix, 
-                appendixprefix,
-				]{scrbook}  
-% Para mais de 100 paginas.
 % \documentclass[%
 % 				12pt, 
-% 		 		letterpaper, 
-% 				twoside,
-% 				bibliography=totoc, 
-% 				cleardoublepage=empty,
-% 				chapterprefix, 
-%                 appendixprefix, 
-%                 ]{scrbook}  
+% 				a4paper, 
+% 				oneside, 
+% 				bibliography=totoc,
+%                 chapterprefix, 
+%                 appendixprefix,
+% 				]{scrbook}  
+% Para mais de 100 paginas.
+\documentclass[%
+				12pt, 
+		 		letterpaper, 
+				twoside,
+				bibliography=totoc, 
+				cleardoublepage=plain,
+				chapterprefix, 
+                appendixprefix, 
+                % draft,
+                ]{scrbook}  
 
 
 
@@ -69,12 +70,12 @@
 \frontmatter
 %
 \input{capa}  % Não edite esse arquivo.
- % \newpage\mbox{}\thispagestyle{empty}\newpage  % Pagina em branco.
+  \newpage\mbox{}\thispagestyle{plain}\newpage  % Pagina em branco.
 %
 % WARNING A folha de rosto precisa ser assinada pelos orientadores.
 % FIXME Substitua arquivo folha-de-rosto.pdf por uma copia escaneada, comente
 % esta linha e descomente a próxima.
- % \include{folha-de-rosto}
+  \include{folha-de-rosto}
 % \includepdf{folha-de-rosto.pdf}
 %
 % WARNING A ficha catalográfica deve estar no verso da folha de rosto.
@@ -135,6 +136,7 @@
 \include{mpis} 
 \include{escolhaadiada}
 \include{alg_converg}
+\include{implementa}
  \include{numericos} 
 \include{concl}
 

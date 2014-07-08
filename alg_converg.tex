@@ -245,7 +245,7 @@ em que  $\bdxzstar>0$ é calculado por \eqref{eq:max-norm-data}.
 
 % Esta análise é  baseada naquelas feitas por \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h},  \textcite{Zhang:2006ic,Zhang:1995fu}. 
 
-O primeiro lema importante que exibiremos, mostra a existência de um limitante para $\nuk \norm{(\xk,\zk)}_{1}$. Uma demonstração similar, porém com condições para o ponto inicial e para a solução ótima diferentes da que aceitamos aqui, pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação bem como à hipótese que aqui assumimos.
+O primeiro lema a seguir mostra a existência de um limitante para $\nuk \norm{(\xk,\zk)}_{1}$. Uma demonstração similar, porém com condições para o ponto inicial e para a solução ótima diferentes da que aceitamos aqui, pode ser encontrada em~\cite[Lema 6.1]{Wright:Primal-dual-interior-point:1997h}, fonte da qual a transcrevemos com as adaptações pertinentes à nossa notação bem como à hipótese que aqui assumimos.
  % Ademais, na demonstração deste e dos outros resultados, omitiremos o índice da iteração $k$ dos vetores, para fins de clareza. 
 
 
@@ -427,9 +427,9 @@ Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{e
 	
 
 	 Usando essa direção auxiliar na equação \eqref{eq:affine-scaling-system-compl}, obtemos 
-	 \[
-	 \Zk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Xk \left(  \dekz   +  \nuk (\zzero - \zstar)\right) = -\xk\zk + \nuk  \Zk(\xzero - \xstar) + \nuk  \Xk(\zzero - \zstar).
-	 \]
+	 \begin{multline*}
+	 \Zk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Xk \left(  \dekz   +  \nuk (\zzero - \zstar)\right) \\ = -\xk\zk + \nuk  \Zk(\xzero - \xstar) + \nuk  \Xk(\zzero - \zstar).
+	 \end{multline*}	 
 	 Multiplicando toda essa expressão por $(\Xk\Zk)^{-1/2}$, e notando que $\Dk=(\Xk\Zk)^{-1/2}\Zk$ e que $\Dik=(\Xk\Zk)^{-1/2}\Xk$, resulta em 
 	\begin{multline}
 		\label{eq:DxDzaff2}
@@ -1049,6 +1049,6 @@ Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que
 \]
  \end{proof}
 
-No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (EOP) converge assintoticamente para pontos com factibilidade e otimalidade. No capítulo que segue, mostramos alguns detalhes dos experimentos numéricos feitos com este método.
+No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (EOP) converge assintoticamente para pontos com factibilidade e otimalidade. Nos capítulos que seguem, mostramos alguns detalhes da implementação de nosso método bem como seus resultados numéricos.
 
 
