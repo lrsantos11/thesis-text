@@ -1,5 +1,8 @@
 %!TEX root = tese.tex
 
+\setchapterpreamble[u]{% 
+\dictum[Donald Knuth]{``The best programs are written so that computing machines can perform them quickly and so that human beings can understand them clearly.''}
+}
 
 \chapter{Implementação}
 \label{chap:implementa}
@@ -179,7 +182,7 @@ Para esse problema alternativo, um gráfico típico de $\Phi(\mu,\sig)$ é dado 
 
  Uma característica interessante é desse problema alternativo é que em quase todos os problemas e iterações, a restrição de $\Omega$ que estava ativa ao final da resolução do subproblema é exatamente aquela relacionada ao índice de bloqueio indicado pelo teste da razão.
 
-Primeiramente considere  um malha construída para o intervalo $[0,u_{\mu}]$ no qual  $\mu$ está definido. Usando o fato de que o índice de bloqueio do teste da razão tem relação com a restrição ativa, uma partição $\mathcal{P} = 0<\sig_{1}<\sig_{2}<\cdots<u_{\sig}$ do intervalo $[0,u_{\sig}]$, para  a  qual $\sig$ está definido é construída, tal que se $\barsig\in I_{j} = [\sig_{j},\sig_{j+1}]$, então existe um índice $t$ tal para este $\barsig$, todo o teste da razão para as componentes não negativas das variáveis $(x,z)$ podem ser substituídas por um único teste da razão, usando o índice $t$. Dessa forma, para cada subintervalo $I_{j} = [\sig_{j},\sig_{j+1}]$ define-se o teste da razão principal. 
+Primeiramente considere  um malha construída para o intervalo $[0,u_{\mu}]$ no qual  $\mu$ está definido. Usando o fato de que o índice de bloqueio do teste da razão tem relação com a restrição ativa, uma partição $\mathcal{P} = 0<\sig_{1}<\sig_{2}<\cdots<u_{\sig}$ do intervalo $[0,u_{\sig}]$, para  a  qual $\sig$ está definido é construída, tal que se $\barsig\in I_{j} = [\sig_{j},\sig_{j+1}]$, então existe um índice $t$ tal para este $\barsig$, todo o teste da razão para as componentes não negativas das variáveis $(x,z)$ podem ser substituídas por um único teste da razão, usando o índice $t$. Dessa forma, para cada subintervalo $I_{j} = [\sig_{j},\sig_{j+1}]$ define-se o teste da razão principal. Esse teste da razão independente de $\sig$ é, segundo \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, a ferramenta principal para conseguir resolver o subproblema na medida em que define a partição $\mathcal{P}$.
 
 Esse índice $t$ permite que escolhamos a restrição $g_{C}^{t}(\al,\sig)\geq0$, a qual é mais restritiva que o teste da razão,   sendo  então declaradas como \emph{restrição principal}  de $I_{j}$. De fato, a partição $\mathcal{P}$ agora é reconstruída tal que cada ponto na fronteira do subintervalo está associado com a interseção de restrições principais, gerando então uma região de relevância.
 
