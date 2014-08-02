@@ -14,23 +14,24 @@
 \label{chap:convergence}
 
 
-Conforme esclarecem \textcite{Zhang:1993gn}, do ponto de vista matemático, os conceitos de polinomialidade de um algoritmo e de taxa de convergência são incompatíveis. Enquanto a polinomialidade tem sentido apenas quando o algoritmo termina em um número finito de passos, a taxa de convergência  está definida apenas para métodos que tomam infinitos passos para convergir. Quando diz-se que um Método de Pontos Interiores é polinomial, tem-se em mente dados inteiros ou racionais e terminação finta. Por outro lado, quando diz-se que o mesmo algoritmo tem convergência linear, por exemplo, isso é feito  no sentido tradicional da análise numérica~\cite{Ortega:2000vd}.
-Daí, da mesma forma que esses autores, discutiremos aqui tanto polinomialidade quanto taxa de convergência do Método de Escolha Otimizada de Parâmetros. Daí, o objetivo principal  deste capítulo é   provar  que o Algoritmo \ref{alg:optimized-choice-of-parameters} converge em uma taxa Q-linear e tem ordem polinomial de iterações.
+Conforme esclarecem \textcite{Zhang:1993gn}, do ponto de vista matemático, os conceitos de polinomialidade de um algoritmo e de taxa de convergência são incompatíveis. Enquanto a polinomialidade tem sentido apenas quando o algoritmo termina em um número finito de passos, a taxa de convergência  está definida apenas para métodos que tomam infinitos passos para convergir. Quando  se diz que um Método de Pontos Interiores é polinomial, tem-se em mente dados inteiros ou racionais e terminação finita. Por outro lado, quando se diz que o mesmo algoritmo tem convergência linear, por exemplo, isso é feito  no sentido tradicional da análise numérica~\cite{Ortega:2000vd}. Para uma abordagem mais completa de teoria de complexidade em Métodos de Pontos Interiores veja \cite[cap.~3]{Wright:Primal-dual-interior-point:1997h}.
+
+Da mesma forma que esses autores, discutiremos aqui tanto polinomialidade quanto taxa de convergência do Método de Escolha Otimizada de Parâmetros. O objetivo principal  deste capítulo é   provar  que o Algoritmo \ref{alg:optimized-choice-of-parameters} converge em uma taxa Q-linear e tem ordem polinomial de iterações.
 
 
 
 
 
 
- Para tanto,  fixaremos os parâmetros $(\mu,\sig)$. O motivo de fazermos isso é facilitarmos as contas. Neste sentido escolheremos estrategicamente  para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
+ Para tanto,  fixaremos os parâmetros $(\mu,\sig)$. O motivo de fazermos isso é facilitar as contas. Neste sentido escolheremos estrategicamente  para o parâmetro  $\mu$ o valor \[\nextmu=\eta\dfrac{x^Tz}{n},
 \] 
-em que $\eta\in (\eta_{\min},\eta_{\max} )$, enquanto o parâmetro $\sig$ será fixado como $\nextsig =0 $. Em alguns momentos, utilizaremos apenas $\nextsig$ ao invés de $0$ pois derivaremos desigualdades importantes que vão valer para qualquer valor de $\eta$ e $\sig$. Essas escolhas  fazem com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}. Os valores dos limitantes de $\eta$ para  estes $\nextmu$  e $\nextsig$ fixados são determinado no Teorema~\ref{teo:next-phi-delta-n4}.
+em que $\eta\in (\eta_{\min},\eta_{\max} )$, enquanto o parâmetro $\sig$ será fixado como $\nextsig =0 $. Em alguns momentos, utilizaremos apenas $\nextsig$ ao invés de $0$, pois derivaremos desigualdades importantes que vão valer para qualquer valor de $\eta$ e $\sig$. Essas escolhas  fazem com que nosso método resolva  sistemas lineares similares aos dos métodos seguidores de caminho, vistos no Capítulo~\ref{chap:mpis}. Os valores dos limitantes de $\eta$ para  estes $\nextmu$  e $\nextsig$ fixados são determinado no Teorema~\ref{teo:next-phi-delta-n4}.
 
 
  A fixação desses dois parâmetros permite as demonstrações que seguem e a consequente prova da convergência do método de maneira mais fácil. No entanto, na prática, o método  tem desempenho melhor, já que se busca, em cada iteração $k$,
-o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$ e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para algum   $\hat{\al}$.
+o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$, e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para algum   $\hat{\al}$.
 
-De fato, com $\mu=\nextmu$ e $\sig=\nextsig$ , vamos determinar que este $\nextal$ existe, está no intervalo $(0,1)$, cumpre com as condições da vizinhança $N_{-\infty}(\ga,\be)$, para algum $\ga$ e $\be$  e principalmente, e por último, mas não menos importante, é grande o suficiente para fazer com que a função de mérito $\nextphi$ decresça suficientemente. Vejamos como isso se dá.
+De fato, com $\mu=\nextmu$ e $\sig=\nextsig$, vamos determinar que este $\nextal$ existe, está no intervalo $(0,1)$, cumpre com as condições da vizinhança $N_{-\infty}(\ga,\be)$, para algum $\ga$ e $\be$, e por último, mas não menos importante, é grande o suficiente para fazer com que a função de mérito $\nextphi$ decresça suficientemente. Vejamos como isso se dá.
 
 
 % Com essas alterações, podemos rescrever o Algoritmo~\ref{alg:optimized-choice-of-parameters} como o  Algoritmo Simplificado \ref{alg:optimized-choice-of-parameters}.
@@ -105,7 +106,7 @@ Para tanto, sejam
 em que $g_{C}^{i}$ e $g_{L}$ são dadas pelas equações  \eqref{eq:g-Ci_explicit} e \eqref{eq:g-L_explicit}, já tendo sido fixados os parâmetros $\mu=\nextmu$ e $\sig=\nextsig$.
 
 
-Com isso, escolheremos  $\hat\al$ que garanta decréscimo suficiente de $\nextphi$ ao mesmo em que haja a pertinência de $({x}^{k} ,{y}^{k},{z}^{k})$ à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ por sujeitar $\nextphi$ tanto à  \eqref{eq:g-Ci_explicit} quanto à \eqref{eq:g-L_explicit}. Isso será feito simplesmente por escolher
+Com isso, escolheremos  $\hat\al$ que garanta decréscimo suficiente de $\nextphi$ ao mesmo tempo em que assegure a pertinência de $({x}^{k} ,{y}^{k},{z}^{k})$ à vizinhança $\Nset_{-\infty}(\gamma,\beta)$ por sujeitar $\nextphi$ tanto à  \eqref{eq:g-Ci_explicit} quanto a \eqref{eq:g-L_explicit}. Isso será feito simplesmente por escolher
 
 \begin{equation}
 	\label{eq:nex-al}
@@ -145,7 +146,7 @@ Primeiramente, é necessário  escolher  $\gamma\in(0,1)$  e $\be\geq 1$ adequad
 \]
 o que garante que o ponto inicial satisfaz a desigualdade~\eqref{eq:symmetric-polynomials-b}.
 
-Com relação à $\be$,  usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\rhoCkb $, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L^{k}}$. Para facilitar os raciocínios, do ponto de vista teórico, vamos escolher o menor valor possível para $\beta$, isto é, $\be=1$.
+Usando um raciocínio similar, para qualquer  $\be\geq 1$, o ponto inicial sempre satisfaz \eqref{eq:symmetric-polynomials-a}. Quanto menor for $\be$, mais acelerada é a redução  das médias dos resíduos de complementaridade, dadas por $\rhoCkb $, em relação à redução da média dos resíduos de linearidade $\dbvec{\rho_L^{k}}$. Para facilitar o raciocínio, do ponto de vista teórico, vamos escolher o menor valor possível para $\beta$, isto é, $\be=1$.
 
 Além disso a seguinte observação será  útil.
 
@@ -154,7 +155,7 @@ Além disso a seguinte observação será  útil.
 	Seja  $(\Dex,\Dey,\Dez)$ uma terna qualquer de direções. Se 
 \begin{equation}
 	\label{eq:Ax0-ATyz0}
-	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0.
+	A\Dex=0 \text{ e } A^T\Dey + \Dez = 0,
 \end{equation}
 então
 \begin{equation}
@@ -167,37 +168,24 @@ então
 
 Em demonstrações de convergência e polinomialidade de Métodos de Pontos Interiores  infactíveis, em particular no métodos do tipo Mehrotra como o que propomos,  é  necessária a aceitação de algumas hipóteses ou condições sobre o ponto inicial e  sobre uma solução ótima. Veja por exemplo os trabalhos de \textcite{Wright:1994jd}, \textcite[cap. 6]{Wright:Primal-dual-interior-point:1997h}, \textcite{Wright:1996kj,Zhang:2006ic,Zhang:1994fz,Zhang:1995fu}. Tais hipóteses permitem estabelecer um limitante para a sequência $\{(\xk,\zk)\}$, o que é de vital importância para as demonstrações.
 
-No entanto, embora as hipóteses  utilizadas nos trabalhos acima produzam uma ordem de convergência  polinomial, estas são impraticáveis do ponto da implementação, já que utilizam pontos iniciais que geram péssimo comportamento quando utilizados e ao mesmo tempo, exigem o conhecimento \emph{a priori}  de um limitante para a solução  ótima. 
+No entanto, embora as hipóteses  utilizadas nos trabalhos acima produzam uma ordem de convergência  polinomial, estas são impraticáveis do ponto de vista da implementação, já que utilizam pontos iniciais que geram péssimo comportamento quando utilizados e, ao mesmo tempo, exigem o conhecimento \emph{a priori}  de um limitante para a solução  ótima. 
 
-Nesse trabalho, preferimos  obter uma ordem de convergência um pouco maior, embora ainda polinomial, porém com um ponto inicial cuja eficácia é bem demonstrada na prática e com uma condição que envolve o ponto inicial e uma solução ótima, condição esta foi verificada como válida, em nosso conjunto de testes. Em resumo, isso significa que a análise de convergência é feita utilizando o Algoritmo que é de fato implementado.
-
-
-Como vimos na Seção \ref{subsec:initial-point}, a heurística introduzida por \textcite{Mehrotra:1992wr} é uma das mais utilizadas em diversas implementações de \acl{MPI}, por suas características de fácil utilização, bem como por seu  ótimo desempenho na prática.  Assim,  utilizaremos em nosso Algoritmo o ponto inicial de \citeauthor{Mehrotra:1992wr}, isto é, o ponto inicial $(\xzero ,\yzero,\zzero )$  dado pela equação \eqref{eq:initial-point-mehrotra}. 
-
- % Seja também, para este ponto inicial, a constante positiva
-% \begin{equation}
-% \label{eq:bdxzzero}
-% 	\bdxzzero= \min_{i=1,\ldots,n}\min\{\xzero_{i},\zzero_{i}\},
-% \end{equation}
-% a qual será utilizada na sequência.
+Nesse trabalho, preferimos  obter uma ordem de complexidade um pouco maior, embora ainda polinomial, porém com um ponto inicial cuja eficácia é bem demonstrada na prática. Para tanto propomos a Condição \ref{cond:xzzero-xzstar},  que envolve o ponto inicial, uma solução ótima do PL e uma medida do \emph{tamanho dos dados} do problema. Tal Condição foi satisfeita para todos os problemas do conjunto de testes que utilizamos  -- veja Seção~\ref{sec:initial:point}, com
+ponto inicial $(\xzero,\yzero,\zzero)$, dado em \eqref{eq:initial-point-mehrotra}, obtido a partir da heurística de \textcite{Mehrotra:1992wr} -- veja Seção~\ref{subsec:initial-point}. Estamos fazendo isso para garantir que a análise de convergência seja feita no  Algoritmo que é de fato implementado. 
 
 
- Seja a constante positiva 
+A medida do tamanho dos dados vai ser dada pela constante positiva 
 \begin{equation}
 	\label{eq:max-norm-data}
- 	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \}.
+ 	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \},
 \end{equation}
-$\bdxzstar$ é o maior valor absoluto de todos os dados de entrada do problema (\ref{eq:primal}-\ref{eq:dual}). Podemos supor sem perda de generalidade que $\bdxzstar \geq  1$,  bastando para isso fazer um escalonamento trivial. Entretanto, na pratica usualmente são feitos escalonamento mais sofisticados, como o de \textcite{Curtis:1972cp}. Em nossa implementação, mantivemos o escalonamento de \citeauthor{Curtis:1972cp}, que é  usado no PCx.
+que corresponde ao maior valor absoluto de todos os dados de entrada do problema (\ref{eq:primal}-\ref{eq:dual}). Podemos supor sem perda de generalidade que $\bdxzstar \geq  1$,  bastando para isso fazer um escalonamento trivial. Entretanto, na prática, usualmente são feitos escalonamento mais sofisticados, como o de \textcite{Curtis:1972cp}. Em nossa implementação, mantivemos o escalonamento de \citeauthor{Curtis:1972cp}, que é  usado no PCx.
 
-Essa constante será utilizada nas demonstrações abaixo, em particular a partir da Condição \ref{cond:xzzero-xzstar}, a qual caracteriza uma relação existente entre  o ponto inicial e uma solução ótima do \ac{PL} que estamos resolvendo. 
 
-% \begin{cond} \label{cond:xzzero} O ponto inicial $(\xzero ,\yzero,\zzero )$ satisfaz 
-% \begin{equation}
-% 	\label{eq:norm-xz-zero}
-% 	\norm{(\xzero,\zzero)}_{1} \leq \bdxzstar n,
-% \end{equation}
-% em que  $\bdxzstar>0$ calculado por \eqref{eq:max-norm-data}.
-% \end{cond}
+A Condição~\ref{cond:xzzero-xzstar}, que enunciamos a seguir, é uma hipótese teórica necessária para as demonstrações de convergência e complexidade que estamos procedendo, porém não será necessária na implementação do MEOP. Como dissemos, ela é válida para o ponto inicial que escolhemos na implementação, porém é possível que estudos futuros determinem outros pontos iniciais que, ao
+satisfazerem tal condição, têm garantia de convergência do MEOP.
+
+
 
 \begin{cond} \label{cond:xzzero-xzstar} Para o ponto inicial dado por \eqref{eq:initial-point-mehrotra}, com $(\xzero,\zzero)>0$,  existe uma solução ótima $(\xstar,\ystar,\zstar)$  do problema (\ref{eq:primal}-\ref{eq:dual}) que satisfaz 
 \begin{equation}
@@ -206,36 +194,6 @@ Essa constante será utilizada nas demonstrações abaixo, em particular a parti
 \end{equation}
 em que  $\bdxzstar>0$ é calculado por \eqref{eq:max-norm-data}. 
 \end{cond}
-
-
-
-% \begin{cond}\label{cond:x0-x*+z0-z*}  O ponto inicial $(\xzero ,\yzero,\zzero )$ dado em \eqref{eq:initial-point-mehrotra} e uma solução ótima $(\xstar,\ystar,\zstar)$ que satisfazem respectivamente as Condições \ref{cond:xzzero} e \ref{cond:xzstar}, também satisfazem as desigualdades
-% \begin{subequations}\label{eq:x0-x*+z0-z*}
-% \begin{gather}
-% \norm{\xzero - \xstar} \leq n^2 \bdxzstar \label{eq:x0-x*} \\
-% \norm{\zzero - \zstar} \leq n^2\bdxzstar \label{eq:z0-z*}
-% \end{gather}
-% \end{subequations}
-% em que  $\bdxzstar>0$ calculado por \eqref{eq:max-norm-data}. 
-% \end{cond}
-
-
-
-
-%FIXME comentar a respeito dessa hipótese, depois dos resultados numéricos
-% Definimos nosso ponto inicial como
-
-% \begin{equation}
-% 	\label{eq:initial-point}
-% 	(\xzero ,\yzero,\zzero ) = (\bdxzstar e, 0, \bdxzstar e ).
-% \end{equation}
-
-% Temos $\xstar_{i}\leq   \bdxzstar$, bem como $\zstar_{i}\leq \bdxzstar $, para $i=1,\ldots,n$ e por isso
-% \begin{equation}
-% 	\label{eq:x0}
-% 0\leq x^{0} - \xstar \leq \bdxzstar e \quad \text{e} \quad 0\leq \zzero  - \zstar \leq \bdxzstar e. 
-% \end{equation}
-
 
 
 
@@ -253,7 +211,7 @@ O primeiro lema a seguir mostra a existência de um limitante para $\nuk \norm{(
 
 
 \begin{lema}\label{lemma:boundxz1}
-	Suponha que  a Condição \ref{cond:xzzero-xzstar} seja válida. Então para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, vale
+	Suponha que  a Condição \ref{cond:xzzero-xzstar} seja válida. Então, para qualquer iterado $(\xk,\yk,\zk)$ gerado pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, vale
 	\begin{equation}
 		\label{eq:bound-xkzk}
 		\nuk \norm{(\xk,\zk)}_{1} \norm{(\xzero,\zzero) - (\xstar,\zstar)} \leq \bdxzstar^{4} n \rhoCkb ,
@@ -323,7 +281,7 @@ Agora,   $\nuk \in(0,1)$ implica que $\nu_{k}^{2}< \nu_{k}$ e que $\nuk (1-\nuk 
 	\nuk \norm{(\xk,\zk)}_{1} 	\leq \left[ n \nuk  \dbvec{\rho_C^0} + n\rhoCkb  + \nuk ((\xzero)^{T}\zstar + (\xstar)^{T}\zzero)\right] \, \dfrac{1}{\minxzinit}.  
 \]
 
-Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$ e portanto vale  \eqref{eq:nu_k-rho0-rhok},  e considerando ainda que  $\be=1$, temos que $\nuk  \dbvec{\rho_C^0} \leq  \rhoCkb $.  
+Considerando que $(\xk,\yk,\zk)$ pertence à vizinhança $\Nset_{-\infty}(\ga,\be)$ e portanto vale  \eqref{eq:nu_k-rho0-rhok},  e considerando ainda que  $\be=1$, temos  $\nuk   \leq  \rhoCkb /\dbvec{\rho_C^0}$.  
 
 
 Por tudo isso,  obtemos 
@@ -352,7 +310,7 @@ como queríamos demonstrar.
 A próxima proposição será utilizada nas demonstrações que seguem e é um fato conhecido e bastante utilizado em \ac{MPI}.
 
 \begin{prop}\label{prop:norm-uv}
-	Seja $D$ uma matriz diagonal não-singular de ordem $n$ e sejam $u,v\in\Real^n$, então 
+	Seja $D$ uma matriz diagonal não-singular de ordem $n$ e sejam $u,v\in\Real^n$ tais que $u^Tv\geq0$, então 
 	\begin{equation}
 		\label{eq:prop-uvDuDv}
 		\norm{uv}\leq \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right)
@@ -372,7 +330,7 @@ Com relação a terceira desigualdade, note que
 \[
 0 \leq \left(\norm{Du} - \norm{D^{-1}v}\right)^{2} = \norm{Du}^{2} - 2\norm{Du}\norm{D^{-1}v} + \norm{D^{-1}v}^{2}
 \]
-e portanto temos a validade de
+e portanto temos
 \[
 \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{1} + \norm{D^{-1}v}^{2}\right). \qedhere
 \]
@@ -426,7 +384,7 @@ Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{e
 	\end{equation}
 	
 
-	 Usando essa direção auxiliar na equação \eqref{eq:affine-scaling-system-compl}, obtemos 
+	 Usando essa direção auxiliar e equação \eqref{eq:affine-scaling-system-compl}, obtemos 
 	 \begin{multline*}
 	 \Zk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Xk \left(  \dekz   +  \nuk (\zzero - \zstar)\right) \\ = -\xk\zk + \nuk  \Zk(\xzero - \xstar) + \nuk  \Xk(\zzero - \zstar).
 	 \end{multline*}	 
@@ -436,7 +394,7 @@ Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{e
 		 \Dk\left( \dekx  +  \nuk (\xzero - \xstar)\right)+ \Dik \left(  \dekz   +  \nuk (\zzero - \zstar)\right) = \\ -(\xk\zk)^{1/2} + \nuk  \Dk(\xzero - \xstar) + \nuk  \Dik(\zzero - \zstar).
 		\end{multline}
 	 
-	 Note que, como vale  \eqref{eq:DxDzaff1}, utilizando o Teorema de Pitágoras para norma-2 de vetores e logo, tomando a norma-2 ao quadrado do lado esquerdo de \eqref{eq:DxDzaff2} obtemos
+	 Note que, como vale  \eqref{eq:DxDzaff1}, utilizando o Teorema de Pitágoras para norma-2 de vetores e tomando a norma-2 ao quadrado do lado esquerdo de \eqref{eq:DxDzaff2} obtemos
 	\begin{multline*}
 			 	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)+ \Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2} =\\
 	 	 	 	 	 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)}^{2}+ \norm{\Dik \left( \dekz  +  \nuk (\zzero - \zstar)\right)}^{2}.
@@ -447,7 +405,7 @@ Portando, $(\Dex,\Dey,\Dez)$  satisfaz \eqref{eq:Ax0-ATyz0} e logo vale \eqref{e
 	 \left\{ \norm{(  \xk \zk   )^{1/2}} + \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)} \right\}^{2}.
 	 \end{multline*}
 
-Isolando o primeiro termo dessa equação, obtemos
+Como o segundo termo dessa inequação é não negativo, obtemos
 \[
 \norm{\Dk\left( \dekx +  \nuk (\xzero - \xstar)\right)} \leq  
 	  \norm{(  \xk \zk  )^{1/2}} + \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)}.
@@ -459,7 +417,7 @@ Uma aplicação direta da desigualdade triangular e a adição de um termo  $\nu
 				 & \leq \norm{(  \xk \zk  )^{1/2}} + 2 \nuk  \norm{\Dk(\xzero - \xstar)} + 2\nuk  \norm{\Dik(\zzero - \zstar)}.\label{eq:DxDzaff4}
 \end{align}
 
-Vamos mostrar a existência de um limitante para cada termo do lado direito de \eqref{eq:DxDzaff4} de magnitude $\Oset\left(\rhoCkb ^{1/2}\right)$. Nesse caso, o mesmo se aplicará à $\norm{\Dik \dekz }$.
+Vamos mostrar a existência de um limitante de magnitude $\Oset\left(\rhoCkb ^{1/2}\right)$ para cada termo do lado direito de \eqref{eq:DxDzaff4} . Nesse caso, o mesmo se aplicará a $\norm{\Dik \dekz }$.
 
 Para o primeiro termo, note que 
 \begin{equation}
@@ -482,7 +440,7 @@ e similarmente
 \norm{\Dik} \leq  \norm{(\Xk\Zk)^{-1/2}} \norm{\xk}_{1}.
 \]
 
-Mais que isso, como $(\xk,\yk,\zk)\in\Nset_{-\infty}(\ga,\be)$, temos que 
+Mais que isso, como $(\xk,\yk,\zk)\in\Nset_{-\infty}(\ga,\be)$, de  \eqref{eq:Nset-infty-rho},temos que 
 \begin{equation}
 \label{eq:DxDzaff6}
 	\norm{(\Xk\Zk)^{-1/2}} = \max_{i=1,\ldots,n}\frac{1}{(\xk_i\zk_i)^{1/2}} \leq \frac{1}{\ga^{1/2}\rhoCkb^{1/2}}.
@@ -503,7 +461,7 @@ Do Lema~\ref{lemma:boundxz1}, da Equação~\eqref{eq:DxDzaff6}  e da desigualdad
  \nuk  \norm{\Dk(\xzero - \xstar)} + \nuk  \norm{\Dik(\zzero - \zstar)}  \leq \bdxzstar^{4} n  \rhoCkb \frac{1}{\ga^{1/2}\rhoCkb ^{1/2}}  = \frac{\bdxzstar^{4}}{\ga^{1/2}}n \rhoCkb ^{1/2}.
 \end{equation}
 
-Se usarmos as equações \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparando-as com \eqref{eq:DxDzaff4} temos que 
+Se usarmos as equações \eqref{eq:DxDzaff5} e \eqref{eq:DxDzaff7}, comparando-as com \eqref{eq:DxDzaff4}, temos que 
 \[
 \begin{aligned}
 \norm{\Dk \dekx} & \leq \frac{n}{\ga^{1/2}}\rhoCkb ^{1/2} +  \frac{2\bdxzstar^{4}}{\ga^{1/2}}n \rhoCkb ^{1/2} \\
@@ -514,7 +472,7 @@ em que	$\dfrac{1 + 2\bdxzstar^{4} }{\ga^{1/2}} >1$,  já que  $\ga\in(0,1)$.
 
 Com isso, obtemos que 
 	\begin{equation}\label{eq:DxDzaff8}
-		\norm{\Dk  \dekx }\leq \left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right) n\rhoCkb ^{1/2}\text{ e } \quad  \norm{\Dik  \dekz  }\leq \left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right)n\rhoCkb ^{1/2},
+		\norm{\Dk  \dekx }\leq \left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right) n\rhoCkb ^{1/2}\text{ e } \quad  \norm{\Dik  \dekz  }\leq \left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right)n\rhoCkb ^{1/2}.
 		\end{equation}
 
 
@@ -534,7 +492,7 @@ Usando as desigualdades da Proposição~\ref{prop:norm-uv} e  a Equação ~\eqre
 \begin{lema}\label{lemma:boundDxDzc}
 Suponha válida a Condição  \ref{cond:xzzero-xzstar}. Se  \begin{equation}
 	\label{eq:sig-eta-relation}
-	\nextsig > \frac{\ga(\sqrt{\ga} - \eta)}{(1+2\bdxzstar^{2})^{2}},
+	\nextsig > \frac{\ga(\sqrt{\ga} - \eta)}{(1+2\bdxzstar^{4})^{2}},
 \end{equation} então  
 	\begin{equation}\label{eq:lemma-boundDxDzcx}
 		\norm{ \Dekcox  \Dekcoz  } \leq \norm{ \Dekcox  \Dekcoz  }_{1} \leq \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{2\ga^{3}} \: n^{4}\rhoCkb ,
@@ -555,29 +513,30 @@ Suponha válida a Condição  \ref{cond:xzzero-xzstar}. Se  \begin{equation}
 	\Zk\Dekcox + \Xk\Dekcoz = \mu e  - \sig \dekx  \dekz .
 	\]
 
-	Multiplicando toda equação anterior por $(  \Xk \Zk  )^{-1/2}$ e  para algum $\mu$ e $\sig$ a ser escolhido, segue que 
+	Multiplicando toda equação  a anterior por $(  \Xk \Zk  )^{-1/2}$,  para algum $\mu$ e $\sig$ a ser escolhido, segue que 
 	\[
-		\Dk\Dekcox + \Dik\Dekcoz = (  \Xk \Zk  )^{-1/2}(\mu e + \sig \dekx  \dekz ).
+		\Dk\Dekcox + \Dik\Dekcoz = (  \Xk \Zk  )^{-1/2}(\mu e - \sig \dekx  \dekz ).
 	\] 
 
-	Por um lado temos que 
+	Por um lado, temos que 
 	\[
 		\begin{aligned}
 		\norm{\Dk\Dekcox + \Dik\Dekcoz}^{2} & = \norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} + 2(\Dekcox)^{T}\Dekcoz  \\ &= \norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2}.
 		\end{aligned}
 	\]
 
-Assim, usando consistência de normas obtemos
+Assim, usando consistência de normas, obtemos
 \begin{align*}
-	\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} & = \norm{(  \Xk \Zk  )^{-1/2}(\mu e+ \sig \dekx  \dekz )}^{2} \notag\\ 
-												& \leq \norm{(  \Xk \Zk  )^{-1/2}}^{2}\norm{(\mu e+ \sig \dekx  \dekz )}^{2} .	
+	\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} & = \norm{(  \Xk \Zk  )^{-1/2}(\mu e- \sig \dekx  \dekz )}^{2} \notag\\ 
+												& \leq \norm{(  \Xk \Zk  )^{-1/2}}^{2}\norm{(\mu e-  \sig \dekx  \dekz )}^{2} .	
 \end{align*}
 
 
  A Equação \eqref{eq:DxDzaff6} e o fato de que  $(\xk,\yk,\zk)\in\Nset_{-\infty}(\ga,\be))$ permitem que derivemos, a partir da desigualdade acima, 
 \begin{align}
-	\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} 	& \leq \min\left({\xk_i\zk_i}\right)^{-1}\left(\mu\norm{ e} +{\sig}\norm{ \dekx  \dekz }\right)^{2}\notag\\
-												& \leq (\ga\rhoCkb )^{-1}\left(\mu\sqrt{n} +{\sig}\norm{ \dekx  \dekz }\right)^{2} \label{eq:DxDzc1}		
+	\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} 	& \leq \left[\min\left\{\xk_i\zk_i\right\}\right]^{-1}\norm{(\mu e-  \sig \dekx  \dekz )}^{2}\notag\\
+	& \leq \left[\min\left\{\xk_i\zk_i\right\}\right]^{-1}\left(\mu\norm{ e} +{\sig}\norm{ \dekx  \dekz }\right)^{2}\notag\\
+												& \leq \left(\ga\rhoCkb \right)^{-1}\left(\mu\sqrt{n} +{\sig}\norm{ \dekx  \dekz }\right)^{2} \label{eq:DxDzc1}		
 \end{align}
 
 Para utilizar \eqref{eq:normDxDzaff}, definimos a variável local
@@ -589,19 +548,18 @@ tal que
 \norm{ \dekx  \dekz  } \leq t n^{2}\rhoCkb.
 \]
 
-Agora, fixamos $\mu = \nextmu =\eta \rhoCkb $ e $\sig = \nextsig$, este último ainda a ser determinado. Notando que para todo $n$ natural vale $\sqrt{n} \leq n^{2}$, a desiguladade~\eqref{eq:DxDzc1} pode ser transformada em
-\[
-\begin{aligned}
+Agora, fixamos $\mu = \nextmu =\eta \rhoCkb $ e $\sig = \nextsig$, este último ainda a ser determinado. Notando que para todo $n$ natural vale $\sqrt{n} \leq n^{2}$, a desigualdade~\eqref{eq:DxDzc1} pode ser transformada em
+\begin{align}
 	% (\ga\rhoCkb )^{-1}\left(\nextmu\sqrt{n} +\abs{\nextsig}\norm{ \dekx  \dekz }\right)^{2}  
 	\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2}
-							& \leq (\ga\rhoCkb )^{-1}\left(\eta\rhoCkb \sqrt{n} +{\nextsig} t n^{2}\rhoCkb \right)^{2}\\
-							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +{\nextsig} t n^{2}\right)^{2}\rhoCkb \\
-							& \leq (\ga)^{-1}\left(\eta +{\nextsig} t \right)^{2}n^{4}\rhoCkb .
-\end{aligned}
-\]
+							& \leq (\ga\rhoCkb )^{-1}\left(\eta\rhoCkb \sqrt{n} +{\nextsig} t n^{2}\rhoCkb \right)^{2} \notag \\
+							& \leq (\ga)^{-1}\left(\eta\sqrt{n} +{\nextsig} t n^{2}\right)^{2}\rhoCkb \notag \\
+							& \leq (\ga)^{-1}\left(\eta +{\nextsig} t \right)^{2}n^{4}\rhoCkb . \label{eq:DxDzc1b}	
+\end{align}
 
 
-Observe que $\ga\in(0,1)$ e logo $t > 1$.  Daí, e $\eta\in[0,1]$ e   se \eqref{eq:sig-eta-relation} for satisfeita, então 
+
+Observe que $\ga\in(0,1)$ e, logo, $t > 1$.  Daí, se $\eta\in[0,1]$ e   se \eqref{eq:sig-eta-relation} for satisfeita, então 
 \[
 \nextsig > \dfrac{\sqrt{\ga} - \eta}{t}
 \]
@@ -612,9 +570,9 @@ $
 $
 como queríamos.
 
-Ao substituirmos o valor de $t$ temos 
+Ao substituirmos o valor de $t$ nessa última desigualdade, temos 
 \[
-	\dfrac{\left(\eta +{\nextsig} t \right)^{2}}{\ga} = \dfrac{\left[\eta + \nextsig\dfrac{(1+2\bdxzstar^{4})^{2}}{\ga}\right]^{2}}{\ga} = \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{\ga^{3}},
+	\dfrac{\left(\eta +{\nextsig} t \right)^{2}}{\ga} = \dfrac{\left[\eta + \nextsig\dfrac{(1+2\bdxzstar^{4})^{2}}{\ga}\right]^{2}}{\ga} = \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{\ga^{3}}.
 \] 
 % Wolphran Alpha code
 % solve{ (1/gamma)*(eta +sigma*omega^2)^2>=1 , gamma<1, omega>=1, sigma}
@@ -622,8 +580,8 @@ Ao substituirmos o valor de $t$ temos
 %solve{ (1/gamma)*(eta +abs(sigma)*omega^2)^2>=1 , gamma<1, omega>=1, sigma}
 %sigma>0
 % solve{ (1/gamma)*(eta +(sigma)*omega^2)^2>=1 , gamma<1, omega>=1, sigma>0, sigma}
-Daí, juntando tudo isso, obtemos
-	\begin{equation}\label{eq:lemma-boundDxDzcx1}
+Substituindo essa expressão em 	\eqref{eq:DxDzc1b}, obtemos
+\begin{equation}\label{eq:lemma-boundDxDzcx1}
 		\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} \leq \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{\ga^{3}} \: n^{4}\rhoCkb.
 	\end{equation}
 
@@ -651,28 +609,28 @@ como queríamos demonstrar.
 t_{1} = \frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}} \quad \text{ e } \quad t_{2} = \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{\ga^{3}}.
 \]
  
-	 Assim, a partir  das Equações~\ref{eq:DxDzaff8} e \eqref{eq:lemma-boundDxDzcx} e da equação \eqref{eq:prop-uvDuDv} segue que  
+	A partir  das Inequações~\eqref{eq:DxDzaff8} e \eqref{eq:lemma-boundDxDzcx} e da inequação \eqref{eq:prop-uvDuDv} segue que  
 	\[
 	\begin{aligned}	
 		\norm{ \dekx \Dekcoz}_{1} & \leq \norm{\Dk \dekx }\norm{\Dik\Dekcoz}\\
 							  & \leq 	t_1 n\rhoCkb ^{1/2}(t_2 n^{4}\rhoCkb )^{1/2}  \\
 							  & = (t_1t_2^{1/2})n^{3}\rhoCkb .
 	\end{aligned}\]			  
-Similarmente, 	$\norm{\Dekcox \dekz }_{1} \leq (t_1t_2^{1/2})n^{3}\rhoCkb $. Com isso temos  que 
+Similarmente, 	$\norm{\Dekcox \dekz }_{1} \leq (t_1t_2^{1/2})n^{3}\rhoCkb $. Com isso, temos  que 
 \[
 		\norm{ \dekx \Dekcoz + \Dekcox \dekz }_{1} \leq 2(t_1t_2^{1/2})n^{3}\rhoCkb .
 \]
 
 Para finalizar, temos que  
 \[
-2(t_1t_2^{1/2}) = 2\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}} \cdot \dfrac{\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}}{\ga^{3/2}} = \dfrac{2(1+2\bdxzstar^{4})\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]}{\ga^{2}}. \qedhere
+2(t_1t_2^{1/2}) = 2\left(\frac{1 + 2\bdxzstar^{4} }{\ga^{1/2}}\right) \cdot\left( \dfrac{\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}}{\ga^{3/2}}\right) = \dfrac{2(1+2\bdxzstar^{4})\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]}{\ga^{2}}. \qedhere
 \]
 \end{proof}
 
 \section{Prova de complexidade e  convergência}
 
 A fim de que o Algoritmo~\ref{alg:optimized-choice-of-parameters} esteja bem definido é necessário que exista em cada iteração $k$ uma tripla $(\al_k,\mu_k,\sig_k)$, de modo que seja possível encontrar um próximo ponto $(\nextx,\nexty,\nextz)$. Com efeito, considerando que fixamos os valores de $\mu$ como $\nextmu = \eta\rhoCkb$ e  agora que faremos $\sig$ como $\nextsig=0$, basta encontrar um  tamanho de passo ${\al_k}>0$ tal que o próximo ponto $(\nextx,\nexty,\nextz)$ satisfaça as restrições da vizinhança 
-$\Nset_{-\infty}(\gamma,\beta)$ e além disso, garanta que  $0 < \theta(\al_k) <1$. É o que os próximos resultados garantem. Observe que, por conta de \eqref{eq:sig-eta-relation}, como $\nextsig =0$, garantiremos que $\eta>\sqrt{\ga}$. Isso dará o primeiro limitante para $\eta$.
+$\Nset_{-\infty}(\gamma,\beta)$ e, além disso, tenhamos   $0 < \theta(\al_k) <1$. É o que os próximos resultados garantem. Observe que, por conta de \eqref{eq:sig-eta-relation}, como $\nextsig =0$, teremos que $\eta>\sqrt{\ga}$. Isso dará o primeiro limitante para $\eta$.
 
 
 
@@ -684,14 +642,13 @@ Seja $\nextal_{C}$ dado em \eqref{eq:al-C+al-L}. Então
 em que 
 \begin{equation}
 	\label{eq:delta1}
-	\de_{1} = \dfrac{2\eta\ga(1-\ga)}{\eta^{2} + 8\eta (1+2\bdxzstar^{4}) + 4 (1+2\bdxzstar^{4})^{2}   },
+	\de_{1} = \dfrac{2\eta\ga(1-\ga)}{\eta^{2} + 8\eta (1+2\bdxzstar^{4}) + 4 (1+2\bdxzstar^{4})^{2}   }
 \end{equation}
-
 é uma constante independente de $n$.
 \end{lema}
 
 \begin{proof}
- Primeiramente, considere que  assim como na Equação \eqref{eq:simplified-merit-function-al}, as escolhas de $\nextmu$ e $\nextsig$ permitem rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, temos
+ Primeiramente, considere que , assim como na Equação \eqref{eq:simplified-merit-function-al}, as escolhas de $\nextmu$ e $\nextsig$ permitem rescrever a função $g_C^i $, para $i=1,\ldots,n$, que foi dada em \eqref{eq:g-Ci_explicit}, somente dependendo de uma escolha de $\al$. De fato, temos
 \[
 \begin{aligned}
 {g}_C^i (\al)				& = (1-\al)(\rho_C^k )_i+ \al\eta\rhoCkb + \al^2\left[(L_{0,0}^{k})_i + \eta\rhoCkb  ({L_{1,0}^{k}})_i 
@@ -727,7 +684,7 @@ em que $h^i$ é uma quadrática côncava em função de $\al$ com uma raiz nula 
 
 Vamos agora obter limitantes para $\abs{\zeta_i}$, $ \abs{\chi_i}$ e para  $\abs{\xi_i}$.
 
-Considere primeiramente que nas substituições que seguem, as definições dos vetores $L_{\ell,j}^{k}$ dadas em~\eqref{eq:defining-Lij} fazem com que sejam válidas 
+Considerando que nas substituições que, seguem, as definições dos vetores $L_{\ell,j}^{k}$ dadas em~\eqref{eq:defining-Lij} fazem com que sejam válidas 
 \begin{equation}
 	\label{eq:normLij}
 \abs{({L_{\ell,j}^{k}})_{i}} \leq \norm{L_{\ell,j}^{k}}_{1} \text{ e } \abs{\dbvec{L_{\ell,j}^{k}}} \leq \dfrac{1}{n}\norm{L_{\ell,j}^{k}}_{1}.
@@ -743,7 +700,7 @@ Para o limitante de $\abs{\zeta_{i}}$ note que por conta de \eqref{eq:defin-zeta
 \abs{\zeta_i}    \leq 2\norm{L_{0,0}^{k}}_1 \label{eq:bound-zeta-i} \leq 2\norm{ \dekx  \dekz }_1.   % \leq 2\omega_1^{2} n^{2}\rhoCkb . 
 \end{equation}
 
-Para $\abs{\chi_{i}}$, considere que   $\sig = \nextsig=0$, que vale as definições dadas em \eqref{eq:Corrector-spllited} e como  $\mu=\nextmu = \eta\rhoCkb$ fixado, temos que $\Decow = \nextmu \Dew^{\mu} + \nextsig
+Para $\abs{\chi_{i}}$, considere que   $\sig = \nextsig=0$, que valem as definições dadas em \eqref{eq:Corrector-spllited} e que  $\mu=\nextmu = \eta\rhoCkb$ está fixado. Assim, temos que $\Decow = \nextmu \Dew^{\mu} + \nextsig
 \Dew^{\sig} = \eta\rhoCkb \Dew^\mu $ e por isso 
 	\[
 		 \eta\rhoCkb (\Dex^\mu)^{k} = \Dekcox     \quad \text{ e } \quad    \eta\rhoCkb (\Dez^\mu)^{k} = \Dekcoz .
@@ -751,7 +708,7 @@ Para $\abs{\chi_{i}}$, considere que   $\sig = \nextsig=0$, que vale as definiç
 
 	Assim, $ L_{1,0}^{k} = \dekx(\Dez^\mu)^{k} +
 			\dekz(\Dex^\mu)^{k} = \dekx\Dekcoz +
-			\dekz\Dekcox $ e novamente, usando  \eqref{eq:absLij} segue que
+			\dekz\Dekcox $ e, novamente, usando  \eqref{eq:absLij} segue que
 \begin{equation}\label{eq:bound-chi-i}
 	\abs{\chi_i } = \abs{\eta\rhoCkb  \left( ({L_{1,0}^{k}})_i - \ga\dbvec{L_{1,0}^{k}} \right)}  \leq 2 \norm{ \dekx \Dekcoz + \Dekcox \dekz }_1. %  \leq \omega_{3}n^{3}\rhoCkb .
 \end{equation}
@@ -786,9 +743,9 @@ desigualdade
 
 
 
-Os Lemas \ref{lemma:boundDxDzaff},   \ref{lemma:boundDxDzc} e \ref{lemma:boundDxDzaff-c}  fazem com que a desigualdade acima transforme-se em 
+Os Lemas \ref{lemma:boundDxDzaff},   \ref{lemma:boundDxDzc} e \ref{lemma:boundDxDzaff-c}  fazem com que a desigualdade acima se transforme em 
 \begin{multline*}
-\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i}  \leq \\  \frac{2(1 + 2\bdxzstar^{4})^{2} }{\ga} n^{2}\rhoCkb + 
+\abs{\zeta_i} + \abs{\chi_i}  + \abs{\xi_i}  \leq \\  \frac{2(1 + 2\bdxzstar^{4})^{2} }{\ga} n^{2}\rhoCkb + 
 												\dfrac{4(1+2\bdxzstar^{4})\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]}{\ga^{2}}\: n^{3}\rhoCkb + 	 \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{2\ga^{3}} \: n^{4}\rhoCkb.
 \end{multline*}
 
@@ -800,7 +757,7 @@ Como $\nextsig = 0$ e $n^{2}\leq n^{3}\leq  n^{4}$ e definindo $t = (1 + 2\bdxzs
 										\label{eq:zeta+chi+xi}
 	\end{align}
 
-Como $\nextal^{i}_{C}$, dada em \eqref{eq:al-C+al-L}, é o maior número em $(0,1]$ tal que $g_{C}^{i}(\al)\geq 0$, para $\al\leq\nextal^{i}_{C}$, e além disso para todo $\al$ vale $g_{C}^{i}(\al) \geq h^{i}(\al)$, claramente $\nextal^{i}_{C} \geq  \al_{C}^i$ para todo $i=1,\ldots,n$.
+Como $\nextal^{i}_{C}$, dada em \eqref{eq:al-C+al-L}, é o maior número em $(0,1]$ tal que $g_{C}^{i}(\al)\geq 0$ para $\al\leq\nextal^{i}_{C}$, e além disso para todo $\al$ vale $g_{C}^{i}(\al) \geq h^{i}(\al)$, claramente $\nextal^{i}_{C} \geq  \al_{C}^i$ para todo $i=1,\ldots,n$.
 
 
 Por conta disso, e a partir  de \eqref{eq:al-Ci-final} e de \eqref{eq:zeta+chi+xi} temos que 
@@ -810,9 +767,9 @@ Por conta disso, e a partir  de \eqref{eq:al-Ci-final} e de \eqref{eq:zeta+chi+x
 							& = \dfrac{\ga(1-\ga)\eta}{ 2t^{2} + 4\eta t + \eta^{2}/2 } \:\dfrac{1}{n^{4}} = \dfrac{\de_{1}}{n^{4}},
 \end{aligned}
 \]
-em que a substituição de $t$ na penúltima igualdade acima, nos dá a Equação~\eqref{eq:delta1}.
+em que a substituição de $t$ na penúltima igualdade acima nos dá a Equação~\eqref{eq:delta1}.
 
- O lema fica provado, considerando que para algum $j\in\{1,\ldots,n\}$, $ \al_{C}^{j}=\nextal_{C} $.
+ O lema fica provado considerando que, para algum $j\in\{1,\ldots,n\}$, $ \al_{C}^{j}=\nextal_{C} $.
  \end{proof}
 
 
@@ -868,7 +825,7 @@ Assim,  segue que
 	\end{align}
 
 
-Os Lema~\ref{lemma:boundDxDzaff-c} e  \ref{lemma:boundDxDzaff} em conjunto com  as Equações \eqref{eq:next-al-ineq}, \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} derivam 
+Dos Lemas~\ref{lemma:boundDxDzaff-c} e  \ref{lemma:boundDxDzaff} em conjunto com  as Inequações \eqref{eq:next-al-ineq}, \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} derivamos
 \[
 \begin{aligned}
 \nextal_L  & \geq \frac{\eta\rhoCkb  } {\dfrac{1}{n} \left(\norm{ \dekx  \dekz }_1 +  \norm{ \dekx \Decoz  \Decox \dekz }_1 \right) } \\
@@ -879,7 +836,7 @@ Os Lema~\ref{lemma:boundDxDzaff-c} e  \ref{lemma:boundDxDzaff} em conjunto com  
 em que $\de_{2}$ é exatamente o dado na Equação \eqref{eq:delta2}
 \end{proof}
  
-Agora podemos enunciar e demonstrar  Teorema que mostra que a sequência $\left\{ \varphi_{k}\right\}$ gerada pelo nosso Algoritmo é convergente. 
+Agora podemos enunciar e demonstrar o Teorema que mostra que a sequência $\left\{ \varphi_{k}\right\}$ gerada pelo nosso Algoritmo é convergente. 
 
 \begin{teo}[Taxa de Convergência do Algoritmo  \ref{alg:optimized-choice-of-parameters}]\label{teo:next-phi-delta-n4}
 A sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-of-parameters} é tal que
@@ -887,7 +844,7 @@ A sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-o
 		\label{eq:varphi-delta-n4}
 				\varphi_{k+1}\leq \left(1 - \frac{\hat{\delta}}{n^{4}}\right)\varphi_{k},
 	\end{equation}
-	para todo $k$, em que $0<\nextdel<1$ e $\nextdel$ independente de $n$.
+	para todo $k$, em que $0<\nextdel<1$ e $\nextdel$ é independente de $n$.
 \end{teo}
 
 
@@ -943,13 +900,13 @@ Com efeito, utilizando a definição de $\de_1$ dada em \eqref{eq:delta1} e de $
 		p(\eta,\ga) =  4 t^2 + ( 8t - 6t^2 + 2t^2\ga) \eta + (1 - 4t - 4t   \ga) ) \eta^2 - \eta^3. 
 	\]
 
-	Considerando que $t\geq3$, pois $\bdxzstar\geq1$ e $\sqrt{\ga}<\eta<1$, para $0 < \ga \leq 1/10$, segue que
+	Considerando que $t\geq3$, pois $\bdxzstar\geq1$, e que $\sqrt{\ga}<\eta<1$, para $0 < \ga \leq 1/10$, segue que
 	\[p(\sqrt{1/10},\ga) >0 \text{ e  } p(1,\ga) <0.\]
 	Sob essas condições, escolhido $\ga$,  $p$ um é polinômio de grau 3 em $\eta$. Pelo Teorema do Valor Intermediário de Bolzano~\cite[Teorema 5.3.7]{Bartle:2011tr},  existe pelo menos uma  raiz  de $p$ no intervalo $(\sqrt{1/10},1)$. 
 
 	Seja $\eta_{1}$ a menor dessas raízes. Nesse caso, por continuidade de $p$, para qualquer $\eta  < \eta_{1}$ e $\ga$ escolhido como acima, temos que  $p(\eta,\ga) >0$. 
 
-	Com isso, concluímos que,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<1$, vale  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$.
+	Com isso, concluímos que,  para $0 < \ga \leq 1/10$ e  $\sqrt{\ga}<\eta<\eta_{1}$, vale  $0<\nextdel<1$  sempre que $\eta < \eta_{1} < 1$.
 
 	Para finalizar, usando \eqref{eq:theta-nextalpha} e por conta da relação existente entre $\varphi_{k+1}$ e $\varphi_{k}$ dada em   \eqref{eq:relation-phi-next-phi} obtemos, para esse $\nextal$
 	\[
@@ -962,7 +919,7 @@ como queríamos demonstrar.
 
 
 O Teorema \ref{teo:next-phi-delta-n4} significa que a relação \eqref{eq:nextphi-philessthan1}
-é válida, portanto, a taxa de convergência da sequência $\{\varphi_{k}\}$ é  Q-linear. Usando esse fato, podemos agora enunciar e provar o Teorema de complexidade do número de iterações. 
+é válida. Portanto, a taxa de convergência da sequência $\{\varphi_{k}\}$ é  Q-linear. Usando esse fato, podemos agora enunciar e provar o Teorema de complexidade do número de iterações. 
 
 
 \begin{teo}[Complexidade do Algoritmo \ref{alg:optimized-choice-of-parameters}]
@@ -1010,7 +967,7 @@ o que termina a demonstração.
 
 
 
-O Teorema \ref{teo:alg-convergence-varphi} implica que para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado na Equação~\eqref{eq:termination-criteria-pcx}, seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}, já que tal sequência estará limitada superiormente pela sequência $\{\varphi_{k}\}$, que é Q-linear, como vimos no Teorema~\ref{teo:next-phi-delta-n4}.
+O Teorema \ref{teo:alg-convergence-varphi} implica que, para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado em~\eqref{eq:termination-criteria-pcx} seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}, já que tal sequência estará limitada superiormente pela sequência $\{\varphi_{k}\}$, que é Q-linear, como vimos no Teorema~\ref{teo:next-phi-delta-n4}.
 
 \begin{corol}
 Suponha que escolhamos  $\tol = \num{e-8}$  e $\varepsilon$   tal que 
@@ -1037,11 +994,11 @@ Ademais, se  o Algoritmo \ref{alg:optimized-choice-of-parameters} converge, exis
 
 Daí, pela Equação \eqref{eq:choosing-eps}, segue que 
 \[
-\dfrac{\norm{Ax^{k} - b}}{1 + \norm{b}} \leq  \frac{\norm{H_{P}(Ax^{k} - b)}_1  }{1 + \norm{b}} < \frac{\eps (m+n)}{1 + \norm{b}} <\frac{\tol(1+\norm{b})}{m+n} \frac{m+n}{1 + \norm{b}} = \tol,
+\dfrac{\norm{Ax^{k} - b}}{1 + \norm{b}} \leq  \frac{\norm{H_{P}(Ax^{k} - b)}_1  }{1 + \norm{b}} < \frac{\eps (m+n)}{1 + \norm{b}} <\frac{\tol(1+\norm{b})}{(m+n)} \frac{(m+n)}{(1 + \norm{b})} = \tol,
 \]
 e
 \[
-\dfrac{\norm{A^{T}y^{k} + z^{k}- c}}{1 + \norm{c}} \leq  \frac{\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_{1}  }{1 + \norm{c}} < \frac{\eps (m+n)}{1 + \norm{c}} <\frac{\tol(1+\norm{c})}{m+n} \frac{m+n}{1 + \norm{c}} = \tol.
+\dfrac{\norm{A^{T}y^{k} + z^{k}- c}}{1 + \norm{c}} \leq  \frac{\norm{H_{D}(A^{T}y^{k} + z^{k}- c)}_{1}  }{1 + \norm{c}} < \frac{\eps (m+n)}{1 + \norm{c}} <\frac{\tol(1+\norm{c})}{(m+n)} \frac{(m+n)}{(1 + \norm{c})} = \tol.
 \]
 Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que 
 \[
@@ -1049,6 +1006,6 @@ Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que
 \]
  \end{proof}
 
-No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o \ac{MPI} de Escolha Otimizada de Parâmetros (EOP) converge assintoticamente para pontos com factibilidade e otimalidade. Nos capítulos que seguem, mostramos alguns detalhes da implementação de nosso método bem como seus resultados numéricos.
+No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que, se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o Método de Escolha Otimizada de Parâmetros (MEOP) converge assintoticamente para pontos com factibilidade e otimalidade. Nos capítulos que seguem, mostramos alguns detalhes da implementação de nosso método bem como seus resultados numéricos.
 
 

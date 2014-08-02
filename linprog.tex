@@ -38,7 +38,7 @@ minimiza ou maximiza --  a função objetivo.
  
 Um problema de \emph{\acl{PL}}  é um problema de otimização no qual as
 restrições e a função objetivo são lineares. A \ac{PL}\footnote{Usaremos
-problema de PL e PL como sinônimos.} surge diretamente em várias aplicações
+os termos ``problema de PL'' e ``PL'' como sinônimos.} surge diretamente em várias aplicações
 reais, por exemplo, em problemas de economia, logística, planejamento e controle
 da produção, entre outros. Ela aparece ainda em aproximações de problemas mais
 complexos ou na solução relaxada de problemas de programação inteira ou mista.
@@ -53,14 +53,14 @@ padrão}:
 \text{sujeito a} &\begin{cases} Ax = b \\
 				 x \geq 0	
 				 \end{cases}
-\end{array}.
+\end{array},
 \end{equation}
 em que $A\in \Real^{m\times n}$ e $c$, $x$ e $b$ têm dimensões compatíveis. A
 região $\Pset = \{x\in\Real^n | Ax=b \text{ e } x\geq 0\}$ é conhecida como
 região factível do problema e é um poliedro com pelo menos um vértice ou
 ponto extremo.
 
-Como uma função linear é convexa, problemas de \ac{PL} tem a particularidade
+Como uma função linear é convexa, problemas de \ac{PL} têm a particularidade
 dada pelo seguinte
 teorema~\cite[cap.~3]{Bazaraa:2009uu}:
 
@@ -89,7 +89,7 @@ ser limitado garante terminação finita para qualquer método que funcione dest
 forma. Entretanto, esse número é exponencial,
 já que 
 \[
-\left(\dfrac{n}{m}\right)^m \geq 2^m  \text{ para }   n\geq 2m.
+\left(\dfrac{n}{m}\right)^m \geq 2^m  \text{ para }   n\geq m.
 \]
 Encontrar um \emph{vértice ótimo} de maneira  eficiente é o
 segredo dos bons métodos para resolver problemas de \ac{PL}.
@@ -103,7 +103,7 @@ Associado a todo problema \ac{PL}, escrito na forma padrão, existe um outro \ac
 				 \end{cases}\
 \end{array}
 \end{equation*}
-em que $A$, $b$ e $c$ são os mesmos do problema original, que neste caso, é chamado \emph{problema primal}.
+em que $A$, $b$ e $c$ são os mesmos do problema original, que, neste caso, é chamado \emph{problema primal}.
 A variável $y\in\Real^{m}$ é chamada variável dual. A fim de que tenhamos restrições de igualdade na definição do problema dual, introduzimos  variáveis de folga duais representadas por $z\in\Real^{n}$, tais que $z\geq 0$, obtendo 
 \begin{equation}
 \begin{array}{lc}
@@ -116,7 +116,7 @@ A variável $y\in\Real^{m}$ é chamada variável dual. A fim de que tenhamos res
 \end{equation}
 
 
-Os problemas primal e dual são comumente chamados par primal-dual e as relações existentes entre estes permitiram a criação ou refinamento de diversos métodos para a solução de \ac{PL}~\cite{Bazaraa:2009uu}. No Capítulo~\ref{chap:mpis} faremos uma explanação mais detalhada sobre esses dois problemas, já estudaremos métodos primais-duais.
+Os problemas primal e dual são comumente chamados par primal-dual e as relações existentes entre estes permitiram a criação ou refinamento de diversos métodos para a solução de \ac{PL}~\cite{Bazaraa:2009uu}. No Capítulo~\ref{chap:mpis} faremos uma explanação mais detalhada sobre esses dois problemas, já que estudaremos métodos primais-duais.
 
 \section{Método simplex}
 
@@ -131,7 +131,7 @@ visitado, fazendo assim uma aplicação do Teorema~\ref{teo:fundamental-pl}.
 Mais que isso, dado um método de escolha do próximo vértice, o conjunto de
 vértices possíveis decresce em cada iteração,  ainda no caso não degenerado.
 Degenerescência (primal) ocorre quando um vértice em $\Real^n$ é definido por
-$p>n$ restrições, e um passo de tamanho zero pode ser produzido pelo método. Desta
+$p>n$ restrições, quando temos restrições na forma $Ax\leq b$, e um passo de tamanho zero pode ser produzido pelo método. Desta
 maneira, o método simplex não sairia do lugar, logo nenhuma melhora na função
 objetivo seria alcançada. 
 
@@ -152,13 +152,13 @@ encontrar a solução ótima.
 Apesar disso, nenhum caso com número exponencial de iterações foi encontrado na
 vida real, e geralmente apenas uma pequena porcentagem de vértices é
 consultada até que se chegue a uma solução ótima. Mais que isso, em geral, o método
-simplex mostra comportamento polinomial, sendo linear em relação à $m$ e
-sublinear em relação à $n$~\cite[pg.~94]{Fang:1993wu}. Um resumo sobre a
-eficiência do método simplex pode ser encontrada no artigo
+simplex mostra comportamento polinomial, sendo linear em relação a $m$ e
+sublinear em relação a $n$~\cite[pg.~94]{Fang:1993wu}. Um resumo sobre a
+eficiência do método simplex na prática pode ser encontrada no artigo
 de~\textcite{Shamir:1987th}.
  
 
-\section{Método elipsoide}
+\section{Método de elipsoide}
 
 Enquanto na prática o método Simplex continuava como o método mais robusto e
 eficiente, a busca por um método que tivesse \emph{complexidade polinomial} no pior
@@ -167,16 +167,17 @@ de seu  \emph{Método Elipsoide}. Antes de continuarmos, vale a penas fazermos u
 
 \begin{obs}
 Neste trabalho, quando mencionarmos \emph{complexidade}, o faremos no sentido de um limitante para o número de iterações apenas, descartando aqui o esforço gasto para calcular cada iteração.
+Para isso, utilizaremos a seguinte notação: se $\al$ tem ordem de complexidade $n$, indicaremos $\al = \Oset(n)$ significando que  existe constante $\be$ tal que $\al \leq \be n$.
 \end{obs}
 
 O  método elipsoide, ao contrário do método simplex,  não se baseia em caminhar pelos
-vértices da região factível mas em diminuir o volume de um elipsoide que
+vértices da região factível, mas em diminuir o volume de um elipsoide que
 contenha um potencial ponto de solução através de um conjunto de desigualdades
 lineares estritas.
 
 Inquestionavelmente, o método elipsoide representou um grande avanço teórico,
 significando que a \acl{PL} faz parte dos problemas polinomiais, isto é, que
-pode ser resolvido por um algoritmo de complexidade polinomial já que provou-se
+pode ser resolvido por um algoritmo de complexidade polinomial, já que se provou
 que este método tem $\mathcal{O}(n^2(1/\eps))$ iterações, em
 que $\eps$ é a precisão desejada para o algoritmo.
 
@@ -198,7 +199,7 @@ de \ac{PL} até meados da década de 1980 como único método viável para resol
 tal classe de problemas. Em 1984, \textcite{Karmarkar:1984cp} inicia uma nova
 abordagem que ficou conhecida como
 \acf{MPI} . Por outro lado,  em 1967,
-\textcite{DIKIN:InterativeSol1967} já havia publicado um trabalho, no qual um 
+\textcite{DIKIN:InterativeSol1967} já havia publicado um trabalho, no qual  
  um método de pontos interiores é apresentado. O método de Dikin ficou
 conhecido como método afim-escala.
       
@@ -220,15 +221,15 @@ iteração estão no interior de uma região.
 
 Isto é feito criando-se uma família
 parametrizada de soluções que convergem assintoticamente para uma solução exata,
-isto é, temos de um método homotópico. Com efeito, um \ac{MPI} basicamente utiliza um método do tipo Newton nas condições de otimimalidade de Primeira Ordem, ou Condições KKT, do Problema de Programação Linear. Há, nos diferentes métodos, variação  do lado direito que se usa na solução da linearização das condições KKT que o Método de Newton utiliza, podendo gerar, nesse caso,  direções de Newton diferentes. Daí o nome \emph{Métodos} de Pontos Interiores. 
+isto é, temos  um método homotópico. Com efeito, um \ac{MPI} basicamente utiliza um método do tipo Newton nas condições de otimimalidade de Primeira Ordem, ou Condições KKT, do Problema de Programação Linear. Há, nos diferentes métodos, variação  do lado direito que se usa na solução da linearização das condições KKT que o Método de Newton utiliza, podendo gerar, nesse caso,  direções de Newton diferentes. Daí o nome \emph{Métodos} de Pontos Interiores. 
 
 Em resumo,  uma abordagem não-linear é utilizada para resolver um problema
 linear, escapando então da  dificuldade que a dimensão do problema apresenta ao
-se lidar com as características combinatoriais  do \ac{PL}.
+ lidar com as características combinatoriais  do \ac{PL}.
 
 
 Além disso,  como exposto acima,  no método simplex a quantidade de
-iterações cresce de acordo com o tamanho do problema,  o que não se repete
+iterações pode crescer exponencialmente, de acordo com o tamanho do problema,  o que não se repete
 nos \ac{MPI}. Do ponto de vista
 da complexidade computacional, esse método também é polinomial,  com
 $\mathcal{O}(n(1/\eps))$ iterações~\cite{Karmarkar:1984cp}.
@@ -237,7 +238,7 @@ $\mathcal{O}(n(1/\eps))$ iterações~\cite{Karmarkar:1984cp}.
 Ao contrário do método elipsoide, o método de \citeauthor{Karmarkar:1984cp} tem um desempenho muito
 melhor e compete com o simplex, sendo consideravelmente melhor  que este em
 problemas de grande porte. Uma variante do método de \citeauthor{Karmarkar:1984cp} foi implementada
-por~\textcite{Adler:1989fw}, e desde então a compreensão do funcionamento desses
+por~\textcite{Adler:1989fw} e, desde então, a compreensão do funcionamento desses
 métodos aumentou consideravelmente, ao mesmo tempo em que variantes têm
 sido propostas, muitas delas se apresentando como alternativas computacionais
 viáveis ao método simplex.
@@ -247,20 +248,20 @@ encontra uma solução com $\eps$-precisão em $\Oset(\sqrt{n}\ln(1/\eps))$
 iterações~\cite{Renegar:1988cr}.
 De acordo com a teoria geral~\cite[Capítulo 4]{Nesterov:2003wi}, o termo
 $\sqrt{n}$  é o melhor que se pode esperar para um \ac{MPI} usando uma função barreira como a
-logarítmica. Na prática, no entanto, as implementações de \ac{MPI}  tem desempenho muito melhor que
-isso, e em algumas dessas, o número de iterações é quase constante, independente da dimensão do
+logarítmica. Na prática, no entanto, as implementações de \ac{MPI}  têm desempenho muito melhor que
+isso, e, em algumas dessas, o número de iterações é quase constante, independente da dimensão do
 problema~\cite{Colombo:2008ia}.
 
-Em linhas gerais, há classes de problemas que são melhores resolvidos
+Em linhas gerais, há classes de problemas que são melhor resolvidos
 pelo método simplex e outras para os quais os métodos de pontos interiores são mais
 adequados. Tamanho e estrutura de esparsidade, entre outros, são fatores
 preponderantes para a escolha do  método apropriado. Entretanto, pode-se dizer
 que com o aumento da dimensão do problema, os \ac{MPI} ficam mais atraentes e
-efetivos. Em alguns problemas altamente esparsos e com  estrutura particular é possível uma revisão
+efetivos. Em alguns problemas altamente esparsos e com  estrutura particular, é possível uma revisão
 do método simplex que o torna muito eficaz~\cite{Hall:2005vw}. Para problemas
 de fluxo em rede, nos quais uma especialização do método simplex permite
 explorar a estrutura do problema de maneira muito
-eficiente~\cite{Nemhauser:Integer-and-combinatorial:1988s}, também é comprovada a eficácia do simplex. Vale a pena notar no entanto que, para um problema de fluxo de rede com de milhões de variáveis, 
+eficiente~\cite{Nemhauser:Integer-and-combinatorial:1988s}, também é comprovada a eficácia do simplex. Vale a pena notar no entanto que, para um problema de fluxo de rede com  cerca de milhões de variáveis, 
 \textcite{Resende:1993hh} mostraram que um \ac{MPI} foi mais eficiente.
 
 
@@ -272,11 +273,11 @@ eficiente~\cite{Nemhauser:Integer-and-combinatorial:1988s}, também é comprovad
 
 \section{Formulação com variáveis canalizadas e extensões}
 
-Embora a formulação padrão do problema primal de \ac{PL} dada em \eqref{eq:introPL-primal} considera apenas que devamos ter $x$ não-negativo, em problemas práticos, nem sempre isso acontece. 
+Embora a formulação padrão do problema primal de \ac{PL} dada em \eqref{eq:introPL-primal} considere apenas que devamos ter $x$ não-negativo, em problemas práticos, nem sempre isso acontece. 
 
-Podemos ter, por exemplo, alguma componente de $x$ -- ou todo o vetor -- irrestrita ou livre. Para resolver esse problema, considere que $x_{i}$ seja livre, para algum $i$. As variáveis $x_{i}^{+},x_{i}^{-}\geq 0$ são criadas, tais que $x_{i} = x_{i}^{+} -  x_{i}^{-}$. Nesse caso, sessa variáveis substituídas são as restrições do problema e  uma variável livre é trocada por duas variáveis não-negativas. 
+Podemos ter, por exemplo, alguma componente de $x$ -- ou todo o vetor -- irrestrita ou livre. Para resolver esse problema, considere que $x_{i}$ seja livre, para algum $i$. As variáveis $x_{i}^{+},x_{i}^{-}\geq 0$ são criadas, tais que $x_{i} = x_{i}^{+} -  x_{i}^{-}$. Nesse caso,  uma variável livre é trocada por duas variáveis não-negativas nas restrições do problema.
 
-Pode haver também algum $x_{i}$ com limitante inferior não nulo, digamos, $\ell\in\Real$. Isto significa que se está exigindo agora $ x_{i}\geq \ell$. Uma forma de  contornar esse problema é  criar a variável $\xtil_{i} = x_{i} - \ell$ e substituir $x_{i}$ por $\xtil +\ell $ nas restrições do problema. Temos, nesse caso, que $\xtil_{i} \geq 0$.
+Pode haver também algum $x_{i}$ com limitante inferior não nulo, digamos, $\ell\in\Real$. Isto significa que se está exigindo agora que $ x_{i}\geq \ell$. Uma forma de  contornar esse problema é  criar a variável $\xtil_{i} = x_{i} - \ell$ e substituir $x_{i}$ por $\xtil +\ell $ nas restrições do problema. Temos, nesse caso,  $\xtil_{i} \geq 0$.
 
 
 Um caso não menos comum e bastante importante é o da variável $x$ ser canalizada, isto é, possuir algum limitante superior. Queremos dizer com isso que para algum $i$, existe  $u_i>0$ tal que $0\leq x_{i} \leq u_{i}$. Para esse caso, uma saída possível é a seguinte. 
@@ -294,7 +295,7 @@ Com isso, o \ac{PL} é escrito como
 				 \end{cases}
 \end{array}.
 \end{equation*}
-Vamos fazer com a desigualdade desapareça das restrições do problema acima, definindo variáveis de folga primais, dadas pelo vetor $s\in\Real^{p}$, tais que $s\geq 0$ e $Ex +s =  u$. Assim, obtemos o \emph{problema primal canalizado}
+Vamos fazer com que a desigualdade desapareça das restrições do problema acima, definindo variáveis de folga primais, dadas pelo vetor $s\in\Real^{p}$, tais que $s\geq 0$ e $Ex +s =  u$. Assim, obtemos o \emph{problema primal canalizado}
 \begin{equation}
 \label{eq:introPL-primal-bounded}
 	\begin{array}{lc}
@@ -351,12 +352,12 @@ Sejam $\Atil = \bbm A & 0 \\ E & I_{p}\ebm$,  $\btil = \bbm b\\ u\ebm$, $\ctil =
 \end{array}.
 \end{equation}
 
-Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso é feito porque, agora é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. 
+Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso é feito porque, agora é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. Do ponto de vista da implementação, essa abordagem também não causará problemas, já que em nossa implementação, a estrutura de dados é  construída pra lidar com as canalizações sem que a ordem de operações em álgebra linear seja afetada.
 
-Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal} e \eqref{eq:introPL-dual} e faremos comentários relativos a canalizações, quando oportunos, em particular quando tratarmos da implementação.
+Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal} e \eqref{eq:introPL-dual} e faremos comentários relativos a canalizações quando oportunos, em particular quando tratarmos da implementação.
 
 
-Conforme dissemos, a presente tese trata de \ac{MPI} para problemas de \ac{PL}, no entretanto tais
+Conforme dissemos, a presente tese trata de \ac{MPI} para problemas de \ac{PL}. No entretanto, tais
 métodos também podem ser estendidos com o objetivo de resolver problemas não-lineares
 de certos tipos, em geral quando a função objetivo é não linear, porém convexa, mas as restrições são lineares e há a exigência da não negatividade das variáveis. 
 
@@ -377,4 +378,4 @@ n}$ e $c$, $x$ e $b$ têm dimensão compatível. Com exceção da matriz $Q$, te
 mesma estrutura de um \ac{PL}.
 
 
-Neste capítulo fizemos uma breve introdução à \acf{PL}. No próximo capítulo mencionaremos restultados importantes de PL bem como faremos uma revisão dos Métodos de Pontos Interiores  para \ac{PL}.
+Neste capítulo, fizemos uma breve introdução à \acf{PL}. No próximo capítulo mencionaremos resultados importantes de PL bem como faremos uma revisão dos Métodos de Pontos Interiores  para \ac{PL}.

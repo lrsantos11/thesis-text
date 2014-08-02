@@ -9,11 +9,14 @@
 Neste capítulo, fazemos alguns comentários sobre a implementação do Método de Escolha Otimizada de Parâmetros. 
 
 
-O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++}, utilizando como base a implementação PCx~\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \textcite{Mehrotra:1992wr}. O PCx pode ser configurado para executar correções de ordem superior de \textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além de  refinamento da solução por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência como PCx-r.
+O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++}, utilizando como base a implementação PCx~\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \textcite{Mehrotra:1992wr}. O PCx pode ser configurado para executar correções de ordem superior de \textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além do  refinamento da solução por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência como PCx-r.
 
-  Chamaremos nossa implementação de PCx-EOP. Com efeito, a chamada de PCx-EOP coincide com a da implementação de referência e há a introdução do código de nosso algoritmo dentro do \emph{loop} principal de PCx-r,  retornando em seguida para a rotina principal e dando prosseguimento a sua execução usual. Isso foi feito, para fazermos uma comparação justa entre nossos resultados e os que o PCx-r produz. 
+  Chamaremos nossa implementação de PCx-EOP. Com efeito, a chamada de PCx-EOP coincide com a da implementação de referência e há a introdução do código de nosso algoritmo dentro do \emph{loop} principal de PCx-r,  retornando em seguida para a rotina principal e dando prosseguimento à sua execução usual. Isso foi feito para fazermos uma comparação justa entre nossos resultados e os que o PCx-r produz. 
 
-  Assim, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalonamento, incluindo escalonamento de~\textcite{Curtis:1972cp}, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de ponto inicial, de critério de parada e saída de dados,   bem como todas as rotinas de álgebra linear -- incluindo a estratégia  de \textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky  e refinamento por gradientes conjugados. Além disso, para problemas canalizados, a estrutura de dados do PCx é feita de forma a fazer o papel da matriz $E$ e das transformações usadas em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded}, tal que os problemas canalizados tenham sua resolução executada com  as mesmas funcionalidades dos problemas não canalizados. 
+  Assim, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalonamento, incluindo escalonamento de~\textcite{Curtis:1972cp}, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de ponto inicial, de critério de parada e saída de dados,   bem como todas as rotinas de álgebra linear -- incluindo a estratégia  de \textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky  e refinamento por gradientes conjugados. 
+
+
+  Além disso, para problemas canalizados, a estrutura de dados do PCx é construída de forma a fazer o papel da matriz $E$ e das transformações usadas em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded}, tal que os problemas canalizados tenham sua resolução executada com  as mesmas funcionalidades dos problemas não canalizados. Isso significa que todos os passos de  PCx-r e PCx-MEOP são executados de modo sem prejuízo por conta das canalizações.
 
 
 
@@ -25,8 +28,8 @@ O código utilizado foi o de \textcite{VillasBoas:2012ur,VillasBoas2013:wn} adap
 
 
 \section{Ponto Inicial}
-
-O ponto inicial dado por \textcite{Mehrotra:1992wr}, foi genericamente descrito na seção \ref{subsec:initial-point}. Ali, mostramos que tal estratégia encontra o ponto $(\xtil,\ytil,\ztil)$, que é solução de norma mínima que satisfaz as restrições primais e
+\label{sec:initial:point}
+O ponto inicial dado por \textcite{Mehrotra:1992wr} foi genericamente descrito na seção \ref{subsec:initial-point}. Ali, mostramos que tal estratégia encontra o ponto $(\xtil,\ytil,\ztil)$, que é solução de norma mínima que satisfaz as restrições primais e
 duais. Tal terna de pontos é encontrada através de
 \begin{equation}
 	\label{eq:intial-point-LSquare}
@@ -38,7 +41,7 @@ Além disso, o ponto é transladado para o ortante positivo
 através do uso de constantes  $\vartheta_x>0$ e $\vartheta_ z>0$ tais que  
 \begin{equation}
 	\label{eq:intial-point-generated}
-(x^0,y^0,z^0) = (\xtil+ \vartheta_x e,\ytil,\ztil+\vartheta_z e)
+(x^0,y^0,z^0) = (\xtil+ \vartheta_x e,\ytil,\ztil+\vartheta_z e),
 \end{equation}
 garantindo que $(x^0,z^0)>0$.
 
@@ -47,13 +50,13 @@ garantindo que $(x^0,z^0)>0$.
 
   Além disso, tal ponto inicial é utilizado em ambos PCx-r e PCx-EOP e a análise de convergência e complexidade relatada no Capítulo~\ref{chap:convergence}, em particular a Condição~\ref{cond:xzzero-xzstar}, continuam válidas ao utilizá-lo para iniciar nosso algoritmo.
 
-O que a rotina  \verb|InitialPoint| faz é primeiramente encontrar  $(\xtil,\ytil,\ztil)$ conforme a Equação~\eqref{eq:intial-point-LSquare}. As constantes são calculadas
+O que a rotina  \verb|InitialPoint| faz é primeiramente encontrar  $(\xtil,\ytil,\ztil)$ conforme a Equação~\eqref{eq:intial-point-LSquare}. Em seguida,  são calculadas
 \begin{equation}
 	\label{eq:initial-point-tilde-var}
 \tilde{\vartheta_x} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\xtil_{i}\},\num{e-2}\} \quad \text{ e }\quad  \tilde{\vartheta_z} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\ztil_{i}\},\num{e-2}\}.
 \end{equation}
-Só então é que se obtém as translações dadas por 
 
+Só então é que se obtém as translações dadas por 
 \begin{equation}
 	\label{eq:initial-point-var-x}
 \vartheta_{x} = \tilde{\vartheta_x} + \num{0.5}\cdot\dfrac{(\xtil+\tilde{\vartheta_x} e)^{T}(\ztil+\tilde{\vartheta_z} e)}{\norm{\ztil+\tilde{\vartheta_z} e}_{1}} 
@@ -71,21 +74,23 @@ No trabalho original de \textcite{Mehrotra:1992wr}, o menor valor possível para
 \section{Critério de Parada}
 
 
-O PCx tem implementado dois critérios de parada que podem ser escolhidos pelo usuário. Sua   documentação~\cite{Czyzyk:1998vw} declara que é utilizado o critério dado em \eqref{eq:termination-criteria}.   Além disso, é possível trocar o critério de parada relacionado à complementaridade, dentro do código. Conforme explanamos na Seção~\ref{subsection:termination-criteria}, uma escolha possível seria a dada na equação \eqref{eq:termination-criteria-pcx}. Porém ao invés do teste dado pela Equação~\eqref{eq:termination-criteria-pcx-gap} -- ou por \eqref{eq:termination-criteria-gap} o que seria razoável --, a implementação do PCx usa
+O PCx tem  dois critérios de parada que podem ser escolhidos pelo usuário. Sua   documentação~\cite{Czyzyk:1998vw} declara que é utilizado o critério dado em \eqref{eq:termination-criteria}.   Além disso, é possível trocar o critério de parada relacionado à complementaridade, dentro do código. Conforme explanamos na Seção~\ref{subsection:termination-criteria}, uma escolha possível seria a dada na equação \eqref{eq:termination-criteria-pcx}. Porém ao invés do teste dado pela Equação~\eqref{eq:termination-criteria-pcx-gap} -- ou por \eqref{eq:termination-criteria-gap} o que seria razoável --, a implementação do PCx usa
 
 \[
 \dfrac{x^{T}z/n}{1 + \abs{c^Tx}}\leq
 	\tol,
 \]
-em que $\tol$ é a tolerância aceita. Essa escolha tem um viés dimensional, já que divide por $n$ o \emph{gap} de complementaridade, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque usar esse teste equivale a utilizar  o critério dado em \eqref{eq:termination-criteria-pcx-gap} da seguinte forma $x^{T}z/(1 + \abs{c^Tx})\leq
+em que $\tol$ é a tolerância aceita. Essa escolha tem um viés dimensional, já que divide por $n$ o \emph{gap} de complementaridade, fazendo com que o programa acuse otimalidade  antes do que deveria. Isso porque usar esse teste equivale a utilizar  o critério dado em \eqref{eq:termination-criteria-pcx-gap} na forma $x^{T}z/(1 + \abs{c^Tx})\leq
 	n\cdot \tol$. 
 
 
-Fizemos duas  alterações no código, no momento em que testamos o critério de parada, que nos parece  contribuir para um melhor desempenho, pelo menos  no que diz respeito a verificação da otimalidade do ponto em questão. 
+Fizemos duas  alterações no código, no momento em que testamos o critério de parada, que nos parecem  contribuir para um melhor desempenho, pelo menos  no que diz respeito à verificação da otimalidade do ponto em questão. 
 
-Primeiramente,  reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já há a indicação de otimalidade e o programa saiu do \emph{loop} principal. Passamos a descrever  a rotina em questão. Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. 
+Primeiramente,  reutilizamos a rotina \verb|RecomputeDualVariables| do PCx. Tal rotina  é utilizada no PCx original somente quando já há a indicação de otimalidade e o programa saiu do \emph{loop} principal. Passamos a descrever  a rotina em questão. 
 
- O código então primeiro testa, para cada  $i = 1,\ldots,n$ se $t_{i}<0$.  Nos casos afirmativos, o programa assinala $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, tenha o valor calculado pela definição do problema dual, e não pelo algoritmo. O teste para verificar se $t_{i}$ é negativo serve para detectar possíveis valores inconvenientes, já que $\zstar\geq 0$.
+Seja $(\xtil,\ytil,\ztil)$ o ponto que o critério de parada do PCx indicou como sendo ótimo. O que a rotina faz é primeiro calcular o vetor  $t= c - A^T\ytil$. É evidente que, por conta do modo como funcionam os \ac{MPI}, deveríamos ter $t\geq0$ e, mais que isso, pela definição de problema dual, deveríamos ter $\ztil = t$. 
+
+ O código então primeiro testa, para cada  $i = 1,\ldots,n$, se $t_{i}<0$.  Nos casos afirmativos, o programa assinala $t_{i}\leftarrow 0$. Finalmente estabelece-se que  $\ztil \leftarrow t $, o que finaliza a rotina. Basicamente isso significa que, a rotina garante que a variável dual $\ztil$, tenha o valor calculado pela definição do problema dual, e não pelo algoritmo. O teste para verificar se $t_{i}$ é negativo serve para detectar possíveis valores inconvenientes, já que $\zstar\geq 0$.
 
  Pois bem, a alteração que fizemos utiliza os princípios da rotina   \verb|RecomputeDualVariables| \emph{em toda iteração} $k$. Neste caso, o que fazemos é encontrar $t= c - A^T\yk$. Testamos então se para algum  $i$ ocorre $t_{i}<0$ e em caso afirmativo assinalamos $t_{i}\leftarrow 0$. Com isso, consideramos a terna $(\xk,\yk,t)$ com a qual realizamos os testes de otimalidade dados por
  \eqref{eq:termination-criteria-pcx}, porém com as seguintes modificações: o critério \eqref{eq:termination-criteria-pcx-dual} é transformado em
@@ -95,11 +100,15 @@ e o critério  \eqref{eq:termination-criteria-pcx-gap} é transformado em
 	\dfrac{(\xk)^{T}t}{1 + \abs{c^Tt}}\leq\tol.
 \]
 Se esses testes são satisfeitos, então assinalamos otimalidade no algoritmo e saímos do \emph{loop} principal. 
-Isso é feito porque,  como $t$ não é mais interior, $(\xk)^{T}t$ tem possivelmente valor menor que $(\xk)^{T}\zk$. Essa estratégia diz que $(\xk,\yk,t)$ pode ser um ponto melhor que $(\xk,\yk,\zk)$.  Caso não seja satisfeito, continuamos a execução do programa com o ponto atual sendo $(\xk,\yk,\zk)$. Em ambos os casos $t$ é descartado e o ponto utilizado é sempre $(\xk,\yk,\zk)$. Considere que se tivermos otimalidade, \verb|RecomputeDualVariables| será chamada -- pois estamos fora do \emph{loop} e o programa assinala $(\xk,\yk,\zk)\leftarrow (\xk,\yk,t)$. 
+Isso é feito porque,  como $t$ não é mais interior, $(\xk)^{T}t$ tem possivelmente valor menor que $(\xk)^{T}\zk$. Essa estratégia diz que $(\xk,\yk,t)$ pode ser um ponto melhor que $(\xk,\yk,\zk)$.  
 
-Uma outra alteração  que fizemos no teste de parada tem relação com o escalonamento dos dados. No manual do PCx~\cite[p. 20]{Czyzyk:1998vw},  os problemas \texttt{brandy}, \texttt{ganges}, \texttt{grow15}, \texttt{grow22}, \texttt{perold}, \texttt{pilot.ja}, \texttt{pilot}, \texttt{pilot4}, \texttt{pilot87}, \texttt{pilotnov} e \texttt{scfxm1}, estão indicados como problemas para os quais houve convergência. No entanto, o resíduo relativo de infactibilidade primal-dual é maior que \num{e-8}. Isso significa que o PCx parou antes do que deveria. De fato, descobrimos que  o teste de parada, que é feito com os dados escalonados, era válido, porém, ao desescalonar, o critério já não era mais satisfeito. Além disso, obviamente o PCx faz o relatório de saída com os dados desescalonados. 
+Caso algum teste  não seja satisfeito, continuamos a execução do programa com o ponto atual sendo $(\xk,\yk,\zk)$. Em ambos os casos $t$ é descartado e o ponto utilizado é sempre $(\xk,\yk,\zk)$. Considere que se tivermos otimalidade, \verb|RecomputeDualVariables| será chamada -- pois estamos fora do \emph{loop} e o programa assinala $(\xk,\yk,\zk)\leftarrow (\xk,\yk,t)$. 
 
-A fim de evitar isso, usamos a rotina \verb|ComputeUnscaledInfeasibilities| que testa a infactibilidade relativa dos dados desescalonados. Essa rotina tem como entrada cópia dos ponteiros da solução atual do PCx e logo não estamos modificando tal solução. O teste de infactibilidade primal-dual é feito então com os dados desescalonados, através da mesma rotina do PCx que  faz o desescalonamento no final do algoritmo. Se para os dados desescalonados o critério for satisfeito, então indicamos otimalidade, caso contrário, continuamos a execução do algoritmo, com os dados escalonados. 
+Uma outra alteração  que fizemos no teste de parada tem relação com o escalonamento dos dados. No manual do PCx~\cite[p. 20]{Czyzyk:1998vw},  os problemas \texttt{brandy}, \texttt{ganges}, \texttt{grow15}, \texttt{grow22}, \texttt{perold}, \texttt{pilot.ja}, \texttt{pilot}, \texttt{pilot4}, \texttt{pilot87}, \texttt{pilotnov} e \texttt{scfxm1} estão indicados como problemas para os quais houve convergência. No entanto, o resíduo relativo de infactibilidade primal-dual é maior que \num{e-8}. Isso significa que o PCx parou antes do que deveria. De fato, descobrimos que  o teste de parada, que é feito com os dados escalonados, era válido, porém, ao desescalonar, o critério já não era mais satisfeito. Além disso, obviamente o PCx faz o relatório de saída com os dados desescalonados. 
+
+A fim de evitar isso, usamos a rotina \verb|ComputeUnscaledInfeasibilities| que testa a infactibilidade relativa dos dados desescalonados. Essa rotina tem como entrada cópia dos ponteiros da solução atual do PCx e logo não estamos modificando tal solução. 
+
+O teste de infactibilidade primal-dual é feito então com os dados desescalonados, através da mesma rotina do PCx que  faz o desescalonamento no final do algoritmo. Se para os dados desescalonados o critério for satisfeito, então indicamos otimalidade. Caso contrário, continuamos a execução do algoritmo, com os dados escalonados. 
 
 
 O critério de parada usado  na implementação em PCx-r e PCx-EOP é o dado na Equação~\eqref{eq:termination-criteria-pcx}, porém com  as alterações relatadas acima. Note que PCx não convergia para \texttt{greenbeb} e \texttt{wood1p}, porém, com essas alterações, PCx-r converge para ambos os problemas. 
@@ -137,12 +146,12 @@ Em cada iteração de nosso método, precisamos resolver o problema dado em \eqr
 				 \end{cases}.
 \end{array}
 \end{equation}
-em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau total 6 nas variáveis $(\al,\mu,\sig)$. Este é um chamado Problema de Otimização de Polinômios (POP) e é considerado um problema não linear  difícil de ser resolvido~\cite{Laurent:2010kp}.
+em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau total 6 nas variáveis $(\al,\mu,\sig)$. Este é um  Problema de Otimização de Polinômios (POP) e é considerado um problema não linear  difícil de ser resolvido~\cite{Laurent:2010kp}.
 
-Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SaparsePOP~\cite{Waki:2008ie}, os quais baseiam-se na transformação do POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas, em particular pela quantidade de restrições do problema, que é  $n+1$.  
+Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SaparsePOP~\cite{Waki:2008ie}, as quais se baseiam na transformação do POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas, em particular pela quantidade de restrições, que é  $n+1$.  
 
 
-O subproblema foi resolvido utilizando da implementação de \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, especialmente desenvolvida para resolver um problema com as mesmas características que o nosso.  Tal estratégia é brevemente resumida a seguir, adaptada à nossa notação.
+O subproblema foi resolvido utilizando a implementação de \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, especialmente desenvolvida para resolver um problema com as mesmas características que o nosso.  Tal estratégia é brevemente resumida a seguir, adaptada à nossa notação.
 
 Seja
 \[\Omega = \left\{(\al,\mu,\sig): g_C^i(\al,\mu,\sig) \geq0, \forall i = 1,\ldots,n,\: g_L(\al,\mu,\sig)   \geq 0,\:		 0\leq (\al,\mu,\sig) \leq u\right\}\]
@@ -170,9 +179,9 @@ Por outro lado
 \[
 \nextphi(\baral,\barmu,\barsig) = \min_{\al}\{ \min_{\sig}\Phi(\barmu,\barsig)\} \leq \Phi(\mu^{*},\sig^{*}) \leq \nextphi(\al^*,\mu^*,\sig^*).
 \]
-Assim, os dois problemas tem o mesmo mínimo. A segunda formulação, entretanto, permite encontrar aproximações numéricas do minimizador de $\nextphi$ de maneira mais fácil. 
+Assim, os dois problemas têm o mesmo mínimo. A segunda formulação, entretanto, permite encontrar aproximações numéricas do minimizador de $\nextphi$ de maneira mais fácil. 
 
-Para esse problema alternativo, um gráfico típico de $\Phi(\mu,\sig)$ é dado na Figura \ref{fig:bnl1-Phi}, tomada na iteração \num{4} do problema \texttt{bnl1}. O aspecto desse gráfico -- , com um \emph{zoom} conveniente perto do mínimo --  acaba se repetindo  em todos os problema da \Netlib-108 que estudamos, o que sugere que $\Phi$ tenha derivadas contínuas por partes próximo ao mínimo.
+Para esse problema alternativo, um gráfico típico de $\Phi(\mu,\sig)$ é dado na Figura \ref{fig:bnl1-Phi}, tomada na iteração \num{4} do problema \texttt{bnl1}. O aspecto desse gráfico --  com um \emph{zoom} conveniente perto do mínimo --  acaba se repetindo  em todos os problema da \Netlib-108 que estudamos, o que sugere que $\Phi$ tenha derivadas contínuas por partes próximo ao mínimo.
 
 \begin{figure}[htbp]
 \centering
@@ -180,15 +189,17 @@ Para esse problema alternativo, um gráfico típico de $\Phi(\mu,\sig)$ é dado 
   	\caption{\label{fig:bnl1-Phi} Gráfico de $\Phi(\mu,\sig)$ para $\al$ fixo de \texttt{bnl1}.}
   \end{figure}
 
- Uma característica interessante é desse problema alternativo é que em quase todos os problemas e iterações, a restrição de $\Omega$ que estava ativa ao final da resolução do subproblema é exatamente aquela relacionada ao índice de bloqueio indicado pelo teste da razão.
+ Uma característica interessante desse problema alternativo é que, em quase todos os problemas e iterações, a restrição de $\Omega$ que estava ativa ao final da resolução do subproblema é exatamente aquela relacionada ao índice de bloqueio indicado pelo teste da razão.
 
-Primeiramente considere  um malha construída para o intervalo $[0,u_{\mu}]$ no qual  $\mu$ está definido. Usando o fato de que o índice de bloqueio do teste da razão tem relação com a restrição ativa, uma partição $\mathcal{P} = 0<\sig_{1}<\sig_{2}<\cdots<u_{\sig}$ do intervalo $[0,u_{\sig}]$, para  a  qual $\sig$ está definido é construída, tal que se $\barsig\in I_{j} = [\sig_{j},\sig_{j+1}]$, então existe um índice $t$ tal para este $\barsig$, todo o teste da razão para as componentes não negativas das variáveis $(x,z)$ podem ser substituídas por um único teste da razão, usando o índice $t$. Dessa forma, para cada subintervalo $I_{j} = [\sig_{j},\sig_{j+1}]$ define-se o teste da razão principal. Esse teste da razão independente de $\sig$ é, segundo \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, a ferramenta principal para conseguir resolver o subproblema na medida em que define a partição $\mathcal{P}$.
+Primeiramente considere  um malha construída para o intervalo $[0,u_{\mu}]$ no qual  $\mu$ está definido. Usando o fato de que o índice de bloqueio do teste da razão tem relação com a restrição ativa, uma partição $\mathcal{P} = 0<\sig_{1}<\sig_{2}<\cdots<u_{\sig}$ do intervalo $[0,u_{\sig}]$, para  a  qual $\sig$ está definido, é construída tal que se $\barsig\in I_{j} = [\sig_{j},\sig_{j+1}]$, então existe um índice $t$ tal que para este $\barsig$,  os testes da razão para as componentes não negativas das variáveis $(x,z)$ podem ser substituídos por um único teste da razão, usando o índice $t$. 
 
-Esse índice $t$ permite que escolhamos a restrição $g_{C}^{t}(\al,\sig)\geq0$, a qual é mais restritiva que o teste da razão,   sendo  então declaradas como \emph{restrição principal}  de $I_{j}$. De fato, a partição $\mathcal{P}$ agora é reconstruída tal que cada ponto na fronteira do subintervalo está associado com a interseção de restrições principais, gerando então uma região de relevância.
+Dessa forma, para cada subintervalo $I_{j} = [\sig_{j},\sig_{j+1}]$ define-se o teste da razão principal. Esse teste da razão independente de $\sig$ é, segundo \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, a ferramenta principal para conseguir resolver o subproblema na medida em que define a partição $\mathcal{P}$.
 
-Essa estratégia leva a descartar restrições que são irrelevantes, reduzindo o número das que precisam ser utilizadas de fato, na solução do subproblema.  Para cada intervalo $I_{j}$, determina-se um tamanho de passo máximo $\al^{\max}_{j}$ e o mínimo de $\nextphi$ em cada intervalo. Isso pode ser feito de maneira analítica usando condições de primeira ordem, mas na implementação atual tal solução é encontrada usando \emph{splines} cúbicos. Finalmente, o menor dos $\nextphi$ encontrados para cada intervalo é declarado como ótimo.
+Esse índice $t$ permite que escolhamos a restrição $g_{C}^{t}(\al,\sig)\geq0$, para algum índice $t$ que é mais restritiva que o teste da razão,   sendo  então declarada como \emph{restrição principal}  de $I_{j}$. De fato, a partição $\mathcal{P}$ agora é reconstruída tal que cada ponto na fronteira do subintervalo está associado com a interseção de restrições principais, gerando então uma região de relevância.
 
-Na prática, esse método funciona porque o tamanho da partição é muito menor ao tamanho dos problemas -- para todo \Netlib-108 para todas as iterações a partição tem em média tamanho \num{3.7} com desvio padrão \num{2.9} e máximo \num{39}. De fato, o tempo  de CPU gasto na solução do subproblema  para toda \Netlib-108 foi \num{1,37}\% do tempo total. Um detalhe é que em grande parte dos casos, o melhor resultado de $\nextphi$ foi encontrado com $\mu=0$.
+Essa estratégia leva a descartar restrições que são irrelevantes, reduzindo o número das que precisam ser utilizadas  na solução do subproblema.  Para cada intervalo $I_{j}$, determina-se um tamanho de passo máximo $\al^{\max}_{j}$ e o mínimo de $\nextphi$ em cada intervalo. Isso pode ser feito de maneira analítica usando condições de primeira ordem, mas na implementação atual tal solução é encontrada usando \emph{splines} cúbicos. Finalmente, o menor dos $\nextphi$ encontrados para cada intervalo é declarado como ótimo.
+
+Na prática, esse método funciona porque o tamanho da partição é muito menor que o tamanho dos problemas -- para todas as iterações do conjunto \Netlib-108, a partição tem em média tamanho \num{3.7} com desvio padrão \num{2.9} e máximo \num{39}. De fato, o tempo  de CPU gasto na solução do subproblema  para toda \Netlib-108 foi \num{1,37}\% do tempo total. Um detalhe é que, em grande parte dos casos, o melhor resultado de $\nextphi$ foi encontrado com $\mu=0$.
 
 
 

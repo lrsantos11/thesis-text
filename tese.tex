@@ -8,6 +8,7 @@
 % 				bibliography=totoc,
 %                 chapterprefix, 
 %                 appendixprefix,
+
 % 				]{scrbook}  
 % Para mais de 100 paginas.
 \documentclass[%
@@ -18,6 +19,7 @@
 				cleardoublepage=plain,
 				chapterprefix, 
                 appendixprefix, 
+                % openright,
                 % draft,
                 ]{scrbook}  
 
@@ -81,25 +83,27 @@
 % WARNING A ficha catalográfica deve estar no verso da folha de rosto.
 % FIXME O arquivo ficha-catalografica.pdf deve ser sobrescrito com uma cópia
 % do arquivo pdf que a biblioteca lhe enviar.
-% \input{ficha-catalografica}
+ \input{ficha-catalografica}
 % \includepdf{ficha-catalografica}
 %
 % WARNING A folha de aprovação deve ser assinada pelos membros da banca apos a
 % defesa.
 % FIXME Substitua o arquivo folha-de-aprovacao.pdf por uma copia escaneada.
-% \includepdf{folha-de-aprovacao}
- \chapter*{}  % Capítulo vazio.
+ \includepdf{folha-de-aprovacao}
+
+
+\cleardoublepage  % Capítulo vazio.
 \input{resumo}
-\vspace{.1\textheight}
+\vspace{.05\textheight}
 \input{abstract}
 %
 \tableofcontents
 %
 % FIXME Se não for incluir a dedicatória, comentar a linha abaixo.
- % \input{dedicatoria}
+  \input{dedicatoria}
 %
 % FIXME Se não for incluir os agradecimentos, comentar a linha abaixo.
-% \input{agradecimentos}
+ \input{agradecimentos}
 %
 % FIXME Comentar a linha abaixo se não desejar listar as figuras
 % apresentadas.

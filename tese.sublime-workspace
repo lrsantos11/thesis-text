@@ -200,69 +200,76 @@
 	"buffers":
 	[
 		{
-			"contents": "Local:    numerical ~/Documents/Matematica/Unicamp/doutorado/tese/thesis-text\nHead:     d5b2409 Various corrrections, including getting rid of \"-se\"\n\n\nUntracked files:\n	tese.synctex.gz(busy)\n\nChanges:\n	Deleted    myabbrvnat.bst\n	Modified   numericos.tex\n	Modified   pacotes.tex\n\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/pacotes.tex",
 			"settings":
 			{
-				"buffer_size": 1040,
+				"buffer_size": 4639,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/dedicatoria.tex",
+			"settings":
+			{
+				"buffer_size": 376,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/ficha-catalografica.tex",
+			"settings":
+			{
+				"buffer_size": 2184,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/tese.tex",
+			"settings":
+			{
+				"buffer_size": 5557,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 43 files for \"\\aplicada\"\n\n/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/folha-de-rosto.tex:\n   49      matemática.\n   50      \\fi\n   51:     \\ifx\\aplicada\\undefined\n   52      \\else\n   53      matemática aplicada.\n\n/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/tese.tex:\n   39  % FIXME Deixe descomente apenas a linha referente ao departamento.\n   40  % \\def\\matematica{}\n   41: \\def\\aplicada{}\n   42  % \\def\\estatistica{}\n   43  \n\n2 matches across 2 files\n",
+			"settings":
+			{
+				"buffer_size": 477,
 				"line_ending": "Unix",
-				"name": "*git-status*: thesis-text",
-				"read_only": true,
+				"name": "Find Results",
 				"scratch": true
 			}
 		},
 		{
-			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/numericos.tex",
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/folha-de-rosto.tex",
 			"settings":
 			{
-				"buffer_size": 25854,
+				"buffer_size": 2706,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "pacotes.tex",
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/configuracao.tex",
 			"settings":
 			{
-				"buffer_size": 4576,
+				"buffer_size": 4518,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "mpis.tex",
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/agradecimentos.tex",
 			"settings":
 			{
-				"buffer_size": 65090,
+				"buffer_size": 2028,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "linprog.tex",
+			"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/simbolos.tex",
 			"settings":
 			{
-				"buffer_size": 19590,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "alg_converg.tex",
-			"settings":
-			{
-				"buffer_size": 56867,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "int.tex",
-			"settings":
-			{
-				"buffer_size": 8776,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "escolhaadiada.tex",
-			"settings":
-			{
-				"buffer_size": 48426,
+				"buffer_size": 2595,
 				"line_ending": "Unix"
 			}
 		}
@@ -270,19 +277,35 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 207.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"ta",
+				"Git: Tag"
+			],
+			[
+				"tag",
+				"Git: Tag"
+			],
+			[
+				"pus",
+				"Git: Push"
+			],
 			[
 				"mer",
 				"Git: Merge"
 			],
 			[
-				"che",
+				"chek",
 				"Git: Checkout"
 			],
 			[
-				"chek",
+				"status",
+				"Git: Status"
+			],
+			[
+				"che",
 				"Git: Checkout"
 			],
 			[
@@ -311,10 +334,6 @@
 			],
 			[
 				"git",
-				"Git: Status"
-			],
-			[
-				"status",
 				"Git: Status"
 			],
 			[
@@ -430,10 +449,6 @@
 				"Git: Checkout"
 			],
 			[
-				"pus",
-				"Git: Push"
-			],
-			[
 				"git:st",
 				"Git: Status"
 			],
@@ -487,41 +502,60 @@
 	},
 	"file_history":
 	[
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
-		"/Users/lrsantos/Downloads/bnl2 iter 14.JNB",
+		"/Users/lrsantos/Dropbox/doutorado/defesa/keynote/keynote_defesa_LRS.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/ficha-catalografica.pdf",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/ficha-catalografica.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/abstract.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/resumo.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/escolhaadiada.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/folha-de-rosto.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/capa.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/tese.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/int.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/Lema4.5.pdf",
+		"/Users/lrsantos/Dropbox/doutorado/defesa/keynote/configuracao.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/concl.tex",
 		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/numericos.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/pacotes.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/linprog.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/implementa.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/alg_converg.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/mpis.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/numericos.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/pacotes.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/folha-de-rosto.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/resumo.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-project",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/linprog.tex",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
+		"/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/tese.toc",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/.gitignore",
+		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/alg_converg.tex",
+		"/Users/lrsantos/Downloads/bnl2 iter 14.JNB",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/testes/perprof-py/REQUIREMENTS",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/capa.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/contas_polinomio/pop.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/simbolos.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/pacotes.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/mpis.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/configuracao.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/concl.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.log",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/linprog.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/escolhaadiada.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.nls",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/alg_converg.tex",
 		"/Users/lrsantos/Dropbox/IFC/Docência/Superior/Matemática/2014-I/Cálculo_Numérico/avaliacoes/prova3/2014-I_CalNum_Prova3.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/.gitignore",
 		"/Users/lrsantos/Dropbox/LaTeX/lrsmath/lrsmath.sty",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/minted.sty",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-project",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/User/LaTeXTools.sublime-settings",
 		"/Users/lrsantos/Downloads/25fv47.txt",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/int.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.aux",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/dedicatoria.tex",
 		"/usr/local/texlive/2013/texmf-dist/tex/latex/siunitx/siunitx.sty",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/folha-de-rosto.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/convergencia.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/references_bibdesk_papers.bib",
 		"/Users/lrsantos/Library/Application Support/Sublime Text 3/Packages/CheckBounce/README.mdown",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.sublime-workspace",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/ficha-catalografica.tex",
-		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/resumo.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/abstract.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/texto_antigo/folha_rosto.tex",
 		"/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text/tese.idx",
@@ -580,6 +614,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"inúmer",
+			"\\aplicada",
+			"flushright",
+			"Netlib",
+			"\\Netlib",
+			"Netlib",
+			"emph",
+			"eq:nextdel-full",
+			"eq:absLij",
+			"lemma:next-phi-delta-n4",
+			"aligned",
+			"sffamily",
+			"eq:pop-subproblem-1",
 			"-se",
 			"bar",
 			"\\si",
@@ -694,20 +741,7 @@
 			"\\dbvec{\\rho_{C}^{k}}",
 			"\\dbvec{\\rho_C^k }",
 			"\\dbvec{\\rho_C^{k}}",
-			"eq:DxDzaff3",
-			"eq:normxz1",
-			"bdxzzero",
-			"equation",
-			"alg:optimized-choice-of-parameters-simplified",
-			"multline",
-			"k",
-			"P",
-			"imples",
-			"\\tilde{z}",
-			"\\tilde{y}",
-			"\\tilde{x}",
-			"\\tilde{z}",
-			"\\tilde{y}"
+			"eq:DxDzaff3"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -764,122 +798,266 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 7,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/pacotes.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1040,
+						"buffer_size": 4639,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								151,
-								151
+								4521,
+								4571
 							]
 						],
 						"settings":
 						{
-							"__vi_external_disable": true,
-							"draw_white_space": "none",
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"git_repo": "/Users/lrsantos/Documents/Matematica/Unicamp/doutorado/tese/thesis-text",
-							"git_status": true,
-							"git_view": "status",
-							"syntax": "Packages/SublimeGit/syntax/SublimeGit Status.tmLanguage",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": false
+							"spell_tag": 49,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/numericos.tex",
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/dedicatoria.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 25854,
+						"buffer_size": 376,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								25854,
-								25854
+								307,
+								307
 							]
 						],
 						"settings":
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 102,
+							"spell_tag": 8,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 8006.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "pacotes.tex",
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/ficha-catalografica.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4576,
+						"buffer_size": 2184,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4404,
-								4404
+								22,
+								22
 							]
 						],
 						"settings":
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 51,
+							"spell_tag": 2,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/tese.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5557,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1311,
+								1320
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 1,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1793.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 477,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										160,
+										169
+									],
+									[
+										403,
+										412
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								60,
+								60
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "mpis.tex",
+					"buffer": 5,
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/folha-de-rosto.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 65090,
+						"buffer_size": 2706,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								63107,
-								63107
+								1624,
+								1624
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 3,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1432.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/configuracao.tex",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4518,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"enable_checkbounce_grammar": false,
+							"enable_checkbounce_spelling": true,
+							"spell_tag": 5,
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/agradecimentos.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2028,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								206,
+								206
 							]
 						],
 						"settings":
@@ -890,136 +1068,43 @@
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 25618.0,
+						"translation.y": 10.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "linprog.tex",
+					"buffer": 8,
+					"file": "/Users/lrsantos/Dropbox/doutorado/tese/thesis-text/simbolos.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19590,
+						"buffer_size": 2595,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11040,
-								11040
+								340,
+								340
 							]
 						],
 						"settings":
 						{
 							"enable_checkbounce_grammar": false,
 							"enable_checkbounce_spelling": true,
-							"spell_tag": 5,
+							"spell_tag": 15,
 							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4053.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "alg_converg.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 56867,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								56867,
-								56867
-							]
-						],
-						"settings":
-						{
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 10,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 26059.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "int.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8776,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7203,
-								7203
-							]
-						],
-						"settings":
-						{
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 12,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1659.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "escolhaadiada.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 48426,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5031,
-								5031
-							]
-						],
-						"settings":
-						{
-							"enable_checkbounce_grammar": false,
-							"enable_checkbounce_spelling": true,
-							"spell_tag": 9,
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 2267.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]

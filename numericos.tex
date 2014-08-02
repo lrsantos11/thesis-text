@@ -15,15 +15,15 @@ No presente capítulo descrevemos o conjunto de testes e relatamos os resultados
 
 % \section{Conjunto de testes}
 
-O conjunto de testes que vamos utilizar foi retirado da \Netlib\footnote{Disponíveis em \url{http://www.netlib.org}.}~\cite{Dongarra:1987jk}. Escolhemos primeiramente os \num{95} problemas de programação linear factíveis que estão no diretório \verb|/lp/data/| de tal repositório.  Além disso, do mesmo repositório escolhemos \num{12} dos \num{16} problemas Kennington~\cite{Kennington:1990vo} que se encontram em \verb|/lp/data/kennington/|. Para finalizar, escolhemos 1 problema -- \texttt{qap-8} -- dos \num{3} do conjunto  QAP, que estão disponíves no diretório \verb|/lp/generators/qap|. Os problemas QAP são  construído via um gerador  e  aparecem a partir da linearização de um problema  de designação quadrática. No total então, temos 108 problemas e por isso, tal conjunto de testes é chamado aqui de \Netlib-108. 
+O conjunto de testes que vamos utilizar foi retirado da \Netlib\footnote{Disponíveis em \url{http://www.netlib.org}.}~\cite{Dongarra:1987jk}. Escolhemos primeiramente os \num{95} problemas de programação linear factíveis que estão no diretório \verb|/lp/data/| de tal repositório.  Além disso, do mesmo repositório escolhemos \num{12} dos \num{16} problemas Kennington~\cite{Kennington:1990vo} que se encontram em \verb|/lp/data/kennington/|. Para finalizar, escolhemos um problema -- \texttt{qap-8} -- dos \num{3} do conjunto  QAP, que estão disponíves no diretório \verb|/lp/generators/qap|. Os problemas QAP são  construído via um gerador  e  aparecem a partir da linearização de um problema  de designação quadrática. No total então, temos 108 problemas e, por isso, tal conjunto de testes é chamado aqui de \Netlib-108. 
 
 
-A Tabela~\ref{tab:netlib108} mostra os \num{108} problemas com seus nomes na primeira coluna. As colunas 2 a 4 mostram o número de linhas, colunas e de canalizações de cada problema, após as rotinas de pré-processamento feitas pelo PCx. Indicamos que um problema  não é canalizado por colocar o número \num{0} na coluna correspondente. A coluna 4 tem o número de elementos não-nulos (NEM) da matriz $A$ das restrições e a última coluna apresenta a densidade da matriz resultante da decomposição de de Cholesky que é para resolução de cada problema.
+A Tabela~\ref{tab:netlib108} mostra os \num{108} problemas com seus nomes na primeira coluna. As colunas 2 a 4 mostram o número de linhas, colunas e de canalizações de cada problema, após as rotinas de pré-processamento feitas pelo PCx. Indicamos que um problema  não é canalizado ao colocar o número \num{0} na coluna correspondente. A coluna 4 tem o número de elementos não-nulos (NEM) da matriz $A$ das restrições e a última coluna apresenta a densidade da matriz resultante da decomposição de de Cholesky utilizada em nossa implementação.
 
 
 Alguns comentários sobre a escolha de \Netlib-108 cabem aqui. Primeiramente, os \num{4} problemas  Kennington -- \texttt{kennington-ken-13}, \texttt{kennington-ken-18}, \texttt{ken\-ning\-ton-osa-60} e \texttt{ken\-ning\-ton-pds-20} --  e os \num{2} QAP -- \texttt{qap12} e \texttt{qap15} --  que foram deixados de fora dos testes, o foram pois suas estruturas e tamanhos não fazem sentido numa implementação que resolve as equações normais que aparecem em \ac{MPI} via fatoração de Cholesky. 
 
-Além disso, tal gama de problemas é a \Netlib\ mais natural, originária de problemas reais e consensual entre os usuários de \ac{PL}. Com efeito, tais problemas, ou pelo menos parte deles, foram testados por \textcite{Mehrotra:1992wr,Colombo:2008ia,Mehrotra:2005do,Jarre:1999tl,Gondzio:1996uw} entre outros pesquisadores com trabalhos importantes da área e estão inclusive na documentação do PCx~\cite{Czyzyk:1998vw,Czyzyk:1999hk}, com a finalidade de demonstrar os testes de seu desempenho. Nesse sentido e assim como esses autores, pensamos que tal conjunto é capaz permitir testes adequados de nosso método. 
+Além disso, tal gama de problemas originária de problemas reais e é consensual entre os usuários de \ac{PL}. Com efeito, tais problemas, ou pelo menos parte deles, foram testados por \textcite{Mehrotra:1992wr,Colombo:2008ia,Mehrotra:2005do,Jarre:1999tl,Gondzio:1996uw}, entre outros pesquisadores com trabalhos importantes da área, e estão inclusive na documentação do PCx~\cite{Czyzyk:1998vw,Czyzyk:1999hk}, com a finalidade de demonstrar os testes de seu desempenho. Nesse sentido e assim como esses autores, pensamos que tal conjunto é capaz de permitir testes adequados de nosso método. 
 
 
 {\footnotesize \onehalfspacing
@@ -182,9 +182,9 @@ qap8                & 912       & 1632      & 0           & 193944   & 4,6526E-0
 
 % \section{Resultados Numéricos}
 
-Os testes computacionais foram rodados em um computador Intel i7 930 2.8GHz com \num{12}GB de memória RAM em sistema operacional Windows 7 \num{64}bits e compilados utilizando Microsoft Visual Studio \texttt{C++} 2010 com compilador Intel \texttt{C++} Compiler  XE 13.0.
+Os testes computacionais foram efetuados em um computador com processador Intel i7 930 2.8GHz com \num{12}GB de memória RAM em sistema operacional Windows 7 \num{64}bits e compilados utilizando Microsoft Visual Studio \texttt{C++} 2010 com compilador Intel \texttt{C++} Compiler  XE 13.0.
 
-A Tabela \ref{tab:testes-PCx-r-EOP}, mostra o número total de iterações, o tempo de CPU e a saída programa -- \texttt{0} indica convergência e \texttt{3} indica que otimalidade não foi alcançada -- para as implementações PCx-r e PCx-EOP. 
+A Tabela \ref{tab:testes-PCx-r-EOP} mostra o número total de iterações, o tempo de CPU e a saída programa -- \texttt{0} indica convergência e \texttt{3} indica que otimalidade não foi alcançada -- para as implementações PCx-r e PCx-EOP. 
 
 
 
