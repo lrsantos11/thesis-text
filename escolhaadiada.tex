@@ -12,13 +12,55 @@ first.''}}
 \label{chap:merit-function}
 
 
-Este capítulo tem o objetivo de apresentar o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do \acl{MPI} proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escrevemos a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final, é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada iteração do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   método de escolha otimizada de parâmetros. Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
+Este capítulo tem o objetivo de apresentar o desenvolvimento de uma função de mérito polinomial,  utilizada em cada passo do método de pontos interiores proposto,  que combina três direções -- a direção afim-escala, a direção de centralização e a direção de correção. Além disso, escrevemos a vizinhança $\Nset_{-\infty}$, ajustada para pontos infactíveis, em termos das mesmas variáveis do polinômio. Isso porque a escolha do peso de cada uma das direções,  na direção final, é feita através da  otimização global da função de mérito sujeita a um conjunto de restrições que garantem que o próximo ponto continuará na vizinhança. Os pesos das direções, são em geral parâmetros escolhidos  \emph{a priori}, nos diversos \ac{MPI}.  Em nosso caso, a escolha será determinada em cada iteração do algoritmo, de maneira otimizada.  Esses procedimentos reunidos produzem o que chamamos de   Método de Escolha Otimizada de Parâmetros (MEOP). Além disso, como veremos a seguir,  nosso método é uma generalização de alguns dos \ac{MPI} encontrados na literatura. 
 
 % \section{Um KKT modificado}
 
 
+O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o MEOP proposto neste capítulo. A escolha do ponto inicial e do critério de parada, serão descritas no Capítulo \ref{chap:implementa}, enquanto os resultados numéricos obtidos estão no Capítulo \ref{chap:numerical}. 
+
+\begin{algorithm}[ht]
+\onehalfspacing
+\caption{Método de Escolha Otimizada de Parâmetros.}
+\label{alg:optimized-choice-of-parameters} \begin{algorithmic}[1]
+\Procedure{ResolveLP}{$A,b,c$}
+\State $k \gets 0$
+\State $(x^0,y^0,z^0) \gets$ \Call{PontoInicial}{$A,b,c$}.
+\Comment{Assegure que  $(x^0,z^0)>0$.}
+	\Repeat
+		\State Resolva   \eqref{eq:affine-scaling-system} e encontre
+		$((\dex)^{k},(\dey)^{k},(\dez)^{k})$.
+		\State 	Encontre $((\Dex^\mu)^{k},(\Dey^\mu)^{k},(\Dez^\mu)^{k})$ e
+		$((\Dex^\sig)^{k},(\Dey^\sig)^{k},(\Dez^\sig)^{k})$ utilizando
+		\eqref{eq:De_C}.
+		\State Calcule os coeficientes de  $\nextphi(\al,\mu,\sig)$ usando
+			\eqref{eq:varphi-coefficients}
+		\State Calcule os coeficienes de $g_{L}(\al,\mu,\sig)$ e $g^{i}_{C}(\al,\mu,\sig)$ utilizando \eqref{eq:g_Ci+G_L-explicit}.
+		\State Encontre $(\alk,\muk,\sigk)$ resolvendo o subproblema de
+		otimização global 
+		\eqref{eq:pop-subproblem}.
+		\State Garanta que $\alk \in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ usando \eqref{eq:ratio-test} e faça
+		\[
+		\begin{aligned}	
+		& x^{k+1} = x^{k} + \alk ((\dex)^{k} + \muk (\Dex^\mu)^{k} +
+		\sigk(\Dex^\sig)^{k} )
+		\\
+		& y^{k+1} = y^{k} + \alk ((\dey)^{k} + \muk (\Dey^\mu)^{k} +
+		\sigk (\Dey^\sig)^{k} )
+		\\
+		& z^{k+1} = z^{k} + \alk ((\dez)^{k} + \muk (\Dez^\mu)^{k} +
+		\sigk (\Dez^\sig)^{k} ) \end{aligned}. 
+		\]		
+		\State $k\gets k+1$
+	\Until{O critério de parada ser satisfeito.}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
  
-A fim de construir a função de mérito e suas restrições como polinômios, são necessárias algumas transformações, as quais explanamos a seguir. Considere novamente o par primal-dual  (\ref{eq:primal}-\ref{eq:dual}) na sua forma padrão,
+O esclarecimento de cada passo do Algoritmo \ref{alg:optimized-choice-of-parameters} será feito a seguir, através da explicitação do MEOP. Primeiramente vamos  construir a função de mérito e suas restrições como polinômios. Para esse fim, são necessárias algumas transformações, as quais explanamos a seguir. 
+
+Considere novamente o par primal-dual  (\ref{eq:primal}-\ref{eq:dual}) na sua forma padrão,
 i.e.,  
 
  \begin{equation*}
@@ -33,7 +75,7 @@ e
  \begin{equation}
 	\begin{array}{lc}
 \displaystyle \max_{(y,z)} & b^Ty \\
-\text{sujeito a} &\begin{cases} A^Ty + z = b \\
+\text{sujeito a} &\begin{cases} A^Ty + z = c \\
 				 z \geq 0, \:y \text{ livre}	
 				 \end{cases}\
 \end{array}.
@@ -311,7 +353,7 @@ trajetória central.
 Uma das principais contribuições do nosso trabalho, através da extensão das ideias
 de \textcite{VillasBoas:2003tg}, é a escolha do valor de $\mu$ -- que aqui faz as
 vezes de parâmetro que determina a trajetória central -- e de $\sig$ -- que vai pesar a contribuição da correção --  sendo feita de maneira adiada. Por isso tais parâmetros, bem como o tamanho do passo $\al$, estão sendo
-tratados como \emph{variáveis}. Para a escolha desses parâmetros, farmos uso de uma
+tratados como \emph{variáveis}. Para a escolha desses parâmetros, faremos uso de uma
 função de mérito, a qual será construída a seguir.
  
 Primeiramente, note que a aproximação dada em  \eqref{eq:aproximacao-direcao}
@@ -667,7 +709,7 @@ próximo se está da solução do problema, embora nem sempre elas sejam usadas 
 critério de parada do algoritmo. 
 
 \textcite{Zhang:2006ic}, por exemplo, escolhe o tamanho de passo de seu
-algoritmo tal que a  complementaridade e a factibilidade primal-dual sejam
+algoritmo tal que a  complementaridade e a infactibilidade primal-dual sejam
 reduzidas. Para isso, este autor define sua função de mérito como a soma do
 \emph{gap} de complementaridade e da norma-2 do resíduo primal-dual, i.e., \[\phi(x,y,z) =
 \norm{(r_P,r_D)} + x^Tz\] e escolhe $\al$ tal que essa função seja minimizada.
@@ -719,7 +761,7 @@ saber:
 \item \label{it:obs-Choice-merit-rho-l} A utilização das matrizes $H_P$ e $H_D$  e o Corolário
 \ref{cor:positive-residual} garantem que dado $(x,y,z)$ calculado pelo
 método e que esteja em $\Qset^+$ ,  o sinal de cada linha de $\rho_{L}$ permanece igual em todas as iterações --  de fato, determinamos que tais linhas sejam não-negativas. Neste caso, temos certeza de que para cada linha $i$ de $\rho_{L}$,  $\rho_L(x,y,z)_{i}\geq 0$. Portanto, podemos descartar o módulo na utilização da norma-1 de $\rho_{L}$, isto é,
-\[\frac{1}{m+n}\norm{\rho_L}_1 = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell. \] 
+\[\frac{1}{m+n}\norm{\rho_L}_1 = \frac{1}{m+n}\sum_{\ell=1}^{m+n}(\rho_L)_\ell. \] 
 Tal escolha permite transformar a função de mérito em um polinômio nas variáveis $(\al,\mu,\sig)$, conforme veremos a seguir; 
 
 
@@ -748,7 +790,7 @@ Por conta dos itens \eqref{it:obs-Choice-merit-rho-l} e \eqref{it:obs-Choice-mer
 
 
 \begin{align}
-\varphi(x,y,z) & = \frac{1}{n+m}\sum_{\ell=1}^{n+m}(\rho_L)_\ell+ 
+\varphi(x,y,z) & = \frac{1}{m+n}\sum_{\ell=1}^{m+n}(\rho_L)_\ell+ 
 \frac{1}{n}\sum_{i=1}^{n}(\rho_C)_i.\label{eq:merit-function-rho}
 \end{align}
 
@@ -806,7 +848,7 @@ Equação \eqref{eq:merit-function} e utilizando a definição do operador médi
 \nextphi(\al,\mu,\sig) & =
 \frac{1}{m+n}\sum_{\ell=1}^{m+n}(\hat{\rho}_L)_\ell +
 \frac{1}{n}\sum_{j=1}^{n}(\hat{\rho}_C)_j \\
-						 & = \frac{1}{m+n}\sum_{\ell=1}^{n+m}\left[(1-\al)(\rho_L)_\ell 
+						 & = \frac{1}{m+n}\sum_{\ell=1}^{m+n}\left[(1-\al)(\rho_L)_\ell 
 						 \right] +
 						 \\
 				 	 & \quad  + \frac{1}{n}\sum_{j=1}^{n}  \left[ (1-\al)(\rho_C)_j +
@@ -920,7 +962,7 @@ minimizador global $(\al^*,\mu^*,\sig^*)$ para o polinômio
 
 
 Vamos considerar a relação existente entre o resíduo linear escalado $\rho_L$ na iteração $k$ com o resíduo 
-linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a  proposição seguinte que trata tanto do resíduo, quanto do resíduo escalado. 
+linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a  proposição seguinte que trata tanto do resíduos lineares de KKT, quanto dos resíduos do KKT escalado. 
 \begin{prop}\label{prop:nu_k}
  Seja $\{(x^k,y^k,z^k)\}$ gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters}. Então para $k\geq0$, vale  
 
@@ -1165,45 +1207,6 @@ função de mérito usando $\al>0$. Com efeito, o teste da razão é sempre util
 Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $u_{2}$ e $u_{3}$ são escalares positivos que podem ou não ser diferentes para esses dois parâmetros.
 
  
-O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o método proposto neste capítulo. A escolha do ponto inicial e do critério de parada, serão descritas no Capítulo \ref{chap:numerical}, assim como os resultados numéricos obtidos.
-
-\begin{algorithm}
-\onehalfspacing
-\caption{Método de Escolha Otimizada de Parâmetros.}
-\label{alg:optimized-choice-of-parameters} \begin{algorithmic}[1]
-\Procedure{ResolveLP}{$A,b,c$}
-\State $k \gets 0$
-\State $(x^0,y^0,z^0) \gets$ \Call{PontoInicial}{$A,b,c$}.
-\Comment{Assegure que  $(x^0,z^0)>0$.}
-	\Repeat
-		\State Resolva   \eqref{eq:affine-scaling-system} e encontre
-		$((\dex)^{k},(\dey)^{k},(\dez)^{k})$.
-		\State 	Encontre $((\Dex^\mu)^{k},(\Dey^\mu)^{k},(\Dez^\mu)^{k})$ e
-		$((\Dex^\sig)^{k},(\Dey^\sig)^{k},(\Dez^\sig)^{k})$ utilizando
-		\eqref{eq:De_C}.
-		\State Calcule os coeficientes de  $\nextphi(\al,\mu,\sig)$ usando
-			\eqref{eq:varphi-coefficients}
-		\State Calcule os coeficienes de $g_{L}(\al,\mu,\sig)$ e $g^{i}_{C}(\al,\mu,\sig)$ utilizando \eqref{eq:g_Ci+G_L-explicit}.
-		\State Encontre $(\alk,\muk,\sigk)$ resolvendo o subproblema de
-		otimização global 
-		\eqref{eq:pop-subproblem}.
-		\State Garanta que $\alk \in(0,1)$ tal que $(x^{k+1},z^{k+1})>0$ usando \eqref{eq:ratio-test} e faça
-		\[
-		\begin{aligned}	
-		& x^{k+1} = x^{k} + \alk ((\dex)^{k} + \muk (\Dex^\mu)^{k} +
-		\sigk(\Dex^\sig)^{k} )
-		\\
-		& y^{k+1} = y^{k} + \alk ((\dey)^{k} + \muk (\Dey^\mu)^{k} +
-		\sigk (\Dey^\sig)^{k} )
-		\\
-		& z^{k+1} = z^{k} + \alk ((\dez)^{k} + \muk (\Dez^\mu)^{k} +
-		\sigk (\Dez^\sig)^{k} ) \end{aligned}. 
-		\]		
-		\State $k\gets k+1$
-	\Until{O critério de parada ser satisfeito.}
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
   
  No próximo capítulo estabeleceremos os resultados teóricos dessa abordagem, garantindo convergência e polinomialidade do algoritmo, em relação a redução da função de mérito e da garantia de que o próximo ponto esteja na vizinhança $\Nset_{-\infty}$.
  

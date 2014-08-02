@@ -61,16 +61,16 @@ Sejam
 \begin{equation}
 \label{eq:primal-dual-feas-set}
 \Pset = \{x : Ax = b, x\geq 0\} \quad\text{ e } \quad
-\Dset = \{ (y, z) : A^Ty + z = b, z\geq 0\}
+\Dset = \{ (y, z) : A^Ty + z = c, z\geq 0\}
 \end{equation}
  os conjuntos de pontos factíveis primais e duais 
 respectivamente. Usando essa notação, o par primal-dual de
 (\ref{eq:primal}-\ref{eq:dual}) pode ser reescrito como
 \begin{equation}
 \label{eq:primal-dual-reescrito}
-\min_x\; c^Tx \; \text{ s.a. }\; x\in \Pset \qquad\text{ e } \qquad
+\min_x\; c^Tx \; \text{ s. a. }\; x\in \Pset \qquad\text{ e } \qquad
 \max_{(y, z)}
-b^Tx \; \text{ s.a. }\; (y, z) \in \Dset.
+b^Tx \; \text{ s. a. }\; (y, z) \in \Dset.
 \end{equation}
 
 
@@ -104,7 +104,7 @@ Neste trabalho, o seguinte pressuposto é assumido como verdadeiro:
 
 
 Com efeito,   o Pressuposto \ref{ass:interior-nonempty} tem como
-consequência o fato existir  solução para
+consequência o fato de existir  solução para
 \eqref{eq:primal} e para \eqref{eq:dual}~\cite[Teorema 3.1]{Guler:1995wf}.
 Mais que isso, a partir desse pressuposto, conhecido como \emph{pressuposto do
 ponto interior}, concluímos que o conjunto ótimo primal-dual  é
@@ -359,7 +359,7 @@ parâmetro de barreira:
 \begin{equation}
 \label{eq:gap-duality-mu}
 g(\tau) = c^Tx(\tau) - b^Ty(\tau) =
-x(\tau)^T(\tau),
+x(\tau)^zT(\tau),
 \end{equation}
 isto é, para cada valor de $\tau$, o gap de dualidade corresponde ao gap de
 complementaridade. Logo reduzir um significa reduzir o outro. Além disso, como
@@ -430,7 +430,7 @@ quanto $\Bset\cup\Mset = {1,\ldots,n}$. A noção de complementaridade estrita e
 de partição ótima são ideias recorrentes em análises de \ac{MPI}.
 
 Um  fato que vale a pena chamar atenção é que, nos casos em que o \ac{PL}
-tenha múltiplas soluções, um \ac{MPI} para em uma vizinhança do 
+tenha múltiplas soluções, um \ac{MPI} converge para uma vizinhança do 
 centro analítico da face ótima ao invés de em um vértice, como no método
 simplex. Isso significa que através do conceito de partição
 ótima, interpretamos essa situação como sendo a determinação de
@@ -444,7 +444,7 @@ solução \emph{exata}. Em vários casos, não é necessária uma precisão adic
  uma solução em um vértice, ao invés da solução que se encontra no centro
 analítico da face ótima.  Do ponto de vista da programação inteira, temos uma
 exceção a esse caso, já que as solução inteiras estão nos vértices do
-envoltório convexo de pontos inteiros factíveis. A diferença entre ter ou não
+envoltório convexo de pontos inteiros factíveis. A questão é que quase nunca temos o envoltório disponível~\cite{MunariJunior:2013wr}. A diferença entre ter ou não
 uma base ótima ou uma partição ótima é de importante consequência para o uso de
 soluções na análise de sensibilidade \cite{Jansen:1997vy,Yildirim:2001gp}.
 
@@ -459,8 +459,8 @@ Newton possuem~\cite{Meggido:Pathways-to-the-optimal:1988u}.
  
 
 
-Considere o limite de \eqref{eq:primal-barrier} quando $\tau\to \infty$ e
-o ponto do qual a trajetória central inicia é encontrado. Isso
+Considere o limite de \eqref{eq:primal-barrier} quando $\tau\to \infty$. Este é
+o ponto do qual a trajetória central \emph{inicia}. Tomar esse limite 
 corresponde a encontrar o ponto $\check{x}$ que minimiza a função de barreira,
 isto é, 
 \[
@@ -510,14 +510,14 @@ sucesso, elas geralmente não são ótimas.
  A maioria dos métodos primais-duais seguidores de caminho realizam passos de Newton
  em direção a pontos de $\Cset$ para os quais $\tau>0$, ao invés de passos
  puramente Newton para $F$. Como vimos,  o sistema \eqref{eq:KKT} é resolvido
- por fazer os pares complementares se alinhem (veja Equação
- \eqref{eq:KKT-complementar-perturbed}) ao mesmo tempo em que $(x,z) >0$. Como
+ por fazer os pares complementares se alinharem -- veja Equação
+ \eqref{eq:KKT-complementar-perturbed} --  ao mesmo tempo em que $(x,z) >0$. Como
  estes passos são enviesados em direção ao ortante positivo definido por
  $(x,z)>0$, usualmente é possível tomar passos maiores que um passo de Newton
  para $F$ antes de violar a restrição de positividade. Para descrever esta busca
  enviesada, introduzimos um \emph{parâmetro de centralização} $\eta\in[0,1]$, na
- equação \eqref{eq:KKT-complementar-perturbed}, que faz com que em cada iteração
- $\tau$ decresça monotonicamente.
+ equação \eqref{eq:KKT-complementar-perturbed}, que faz com que 
+ $\tau$ decresça monotonicamente em cada iteração.
 
  
  As equações para  encontrar a direção de busca tornam-se
@@ -684,16 +684,16 @@ positividade exigida de $(x,z)$.
  de pontos desta vizinhança têm propriedades mais fracas e o teste da razão é
  necessário para assegurar a positividade de $(x,z)$. Portanto, métodos que
  levam em conta a vizinhança larga são menos conservadores que os métodos de
- passo-curto e podem decrescer o parâmetro de barreira mais rapidamente. São
+ passo-curto e podem decrescer o parâmetro de barreira mais rapidamente. Recentemente, \textcite{Potra:1994dy} provou $\Oset(\sqrt{n}L)$ de iterações e convergência quadrática de um método que faz uso da vizinhança larga. Estas são os
  chamados de \emph{métodos de passo-longo}  e implementações eficientes de
- \ac{MPI} baseiam-se em alguma variação de métodos de passo-longo.
+ \ac{MPI} baseiam-se em alguma variação de tais métodos.
  
  \subsubsection{Vizinhança Simétrica}
 \label{sec:symmetric-neig}  
  A vizinhança $\Nset_{-\infty}(\ga)$, como vimos,  produz uma boa base para
  métodos práticos, pois permite o parâmetro de barreira reduzir rapidamente.
  Mesmo assim, permite que os iterados produzam produtos $x_iz_i$ muito
- diferentes, já que não impõe uma limite superior para a complementaridade.
+ diferentes, já que não impõe um limite superior para a complementaridade.
  
  Essa dificuldade, quando ultrapassada, permite resultados muito melhores na
  prática, já que os pares $x_iz_i$, quando mal escalonados, influenciam o mau
@@ -781,23 +781,23 @@ A^T(y+\Dey) + (z + \Dez) = (A^Ty + z) + (A^T\Dey + \Dez) = c, \text{ e }\\
 \end{gather*}
 Métodos que assumem esta hipótese são os chamados \emph{\ac{MPI} factíveis}. 
 
-Ao avaliar o gap de complementaridade quando tomando um passo de
-tamanho $\al$ na direção $(\Dex, \Dey, \Dez) $ obtemos
-\[
-x(\al)^Tz(\al) = x^Tz + \al\left(z^T\Dex +  x^T\Dez\right) + \al^2\Dex^T \Dez  
- = \left(1 - \al(1 - \eta) \right)x^Tz,
-\]
-em que usamos o fato de que $\Dex^T \Dez = 0$, $x^Tz = n\tau$ e que $z^T\Dex
-+ x^T\Dez = - x^Tz + n\tau\eta $. Assim, dividindo por $n$ obtemos 
-\begin{equation}
-\label{eq:progress-opt-feasible}
-\tau(\al) = x(\al)^Tz(\al)/n = (1 - \al(1-\eta))\tau.
-\end{equation}
+% Ao avaliar o gap de complementaridade quando tomando um passo de
+% tamanho $\al$ na direção $(\Dex, \Dey, \Dez) $ obtemos
+% \[
+% x(\al)^Tz(\al) = x^Tz + \al\left(z^T\Dex +  x^T\Dez\right) + \al^2\Dex^T \Dez  
+%  = \left(1 - \al(1 - \eta) \right)x^Tz,
+% \]
+% em que usamos o fato de que $\Dex^T \Dez = 0$, $x^Tz = n\tau$ e que $z^T\Dex
+% + x^T\Dez = - x^Tz + n\tau\eta $. Assim, dividindo por $n$ obtemos 
+% \begin{equation}
+% \label{eq:progress-opt-feasible}
+% \tau(\al) = x(\al)^Tz(\al)/n = (1 - \al(1-\eta))\tau.
+% \end{equation}
 
-A equação \eqref{eq:progress-opt-feasible} mostra que  o progresso na
-otimização depende dos parâmetros $\tau$ e $\eta$, bem como do tamanho do passo
-$\al$. Este fato motiva a escolha adequada destes valores de modo a obter um
-iterado que progrida em direção ao ótimo de maneira mais rápida. 
+% A equação \eqref{eq:progress-opt-feasible} mostra que  o progresso na
+% otimização depende dos parâmetros $\tau$ e $\eta$, bem como do tamanho do passo
+% $\al$. Este fato motiva a escolha adequada destes valores de modo a obter um
+% iterado que progrida em direção ao ótimo de maneira mais rápida. 
 
 
 
@@ -958,14 +958,14 @@ sistema de Newton com o lado direto dado por
  isto é,  $(\dex, \dey, \dez)$  corresponde a direção afim-escala dada em
 \eqref{eq:KKT-Newton-step}. Como visto, essa direção otimiza fortemente em
 direção aos pontos para os quais a complementaridade é nula. Entretanto, como o
-alvo e $XZe = 0$, essas direções podem ser excessivamente influenciadas por
+alvo é $XZe = 0$, essas direções podem ser excessivamente influenciadas por
 pontos que têm complementaridade pequena, mas que não são ótimos.
 
 
 %XXX: Distraídas? 
 
 
-\subsubsection{Direção com correção de Segunda Ordem}
+\subsubsection{Direção com correção de segunda ordem}
 
 O \ac{MPC-M} explora uma direção corretora de centralidade de modo a
 tentar remediar pontos que estão mal centrados. Esta direção caminha para
@@ -1010,7 +1010,7 @@ centralização pode ser escolhido como
 \]
 
 Além disso, \textcite{Mehrotra:1992wr} estudou o efeito de diferentes valores de
-$p= 1,2,3,4$ em um subconjunto da de problemas da \Netlib\ e concluiu que não havia
+$p= 1,2,3,4$ em um subconjunto  de problemas da \Netlib\ e concluiu que não havia
  muita diferença para $p$ entre 2 e 4.
 
 Para calcular a direção centralizadora, bastaria resolver o sistema de Newton
@@ -1148,7 +1148,7 @@ De fato, o que faremos é  mover produtos pequenos
 ($\tilde{t}_i\leq \ga\tau$) para o limite inferior $\ga\tau$ e produtos grandes
 ($\tilde{t}_i\geq \ga^{-1}\tau$) para o limite superior $\ga^{-1}\tau$. Os
 produtos que estiverem na vizinhança simétrica já satisfazem estes limites e
-portante estão razoavelmente pouco dispersos em relação à média. Na prática
+portanto estão razoavelmente pouco dispersos em relação à média. Na prática
 estamos movendo os iterados para dentro de $\Nset_s(\ga)$.
 
 
@@ -1200,7 +1200,7 @@ correção neste caso é o mesmo, ao contrário de outros métodos cujo custo au
 correção. Praticamente todos os códigos modernos utilizam essa estratégia
 \cite[Apêndice B]{Wright:Primal-dual-interior-point:1997h}. Uma generalização
 desta pode ser encontrada em \cite{Colombo:2008ia}, no qual a direção de
-busca é dada por $\Dew = \DeMew + \om\DeMuw$ em que usa-se parâmetro de peso
+busca é dada por $\Dew = \DeMew + \om\DeMuw$ em que usa-se o parâmetro de peso
 $\om\in(0,1]$. Este peso é encontrado através de uma busca linear tal que
 a solução $\hat{\om}$  maximiza o tamanho de passo $\al$.
 
@@ -1268,7 +1268,7 @@ ponto infactível. Essa heurística procede agora,  de forma similar à heuríst
 isto é,  $(\tilde{x},\tilde{y},\tilde{z})$ é transladado para o ortante positivo. 
 
 Para tal, o valor
-o máximo da violação dos limites das variáveis é calculado, digamos 
+máximo da violação dos limites das variáveis é calculado, digamos 
 \[ \vartheta =
 \max_{i\in I_V}\{-x_i,-z_i,0\}, \] em que $I_V$ é o conjunto de índices de $x$ e $z$
 que violaram a não-negatividade, e  o ponto com o valor \[
@@ -1290,7 +1290,7 @@ Aliás, aqui a \emph{métrica} dada pela vizinhança
 $\Nset_{-\infty}(\ga,\be)$ é utilizada, como  foi definida em \eqref{eq:infeasible-infty-neig}. Com isso, essas
 heurísticas têm como objetivo impedir que o tamanho do passo $\al$ seja muito
 pequeno, ao mesmo tempo que tendem a limitar  o valor de $\norm{(r_P^k
-,r_D^k)}/{\tau_k}$. Além disso, ao utilizarmos $\Nset(\ga,\be)$, desejamos que a
+,r_D^k)}/{\tau_k}$. Além disso, ao utilizarmos $\Nset_{-\infty}(\ga,\be)$, desejamos que a
 infactibilidade seja levada a zero na mesma taxa que o \emph{gap} de dualidade.
 Para uma  análise de várias estratégias de pontos iniciais em
 \ac{MPI} veja os trabalhos de \textcite{Gertz:2004cw,DApuzzo:2009ks,Andersen:1996un,Vanderbei:1999wv}.
@@ -1374,7 +1374,7 @@ norma  -- ainda que norma-$\infty$ --  dos vetores $x$ e $z$ em cada
 iteração. 
 
 O valor de $x^{T}z$,  é usado em \eqref{eq:termination-criteria-pcx-gap} ao
- invés do \emph{gap} dual  como em \eqref{eq:termination-criteria-gap}, pois além de para pontos factíveis, \emph{gap} dual e \emph{gap} de complementaridade serem iguais -- vide Equação \eqref{eq:gap-complementarity} --, é razoável que se $x^{T}z$ convergir para zero, então o \emph{gap} dual também convirja para zero.
+ invés do \emph{gap} dual  como em \eqref{eq:termination-criteria-gap}, pois além de, para pontos factíveis, \emph{gap} dual e \emph{gap} de complementaridade serem iguais -- vide Equação \eqref{eq:gap-complementarity} --, é razoável que se $x^{T}z$ convergir para zero, então o \emph{gap} dual também convirja para zero.
 
 
 
