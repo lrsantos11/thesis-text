@@ -29,9 +29,9 @@ em que $\eta\in (\eta_{\min},\eta_{\max} )$, enquanto o parâmetro $\sig$ será 
 
 
  A fixação desses dois parâmetros permite as demonstrações que seguem e a consequente prova da convergência do método de maneira mais fácil. No entanto, na prática, o método  tem desempenho melhor, já que se busca, em cada iteração $k$,
-o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$, e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para algum   $\hat{\al}$.
+o minimizador global de $\nextphi$ através da solução do problema \eqref{eq:pop-subproblem}, dado por $(\al^*,\mu^*,\sig^*)$, e portanto	$\nextphi(\al^*,\mu^*,\sig^*)\leq \nextphi(\hat{\al},\nextmu,\nextsig)$, para todo   $\hat{\al}$.
 
-De fato, com $\mu=\nextmu$ e $\sig=\nextsig$, vamos determinar que este $\nextal$ existe, está no intervalo $(0,1)$, cumpre com as condições da vizinhança $N_{-\infty}(\ga,\be)$, para algum $\ga$ e $\be$, e por último é grande o suficiente para fazer com que a função de mérito $\nextphi$ decresça suficientemente. Vejamos como isso se dá.
+De fato, com $\mu=\nextmu$ e $\sig=\nextsig$, vamos determinar que existe $\nextal$  no intervalo $(0,1)$ que cumpre com as condições da vizinhança $N_{-\infty}(\ga,\be)$, para algum $\ga$ e $\be$.  Por último, vamos mostrar que $\nextal$ é grande o suficiente para fazer com que a função de mérito $\nextphi$ decresça suficientemente. Vejamos como isso se dá.
 
 
 % Com essas alterações, podemos rescrever o Algoritmo~\ref{alg:optimized-choice-of-parameters} como o  Algoritmo Simplificado \ref{alg:optimized-choice-of-parameters}.
@@ -83,11 +83,11 @@ Usando tal definição, derivamos a seguinte relação entre a função de méri
 \end{equation}
 
 
-Como é necessário garantir que  $\nextphi  $  seja não negativa, devemos escolher um tamanho de passo  $\al_k$, em cada iteração $k$, tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir um escalar $\theta>0$, tal que $\theta = \liminf (\theta_k)$, isto é, se a sequência $\{\theta_k\}$ for limitada inferiormente por um valor positivo,	 então para $k$ suficientemente grande
+Como é necessário garantir que  $\nextphi  $  seja não negativa, devemos escolher um tamanho de passo  $\al_k$, em cada iteração $k$, tal que  $\theta_k = \theta(\al_k)<1$. Além disso, se existir um escalar $\theta>0$, tal que $\theta = \liminf (\theta_k)$, 	 então para $k$ suficientemente grande
 \begin{equation}\label{eq:nextphi-philessthan1}
-\frac{{\varphi_{k+1}}}{\varphi_{k}} < (1- \theta) < 1.
+\frac{{\varphi_{k+1}}}{\varphi_{k}} < (1- \theta) < 1
 \end{equation}
-e logo a sequência $\{\varphi_k\}$, gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, converge para zero Q-linearmente~\cite{Ortega:2000vd}.
+e, logo, a sequência $\{\varphi_k\}$, gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters}, converge para zero Q-linearmente~\cite{Ortega:2000vd}.
 
 
 
@@ -177,7 +177,7 @@ ponto inicial $(\xzero,\yzero,\zzero)$, dado em \eqref{eq:initial-point-mehrotra
 A medida do tamanho dos dados vai ser dada pela constante positiva 
 \begin{equation}
 	\label{eq:max-norm-data}
- 	\bdxzstar = \max\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \},
+ 	\bdxzstar = \max\left\{\abs{A_{ij}},\abs{b_{i}},\abs{c_{j}}, \text{ para } 1\leq i\leq m \text{ e } 1\leq j \leq n  \right\},
 \end{equation}
 que corresponde ao maior valor absoluto de todos os dados de entrada do problema (\ref{eq:primal}-\ref{eq:dual}). Podemos supor sem perda de generalidade que $\bdxzstar \geq  1$,  bastando para isso fazer um escalonamento trivial. Entretanto, na prática, usualmente são feitos escalonamento mais sofisticados, como o de \textcite{Curtis:1972cp}. Em nossa implementação, mantivemos o escalonamento de \citeauthor{Curtis:1972cp}, que é  usado no PCx.
 
@@ -313,7 +313,7 @@ A próxima proposição será utilizada nas demonstrações que seguem e é um f
 	Seja $D$ uma matriz diagonal não-singular de ordem $n$ e sejam $u,v\in\Real^n$ tais que $u^Tv\geq0$, então 
 	\begin{equation}
 		\label{eq:prop-uvDuDv}
-		\norm{uv}\leq \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right)
+		\norm{uv}\leq \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right).
 	\end{equation}
 \end{prop}
 \begin{proof} A primeira desigualdade é válida por conta da equivalência de normas~\cite[p.~53]{Golub:1996wp}. Quanto às demais, vejamos que 
@@ -332,7 +332,7 @@ Com relação a terceira desigualdade, note que
 \]
 e portanto temos
 \[
-\norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{1} + \norm{D^{-1}v}^{2}\right). \qedhere
+\norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right). \qedhere
 \]
 \end{proof}
 
@@ -536,7 +536,7 @@ Assim, usando consistência de normas, obtemos
 \begin{align}
 	\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} 	& \leq \left[\min\left\{\xk_i\zk_i\right\}\right]^{-1}\norm{(\mu e-  \sig \dekx  \dekz )}^{2}\notag\\
 	& \leq \left[\min\left\{\xk_i\zk_i\right\}\right]^{-1}\left(\mu\norm{ e} +{\sig}\norm{ \dekx  \dekz }\right)^{2}\notag\\
-												& \leq \left(\ga\rhoCkb \right)^{-1}\left(\mu\sqrt{n} +{\sig}\norm{ \dekx  \dekz }\right)^{2} \label{eq:DxDzc1}		
+												& \leq \left(\ga\rhoCkb \right)^{-1}\left(\mu\sqrt{n} +{\sig}\norm{ \dekx  \dekz }\right)^{2}. \label{eq:DxDzc1}		
 \end{align}
 
 Para utilizar \eqref{eq:normDxDzaff}, definimos a variável local
@@ -585,7 +585,7 @@ Substituindo essa expressão em 	\eqref{eq:DxDzc1b}, obtemos
 		\norm{\Dk\Dekcox}^{2} + \norm{\Dik\Dekcoz}^{2} \leq \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{\ga^{3}} \: n^{4}\rhoCkb.
 	\end{equation}
 
-Pra finalizarmos, como consequência  das desigualdades dadas pela Proposição~\ref{prop:norm-uv} e da Equação~\eqref{eq:lemma-boundDxDzcx1} temos
+Pra finalizarmos, como consequência  das desigualdades dadas pela Proposição~\ref{prop:norm-uv} e da Inequação~\eqref{eq:lemma-boundDxDzcx1} temos
 \[
 \begin{aligned}  				 
 	\norm{ \Dekcox  \Dekcoz  } \leq \norm{ \Dekcox  \Dekcoz  }_{1}   & \leq \frac{1}{2}\left(\norm{\Dk \Dekcox}^{2} + \norm{\Dik  \Dekcoz  }^{2}\right) \notag
@@ -749,7 +749,7 @@ Os Lemas \ref{lemma:boundDxDzaff},   \ref{lemma:boundDxDzc} e \ref{lemma:boundDx
 												\dfrac{4(1+2\bdxzstar^{4})\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]}{\ga^{2}}\: n^{3}\rhoCkb + 	 \dfrac{\left[\eta\ga + \nextsig(1+2\bdxzstar^{4})^{2}\right]^{2}}{2\ga^{3}} \: n^{4}\rhoCkb.
 \end{multline*}
 
-Como $\nextsig = 0$ e $n^{2}\leq n^{3}\leq  n^{4}$ e definindo $t = (1 + 2\bdxzstar^{4})$, temos que 
+Como $\nextsig = 0$ e $n^{2}\leq n^{3}\leq  n^{4}$ e, definindo $t = (1 + 2\bdxzstar^{4})$, temos que 
 
 	\begin{align}
 	\abs{\zeta_i} + \abs{\chi_i} + \abs{\xi_i} & \leq \left[ \frac{2(1 + 2\bdxzstar^{4})^{2} }{\ga} + 												\dfrac{4\eta(1+2\bdxzstar^{4})}{\ga} +	 \dfrac{\eta^{2}}{2\ga} \right] n^{4}\rhoCkb \notag \\
@@ -795,7 +795,7 @@ Seja $\nextal_{L}$ dado em \eqref{eq:al-C+al-L}. Então
 Usando as mesmas substituições de $\nextmu$ e $\nextsig$, a função $g_L$ dada em \eqref{eq:g-L_explicit} torna-se uma função que depende apenas de $\al$, nos seguintes termos 
 \[
 g_L(\al) =     (1-\al)\left(\rhoCkb  -  \be_L \nuk    \right) +  \al\eta\rhoCkb  + 
-   \al^2\left( \dbvec{L_{0,0}^{k}} + \eta\rhoCkb   \,\dbvec{L_{1,0}^{k}}   \right ) ,
+   \al^2\left( \dbvec{L_{0,0}^{k}} + \eta\rhoCkb   \,\dbvec{L_{1,0}^{k}}   \right ) .
 	\]
 Usando  o fato de que o ponto atual pertence à  vizinhança segue que 
  \[
@@ -812,7 +812,7 @@ Note que  $\nextal_L\in(0,1]$ -- definido em \eqref{eq:al-C+al-L} -- é o maior 
 \nextal_L \geq \frac{\eta\rhoCkb  }{\abs{\dbvec{L_{0,0}^{k}}} + \abs{\eta\rhoCkb \,  \dbvec{L_{1,0}^{k}}}}.
 \end{equation}
 
-Novamente, como na demonstração do Lema \ref{lemma:alC_delta-1}, usaremos \eqref{eq:normLij} por isso
+Novamente, como na demonstração do Lema \ref{lemma:alC_delta-1}, usaremos \eqref{eq:normLij} para obter
 \begin{equation}
 \abs{\dbvec{L_{0,0}^{k}}}  = \frac{1}{n}\norm{L_{0,0}^{k}}_{1}  \leq \dfrac{1}{n} \norm{ \dekx  \dekz }_1 .  \label{eq:bound-zeta}
 \end{equation}
@@ -970,7 +970,7 @@ o que termina a demonstração.
 O Teorema \ref{teo:alg-convergence-varphi} implica que, para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado em~\eqref{eq:termination-criteria-pcx} seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}, já que tal sequência estará limitada superiormente pela sequência $\{\varphi_{k}\}$, que é Q-linear, como vimos no Teorema~\ref{teo:next-phi-delta-n4}.
 
 \begin{corol}
-Suponha que escolhamos  $\tol = \num{e-8}$  e $\varepsilon$   tal que 
+Suponha que escolhamos  $\tol >0 $  e $\varepsilon$   tal que 
 \begin{equation}
 	\label{eq:choosing-eps}
 		\varepsilon < \min\left\{  \frac{\tol(1+\norm{b})}{m+n}, \frac{\tol(1+\norm{c})}{m+n},\frac{\tol}{n}\right\}.

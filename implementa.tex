@@ -16,7 +16,7 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \textt
   Assim, herdamos todas as rotinas de preprocessamento -- dentre as quais leitura de dados, precondicionamento e escalonamento, incluindo escalonamento de~\textcite{Curtis:1972cp}, reordenação de linhas e colunas, tratamento de colunas densas e fatoração simbólica de Cholesky --, de ponto inicial, de critério de parada e saída de dados,   bem como todas as rotinas de álgebra linear -- incluindo a estratégia  de \textcite{Ng:1993uz} para resolução de sistemas lineares esparsos via fatoração de Cholesky  e refinamento por gradientes conjugados. 
 
 
-  Além disso, para problemas canalizados, a estrutura de dados do PCx é construída de forma a fazer o papel da matriz $E$ e das transformações usadas em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded}, tal que os problemas canalizados tenham sua resolução executada com  as mesmas funcionalidades dos problemas não canalizados. Isso significa que todos os passos de  PCx-r e PCx-MEOP são executados de modo sem prejuízo por conta das canalizações.
+Para problemas canalizados, a estrutura de dados do PCx é construída de forma a fazer o papel da matriz $E$ e das transformações usadas em \eqref{eq:introPL-primal-bounded} e \eqref{eq:introPL-dual-bounded}, tal que os problemas canalizados tenham sua resolução executada com  as mesmas funcionalidades dos problemas não canalizados. Isso significa que todos os passos de  PCx-r e PCx-MEOP são executados de modo sem prejuízo por conta das canalizações.
 
 
 
@@ -164,7 +164,7 @@ ou mais convenientemente
 \[
 \displaystyle \min_{\mu}\Psi(\mu),
 \]
-em que  $\displaystyle \Psi = \min_{\sig}\Phi(\mu,\sig)$ e 
+em que  $\displaystyle \Psi (\mu)= \min_{\sig}\Phi(\mu,\sig)$ e 
 \[
 \Phi(\mu,\sig) = \left\{
 	\begin{array}{l}

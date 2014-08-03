@@ -70,7 +70,7 @@ respectivamente. Usando essa notação, o par primal-dual de
 \label{eq:primal-dual-reescrito}
 \min_x\; c^Tx \; \text{ s. a. }\; x\in \Pset \qquad\text{ e } \qquad
 \max_{(y, z)}
-b^Tx \; \text{ s. a. }\; (y, z) \in \Dset.
+b^Ty \; \text{ s. a. }\; (y, z) \in \Dset.
 \end{equation}
 
 
@@ -216,7 +216,7 @@ Todos os \acl{MPI} primais-duais geram iterados $w^k = (x^k, y^k,z^k)$ que satis
 propriedade dá origem ao termo \emph{ponto interior}. 
 
 Ao respeitar estes
-limites, iterados tais que $F(w^k)=0$ não são aceitos. Alguns métodos primais-duais exigem que $w^k\in\Fset^+$, ou
+limites,  não são aceitos iterados tais que $F(w^k)=0$. Alguns métodos primais-duais exigem que $w^k\in\Fset^+$, ou
 seja, que o ponto seja estritamente factível. No entanto, atualmente os métodos
 mais competitivos trabalham com pontos infactíveis, exigindo somente que o ponto
 seja estritamente interior (veja Seção~\ref{sec:infeasible_inicial_point})
@@ -276,7 +276,7 @@ puramente afim-escala não nos permitem um bom progresso em direção à soluç�
  seguidores de caminho sugerem algumas estratégias diferentes do  procedimento padrão de
  Newton:
  \begin{enumerate}[(i)]
-\item Enviesar a direção de busca de modo a fazê-la apontar para dentro do
+\item Desviar a direção de busca de modo a fazê-la apontar mais para o
 interior do ortante não-negativo $(x,z)\geq 0$, de tal forma que seja possível
 os iterados moverem-se suficientemente  longe da fronteira de tal ortante, antes que algum componente de
 $(x,z)$ se torne negativo.
@@ -325,7 +325,7 @@ Ax  =b,\\
 (x,z) > 0. 
 \end{cases}
 \]
-Fazendo $Ze=\tau X^{-1}e$, ou equivalentemente $Xz = \tau e$, obtemos a
+Fazendo $Ze=\tau X^{-1}e$, ou equivalentemente $XZ e= \tau e$, obtemos a
 formulação padrão primal-dual das chamadas \emph{condições \ac{KKT} perturbadas}:
 
 \begin{subnumcases}{\label{eq:KKT-perturbed}}
@@ -512,7 +512,7 @@ sucesso, elas geralmente não são ótimas.
  puramente Newton para $F$. Como vimos,  o sistema \eqref{eq:KKT} é resolvido
  por fazer os pares complementares se alinharem -- veja Equação
  \eqref{eq:KKT-complementar-perturbed} --  ao mesmo tempo em que $(x,z) >0$. Como
- estes passos são enviesados em direção ao ortante positivo definido por
+ estes passos são desviados em direção ao ortante positivo definido por
  $(x,z)>0$, usualmente é possível tomar passos maiores que um passo de Newton
  para $F$ antes de violar a restrição de positividade. Para descrever esta busca
  enviesada, introduzimos um \emph{parâmetro de centralização} $\eta\in[0,1]$, na
@@ -622,14 +622,14 @@ conjunto solução e ao mesmo tempo são obtidas de maneira mais fácil.
 
 As duas vizinhanças de $\Cset$ mais comuns são  $\Nset_2(\theta)$, que tem como base a norma-2 e é definida por
 \[
-\Nset_2(\theta) = \left\{w\in\Fset^0 : \norm{XZe - \tau e}_2 \leq \theta\tau  
+\Nset_2(\theta) = \left\{w\in\Fset^+ : \norm{XZe - \tau e}_2 \leq \theta\tau  
 \right\},
 \]
 em que $\theta \in (0,1)$, e a vizinhança 
 $\Nset_{-\infty}(\ga)$, baseada na norma-$\infty$, dada por 
 \begin{equation}
 \label{eq:infty-neig}
-\Nset_{-\infty}(\ga) = \left\{w\in\Fset^0 : x_iz_i\geq \ga\tau\text{, para
+\Nset_{-\infty}(\ga) = \left\{w\in\Fset^+ : x_iz_i\geq \ga\tau\text{, para
 todo }i =1,\dotsc,n \right\},
 \end{equation}
 para algum $\ga\in(0,1)$\footnote{Tipicamente são usados os seguintes valores 
@@ -677,7 +677,7 @@ positividade exigida de $(x,z)$.
  Métodos baseados na vizinhança $\Nset_{-\infty}(\ga)$ permitem iterados que
  seguem a trajetória central de maneira mais relaxada  pois se obtém mais
  liberdade para manobrar e é possível se aproximar da fronteira da região
- factível. De fato, para $\ga$ pequeno quase todo o conjunto $\Fset^0$ está
+ factível. De fato, para $\ga$ pequeno quase todo o conjunto $\Fset^+$ está
  contido em $\Nset_{-\infty}(\ga)$. 
 
  Por outro lado, direções calculadas a partir
@@ -705,7 +705,7 @@ positividade exigida de $(x,z)$.
 \varrho(XZe) = \frac{\min_i\{x_iz_i\}}{\max_i\{x_iz_i\}}
 \end{equation}
 dá uma medida de proporção entre o maior e o menor par de complementaridade.
- Claramente, $\varrho(XZe)\in(0,1)$ e, quando o iterado é perfeitamente
+ Claramente, $\varrho(XZe)\in(0,1]$ e, quando o iterado é perfeitamente
 centrado, este valor é igual a 1. Uma
 análise da medida \eqref{eq:ratio-complementarity} pode ser encontrada em
 \textcite{Jansen:1jv}.
@@ -729,7 +729,7 @@ simétrica} $\Nset_s$, na qual os pares complementares não só satisfazem um li
 mas também um limite superior, sendo é definida como
 \begin{equation}
 \label{eq:symmetric-neig}
-\Nset_s(\ga) = \left\{w\in\Fset^0 : \ga\tau \leq x_iz_i \leq
+\Nset_s(\ga) = \left\{w\in\Fset^+ : \ga\tau \leq x_iz_i \leq
 \frac{1}{\ga}\tau, i=1,\dotsc,n \right\},
 \end{equation}
 em que $\tau = x^Tz/n$ e $\ga\in(0,1)$.
@@ -758,14 +758,14 @@ contribuem com  a possibilidade de deixar os iterados mais centrados.
 De fato, \textcite{Zhang:1993gn}, ao provarem a convergência superlinear de um método
 primal-dual, utilizam uma vizinhança com parâmetros simétricos para melhorar os
 limites da convergência. No entanto, à época imaginavam que um limite superior,
-como o dado por $\gamma\tau$,  não teria significância prática, previsão não que se
+como o dado por $\gamma\tau$,  não teria significância prática, previsão  que não se
 concretizou~\cite{Gondzio:1996uw,Colombo:2008wm,Colombo:2008ia}.
 
 \subsection{Ponto inicial infactível}
 \label{sec:infeasible_inicial_point}
 
 Note que, até agora, estamos assumindo que o método inicia  um ponto estritamente
-factível $w^0 \in \Fset^0$. Neste caso, $r_P = r_D = 0$, no lado
+factível $w^0 \in \Fset^+$. Neste caso, $r_P = r_D = 0$, no lado
 direito de \eqref{eq:KKT-Newton-step-mu-tau}, e assim a direção de busca
 encontrada através desta equação garante que
 \begin{equation}
@@ -862,7 +862,7 @@ mostrando que a infactibilidade se reduz linearmente com $\al$.
 Assim, se $\al
 = 1$, então os resíduos $r_P$ e $r_D$ tornam-se nulos,  a factibilidade é
 restaurada e  subsequentemente o método infactível torna-se igual a um método
-factível, já que todos os próximos iterados estarão em $\Fset^0$.
+factível, já que todos os próximos iterados estarão em $\Fset^+$.
 \textcite{Kojima:1993fe} provaram a convergência global de um método com passos
 infactíveis, enquanto \textcite{Zhang:2006ic} provou  a complexidade  de $\Oset(
 n^2 \ln ( 1/\eps ) )$ para um método desse tipo. Para uma uma explanação
@@ -881,10 +881,10 @@ completa de métodos infactíveis veja \textcite[cap. 6]{Wright:Primal-dual-inte
 \subsection{Método Preditor-Corretor de Mehrotra}
 \label{sec:mehrotra-pc-method}
 Do ponto de vista prático, a maioria dos códigos de implementação de \ac{MPI}
-baseia-se em alguma variação de um método do tipo  preditor-corretor
- devido a \textcite{Mehrotra:1992wr}. O \acrodef{MPC-M}{Método Preditor Corretor de Mehrotra} \ac{MPC-M} baseia-se no modelo geral
+é uma modificação em alguma variação de um método do tipo  preditor-corretor
+ devido a \textcite{Mehrotra:1992wr}. O \acrodef{MPC-M}{Método Preditor Corretor de Mehrotra} \ac{MPC-M} se baseia no modelo geral
 para métodos seguidores de caminho, dado no Pseudo-código
-\ref{alg:modelo-geral}, mas altera a busca de direção puramente Newton com
+\ref{alg:modelo-geral}, mas altera a  direção de busca puramente newtoniana com
 correções que são computacionalmente muito baratas,  porém que auxiliam a obtenção de uma
 melhor direção. Além disso, um escolha adaptativa do parâmetro de centragem
 $\eta$ é feita em cada iteração. Atualmente, nos códigos mais utilizados, tanto os
@@ -930,7 +930,7 @@ propriedade da convergência global em favor da eficiência computacional.
 O método de Mehrotra gera a sequência de iterados infactíveis
 $(x,y,z)$ tais que $(x,z)>0$, e a direção de busca consiste em três componentes:
 \begin{enumerate}[(i)]
-  \item Uma  direção afim-escala \emph{preditora} que nada mais é que uma direção puramente Newton; 
+  \item Uma  direção afim-escala \emph{preditora} que nada mais é que uma direção puramente newtoniana; 
   
   \item Um termo de centralização,
   cujo tamanho é controlado pela escolha de forma adaptativa do parâmetro $\eta$;
@@ -1219,13 +1219,13 @@ propriedades é crítica e é uma tarefa difícil tanto para métodos factíveis
 quanto infactíveis. O ponto deve possuir boas propriedades nas
 seguintes características: centralidade do ponto e magnitude das
 infactibilidades.
-
+ 
 \textcite{Mehrotra:1992wr}
 introduziu uma heurística para encontrar um ponto inicial que satisfaz essas hipóteses.
 Nesta, os seguintes problemas de Quadrados Mínimos são resolvidos
 \begin{align*}
-&\min\: x^Tx\quad \text{s.a.}\quad Ax = b \\
-&\min_{(y,z)}\: z^Tz\quad \text{s.a.}\quad A^Ty + z = c 
+&\min\: x^Tx\quad \text{s. a.}\quad Ax = b \\
+&\min_{(y,z)}\: z^Tz\quad \text{s. a.}\quad A^Ty + z = c 
 \end{align*}
 que tentam encontrar um ponto $(\tilde{x},\tilde{y},\tilde{z})$ que satisfaça as restrições primais e
 duais. As soluções para estes problemas são dada por 

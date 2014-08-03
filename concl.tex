@@ -38,12 +38,12 @@ não foram  abordadas nessa tese. Algumas dessas questões podem servir como gui
 
 Uma ideia interessante é concernente às matrizes $H_P$ e $H_D$  -- veja Equação
 \eqref{eq:defining_matrices_H}. Tais matrizes podem ser adaptadas, não só garantido a
-não-negatividade dos resíduos primais e duais, mas servindo, de certa maneira  de  fator de escalonamento do sistema o que geraria escalamento da função de mérito. Assim, poderíamos inclusive incluir um escalonamento da parte da complementaridade de KKT e verificar como tal escalonamento impactaria no despenho do MEOP.
+não-negatividade dos resíduos primais e duais, mas servindo, de certa maneira  de  fator de escalonamento do sistema o que geraria escalamento da função de mérito. Assim, poderíamos inclusive incluir um escalonamento da parte da complementaridade do sistema KKT e verificar como tal escalonamento impactaria no despenho do MEOP.
 
 
 Quanto à análise do método, a fim de atacar o problema escolhemos um valor para $\mu\neq 0$ e para $\sig = 0$, de modo a garantir que o conjunto $\Omega$ das restrições do subproblema resolvido em cada iteração fosse não-vazio.  No entanto, quando da solução de problemas práticos, em grande parte das iterações o método utilizado encontrou ótimo para $\mu=0$ e $\sig\neq 0$. Embora a demonstração continue válida, a utilização de outros valores para $\mu$ e $\sig$ pode fazer com que a complexidade seja melhorada. Além disso, outro caminho na análise seria tentar verificar se é possível demonstrar convergências de ordem maior, como quadrática ou subquadrática. 
 
-Uma investigação  que pretendemos fazer é quanto à Condição~\ref{cond:xzzero-xzstar}. Essa condição permite que estudemos relações entre o ponto inicial, a solução ótima e o tamanho dos dados. Embora tenhamos escolhido o ponto inicial de Mehrotra, outro ponto inicial que satisfaça essa Condição tem garantia de convergência do MEOP. Ademais, conforme dissemos, poderemos utilizar essa condição em outras análises de convergência. Daí testes podem surgir com outros pontos iniciais no PCx-EOP ou em outras implementações de pontos interiores.
+Uma investigação  que pretendemos fazer é quanto à Condição~\ref{cond:xzzero-xzstar}. Essa condição permite que estudemos relações entre o ponto inicial, a solução ótima e o tamanho dos dados. Embora tenhamos escolhido o ponto inicial de Mehrotra, qualquer   boutro ponto inicial que satisfaça essa Condição tem garantia de convergência do MEOP. Ademais, conforme dissemos, poderemos utilizar essa condição em outras análises de convergência. Daí testes podem surgir com outros pontos iniciais no PCx-EOP ou em outras implementações de pontos interiores.
 
 
 

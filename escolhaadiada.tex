@@ -115,7 +115,7 @@ r^0_C  &=X^0Z^0 e > 0.
 
 
 No método proposto, vamos garantir que os resíduos primais e duais iniciais
-sejam  não-negativos -- veja Observação \ref{obs:Choice-of-merit-function}.
+sejam  não-negativos -- veja Observação \ref{obs:Choice-of-merit-function} na página \pageref{obs:Choice-of-merit-function}.
 Escolher um $(x^0,y^0,z^0)$ que gere resíduos iniciais desse tipo pode ser
 uma tarefa difícil. Assim, a estratégia adotada é definir  $H_P$ e $H_D$,
 matrizes diagonais, tais que cada entrada de suas diagonais seja formada segundo as
@@ -272,7 +272,7 @@ temos
 e
 \begin{align*}
 A^T(y+\Dey) + (z+\Dez) - c &= A^T(y+\dey+\Decoy) + (z+\dez+\Decoz) - c \\
-						  &= \underbrace{A^Ty + z - c + A^T\dey+ +\dez}_{=0 
+						  &= \underbrace{A^Ty + z - c + A^T\dey +\dez}_{=0 
 						  \text{ por \eqref{eq:affine-scaling-system-dual}}} +
 						   A^T\Decoy +\Decoz \\
 						  &=  A^T\Decoy +\Decoz.
@@ -283,9 +283,9 @@ Por outro lado, para a parte da complementaridade de
 \begin{align*}
 \hat{x}\hat{z} &= (x + \Dex)(z+\Dez) = xz + x\Dez + z\Dex + \Dex\Dez \\
                 &= \underbrace{xz + x\dez + z\dex}_{=0 \text{ por
-                \eqref{eq:affine-scaling-system-compl} }}  + z\Dex^c + x\Dez^c + (\dex + \Dex^c)(\dez + \Dez^c) \\
-                &=  x\Dez^c  +z\Dex^c + \Dex^c\Dez^c + \dex\dez 
-                + \dex\Dez^c + \dez\Dex^c \\
+                \eqref{eq:affine-scaling-system-compl} }}  + z\Dex^c + x\Dez^c +\Dex\Dez  \\
+                % &=  x\Dez^c  +z\Dex^c + \Dex^c\Dez^c + \dex\dez 
+                % + \dex\Dez^c + \dez\Dex^c \\
                 &=         x\Dez^c  +z\Dex^c + \Dex\Dez.     
 \end{align*}
   
@@ -529,7 +529,7 @@ e
 O Teorema \ref{thm:next=residual} é consequência direta da aplicação
 dos Lemas \ref{lemma:linear-residual} e \ref{lemma:nonlinear-residual}, que
 consideram a parte linear e não linear de  $\hat{\rho}$ de forma separada. Esses lemas
-e suas demonstrações encontram-se na sequência. %no Apêndice
+e suas demonstrações são encontrados na sequência. %no Apêndice
 % \ref{sec:tech-resultas}. 
  
 \begin{lema}\label{lemma:linear-residual}
@@ -962,7 +962,7 @@ minimizador global $(\al^*,\mu^*,\sig^*)$ para o polinômio
 
 
 Vamos considerar a relação existente entre o resíduo linear escalado $\rho_L$ na iteração $k$ com o resíduo 
-linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a  proposição seguinte que trata tanto do resíduos lineares de KKT, quanto dos resíduos do KKT escalado. 
+linear da iteração $k+1$, dada no Teorema \ref{thm:next=residual}. É possível, generalizar tal relação usando a  proposição seguinte que trata tanto dos resíduos lineares de KKT, quanto dos resíduos do KKT escalado. 
 \begin{prop}\label{prop:nu_k}
  Seja $\{(x^k,y^k,z^k)\}$ gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters}. Então para $k\geq0$, vale  
 
@@ -1064,7 +1064,7 @@ Por conta de \eqref{eq:nu_k} e \eqref{eq:Nset-infty-rho}, segue que para qualque
 \end{equation}
 
 
-Até agora, o método proposto resolve o \ac{KKT} escalado \eqref{eq:ScaledKKT}
+Até agora, o método proposto resolve o sistema \ac{KKT} escalado \eqref{eq:ScaledKKT}
 e além disso usa a função de mérito $\nextphi$ dada em
 \eqref{eq:merit-function-al-mu-sig} como guia para a escolha das variáveis
 $(\al,\mu,\sig)$  e por conseguinte do próximo ponto. Por conta do exposto
@@ -1203,7 +1203,7 @@ em que   $u\in\Real^3$ é um vetor de limitantes superiores para  $(\al,\mu,\sig
 $\al$, $u_1<1$, pois  não queremos que o próximo ponto saia do interior do ortante positivo. 
 Com efeito, também não queremos $\al=0$. Por isso mesmo,  durante a
 demonstração de convergência daremos garantia de que é possível reduzir a
-função de mérito usando $\al>0$. Com efeito, o teste da razão é sempre utilizado em cada iteração para garantir isso.
+função de mérito usando $\al>0$. O teste da razão é sempre utilizado em cada iteração para garantir isso.
 Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $u_{2}$ e $u_{3}$ são escalares positivos que podem ou não ser diferentes para esses dois parâmetros.
 
  
