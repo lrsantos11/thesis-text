@@ -9,7 +9,7 @@
 Neste capítulo, fazemos alguns comentários sobre a implementação do Método de Escolha Otimizada de Parâmetros. 
 
 
-O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++}, utilizando como base a implementação PCx~\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \textcite{Mehrotra:1992wr}. O PCx pode ser configurado para executar correções de ordem superior de \textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além do  refinamento da solução por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência como PCx-r.
+O Algoritmo \ref{alg:optimized-choice-of-parameters} foi implementado em  \texttt{C/C++} e o código utilizado foi o de \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, que o adaptou ao MEOP. utilizando como base a implementação PCx~\cite{Czyzyk:1999hk} do algoritmo preditor-corretor de \textcite{Mehrotra:1992wr}. O PCx pode ser configurado para executar correções de ordem superior de \textcite{Gondzio:1996uw} e permitimos que fossem feitas no máximo 2 correções através do arquivo de configuração, além do  refinamento da solução por gradiente conjugado presente na implementação original. Denominamos essa implementação de referência como PCx-r.
 
   Chamaremos nossa implementação de PCx-EOP. Com efeito, a chamada de PCx-EOP coincide com a da implementação de referência e há a introdução do código de nosso algoritmo dentro do \emph{loop} principal de PCx-r,  retornando em seguida para a rotina principal e dando prosseguimento à sua execução usual. Isso foi feito para fazermos uma comparação justa entre nossos resultados e os que o PCx-r produz. 
 
@@ -22,7 +22,7 @@ Para problemas canalizados, a estrutura de dados do PCx é construída de forma 
 
 Além disso, para todos os códigos foram usadas as mesmas opções de compilação e o mesmo computador. Com essa estratégia, diferenças nos tempos de CPU ou no número de iterações podem ser atribuídas apenas à implementação de cada algoritmo. 
 
-O código utilizado foi o de \textcite{VillasBoas:2012ur,VillasBoas2013:wn} adaptado ao nosso algoritmo. 
+
 
 
 
@@ -53,7 +53,7 @@ garantindo que $(x^0,z^0)>0$.
 O que a rotina  \verb|InitialPoint| faz é primeiramente encontrar  $(\xtil,\ytil,\ztil)$ conforme a Equação~\eqref{eq:intial-point-LSquare}. Em seguida,  são calculadas
 \begin{equation}
 	\label{eq:initial-point-tilde-var}
-\tilde{\vartheta_x} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\xtil_{i}\},\num{e-2}\} \quad \text{ e }\quad  \tilde{\vartheta_z} = \max\{\displaystyle\num{-1.5}\cdot\min_{i}\{\ztil_{i}\},\num{e-2}\}.
+\tilde{\vartheta_x} = \max\left\{\displaystyle\num{-1.5}\cdot\min_{i}\{\xtil_{i}\},\num{e-2}\right\} \quad \text{ e }\quad  \tilde{\vartheta_z} = \max\left\{\displaystyle\num{-1.5}\cdot\min_{i}\{\ztil_{i}\},\num{e-2}\right\}.
 \end{equation}
 
 Só então é que se obtém as translações dadas por 
@@ -146,9 +146,9 @@ Em cada iteração de nosso método, precisamos resolver o problema dado em \eqr
 				 \end{cases}.
 \end{array}
 \end{equation}
-em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau total 6 nas variáveis $(\al,\mu,\sig)$. Este é um  Problema de Otimização de Polinômios (POP) e é considerado um problema não linear  difícil de ser resolvido~\cite{Laurent:2010kp}.
+em que $\varphi$ bem como $g_{C}^{i}$ e $g_{L}$ são polinômios de grau total 6 nas variáveis $(\al,\mu,\sig)$. Este é um  Problema de Otimização de Polinômios (POP) e é considerado um problema não linear altamente  difícil de ser resolvido, alguns deles, NP-Hard~\cite{Laurent:2010kp,Lasserre:2001fw,Nesterov:2000ch}.
 
-Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SaparsePOP~\cite{Waki:2008ie}, as quais se baseiam na transformação do POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas, em particular pela quantidade de restrições, que é  $n+1$.  
+Testamos algumas  implementações especializadas em POP, dentre elas GloptiPoly~\cite{Henrion:2009eb} e SparsePOP~\cite{Waki:2008ie}, as quais se baseiam na transformação do POP em um problema de Programação Semidefinida~\cite{Lasserre:2001fw}. Nenhuma delas, entretanto, foi capaz de resolver os subproblemas. A causa provável disso é  quantidade de restrições do POP, que é  $n+1$, em que $n$ é o número de variáveis do PL original.
 
 
 O subproblema foi resolvido utilizando a implementação de \textcite{VillasBoas:2012ur,VillasBoas2013:wn}, especialmente desenvolvida para resolver um problema com as mesmas características que o nosso.  Tal estratégia é brevemente resumida a seguir, adaptada à nossa notação.

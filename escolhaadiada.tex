@@ -1207,6 +1207,11 @@ função de mérito usando $\al>0$. O teste da razão é sempre utilizado em cad
 Por outro lado, para $\mu$ e $\sig$ os limitantes superiores $u_{2}$ e $u_{3}$ são escalares positivos que podem ou não ser diferentes para esses dois parâmetros.
 
  
-  
- No próximo capítulo estabeleceremos os resultados teóricos dessa abordagem, garantindo convergência e polinomialidade do algoritmo, em relação a redução da função de mérito e da garantia de que o próximo ponto esteja na vizinhança $\Nset_{-\infty}$.
+  O problema \eqref{eq:pop-subproblem} é um um Problema de Otimização de Polinômios (POP) e, em geral, é difícil de ser resolvido.  Considere que o conjunto dos polinômios aproxima o conjunto de todas as funções contínuas em conjuntos compactos e, por isso, minimizar polinômios globalmente não é uma tarefa  trivial. 
+  Com efeito, para alguns exemplares, um POP é NP-Hard \cite{Lasserre:2001fw,Laurent:2010kp}. 
+
+  No entanto, em nosso caso, \textcite{VillasBoas2013:wn} resolvem um problema com características parecidas com \eqref{eq:pop-subproblem} em tempo computacional muito baixo, o que permite sua utilização em termos práticos. Um resumo dessa estratégia, que foi utilizada em nossa implementação, está no Capítulo~\ref{chap:implementa}.
+
+
+ No presente capítulo estabelecemos as bases do Método de Escolha Otimizada de Parâmetros, as quais se encontram resumidas  no Algoritmo \ref{alg:optimized-choice-of-parameters}. Nos  capítulos que seguem  estabeleceremos os resultados teóricos dessa abordagem, garantindo convergência e polinomialidade do algoritmo,  bem como os resultados dos experimentos computacionais de nosso método. Mais uma vez ressaltamos que nossa abordagem é tratar o MEOP tanto do ponto de visto teórico, quanto do de implementação, garantindo que os resultados da análise teórica sejam estabelecidos para o algoritmo que está, de fato, sendo implementado.
  

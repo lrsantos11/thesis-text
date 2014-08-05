@@ -847,15 +847,11 @@ parâmetros, $\tau_0$ é dado por \eqref{eq:tau_k} e  $r^0_P$, $r^0_D$ são os
 resíduos iniciais primais e duais respectivamente.
 
  
-Embora $\Nset_{-\infty}(\ga,\be)$ não exija a factibilidade em cada iteração,
- existe um limitante superior para a infactibilidade,  que tem como
-componente principal a medida de  complementaridade $\tau$.
-Assim, ao reduzirmos $\tau$ forçamos os resíduos para zero,  reduzindo
-a complementaridade e a infactibilidade na mesma taxa. Com efeito, se
+Embora $\Nset_{-\infty}(\ga,\be)$ não exija factibilidade em cada iteração, a primeira de suas condições dá uma prioridade para a factibilidade em relação à complementaridade. Em resumo, não se quer que o ponto satisfaça a restrição de complementaridade sem que a factibilidade seja satisfeita. Com efeito, se
 $(x(\al),y(\al),z(\al)) = (x,y,z) + \al\De(x,y,z)$, então 
 \[
 r_P(\al) = (1-\al)r_P \text{ e } 
-r_D(\al) = (1-\al)r_D
+r_D(\al) = (1-\al)r_D,
 \]
 mostrando que a infactibilidade se reduz linearmente com $\al$.  
 

@@ -356,9 +356,24 @@ qap8                & 7  & 0,435  & 0 & 8  &  0,476  & 0  \\
 \end{longtable}
 }
  
- Note que o PCx-r não resolveu \num{3} problemas: \texttt{brandy}, \texttt{greenbea} e \texttt{scfxm2}, enquanto PCx-EOP não resolveu \num{5}:  \texttt{bnl1}, \texttt{fit1p}, \texttt{fit2p}, \texttt{greenbea}, \texttt{pilot4}. Apenas \texttt{grenebea} não foi resolvido pelas duas implementações. 
+ Note que o PCx-r não resolveu \num{3} problemas: \texttt{brandy}, \texttt{greenbea} e \texttt{scfxm2}, enquanto PCx-EOP não resolveu \num{5}:  \texttt{bnl1}, \texttt{fit1p}, \texttt{fit2p}, \texttt{greenbea}, \texttt{pilot4}. Apenas \texttt{greenbea} não foi resolvido pelas duas implementações. 
 
 Os resultados mostram que PCx-EOP resolveu o conjunto de 108 problemas em tempo de CPU  de 2min 36s e o PCx-r resolveu o mesmo conjunto em 1min 55s, com número de iterações comparável. Isso significa que os tempos de CPU tem a mesma ordem de grandeza, para ambas as implementações.
-Esse era o parâmetro mais importante para nós, já que em nossa opinião é o tempo de CPU que valida nossa abordagem, como prova de conceito. 
+Esse era o parâmetro mais importante para nós já que, em nossa opinião, é o tempo de CPU que valida nossa abordagem como prova de conceito. 
+
+Uma das possíveis causas do resultado acima é que o MEOP é um método do tipo \emph{greedy} ou guloso, no sentido que busca a minimização das médias dos resíduos, levando em conta apenas a próxima iteração. Entretanto, note que qualquer informação de iterações mais avançadas depende, para cada iteração, de uma fatoração de Cholesky e, portanto, tem auto custo computacional.
+
+Um outro fator importante a ser ressaltado é que nosso método escolhe o mesmo tamanho de passo em ambas as direções primal e dual, e tal passo é o implementado em PCx-MEOP. Por outro lado, o método preditor-corretor de Mehrotra implementado em PCx-r utiliza passos diferentes para as direções primal e dual. Aliás, \textcite[p.~195]{Wright:Primal-dual-interior-point:1997h} explica que 
+\begin{quotation}\small 
+The idea of different primal and dual step lengths [\ldots] has been used
+in both theoretical and practical development of primal dual methods
+since the earliest days. Computationally, this enhancement saves about
+10\%-20\% on a typical problem.
+\end{quotation}
+
+Mesmo assim, em nosso método utilizamos os mesmo tamanho de passo, por conta da complexidade algébrica que isso envolveria. Considere que as restrições do subproblema que resolvemos no MEOP, dadas por $g^{i}_{C}$ e $g_{L}$ -- veja \eqref{eq:pop-subproblem}, seriam agora dependentes de $\al_{P}$ e $\al_{D}$, além de $\mu$ e $\sig$. Fixados $\mu$ e $\sig$, cada uma das $\Oset(n)$ desigualdades é uma região do plano $\Real^{2}$ definido por uma hipérbole com eixos paralelos aos eixos $\al_{P}$ e $\al_{D}$.  Para que tais desigualdades fossem satisfeitas, precisaríamos computar $\Oset(n)$ itersecções dessas regiões. O resultado seria uma região não convexa e podem ter até $\Oset(n)$ pontos extremos. 
+
+Tanto do ponto de vista do cálculo algébrico quanto do método numérico, tais intersecções são causam grandes problemas. Deixamos tal escolha para um desenvolvimento futuro.
 
 
+Neste capítulo apresentamos o conjunto de testes \Netlib-108 nem como os resultados numéricos do MEOP, comparando sua implementação, chamada PCx-EOP com uma implementação do método preditor-corretor de Mehrotra, denominada PCx-r. Tais resultado mostram que o MEOP é robusto e tem tempo de CPU comparável com PCx-r. Futuros desenvolvimentos, tanto da solução do subproblema quanto da implementação, podem ser feitos e se mostram promissores. 

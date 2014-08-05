@@ -16,15 +16,20 @@
 		 		letterpaper, 
 				twoside,
 				bibliography=totoc, 
-				cleardoublepage=plain,
+				 cleardoublepage=empty,
 				chapterprefix, 
                 appendixprefix, 
-                % openright,
+                openright,
                 % draft,
                 ]{scrbook}  
 
 
-
+% \usepackage{scrpage2}
+% \clearscrheadfoot
+% \pagestyle{scrplain}
+% \clearscrheadfoot
+% \cfoot[\pagemark]{\pagemark}
+% \KOMAoptions{cleardoublepage=scrplain}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Configuração: pacotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{pacotes}  % Arquivo com os pacotes.
 
@@ -72,7 +77,8 @@
 \frontmatter
 %
 \input{capa}  % Não edite esse arquivo.
-  \newpage\mbox{}\thispagestyle{plain}\newpage  % Pagina em branco.
+\cleardoublepage
+  % \newpage\mbox{}\thispagestyle{empty}\newpage  % Pagina em branco.
 %
 % WARNING A folha de rosto precisa ser assinada pelos orientadores.
 % FIXME Substitua arquivo folha-de-rosto.pdf por uma copia escaneada, comente
@@ -89,7 +95,7 @@
 % WARNING A folha de aprovação deve ser assinada pelos membros da banca apos a
 % defesa.
 % FIXME Substitua o arquivo folha-de-aprovacao.pdf por uma copia escaneada.
- \includepdf{folha-de-aprovacao}
+ \includepdf[pages=-,pagecommand={\thispagestyle{plain}}]{folha-de-aprovacao1}
 
 
 \cleardoublepage  % Capítulo vazio.

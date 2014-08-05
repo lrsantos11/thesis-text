@@ -8,7 +8,7 @@
 
 
 
-\chapter{Convergência  polinomial do método de Escolha Otimizada de Parâmetros}
+\chapter{Convergência  polinomial do Método de Escolha Otimizada de Parâmetros}
 
 
 \label{chap:convergence}
@@ -313,10 +313,10 @@ A próxima proposição será utilizada nas demonstrações que seguem e é um f
 	Seja $D$ uma matriz diagonal não-singular de ordem $n$ e sejam $u,v\in\Real^n$ tais que $u^Tv\geq0$, então 
 	\begin{equation}
 		\label{eq:prop-uvDuDv}
-		\norm{uv}\leq \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right).
+	 \norm{uv}_1 \leq \norm{Du}\norm{D^{-1}v} \leq \frac{1}{2}\left(\norm{Du}^{2} + \norm{D^{-1}v}^{2}\right).
 	\end{equation}
 \end{prop}
-\begin{proof} A primeira desigualdade é válida por conta da equivalência de normas~\cite[p.~53]{Golub:1996wp}. Quanto às demais, vejamos que 
+\begin{proof} Para a primeira desigualdade  vejamos que 
 \[
 	\begin{aligned}
 		\norm{uv}_1^{2} & = \left( \sum_{i=1}^{n}\abs{u_i v_i}  \right)^{2} \leq  \sum_{i=1}^{n}\abs{u_iv_i}^{2}\\
@@ -653,11 +653,14 @@ em que
 \begin{aligned}
 {g}_C^i (\al)				& = (1-\al)(\rho_C^k )_i+ \al\eta\rhoCkb + \al^2\left[(L_{0,0}^{k})_i + \eta\rhoCkb  ({L_{1,0}^{k}})_i 
 				+ (\eta\rhoCkb )^2(L_{2,0}^{k})_i \right]  + \\
-				& \quad -\ga\left[  (1-\al)\rhoCkb  + \al\eta\rhoCkb  + \al^2\left(\dbvec{L_{0,0}^{k}} + \eta\rhoCkb  \dbvec{L_{1,0}^{k}}.
+				& \quad -\ga\left[  (1-\al)\rhoCkb  + \al\eta\rhoCkb  + \al^2\left(\dbvec{L_{0,0}^{k}} + \eta\rhoCkb  \dbvec{L_{1,0}^{k}}
 \right)  \right]
 \end{aligned}
 \]
-a depender somente de uma escolha de $\al$.
+Note que, por conta da Observação \ref{obs:L_02-L20} na página \pageref{obs:L_02-L20}, 
+$\dbvec{L_{2,0}^{k}} = 0$  e, por conta disso, essa constante não aparece no termo que é  multiplicado por $-\ga$ na expressão acima. No entanto, não há qualquer substituição possível para $(L_{2,0}^{k})_{i}$ e, logo, ela continua aparecendo na expressão de ${g}_C^i (\al)$.
+
+
 Sejam as constantes
 \begin{equation}
 \label{eq:defin-zeta-i+chi-i+xi-i}
@@ -797,6 +800,9 @@ Usando as mesmas substituições de $\nextmu$ e $\nextsig$, a função $g_L$ dad
 g_L(\al) =     (1-\al)\left(\rhoCkb  -  \be_L \nuk    \right) +  \al\eta\rhoCkb  + 
    \al^2\left( \dbvec{L_{0,0}^{k}} + \eta\rhoCkb   \,\dbvec{L_{1,0}^{k}}   \right ) .
 	\]
+Novamente,  levando em conta a Observação \ref{obs:L_02-L20}, 
+$\dbvec{L_{2,0}^{k}} = 0$.
+
 Usando  o fato de que o ponto atual pertence à  vizinhança segue que 
  \[
 \begin{aligned}
@@ -848,9 +854,9 @@ A sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-o
 \end{teo}
 
 
-\begin{proof} Por conta da Equação \eqref{eq:nex-al}, e dos Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2}, podemos escolher, sem perda de generalidade, $\nextal = \delta_{1}/n^{4}$, com $\de_{1}$ dado em \eqref{eq:delta1}. 
+\begin{proof} Note que $(1-\ga)<1$, que $(2t^{2} + 4\eta t + \eta^{2}/2) >(  t^{2} + 2\eta t)$, para $t = (1+2\bdxzstar^{4})$ e $\eta>0$, e que $n^{4} > n^{2}$. Levando isso em conta em conjunto com os Lemas \ref{lemma:alC_delta-1} e \ref{lemma:alL_delta-2} e  por conta da Equação \eqref{eq:nex-al}, podemos escolher $\nextal = \delta_{1}/n^{4}$, com $\de_{1}$ dado em \eqref{eq:delta1}. 
 
-Precisamos  primeiro mostrar que para a função $\theta$ dada em \eqref{eq:theta},  $\theta(\nextal)= \Oset(1/n^{4})$. Para isso, sejam $t = (1+2\bdxzstar^{4})$ e $t_1 = \dfrac{t}{\ga}$.  
+Precisamos  primeiro mostrar que para a função $\theta$ dada em \eqref{eq:theta},  $\theta(\nextal)= \Oset(1/n^{4})$. Para isso, novamente, seja $t = (1+2\bdxzstar^{4})$ e $t_1 = \dfrac{t}{\ga}$.  
 
 Considere agora que pelas definições  dadas em~\eqref{eq:defining-Lij} em conjunto com  as Equações  \eqref{eq:bound-zeta} e \eqref{eq:bound-chi} e ainda  os Lema~\ref{lemma:boundDxDzaff-c} e \ref{lemma:boundDxDzaff} derivamos 
 \[
@@ -923,27 +929,42 @@ O Teorema \ref{teo:next-phi-delta-n4} significa que a relação \eqref{eq:nextph
 
 
 \begin{teo}[Complexidade do Algoritmo \ref{alg:optimized-choice-of-parameters}]
-	\label{teo:alg-convergence-varphi} Seja $0 < \varepsilon <1$ dado. Suponha que a sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo~\ref{alg:optimized-choice-of-parameters} é  tal que 
-	para o ponto inicial $(\xzero,\yzero,\zzero)$ dado em \eqref{eq:initial-point-mehrotra} seja válido	
-	\begin{equation}
-	\label{eq:varphi0-eps-kappa}
-		\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}},
-	\end{equation} 
-	com  $\kappa$ uma constante positiva. Então  existe um índice \[K =  \Oset\left(n^{4}{\ln\frac{1}{\varepsilon}}\right),\] tal que 
-	 $\varphi_{k}\leq \varepsilon \text{ para todo } k \geq K$.
+	\label{teo:alg-convergence-varphi} Seja $0 < \varepsilon <1$ dado. Suponha que a sequência $\{\varphi_{k}\}$ seja gerada pelo Algoritmo~\ref{alg:optimized-choice-of-parameters}.
+	% é  tal que 
+	% para o ponto inicial $(\xzero,\yzero,\zzero)$ dado em \eqref{eq:initial-point-mehrotra} seja válido	
+	% \begin{equation}
+	% \label{eq:varphi0-eps-kappa}
+	% 	\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}},
+	% \end{equation} 
+	% com  $\kappa$ uma constante positiva. 
+	Então  existe um índice \[K_{\eps} =  \Oset\left(n^{4}{\ln\frac{1}{\varepsilon}}\right),\] tal que 
+	 $\varphi_{k}\leq \varepsilon \text{ para todo } k \geq K_{\eps}$.
 	 
 \end{teo}
 
 \begin{proof} Para mostrarmos a complexidade polinomial do algoritmo, aplicamos o logaritmo natural em ambos os lados da inequação \eqref{eq:varphi-delta-n4} dada no Teorema~\ref{teo:next-phi-delta-n4}, obtendo
 	\[
-	\ln\varphi_{k+1}\leq \ln \left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln\varphi_{k},
+	\ln\varphi_{k+1}\leq \ln \left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln\varphi_{k}.
 	\]
-Usando um argumento indutivo e utilizando \eqref{eq:varphi0-eps-kappa} segue que
+
+Usando um argumento indutivo  segue que
+\begin{equation}\label{eq:varphi-varphi0}
+		\ln\varphi_{k} \leq k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln \varphi_{0} 	
+						% & \leq k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \kappa\ln \frac{1}{\varepsilon}. 
+\end{equation}
+	
+
+Para 
 \[
-	\begin{aligned}
-		\ln\varphi_{k} & \leq k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \ln \varphi_{0} \\
-					& \leq k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \kappa\ln \frac{1}{\varepsilon}. 
-	\end{aligned}
+\kappa \geq \dfrac{\ln(1/\varphi_{0})}{\ln(\eps)}
+\] 
+temos que 
+\[
+\varphi_{0}\leq \dfrac{1}{\varepsilon^{\kappa}}
+\]
+Assim, utilizando esta última inequação em \eqref{eq:varphi-varphi0}, obtemos
+\[
+\ln\varphi_{k} \leq  k \ln\left(1 - \frac{\hat{\delta}}{n^{4}}\right) + \kappa\ln \frac{1}{\varepsilon}.
 \] 
 
 Conforme \textcite[Lema 4.1, p.~68]{Wright:Primal-dual-interior-point:1997h}, temos que $\ln(1+r) \leq r$, sempre que $r>-1$. Assim
@@ -969,13 +990,13 @@ o que termina a demonstração.
 
 O Teorema \ref{teo:alg-convergence-varphi} implica que, para um $k$ suficientemente grande, o valor de $\varphi$ será tão pequeno quanto se deseja. No entanto, tal resultado ainda não implica que algum critério de parada usual de Métodos de Pontos Interiores é satisfeito. Porém é possível garantir que o Critério de Parada dado em~\eqref{eq:termination-criteria-pcx} seja satisfeito para uma escolha particular de $\varepsilon$. Tal garantia, dada pelo Corolário a seguir, permite concluir que a sequência $\left\{\norm{(r_{P}^{k},r_{D}^{k})}\right\}$ tem taxa de convergência R-linear~\cite{Ortega:2000vd}, já que tal sequência estará limitada superiormente pela sequência $\{\varphi_{k}\}$, que é Q-linear, como vimos no Teorema~\ref{teo:next-phi-delta-n4}.
 
-\begin{corol}
-Suponha que escolhamos  $\tol >0 $  e $\varepsilon$   tal que 
+\begin{corol} 
+Suponha que escolhamos  $\tol >0 $  e $\varepsilon>0$   tal que 
 \begin{equation}
 	\label{eq:choosing-eps}
 		\varepsilon < \min\left\{  \frac{\tol(1+\norm{b})}{m+n}, \frac{\tol(1+\norm{c})}{m+n},\frac{\tol}{n}\right\}.
 \end{equation}
-Se o Algoritmo \ref{alg:optimized-choice-of-parameters} converge com tal $\eps$, então o critério de parada dado na Equação~\eqref{eq:termination-criteria-pcx} é satisfeito.
+Se para $k$ suficientemente grande, a sequência $\{\varphi_{k}\}$ gerada pelo Algoritmo \ref{alg:optimized-choice-of-parameters} é tal que  $\varphi_{k}\leq \eps$, então o critério de parada dado na Equação~\eqref{eq:termination-criteria-pcx} é satisfeito.
 \end{corol}		
 
 \begin{proof}
@@ -1006,6 +1027,6 @@ Além disso, como $1+ |c^{T}x^{k}| \geq 1$, temos que
 \]
  \end{proof}
 
-No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros, em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de demonstração utilizadas em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que, se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em várias implementações também é satisfeito. Neste sentido, do ponto de vista teórico,  garantimos que o Método de Escolha Otimizada de Parâmetros (MEOP) converge assintoticamente para pontos com factibilidade e otimalidade. Nos capítulos que seguem, mostramos alguns detalhes da implementação de nosso método bem como seus resultados numéricos.
+No presente capítulo, estabelecemos os resultados de complexidade polinomial e convergência  do Método de Escolha Otimizada de Parâmetros (MEOP), em relação à função de mérito que estamos usando. Isso foi feito através das ferramentas de análise de convergência  utilizadas de praxe em \acl{MPI}. Além disso, garantimos que é possível escolher um $\eps>0$, tal que, se a função de mérito em uma dada iteração é limitada superiormente por esse $\eps$, o critério de parada  usado em nossa implementação também é satisfeito. Nesse sentido, do ponto de vista teórico,  garantimos que o  MEOP converge assintoticamente para pontos com factibilidade e otimalidade. desde que o ponto inicial satisfaça a Condição \ref{cond:xzzero-xzstar}. Nos capítulos que seguem, mostramos alguns detalhes da implementação de nosso método bem como seus resultados numéricos.
 
 
