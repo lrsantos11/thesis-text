@@ -203,7 +203,7 @@ método de Newton é aplicada, modificando a direção de busca e o tamanho de p
 
 
 Podemos reescrever \eqref{eq:KKT} utilizando uma aplicação
-$F:\Real^{2n+m}\to \Real^{2n+m}$ da seguinte maneira:
+$F:\Real^{2n+m}\to \Real^{2n+m}$ da seguinte maneira\footnote{A partir de agora, utilizaremos a notação $uv$ para representar o produto componente a componente de dois vetores $u$ e $v$ quaisquer, da mesma forma que fizeram  \textcite{Kitahara:2013kt,Potra:1994dy,Salahi:2005vd}, entre outros. Este é o produto de Haddamard e significa que $UVe = uv$.}:
 \begin{subequations}
 \label{eq:KKT-Newton}
 \begin{gather}
@@ -325,13 +325,13 @@ Ax  =b,\\
 (x,z) > 0. 
 \end{cases}
 \]
-Fazendo $Ze=\tau X^{-1}e$, ou equivalentemente $XZ e= \tau e$, obtemos a
+Fazendo $z=\tau X^{-1}e$, ou equivalentemente $xz= \tau e$, obtemos a
 formulação padrão primal-dual das chamadas \emph{condições \ac{KKT} perturbadas}:
 
 \begin{subnumcases}{\label{eq:KKT-perturbed}}
 Ax  =b,\label{eq:KKT-fac-primal-perturbed}\\ 
 A^Ty + z =c, \label{eq:KKT-fac-dual-perturbed}\\
-XZe =\tau e,  \label{eq:KKT-complementar-perturbed}\\
+xz =\tau e,  \label{eq:KKT-complementar-perturbed}\\
 (x,z)  >0. \label{eq:KKT-nao-negativ-perturbed} 
 \end{subnumcases}
 
@@ -363,7 +363,7 @@ x(\tau)^zT(\tau),
 \end{equation}
 isto é, para cada valor de $\tau$, o gap de dualidade corresponde ao gap de
 complementaridade. Logo reduzir um significa reduzir o outro. Além disso, como
-$XZe - \tau e = 0$ por \eqref{eq:KKT-complementar-perturbed}, então $x_iz_i =
+$xz - \tau e = 0$ por \eqref{eq:KKT-complementar-perturbed}, então $x_iz_i =
 \tau, i=1,\dotsc,n$ e logo
  \begin{equation}
 \label{eq:gap-duality-n-mu}
@@ -622,7 +622,7 @@ conjunto solução e ao mesmo tempo são obtidas de maneira mais fácil.
 
 As duas vizinhanças de $\Cset$ mais comuns são  $\Nset_2(\theta)$, que tem como base a norma-2 e é definida por
 \[
-\Nset_2(\theta) = \left\{w\in\Fset^+ : \norm{XZe - \tau e}_2 \leq \theta\tau  
+\Nset_2(\theta) = \left\{w\in\Fset^+ : \norm{xz - \tau e}_2 \leq \theta\tau  
 \right\},
 \]
 em que $\theta \in (0,1)$, e a vizinhança 
@@ -702,10 +702,10 @@ positividade exigida de $(x,z)$.
  A razão 
 \begin{equation}
 \label{eq:ratio-complementarity}
-\varrho(XZe) = \frac{\min_i\{x_iz_i\}}{\max_i\{x_iz_i\}}
+\varrho(xz) = \frac{\min_i\{x_iz_i\}}{\max_i\{x_iz_i\}}
 \end{equation}
 dá uma medida de proporção entre o maior e o menor par de complementaridade.
- Claramente, $\varrho(XZe)\in(0,1]$ e, quando o iterado é perfeitamente
+ Claramente, $\varrho(xz)\in(0,1]$ e, quando o iterado é perfeitamente
 centrado, este valor é igual a 1. Uma
 análise da medida \eqref{eq:ratio-complementarity} pode ser encontrada em
 \textcite{Jansen:1jv}.
@@ -918,7 +918,7 @@ razão, isto é,
 0\right\}
 \end{equation} 
 em que $\al_0$ é um fator que garante positividade estrita e em geral vale
-$0,9995$. Além disso, embora   algum tipo de vizinhança seja sempre utilizada, muitas
+$\num{0.9995}$. Além disso, embora   algum tipo de vizinhança seja sempre utilizada, muitas
 vezes é permitido que o ponto esteja fora da mesma e por isso, com a perda da
 propriedade da convergência global em favor da eficiência computacional. 
 
@@ -939,8 +939,8 @@ $(x,y,z)$ tais que $(x,z)>0$, e a direção de busca consiste em três component
 Para compreendermos melhor o que essas ideias significam, note que, no sistema de
 Newton \eqref{eq:KKT-Newton-step-mu-tau}, o lado direito pode ser separado da seguinte forma:
 \[
-\bbm b-Ax \\ c - A^Ty - z \\ -XZe + \eta\tau \ebm = 
- \bbm b-Ax \\ c - A^Ty - z \\ -XZe  \ebm +  \bbm 0 \\ 0 \\ 
+\bbm b-Ax \\ c - A^Ty - z \\ -xz + \eta\tau \ebm = 
+ \bbm b-Ax \\ c - A^Ty - z \\ -xz  \ebm +  \bbm 0 \\ 0 \\ 
  \eta\tau \ebm.
  \] 
 
@@ -949,7 +949,7 @@ Assim, a direção preditora $(\dex, \dey, \dez)$ é obtida resolvendo-se o
 sistema de Newton com o lado direto dado por
  \begin{equation}
  \label{eq:afinne-scale-step}
- \bbm b-Ax\\ c - A^Ty - z \\ -XZe  \ebm =  \bbm r_P\\ r_D \\ r_C  \ebm 
+ \bbm b-Ax\\ c - A^Ty - z \\ -xz  \ebm =  \bbm r_P\\ r_D \\ r_C  \ebm 
  \end{equation} 
  isto é,  $(\dex, \dey, \dez)$  corresponde a direção afim-escala dada em
 \eqref{eq:KKT-Newton-step}. Como visto, essa direção otimiza fortemente em
@@ -1016,7 +1016,7 @@ calcular esse termo em conjunto com a direção corretora.
 A direção afim-escala corresponde à aproximação linear da trajetória que liga o
 ponto atual ao conjunto ótimo.  Esta linearização produz um erro que pode ser
 determinado. De fato, assumindo que daremos um passo completo na direção
-afim-escala, temos que o vetor dos pares complementares é  dado por\footnote{A partir de agora, utilizaremos a notação $uv$ para representar o produto componente a componente de dois vetores $u$ e $v$ quaisquer, da mesma forma que fizeram  \textcite{Kitahara:2013kt,Potra:1994dy,Salahi:2005vd}, entre outros. Este é o produto de Haddamard e significa que $UVe = uv$.} 
+afim-escala, temos que o vetor dos pares complementares é  dado por 
 \[
 \hat{x}\hat{z} = (x+\dex)(z + \dez) = xz + x\dez + z\dex + \dex
 \dez =  \dex\dez \] 

@@ -351,7 +351,7 @@ Sejam $\Atil = \bbm A & 0 \\ E & I_{p}\ebm$,  $\btil = \bbm b\\ u\ebm$, $\ctil =
 \end{array}.
 \end{equation}
 
-Observe que essa notação transforma o par primal-dual canalizado na forma padrão do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho. Isso é feito porque, agora é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima indica que todos os resultados obtidos também serão estendidos para os problemas canalizados. Do ponto de vista da implementação, essa abordagem também não causará problemas, já que em nossa implementação, a estrutura de dados é  construída pra lidar com as canalizações sem que a ordem de operações em álgebra linear seja afetada.
+Observe que essa notação transforma o par primal-dual canalizado na forma  do par primal-dual padrão. Assim, temos uma vantagem que utilizaremos em todo este trabalho:  agora é possível tratar apenas do par primal dual na forma padrão sem canalizações, e a notação acima faz com  que todos os resultados obtidos também serão estendidos para os problemas canalizados. Do ponto de vista dos experimentos numéricos, essa abordagem também não causará problemas já que, em nossa implementação, a estrutura de dados é  construída pra lidar com as canalizações sem que a ordem de complexidade das operações em álgebra linear seja afetada.
 
 Com isso, a partir de agora, consideraremos apenas \ac{PL} na forma dada em \eqref{eq:introPL-primal} e \eqref{eq:introPL-dual} e faremos comentários relativos a canalizações quando oportunos, em particular quando tratarmos da implementação.
 

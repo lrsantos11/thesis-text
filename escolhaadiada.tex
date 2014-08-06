@@ -58,7 +58,7 @@ O Algoritmo \ref{alg:optimized-choice-of-parameters} resume o MEOP proposto nest
 \end{algorithm}
 
  
-O esclarecimento de cada passo do Algoritmo \ref{alg:optimized-choice-of-parameters} será feito a seguir, através da explicitação do MEOP. Primeiramente vamos  construir a função de mérito e suas restrições como polinômios. Para esse fim, são necessárias algumas transformações, as quais explanamos a seguir. 
+A explicação de cada passo do Algoritmo \ref{alg:optimized-choice-of-parameters} será feita a seguir -- a menos dos passos \num{7} e \num{12}, através da explicitação do MEOP. Para dar conta disso e, portanto, dos objetivos propostos no presente capítulo,  são necessárias algumas transformações, as quais explanamos a seguir. 
 
 Considere novamente o par primal-dual  (\ref{eq:primal}-\ref{eq:dual}) na sua forma padrão,
 i.e.,  
@@ -83,12 +83,12 @@ e
 \end{equation}
 
 Como visto no Capítulo \ref{chap:mpis}, as condições \ac{KKT}  para este
-problema são
+problema são\footnote{Novamente, durante todo este capítulo, estamos utilizando a notação do produto de Haddamard e assim,  $uv$ indica o produto componente a componente de $u$ e $v$.}
 
 \begin{subnumcases}{\label{eq:KKT-choice}}
 Ax =b,\label{eq:KKT-fac-primal-choice}\\
 A^Ty + z =c, \label{eq:KKT-fac-dual-choice}\\
-XZe =0,  \label{eq:KKT-complementar-choice}\\
+xz =0,  \label{eq:KKT-complementar-choice}\\
 (x,z) \geq 0. \label{eq:KKT-nao-negativ-choice}
 \end{subnumcases}
 Com isso, dado qualquer $w = (x,y,z)$, os vetores dos resíduos
@@ -98,7 +98,7 @@ de \eqref{eq:KKT-choice}, $r_P, r_D$ e $r_C$, podem ser definidos como
 \begin{align} 
 r_P & =Ax-b,\label{eq:KKT-residuals-a}\\ 
 r_D & =A^Ty + z - c,\label{eq:KKT-residuals-b}\\
-r_C  &=XZe. \label{eq:KKT-residuals-c}
+r_C  &=xz. \label{eq:KKT-residuals-c}
 \end{align} 
 \end{subequations}
 
@@ -109,7 +109,7 @@ $(x^0,y^0,z^0)$ um ponto inicial que pertença a $\Qset^+$, isto é, um ponto in
 \begin{align*} 
 r^0_P & =Ax^0-b,\\ 
 r^0_D & =A^Ty^0 + z^0 - c, \\
-r^0_C  &=X^0Z^0 e > 0. 
+r^0_C  &=\xzero\zzero > 0. 
 \end{align*}
  
 
@@ -142,7 +142,7 @@ solução de  \eqref{eq:KKT-choice} e do sistema
 \begin{subnumcases}{\label{eq:ScaledKKT}}
 H_P(Ax-b) =0,\label{eq:ScaledKKT-fac-primal}\\ 
 H_D(A^Ty + z -c) =0, \label{eq:ScaledKKT-fac-dual}\\
-XZe =0,  \label{eq:ScaledKKT-complementar}\\
+xz =0,  \label{eq:ScaledKKT-complementar}\\
 (x,z) \geq 0, \label{eq:ScaledKKT-nao-negativ} 
 \end{subnumcases}
 é o mesmo. De fato, note que apenas estamos multiplicando cada linha do sistema
@@ -152,8 +152,7 @@ XZe =0,  \label{eq:ScaledKKT-complementar}\\
 Tal era o objetivo principal dessas transformações.
 
 A otimalidade do sistema \eqref{eq:KKT-choice} -- bem como de
-\eqref{eq:ScaledKKT}  -- é alcançada quando todos os resíduos forem nulos, ou
-melhor dizendo, sempre que esses resíduos forem menores ou iguais a uma  
+\eqref{eq:ScaledKKT}  -- é alcançada quando todos os resíduos forem nulos. De fato, para fins de implementação, diremos que a otimalidade foi alcançada  sempre que a norma de cada um desses resíduos for menor ou igual a uma  
 tolerância pré-estabelecida. Assim propomos um método para resolver o sistema
 \ac{KKT} escalado que resolva aproximadamente, em cada iteração, para
 $(x,y,z)\in\Qset^+$ e algum $\mu>0$, o sistema
@@ -161,7 +160,7 @@ $(x,y,z)\in\Qset^+$ e algum $\mu>0$, o sistema
 \begin{subnumcases}{\label{eq:Homotopy}}
 H_P(Ax-b) = 0, \label{eq:Homotopy-fac-primal}\\ 
 H_D(A^Ty + z -c) =0, \label{eq:Homotopy-fac-dual}\\
-XZe =\mu e,  \label{eq:Homotopy-complementar}\\
+xz =\mu e,  \label{eq:Homotopy-complementar}\\
 (x,z) > 0. \label{eq:Homotopy-nao-negativ} 
 \end{subnumcases}
 
@@ -182,13 +181,13 @@ $(\dew)^k$ que resolve aproximadamente  o sistema \eqref{eq:KKT-choice}
 \begin{subnumcases}{\label{eq:affine-scaling-system}}
 A(\dex)^k + r_P^k = 0, \label{eq:affine-scaling-system-primal} \\
 A^T(\dey)^k +(\dez)^k + r_D^k =  0, \label{eq:affine-scaling-system-dual}\\
-Z^k(\dex)^k + X^k(\dez)^k +  r_C^k = 0. \label{eq:affine-scaling-system-compl}
+z^k(\dex)^k + x^k(\dez)^k +  r_C^k = 0. \label{eq:affine-scaling-system-compl}
 \end{subnumcases}
 
 Deixando de utilizar o índice da iteração, para simplificar, podemos encontrar, por meio  da equação \eqref{eq:affine-scaling-system-compl}, o valor de  $\dez$ como
 \begin{equation}
 \label{eq:de_z}
-\dez = -X^{-1}(Z\dex + r_C).
+\dez = -X^{-1}(z\dex + r_C).
 \end{equation}
 
 
@@ -197,7 +196,7 @@ Se  esta equação for usada e, além disso, $\dez$ for substituído na equaçã
 \[
 \begin{cases}
 A\dex + r_P = 0  \\
-A^T\dey -X^{-1}Z\dex -X^{-1}r_C + r_D =  0
+A^T\dey -X^{-1}z\dex -X^{-1}r_C + r_D =  0
 \end{cases}.
 \]
 Este sistema é chamado \emph{Sistema Aumentado} e tem sua forma matricial dada
@@ -222,7 +221,7 @@ $\dex$ pode ser encontrado como
 em que 
 \begin{align*}
 t &=  X^{-1}r_C - r_D \\
-  &= X^{-1}XZe - A^Ty - z + c \\
+  &= (X^{-1})xz - A^Ty - z + c \\
   &= z - A^Ty - z + c\\
    &= -(A^Ty - c).
 \end{align*}
@@ -253,7 +252,7 @@ do sistema
 \begin{cases} 
 A\hat{x} -b = 0 \\
 A^T\hat{y} +\hat{z} -c = 0 \\
-\hat{X}\hat{Z}e = \mu e
+\hat{x}\hat{z} = \mu e
 \end{cases},
 \end{equation}
 através de um único
@@ -293,11 +292,11 @@ Usando tais simplificações, obtemos o seguinte sistema não linear
 \begin{equation}\begin{cases}
 A\Dex^c =  0\\
 A^T\Dey^c +\Dez^c =  0\\
-X\Dez^c + Z\Dex^c + \DeX\Dez = \mu e 
+x\Dez^c  +z\Dex^c + \Dex\Dez = \mu e 
 \label{eq:corrector-nonlinear}
 \end{cases}.
 \end{equation}
-O vetor $\DeX\Dez$ corresponde a uma correção de segunda ordem, nos moldes dos
+O vetor $\Dex\Dez$ corresponde a uma correção de segunda ordem, nos moldes dos
 trabalhos de \textcite{Mehrotra:1992wr,Gondzio:1996uw}.
 
 
@@ -308,9 +307,9 @@ Essa generalização será feita supondo que para algum escalar
 $\sig$ positivo e limitado a aproximação
 \begin{equation}
 \label{eq:aproximacao-direcao}
-\DeX\Dez \approx \sig \deX\dez
+\Dex\Dez \approx \sig \dex\dez
 \end{equation} 
-seja aceitável. Estamos aqui fazendo um abuso de notação, ao utilizar o símbolo $\approx$. O que queremos dizer é que, estamos usando como hipótese que existe $\sig$ tal que $\norm{\DeX\Dez - \sig \deX\dez}$ seja suficientemente pequena.
+seja aceitável. Estamos aqui fazendo um abuso de notação, ao utilizar o símbolo $\approx$. O que queremos dizer é que, estamos usando como hipótese que existe $\sig$ tal que $\norm{\Dex\Dez - \sig \dex\dez}$ seja suficientemente pequena.
 %\footnote{Neste caso, a notação $u \approx \sig v$ significa que
 %  $u$ é um vetor que pertence ao subespaço gerado por $v$.}
 
@@ -362,7 +361,7 @@ transforma o sistema não linear \eqref{eq:corrector-nonlinear} no sistema linea
 \label{eq:linear-sytem-DeXDeZcorrec}
 A\Decox = 0 \\
 A^T\Decoy +\Decoz = 0 \\
-X\Decoz + Z\Decox  = \mu e - \sig\deX\dez
+x\Decoz + z\Decox  = \mu e - \sig\dex\dez
 \end{cases}.
 \end{equation}
 Expressando tal sistema  na  forma
@@ -374,7 +373,7 @@ matricial, temos
 Z & 0 & X \ebm
 \bbm \Decox \\ \Decoy \\ \Decoz
 \ebm = 
-\bbm 0  \\ 0 \\ \mu e - \sig\deX\dez
+\bbm 0  \\ 0 \\ \mu e - \sig\dex\dez
 \ebm.
 \end{equation}
 As matrizes do lado esquerdo das equações em
@@ -387,7 +386,7 @@ reescrito como
 \begin{equation}
 \label{eq:corrector-linear-matrix-rhs}
 \mu\bbm 0 \\  0 \\ e
-\ebm + \sig \bbm 0  \\ 0 \\ - \deX\dez
+\ebm + \sig \bbm 0  \\ 0 \\ - \dex\dez
 \ebm.
 \end{equation}
 Portanto, para $\mu,\sig$ quaisquer -- ainda não escolhidos --, é possível
@@ -404,7 +403,7 @@ Com efeito, encontramos
 $\Dew^\mu$ e $\Dew^\sig$  usando a
 mesma abordagem da referida seção, i.e., resolvendo
 os sistemas $\nabla F(w)\Dew^\mu = (0,0,e)$ e $\nabla F(w)\Dew^\sig = (0,0,-
-\deX\dez)$.
+\dex\dez)$.
 
 
 Explicitamente, temos
@@ -413,16 +412,16 @@ Explicitamente, temos
 \begin{aligned}
 & \Dey^{\mu} = B(ADt^\mu )\\
 & \Dex^{\mu} = D(A^T\Dey^{\mu} - t^\mu) \\
-& \Dez^{\mu} = -X^{-1}(Z\Dex^{\mu} - e)
+& \Dez^{\mu} = -X^{-1}(z\Dex^{\mu} - e)
 \end{aligned} \text{\quad e \quad } \begin{aligned}
 & \Dey^{\sig} = B(ADt^\sig)\\
 & \Dex^{\sig} = D(A^T\Dey^{\sig} - t^\sig) \\
-& \Dez^{\sig} = -X^{-1}(Z\Dex^{\sig} + \deX\dez)
+& \Dez^{\sig} = -X^{-1}(z\Dex^{\sig} + \dex\dez)
 \end{aligned}, 
 \end{equation}
 em que
 \[
-t^\mu = - X^{-1}e \text{\quad e \quad} t^\sig = X^{-1}\deX\dez.
+t^\mu = - X^{-1}e \text{\quad e \quad} t^\sig = (X^{-1})\dex\dez.
 \]
 
 Desta forma, o maior esforço computacional por iteração do método proposto consiste
@@ -472,7 +471,7 @@ Definimos  $\rho$, \emph{vetor de resíduos do sistema} \ac{KKT}  escalado
 \begin{cases}
 \rho_P (x,y,z)= H_P(A{x} -b)  \\
 \rho_D(x,y,z)= H_D(A^T{y} +{z} -c) \\
-\rho_C(x,y,z)= {X}{Z}e
+\rho_C(x,y,z)= xz
 \end{cases}.
 \end{equation}
 

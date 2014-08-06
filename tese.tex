@@ -24,12 +24,12 @@
                 ]{scrbook}  
 
 
-% \usepackage{scrpage2}
-% \clearscrheadfoot
-% \pagestyle{scrplain}
-% \clearscrheadfoot
-% \cfoot[\pagemark]{\pagemark}
-% \KOMAoptions{cleardoublepage=scrplain}
+\usepackage{scrpage2}
+\clearscrheadfoot
+\pagestyle{scrplain}
+\clearscrheadfoot
+\cfoot[\pagemark]{\pagemark}
+\KOMAoptions{cleardoublepage=scrplain}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Configuração: pacotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{pacotes}  % Arquivo com os pacotes.
 
@@ -56,7 +56,7 @@
 
 % FIXME Substituir 'Nome completo do coorientador' pelo nome completo do seu
 % coorientador. Caso não tenha coorientador, comente a linha a seguir.
-\newcommand{\coorientador}{Fernando da Rocha Villas-Bôas e Clóvis Perin Filho}
+\newcommand{\coorientador}{Fernando Rocha Villas Bôas e Clóvis Perin Filho}
 % FIXME Se for coorientado por uma mulher, descomente a linha a seguir.
 % \def\femaleCoorientador{}
 % FIXME Se tiver mais que um coorientador, descomente a linha a seguir.
@@ -99,9 +99,9 @@
 
 
 \cleardoublepage  % Capítulo vazio.
-\input{resumo}
-\vspace{.05\textheight}
 \input{abstract}
+\vspace{.05\textheight}
+\input{resumo}
 %
 \tableofcontents
 %

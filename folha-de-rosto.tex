@@ -111,15 +111,17 @@ es\fi: \coorientador
 \end{flushleft}
 
 \vfill
-\begin{tabular}{c@{\hskip 1in}c}
+\noindent
+\begin{tabular}{l}
 {\small\textbf{Assinatura
 \ifx\femaleOrientador\undefined
 do Orientador
 \else
 da Orientadora
 \fi
-}} & 
-
+}} \\[0.6cm]
+\rule[1pt]{7cm}{.5pt} 
+\\[0.4cm]
 \ifx\coorientador\undefined
 \else
 {\small\textbf{Assinatura
@@ -130,11 +132,14 @@ Coorientador\ifx\Coorientadores\undefined
 \else es \fi 
 \else
 da Coorientadora
-\fi } }\\[0.6cm]
-
-\rule[1pt]{6cm}{.5pt}  % Linha para assinatura do orientador
- & 
+\fi } }
+ \\[0.6cm]
+\rule[1pt]{7cm}{.5pt}  % Linha para assinatura do orientador
+ \ifx\Coorientadores\undefined
+ \else
+ \\[0.6cm]
 \rule[1pt]{7cm}{.5pt}  % Linha para assinatura do coorientador
+\fi
 \end{tabular}
 
 \vfill
